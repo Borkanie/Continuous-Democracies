@@ -31,5 +31,10 @@ namespace ParliamentMonitor.Contracts.Model
         /// Defaul party color for UI representation.
         /// </summary>
         public Color Color { get; set; } = Color.LightGray;
+
+        /// <summary>
+        /// List of politicans affiliated with this party.
+        /// </summary>
+        public List<Politician> Politicians { get; set; }
     }
 }

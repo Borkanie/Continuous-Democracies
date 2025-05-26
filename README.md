@@ -4,3 +4,7 @@ This project will allow us to see what the fuck the parlament is doing on our mo
 ## Arhitecture
 
 [Overall diagram](https://app.diagrams.net/#G1IoOFjcHjG2b3ap5Qtk5loAzpLCS3u-wf#%7B"pageId"%3A"tO0PR2FBSI-hfwW1G_-8"%7D)
+
+## DataBase
+
+It will use PostGRSQL on a kubernetes cluister to make it easy to move into the cloud and have a fast reliable data structure.
