@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 
 namespace ParliamentMonitor.Contracts.Model
 {
@@ -10,7 +11,8 @@ namespace ParliamentMonitor.Contracts.Model
         /// <summary>
         /// Unique ID of the party, will be used to identyfy the entity.
         /// </summary>
-        public Guid Id { get; }
+        [Key]
+        public Guid Id { get; set; }
 
         /// <summary>
         /// The Full Name of the Party.

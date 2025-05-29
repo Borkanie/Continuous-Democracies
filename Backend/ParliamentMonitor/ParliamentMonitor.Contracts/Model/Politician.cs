@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace ParliamentMonitor.Contracts.Model
 {
     public enum Gender
@@ -23,7 +25,8 @@ namespace ParliamentMonitor.Contracts.Model
         /// <summary>
         /// Primary key of the politician, will be used to identify the entity.
         /// </summary>
-        public Guid Id { get; }
+        [Key]
+        public Guid Id { get; set; }
 
         /// <summary>
         /// The full name of the politician.
