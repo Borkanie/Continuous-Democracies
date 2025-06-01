@@ -20,18 +20,9 @@ namespace ParliamentMonitor.Contracts.Model
     /// <summary>
     /// Abstraction of a politician in a political context.
     /// </summary>
-    public class Politician
+    public class Politician: Entity
     {
-        /// <summary>
-        /// Primary key of the politician, will be used to identify the entity.
-        /// </summary>
-        [Key]
-        public Guid Id { get; set; }
 
-        /// <summary>
-        /// The full name of the politician.
-        /// </summary>
-        public String Name { get; set; } = String.Empty;
 
         /// <summary>
         /// Gender of the politician, used for demographic purposes.

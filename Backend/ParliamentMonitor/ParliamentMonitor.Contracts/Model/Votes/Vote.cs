@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace ParliamentMonitor.Contracts.Model.Votes
 {
-    public class Vote
+    public class Vote : Entity
     {
-        [Key]
-        public Guid Id { get; set; }
-        public string Title { get; set; }
+
+        public string Title { get => Name; set => Name = value; }
         public string Description { get; set; }
         public DateTime VoteDate { get; set; }
 

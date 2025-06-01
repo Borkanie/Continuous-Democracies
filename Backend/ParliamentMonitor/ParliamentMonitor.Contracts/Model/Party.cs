@@ -6,18 +6,8 @@ namespace ParliamentMonitor.Contracts.Model
     /// <summary>
     /// Abstraction of a party in a political context.
     /// </summary>
-    public class Party
+    public class Party : Entity
     {
-        /// <summary>
-        /// Unique ID of the party, will be used to identyfy the entity.
-        /// </summary>
-        [Key]
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// The Full Name of the Party.
-        /// </summary>
-        public String Name { get; set; } = String.Empty;
 
         /// <summary>
         /// The Acronym of the Party, used for quick identification.
@@ -38,5 +28,7 @@ namespace ParliamentMonitor.Contracts.Model
         /// List of politicans affiliated with this party.
         /// </summary>
         public List<Politician> Politicians { get; set; }
+
+        public bool Active {  get; set; }
     }
 }

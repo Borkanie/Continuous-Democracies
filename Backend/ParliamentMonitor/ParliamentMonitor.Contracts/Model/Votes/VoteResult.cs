@@ -14,11 +14,8 @@ namespace ParliamentMonitor.Contracts.Model.Votes
         Abstain,
         Absent
     }
-    public class VoteResult
+    public class VoteResult : Entity
     {
-        [Key]
-        public Guid Id { get; set; }
-
         public Vote Vote { get; set; }
 
         public Politician Politician { get; set; }
