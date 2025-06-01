@@ -7,20 +7,14 @@ using System.Threading.Tasks;
 
 namespace ParliamentMonitor.Contracts.Model.Votes
 {
-    public enum VotePosition
+    public class VotingRound : Entity
     {
-        Yes,
-        No,
-        Abstain,
-        Absent
-    }
-    public class Vote : Entity
-    {
-        public VotingRound Round { get; set; }
 
-        public Politician Politician { get; set; }
+        public string Title { get => Name; set => Name = value; }
+        public string Description { get; set; } = string.Empty;
+        public DateTime VoteDate { get; set; } = DateTime.Now;
 
-        public VotePosition Position { get; set; } = VotePosition.Absent;
+        public ISet<Vote> VoteResults { get; set; } = new HashSet<Vote>();
 
         public override bool Equals(object? obj)
         {
@@ -29,8 +23,8 @@ namespace ParliamentMonitor.Contracts.Model.Votes
             {
                 return false;
             }
-            var ob = (Vote)obj;
-            return ob.Id == Id || (ob.Round == Round && ob.Politician == Politician);
+            var ob = (VotingRound)obj;
+            return ob.Id == Id || (Title == ob.Title && ob.VoteDate == VoteDate);
         }
     }
 }

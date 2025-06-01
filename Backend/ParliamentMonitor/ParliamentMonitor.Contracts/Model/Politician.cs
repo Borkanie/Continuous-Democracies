@@ -48,5 +48,12 @@ namespace ParliamentMonitor.Contracts.Model
         /// Worklocation of the politician, indicating where they primarily operate.For now, Parliament or Senate.
         /// </summary>
         public WorkLocation WorkLocation { get; set; } = WorkLocation.Parliament;
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null) return false;
+            if(obj.GetType()!= typeof(Politician)) return false;
+            return ((Politician)obj).Id == Id;
+        }
     }
 }
