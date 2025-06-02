@@ -106,5 +106,14 @@ namespace ParlimentMonitor.ServiceImplementation
             }
             return item;
         }
+
+        public void Delete(Politician entity)
+        {
+            if (dBContext.Politicians.Contains(entity))
+            {
+                dBContext.Politicians.Remove(entity);
+                dBContext.SaveChanges();
+            }
+        }
     }
 }

@@ -33,6 +33,6 @@ namespace ParliamentMonitor.DataBaseConnector
 
         public DbSet<Party> Parties { get; set; }
 
-        public DbSet<Vote> Votes { get; set; }
+        public DbSet<VotingRound> Votes { get; set; }
     }
 }

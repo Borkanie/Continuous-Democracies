@@ -81,5 +81,14 @@ namespace ParlimentMonitor.ServiceImplementation
             }
             return item;
         }
+
+        public void Delete(Party entity)
+        {
+            if (dbContext.Parties.Contains(entity))
+            {
+                dbContext.Parties.Remove(entity);
+                dbContext.SaveChanges();
+            }
+        }
     }
 }

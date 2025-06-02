@@ -16,10 +16,11 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
                     Acronym = table.Column<string>(type: "text", nullable: true),
                     LogoUrl = table.Column<string>(type: "text", nullable: true),
-                    Color = table.Column<string>(type: "text", nullable: false)
+                    Color = table.Column<string>(type: "text", nullable: false),
+                    Active = table.Column<bool>(type: "boolean", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,7 +34,8 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    VoteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    VoteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,12 +47,12 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
                     Gender = table.Column<int>(type: "integer", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     PartyId = table.Column<Guid>(type: "uuid", nullable: false),
                     Active = table.Column<bool>(type: "boolean", nullable: false),
-                    WorkLocation = table.Column<int>(type: "integer", nullable: false)
+                    WorkLocation = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,26 +66,27 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VoteResult",
+                name: "Vote",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    VoteId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RoundId = table.Column<Guid>(type: "uuid", nullable: false),
                     PoliticianId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Position = table.Column<int>(type: "integer", nullable: false)
+                    Position = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VoteResult", x => x.Id);
+                    table.PrimaryKey("PK_Vote", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VoteResult_Politicians_PoliticianId",
+                        name: "FK_Vote_Politicians_PoliticianId",
                         column: x => x.PoliticianId,
                         principalTable: "Politicians",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VoteResult_Votes_VoteId",
-                        column: x => x.VoteId,
+                        name: "FK_Vote_Votes_RoundId",
+                        column: x => x.RoundId,
                         principalTable: "Votes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -95,21 +98,21 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                 column: "PartyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VoteResult_PoliticianId",
-                table: "VoteResult",
+                name: "IX_Vote_PoliticianId",
+                table: "Vote",
                 column: "PoliticianId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VoteResult_VoteId",
-                table: "VoteResult",
-                column: "VoteId");
+                name: "IX_Vote_RoundId",
+                table: "Vote",
+                column: "RoundId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "VoteResult");
+                name: "Vote");
 
             migrationBuilder.DropTable(
                 name: "Politicians");

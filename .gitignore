@@ -53,3 +53,5 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+Backend/ParliamentMonitor/.vs/ParliamentMonitor/DesignTimeBuild/.dtbcache.v2
+Backend/ParliamentMonitor/.vs/ParliamentMonitor/v17/.suo

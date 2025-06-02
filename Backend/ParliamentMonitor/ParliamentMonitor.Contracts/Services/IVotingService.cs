@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ParliamentMonitor.Contracts.Services
 {
-    internal interface IVotingService<T,Y> : IDBMService<T> where T : Vote where Y : VotingRound
+    public interface IVotingService<T,Y> : IDBMService<T> where T : Vote where Y : VotingRound
     {
         /// <summary>
         /// Udpates a VotingRound result. 
@@ -26,7 +26,7 @@ namespace ParliamentMonitor.Contracts.Services
         /// <param name="time">When it took ended.</param>
         /// <param name="votes">The list of votes for all present individuals.</param>
         /// <param name="Description">Short descriptiona bout the vote.</param>
-        public void CreateVote(string title, DateTime time, List<T>? votes = null, string? Description = null);
+        public Y CreateVotingRound(string title, DateTime time, List<T>? votes = null, string? Description = null);
 
         /// <summary>
         /// Update a vote result in the db.

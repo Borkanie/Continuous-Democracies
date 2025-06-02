@@ -12,7 +12,7 @@ using ParliamentMonitor.DataBaseConnector;
 namespace ParliamentMonitor.DataBaseConnector.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250527160541_InitialCreate")]
+    [Migration("20250602120242_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,6 +33,9 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
 
                     b.Property<string>("Acronym")
                         .HasColumnType("text");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -88,7 +91,39 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("PoliticianId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("RoundId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PoliticianId");
+
+                    b.HasIndex("RoundId");
+
+                    b.ToTable("Vote");
+                });
+
+            modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.VotingRound", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -104,30 +139,6 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                     b.ToTable("Votes");
                 });
 
-            modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.VoteResult", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PoliticianId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("VoteId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PoliticianId");
-
-                    b.HasIndex("VoteId");
-
-                    b.ToTable("VoteResult");
-                });
-
             modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Politician", b =>
                 {
                     b.HasOne("ParliamentMonitor.Contracts.Model.Party", "Party")
@@ -139,7 +150,7 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                     b.Navigation("Party");
                 });
 
-            modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.VoteResult", b =>
+            modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.Vote", b =>
                 {
                     b.HasOne("ParliamentMonitor.Contracts.Model.Politician", "Politician")
                         .WithMany()
@@ -147,15 +158,15 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ParliamentMonitor.Contracts.Model.Votes.Vote", "Vote")
+                    b.HasOne("ParliamentMonitor.Contracts.Model.Votes.VotingRound", "Round")
                         .WithMany("VoteResults")
-                        .HasForeignKey("VoteId")
+                        .HasForeignKey("RoundId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Politician");
 
-                    b.Navigation("Vote");
+                    b.Navigation("Round");
                 });
 
             modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Party", b =>
@@ -163,7 +174,7 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                     b.Navigation("Politicians");
                 });
 
-            modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.Vote", b =>
+            modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.VotingRound", b =>
                 {
                     b.Navigation("VoteResults");
                 });
