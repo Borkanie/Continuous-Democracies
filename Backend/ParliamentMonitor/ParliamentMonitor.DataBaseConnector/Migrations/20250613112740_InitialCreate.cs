@@ -28,18 +28,19 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Votes",
+                name: "VotingRounds",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     VoteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    VoteId = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Votes", x => x.Id);
+                    table.PrimaryKey("PK_VotingRounds", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,7 +67,7 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vote",
+                name: "Votes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -77,17 +78,17 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vote", x => x.Id);
+                    table.PrimaryKey("PK_Votes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vote_Politicians_PoliticianId",
+                        name: "FK_Votes_Politicians_PoliticianId",
                         column: x => x.PoliticianId,
                         principalTable: "Politicians",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Vote_Votes_RoundId",
+                        name: "FK_Votes_VotingRounds_RoundId",
                         column: x => x.RoundId,
-                        principalTable: "Votes",
+                        principalTable: "VotingRounds",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -98,13 +99,13 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                 column: "PartyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vote_PoliticianId",
-                table: "Vote",
+                name: "IX_Votes_PoliticianId",
+                table: "Votes",
                 column: "PoliticianId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vote_RoundId",
-                table: "Vote",
+                name: "IX_Votes_RoundId",
+                table: "Votes",
                 column: "RoundId");
         }
 
@@ -112,13 +113,13 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Vote");
+                name: "Votes");
 
             migrationBuilder.DropTable(
                 name: "Politicians");
 
             migrationBuilder.DropTable(
-                name: "Votes");
+                name: "VotingRounds");
 
             migrationBuilder.DropTable(
                 name: "Parties");

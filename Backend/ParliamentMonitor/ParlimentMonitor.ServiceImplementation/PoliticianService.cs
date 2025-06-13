@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace ParlimentMonitor.ServiceImplementation
 {
-    internal class PoliticianService : IPoliticianService<Politician>
+    public class PoliticianService : IPoliticianService<Politician>
     {
         private AppDBContext dBContext;
 
@@ -31,6 +31,8 @@ namespace ParlimentMonitor.ServiceImplementation
             {
                 politician.ImageUrl = imageUrl;
             }
+            if (dBContext.Politicians.Any(x => x == politician))
+                throw new Exception("Already existing politician");
             dBContext.Politicians.Add(politician);
             dBContext.SaveChanges();
             return politician;
@@ -84,8 +86,9 @@ namespace ParlimentMonitor.ServiceImplementation
             var item = GetPolitician(id);
             if(item != null)
             {
+                dBContext.Update(item);
                 item.Active = isCurrentlyActive;
-                Update(item);
+                dBContext.SaveChanges();
             }
             return item;
         }
@@ -95,14 +98,14 @@ namespace ParlimentMonitor.ServiceImplementation
             var item = GetPolitician(id);
             if (item != null)
             {
+                dBContext.Update(item);
                 item.Name = name ?? item.Name;
                 item.Party = party ?? item.Party;
                 item.WorkLocation = location ?? item.WorkLocation;
                 item.Gender = gender ?? item.Gender;
                 item.Active = isCurrentlyActive ?? item.Active;
                 item.ImageUrl = imageUrl ?? item.ImageUrl;
-
-                Update(item);
+                dBContext.SaveChanges();
             }
             return item;
         }
@@ -114,6 +117,11 @@ namespace ParlimentMonitor.ServiceImplementation
                 dBContext.Politicians.Remove(entity);
                 dBContext.SaveChanges();
             }
+        }
+
+        public Politician? GetPolitician(string name)
+        {
+            return dBContext.Politicians.FirstOrDefault(x => x.Name == name);
         }
     }
 }

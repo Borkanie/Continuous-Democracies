@@ -82,6 +82,35 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                     b.ToTable("Politicians");
                 });
 
+            modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.Round", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("VoteDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("VoteId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VotingRounds");
+                });
+
             modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.Vote", b =>
                 {
                     b.Property<Guid>("Id")
@@ -107,32 +136,6 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
 
                     b.HasIndex("RoundId");
 
-                    b.ToTable("Vote");
-                });
-
-            modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.VotingRound", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("VoteDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
                     b.ToTable("Votes");
                 });
 
@@ -155,7 +158,7 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ParliamentMonitor.Contracts.Model.Votes.VotingRound", "Round")
+                    b.HasOne("ParliamentMonitor.Contracts.Model.Votes.Round", "Round")
                         .WithMany("VoteResults")
                         .HasForeignKey("RoundId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -171,7 +174,7 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                     b.Navigation("Politicians");
                 });
 
-            modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.VotingRound", b =>
+            modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Votes.Round", b =>
                 {
                     b.Navigation("VoteResults");
                 });

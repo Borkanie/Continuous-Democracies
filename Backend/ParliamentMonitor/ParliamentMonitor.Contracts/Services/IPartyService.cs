@@ -15,6 +15,12 @@ namespace ParliamentMonitor.Contracts.Services
         public T? GetParty(Guid id);
 
         /// <summary>
+        /// Returns a party by its unique identifier.
+        /// </summary>
+        /// <returns>Null if not found.</returns>
+        public T? GetParty(string? name = null,string? acronym = null);
+
+        /// <summary>
         /// Creates a new party with the specified parameters.
         /// </summary>
         /// <returns>The created instance.</returns>

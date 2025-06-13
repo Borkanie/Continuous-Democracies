@@ -2,17 +2,11 @@
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ParlimentMonitor.ServiceImplementation
 {
-    internal class PartyService : IPartyService<Party>
+    public class PartyService : IPartyService<Party>
     {
         private readonly AppDBContext dbContext;
 
@@ -38,7 +32,7 @@ namespace ParlimentMonitor.ServiceImplementation
                     newParty.Color = (Color)color;
                 if (newParty == null || dbContext.Parties.Any(x => x == newParty))
                 {
-                    return dbContext.Parties.First(x => x == newParty);
+                    throw new Exception("Already existing party");
                 }
                 dbContext.Parties.Add(newParty);
                 dbContext.SaveChanges();
@@ -73,11 +67,12 @@ namespace ParlimentMonitor.ServiceImplementation
             var item = GetParty(id);
             if (item != null)
             {
+                dbContext.Update(item);
                 item.Name = name ?? item.Name;
                 item.Acronym = acronym ?? item.Acronym;
                 item.LogoUrl = logoUrl ?? item.LogoUrl;
                 item.Color = color ?? item.Color;
-                Update(item);
+                dbContext.SaveChanges();
             }
             return item;
         }
@@ -89,6 +84,19 @@ namespace ParlimentMonitor.ServiceImplementation
                 dbContext.Parties.Remove(entity);
                 dbContext.SaveChanges();
             }
+        }
+
+        public Party? GetParty(string? name = null, string? acronym = null)
+        {
+            if(name != null)
+            {
+                return dbContext.Parties.FirstOrDefault(x => x.Name == name);
+            }
+            if (acronym != null)
+            {
+                return dbContext.Parties.FirstOrDefault(x => x.Acronym == acronym);
+            }
+            return null;
         }
     }
 }

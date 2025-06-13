@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ParliamentMonitor.Contracts.Model.Votes
 {
-    public class VotingRound : Entity
+    public class Round : Entity
     {
 
         public string Title { get => Name; set => Name = value; }
@@ -16,6 +16,8 @@ namespace ParliamentMonitor.Contracts.Model.Votes
 
         public ISet<Vote> VoteResults { get; set; } = new HashSet<Vote>();
 
+        public int VoteId { get; set; }
+
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
@@ -23,7 +25,7 @@ namespace ParliamentMonitor.Contracts.Model.Votes
             {
                 return false;
             }
-            var ob = (VotingRound)obj;
+            var ob = (Round)obj;
             return ob.Id == Id || (Title == ob.Title && ob.VoteDate == VoteDate);
         }
     }

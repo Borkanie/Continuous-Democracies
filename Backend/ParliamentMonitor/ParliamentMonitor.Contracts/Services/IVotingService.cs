@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ParliamentMonitor.Contracts.Services
 {
-    public interface IVotingService<T,Y> : IDBMService<T> where T : Vote where Y : VotingRound
+    public interface IVotingService<T,Y> : IDBMService<T> where T : Vote where Y : Round
     {
         /// <summary>
         /// Udpates a VotingRound result. 
@@ -44,11 +44,18 @@ namespace ParliamentMonitor.Contracts.Services
         /// Casts a vote for a given politican in a given voting round.
         /// A politician can only give a single vote per round.
         /// </summary>
-        public T CastVote(VotingRound container, Politician politician, VotePosition position);
+        public T CastVote(Round container, Politician politician, VotePosition position);
 
         /// <summary>
         /// Changes the position of apolitican in a given round.
         /// </summary>
-        public T? UpdateCastedVote(VotingRound container, Politician politician, VotePosition position);
+        public T? UpdateCastedVote(Round container, Politician politician, VotePosition position);
+
+        /// <summary>
+        /// Return voting round based off voting number.
+        /// </summary>
+        /// <param name="votingRoundId"></param>
+        /// <returns></returns>
+        public Y? GetVotingRound(int votingRoundId);
     }
 }

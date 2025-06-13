@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.Configuration;
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
 using System;
@@ -14,6 +15,14 @@ namespace ParliamentMonitor.DataBaseConnector
     public class AppDBContext : DbContext
     {
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
+
+        public AppDBContext() : base(new DbContextOptionsBuilder<AppDBContext>()
+                .UseNpgsql("Server=localhost;Port=5432;Database=parliment_db;Username=ps_user;Password=SecurePassword;")
+                .Options)
+        {
+         
+
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,6 +42,8 @@ namespace ParliamentMonitor.DataBaseConnector
 
         public DbSet<Party> Parties { get; set; }
 
-        public DbSet<VotingRound> Votes { get; set; }
+        public DbSet<Round> VotingRounds { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }
     }
 }

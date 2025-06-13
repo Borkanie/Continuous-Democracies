@@ -16,7 +16,7 @@ namespace ParliamentMonitor.Contracts.Model.Votes
     }
     public class Vote : Entity
     {
-        public VotingRound Round { get; set; }
+        public Round Round { get; set; }
 
         public Politician Politician { get; set; }
 

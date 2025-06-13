@@ -13,6 +13,11 @@ namespace ParliamentMonitor.Contracts.Services
         public T? GetPolitician(Guid id);
 
         /// <summary>
+        /// Returns a politician by its unique identifier.
+        /// </summary>
+        public T? GetPolitician(String name);
+
+        /// <summary>
         /// Creates a new politician with the specified parameters.
         /// </summary>
         /// <returns>The new instance of a politician.</returns>
