@@ -1,3 +1,8 @@
+using ParliamentMonitor.Contracts.Model;
+using ParliamentMonitor.Contracts.Model.Votes;
+using ParliamentMonitor.Contracts.Services;
+using ParliamentMonitor.DataBaseConnector;
+using ParlimentMonitor.ServiceImplementation;
 using ParlimentMonitor.WebInterface.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+var appDBContext = new AppDBContext();
+builder.Services.AddSingleton<AppDBContext>(appDBContext);
+builder.Services.AddScoped<IVotingService<Vote,Round>, VotingService>();
+builder.Services.AddScoped<IPartyService<Party>, PartyService>();
+builder.Services.AddScoped<IPoliticianService<Politician>,PoliticianService>();
 
 var app = builder.Build();
 

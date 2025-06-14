@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Backend\ParliamentMonitor\ParliamentMonitor.Contracts\ParliamentMonitor.Contracts.csproj" />
+    <ProjectReference Include="..\..\Backend\ParliamentMonitor\ParliamentMonitor.DataBaseConnector\ParliamentMonitor.DataBaseConnector.csproj" />
+    <ProjectReference Include="..\..\Backend\ParliamentMonitor\ParlimentMonitor.ServiceImplementation\ParlimentMonitor.ServiceImplementation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\Images\" />
   </ItemGroup>
 
 </Project>
