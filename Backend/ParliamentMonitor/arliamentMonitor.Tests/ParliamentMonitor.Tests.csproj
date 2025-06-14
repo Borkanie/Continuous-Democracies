@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ParliamentMonitor.Contracts\ParliamentMonitor.Contracts.csproj" />
-    <ProjectReference Include="..\ParliamentMonitor\ParliamentMonitor.csproj" />
   </ItemGroup>
 
   <ItemGroup>
