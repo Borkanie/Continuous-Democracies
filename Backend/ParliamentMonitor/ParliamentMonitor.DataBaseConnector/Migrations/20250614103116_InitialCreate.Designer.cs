@@ -12,7 +12,7 @@ using ParliamentMonitor.DataBaseConnector;
 namespace ParliamentMonitor.DataBaseConnector.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250613112740_InitialCreate")]
+    [Migration("20250614103116_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

@@ -38,20 +38,23 @@ namespace DataImporter
                 if (int.TryParse(Id, out id))
                 {
                     Console.WriteLine($"Vote Id:{id}");
-                    var round = votingService.GetVotingRound(id) ?? votingService.CreateVotingRound($"Vot electronic:{id}", DateTime.UtcNow);
+                    var round = votingService.GetVotingRound(id);
+                    var date = DateTime.UtcNow;
+                    if (round != null)
+                    {
+                        Console.WriteLine($"Updatate voting round:{round.VoteId}");
+                    }else
+                    {
+                        round = votingService.CreateVotingRound($"Vot electronic:{id}", date);
+                    }
+                    
                     var votesXML = votElement.Descendants("ROW");
                     List<Vote> votes = new List<Vote>();
                     Console.WriteLine($"Number of votes:{votesXML.Count()}");
                     foreach (var voteXML in votesXML)
                     {
-                        Console.WriteLine($"Processing :{voteXML} \n\n");
-                        var vote = new Vote();
-                        vote.Position = ConvertStringToVotePositon(votElement.Descendants("VOT").First().Value);
-                        vote.Politician = getPoliticianFromVote(voteXML);
-                        vote.Round = round;
-                        votes.Add(vote);
+                        CastVote(votElement, round, date, voteXML);
                     }
-                    votingService.UpdateVoteResult(round.Id, votes: votes);
                 }
                 else
                 {
@@ -63,17 +66,53 @@ namespace DataImporter
             
         }
 
-        private Politician getPoliticianFromVote(XElement element)
+        private void CastVote(IEnumerable<XElement> votElement, Round? round, DateTime date, XElement voteXML)
+        {
+            Console.WriteLine($"Processing :{voteXML} \n\n");
+            var vote = new Vote();
+            vote.Position = ConvertStringToVotePositon(votElement.Descendants("VOT").First().Value);
+            vote.Politician = getPoliticianAndPartyFromVote(voteXML);
+            vote.Round = round;
+            var current = round.VoteResults.FirstOrDefault(x => x == vote);
+            if (round.VoteDate != date || current == null)
+            {
+                Console.WriteLine($"Politician: {vote.Politician.Name} casted a vote");
+                votingService.CastVote(round, vote.Politician, vote.Position);
+            }
+            else
+            {
+                Console.WriteLine($"Politician: {vote.Politician.Name} has changed it's vote");
+                votingService.UpdateCastedVote(round, vote.Politician, vote.Position);
+            }
+        }
+
+        private Politician getPoliticianAndPartyFromVote(XElement element)
         {
             var prename = element.Element("PRENUME")?.Value;
             var name = element.Element("NUME")?.Value;
             var prenume = element.Element("PRENUME")?.Value;
             var partyName = element.Element("GRUP")?.Value;
 
-            var party = partyService.GetParty(acronym: partyName) ?? partyService.CreateParty("partid", acronym: partyName);
+            var party = partyService.GetParty(acronym: partyName);
+            if(party != null)
+            {
+                Console.WriteLine($"Already Existing party {partyName} has voted");
+            }
+            else
+            {
+                party = partyService.CreateParty("partid", acronym: partyName);
+            }
 
-            return politicianService.GetPolitician(prename + " " + name) ?? 
-                politicianService.CreatePolitican(prename + " " + name, party, WorkLocation.Parliament, Gender.Other, true)!;
+            var politican = politicianService.GetPolitician(prename + " " + name);
+            if( politican != null ) {
+                Console.WriteLine($"Politican :{politican.Name} has voted");
+            }
+            else
+            {
+                politican = politicianService.CreatePolitican(prename + " " + name, party, WorkLocation.Parliament, Gender.Other, true)!;
+            }
+
+            return politican;
         }
 
         private VotePosition ConvertStringToVotePositon(string vote)

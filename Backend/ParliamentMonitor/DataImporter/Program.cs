@@ -34,7 +34,7 @@ if (Directory.Exists(pathToXmlDir))
     }
     catch(Exception ex)
     {
-
+        Console.WriteLine($"Failed to load service because:{ex.Message}");
     }
     
 }
