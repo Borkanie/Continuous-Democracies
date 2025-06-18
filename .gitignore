@@ -40,7 +40,8 @@ ScaffoldingReadMe.txt
 ~$*
 *~
 CodeCoverage/
-*.vs/*
+.vs/
+ParliamentMonitor/.vs
 
 # MSBuild Binary and Structured Log
 *.binlog
