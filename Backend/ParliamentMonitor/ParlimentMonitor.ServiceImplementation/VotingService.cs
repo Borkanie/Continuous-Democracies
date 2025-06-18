@@ -1,9 +1,10 @@
-﻿using ParliamentMonitor.Contracts.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
 
-namespace ParlimentMonitor.ServiceImplementation
+namespace ParliamentMonitor.ServiceImplementation
 {
     public class VotingService : IVotingService<Vote, Round>
     {
@@ -14,11 +15,12 @@ namespace ParlimentMonitor.ServiceImplementation
             dBContext = context;
         }
 
-        public Round CreateVotingRound(string title, DateTime time, List<Vote>? votes = null, string? description = null)
+        public Round CreateVotingRound(string title, DateTime time, int id = 0, List<Vote>? votes = null, string? description = null)
         {
             var round = new Round();
             round.Title = title;
             round.VoteDate = time;
+            round.VoteId = id;
             if(votes!= null)
             {
                 foreach(var vote in votes)
@@ -50,7 +52,19 @@ namespace ParlimentMonitor.ServiceImplementation
 
         public Round? GetVotingRound(int votingRoundId)
         {
-           return dBContext.VotingRounds.FirstOrDefault(x => x.VoteId == votingRoundId);
+           var round = dBContext.VotingRounds.FirstOrDefault(x => x.VoteId == votingRoundId);
+            if (round == null)
+                Console.WriteLine($"No round with Id{votingRoundId} found in db");
+            else
+            {
+                Console.WriteLine($"Returning round:{votingRoundId}");
+                if(round.VoteResults.Count == 0)
+                {
+                    Console.WriteLine($"Loading vote results for round{round.Id}");
+                    round.VoteResults = dBContext.Votes.Include(x => x.Politician).Include(x => x.Politician.Party).Where(x => x.Round == round).ToHashSet();
+                }
+            }
+           return round;
         }
 
         public void Update(Round voteResult)

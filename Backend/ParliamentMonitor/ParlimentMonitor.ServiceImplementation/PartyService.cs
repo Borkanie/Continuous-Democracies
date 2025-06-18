@@ -4,7 +4,7 @@ using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
 using System.Drawing;
 
-namespace ParlimentMonitor.ServiceImplementation
+namespace ParliamentMonitor.ServiceImplementation
 {
     public class PartyService : IPartyService<Party>
     {

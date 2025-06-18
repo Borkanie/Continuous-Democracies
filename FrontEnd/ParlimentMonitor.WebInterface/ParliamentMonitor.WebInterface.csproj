@@ -9,11 +9,15 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Backend\ParliamentMonitor\ParliamentMonitor.Contracts\ParliamentMonitor.Contracts.csproj" />
     <ProjectReference Include="..\..\Backend\ParliamentMonitor\ParliamentMonitor.DataBaseConnector\ParliamentMonitor.DataBaseConnector.csproj" />
-    <ProjectReference Include="..\..\Backend\ParliamentMonitor\ParlimentMonitor.ServiceImplementation\ParlimentMonitor.ServiceImplementation.csproj" />
+    <ProjectReference Include="..\..\Backend\ParliamentMonitor\ParlimentMonitor.ServiceImplementation\ParliamentMonitor.ServiceImplementation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Components\Images\" />
   </ItemGroup>
+
+	<ItemGroup>
+		<RazorComponent Include="Components/App.razor" />
+	</ItemGroup>
 
 </Project>

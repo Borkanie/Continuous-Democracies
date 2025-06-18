@@ -5,7 +5,7 @@ using ParliamentMonitor.DataBaseConnector;
 using System.Drawing;
 using System.Reflection;
 
-namespace ParlimentMonitor.ServiceImplementation
+namespace ParliamentMonitor.ServiceImplementation
 {
     public class PoliticianService : IPoliticianService<Politician>
     {

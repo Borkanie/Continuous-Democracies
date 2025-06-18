@@ -10,7 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ParliamentMonitor.Contracts\ParliamentMonitor.Contracts.csproj" />
     <ProjectReference Include="..\ParliamentMonitor.DataBaseConnector\ParliamentMonitor.DataBaseConnector.csproj" />
-    <ProjectReference Include="..\ParlimentMonitor.ServiceImplementation\ParlimentMonitor.ServiceImplementation.csproj" />
+    <ProjectReference Include="..\ParlimentMonitor.ServiceImplementation\ParliamentMonitor.ServiceImplementation.csproj" />
   </ItemGroup>
 
 </Project>

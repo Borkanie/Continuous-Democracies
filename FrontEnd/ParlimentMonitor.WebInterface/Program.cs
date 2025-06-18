@@ -2,8 +2,8 @@ using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
-using ParlimentMonitor.ServiceImplementation;
-using ParlimentMonitor.WebInterface.Components;
+using ParliamentMonitor.ServiceImplementation;
+using ParliamentMonitor.WebInterface.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +15,10 @@ builder.Services.AddSingleton<AppDBContext>(appDBContext);
 builder.Services.AddScoped<IVotingService<Vote,Round>, VotingService>();
 builder.Services.AddScoped<IPartyService<Party>, PartyService>();
 builder.Services.AddScoped<IPoliticianService<Politician>,PoliticianService>();
+builder.Services.AddServerSideBlazor().AddCircuitOptions(options =>
+{
+    options.DetailedErrors = true;
+});
 
 var app = builder.Build();
 

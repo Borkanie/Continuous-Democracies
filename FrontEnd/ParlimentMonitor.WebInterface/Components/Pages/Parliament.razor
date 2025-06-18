@@ -1,0 +1,28 @@
+﻿@page "/parliament"
+@using ParliamentMonitor.Contracts.Services;
+@using ParliamentMonitor.Contracts.Model.Votes;
+@inject IVotingService<Vote,Round> VotingService
+
+<h3>Parliament Layout</h3>
+
+<ul>
+    @foreach (var vote in Votes)
+    {
+        <li>@vote.Politician.Name</li>
+    }
+</ul>
+
+@code {
+    private ISet<Vote> Votes = new HashSet<Vote>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        int roundId = 35052;
+        var round = VotingService.GetVotingRound(roundId);
+        if(round != null)
+        {    
+            Votes = round.VoteResults;
+            //StateHasChanged();
+        }
+    }
+}

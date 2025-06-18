@@ -26,7 +26,7 @@ namespace ParliamentMonitor.Contracts.Services
         /// <param name="time">When it took ended.</param>
         /// <param name="votes">The list of votes for all present individuals.</param>
         /// <param name="Description">Short descriptiona bout the vote.</param>
-        public Y CreateVotingRound(string title, DateTime time, List<T>? votes = null, string? Description = null);
+        public Y CreateVotingRound(string title, DateTime time,int id=0, List<T>? votes = null, string? Description = null);
 
         /// <summary>
         /// Update a vote result in the db.

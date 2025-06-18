@@ -2,7 +2,7 @@
 using DataImporter;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
-using ParlimentMonitor.ServiceImplementation;
+using ParliamentMonitor.ServiceImplementation;
 using System.Text;
 
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
