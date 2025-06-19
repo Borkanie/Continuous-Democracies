@@ -1,0 +1,55 @@
+﻿@using ParliamentMonitor.Contracts.Model.Votes
+@using ParliamentMonitor.WebInterface.ViewModels
+
+<div class="vote-canvas" style="position: relative; width:@Width}px; height:@Height}px; border:1px solid #ccc;">
+    @foreach (var vote in Votes)
+    {
+        <div class="vote-box"
+             style="
+                position: absolute;
+                left:@vote.PositionX}px;
+                top:@vote.PositionY}px;
+                width:@VoteBoxWidth}px;
+                height:@VoteBoxHeigth}px;
+                background-color: lightblue;
+                border: 1px solid #000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 10px;">
+            @vote.Vote.Politician.Name
+        </div>
+    }
+</div>
+
+@code {
+    private ISet<VoteContainer> votes = new HashSet<VoteContainer>();
+    [Parameter]
+    public ISet<VoteContainer> Votes {
+        get
+        {
+            return votes;
+        }
+        set
+        {
+            if(value != votes)
+            {
+                Console.WriteLine($"Got new votes:{value.Count} replacing the old {votes.Count} votes.");
+                votes = value;
+                StateHasChanged();
+            }
+        }
+    }
+
+    [Parameter]
+    public int Width { get; set; }
+
+    [Parameter]
+    public int Height { get; set; }
+
+    [Parameter]
+    public int VoteBoxWidth { get; set; } = 20;
+
+    [Parameter]
+    public int VoteBoxHeigth { get; set; } = 30;
+}

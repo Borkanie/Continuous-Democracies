@@ -60,7 +60,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 Console.WriteLine($"Returning round:{votingRoundId}");
                 if(round.VoteResults.Count == 0)
                 {
-                    Console.WriteLine($"Loading vote results for round{round.Id}");
+                    Console.WriteLine($"Loading vote results for round{round.VoteId}");
                     round.VoteResults = dBContext.Votes.Include(x => x.Politician).Include(x => x.Politician.Party).Where(x => x.Round == round).ToHashSet();
                 }
             }
@@ -110,6 +110,7 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 vote.Position = position;    
             }
+            dBContext.Votes.Add(vote);
             dBContext.SaveChanges();
             return vote;
         }
@@ -155,6 +156,12 @@ namespace ParliamentMonitor.ServiceImplementation
             }
             dBContext.SaveChanges();
             return round;
+        }
+
+        /// <inheritdoc/>
+        public ISet<Round> GetAllRoundsFromDB()
+        {
+            return dBContext.VotingRounds.Where( x => x.VoteId != 0).ToHashSet();
         }
     }
 }

@@ -45,7 +45,7 @@ namespace DataImporter
                         Console.WriteLine($"Updatate voting round:{round.VoteId}");
                     }else
                     {
-                        round = votingService.CreateVotingRound($"Vot electronic:{id}", date);
+                        round = votingService.CreateVotingRound($"Vot electronic:{id}", date, id: id);
                     }
                     
                     var votesXML = votElement.Descendants("ROW");
@@ -88,13 +88,13 @@ namespace DataImporter
 
         private Politician getPoliticianAndPartyFromVote(XElement element)
         {
-            var prename = element.Element("PRENUME")?.Value;
-            var name = element.Element("NUME")?.Value;
-            var prenume = element.Element("PRENUME")?.Value;
-            var partyName = element.Element("GRUP")?.Value;
-
+            var prename = getUtf8String(element.Element("PRENUME")?.Value);
+            var name = getUtf8String(element.Element("NUME")?.Value);
+            var prenume = getUtf8String(element.Element("PRENUME")?.Value);
+            var partyName = getUtf8String(element.Element("GRUP")?.Value);
+            
             var party = partyService.GetParty(acronym: partyName);
-            if(party != null)
+            if (party != null)
             {
                 Console.WriteLine($"Already Existing party {partyName} has voted");
             }
@@ -104,7 +104,8 @@ namespace DataImporter
             }
 
             var politican = politicianService.GetPolitician(prename + " " + name);
-            if( politican != null ) {
+            if (politican != null)
+            {
                 Console.WriteLine($"Politican :{politican.Name} has voted");
             }
             else
@@ -113,6 +114,18 @@ namespace DataImporter
             }
 
             return politican;
+        }
+
+        private static string getUtf8String(string? partyName)
+        {
+            partyName = Encoding.UTF8.GetString(
+                            Encoding.Convert(
+                                Encoding.GetEncoding("ISO-8859-2"),
+                                Encoding.UTF8,
+                                Encoding.GetEncoding("ISO-8859-2").GetBytes(partyName)
+                            )
+                        );
+            return partyName;
         }
 
         private VotePosition ConvertStringToVotePositon(string vote)
