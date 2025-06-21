@@ -3,6 +3,7 @@
 @using ParliamentMonitor.Contracts.Services
 @using ParliamentMonitor.Contracts.Model.Votes
 @using ParliamentMonitor.WebInterface.ViewModels
+@using ParliamentMonitor.WebInterface.Components.Modules
 @inject IVotingService<Vote, Round> VotingService
 
 <h3>Parliament Layout</h3>
@@ -22,11 +23,12 @@
 {
     <h4>Votes in Round @SelectedRoundId:</h4>
     
-        <VoteCanvas Votes="@Votes"
-            Width="@ContainerWidth"
-            Height="@ContainerHeigth"
-            VoteBoxSize="25" 
-             @key="SelectedRoundId"/>
+        <VotingCanvas Votes="@Votes"
+                Width="@ContainerWidth"
+                Height="@ContainerHeigth"
+                VoteBoxWidth="@VoteContainer.VoteBoxWidth"
+                VoteBoxHeigth="@VoteContainer.VoteBoxHeigth"
+                @key="SelectedRoundId" />
     
 }
 else if (SelectedRoundId != 0)
@@ -41,6 +43,7 @@ else if (SelectedRoundId != 0)
     private int ContainerWidth = 500;
     private int ContainerHeigth = 700;
 
+
     protected override async Task OnInitializedAsync()
     {
         // Load available voting rounds when page initializes
@@ -50,25 +53,29 @@ else if (SelectedRoundId != 0)
 
     private async Task OnRoundChanged(ChangeEventArgs e)
     {
-        Console.WriteLine($"Dropdown changed! Value: ");
-
         if (int.TryParse(e.Value?.ToString(), out int roundId))
         {
             Console.WriteLine($"Parsed roundId: {roundId}");
             SelectedRoundId = roundId;
 
             var round = VotingService.GetVotingRound(roundId);
-            Votes = VoteContainer.CreateContainers(round?.VoteResults ?? new HashSet<Vote>(), ContainerWidth, ContainerHeigth);
-
-            Console.WriteLine($"Votes count: {Votes.Count}");
+            var newVotes = VoteContainer.CreateContainers(
+                round?.VoteResults ?? new HashSet<Vote>(),
+                ContainerWidth,
+                ContainerHeigth
+            );
+        
+            Votes = new HashSet<VoteContainer>(newVotes); // new reference always
         }
         else
         {
             Console.WriteLine("Invalid selection.");
             SelectedRoundId = 0;
-            Votes.Clear();
+            Votes = new HashSet<VoteContainer>(); // clear by new ref
         }
+
         StateHasChanged();
     }
+
 
 }

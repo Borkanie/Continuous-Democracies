@@ -1,16 +1,18 @@
 ﻿@using ParliamentMonitor.Contracts.Model.Votes
 @using ParliamentMonitor.WebInterface.ViewModels
 
-<div class="vote-canvas" style="position: relative; width:@Width}px; height:@Height}px; border:1px solid #ccc;">
+@rendermode InteractiveServer
+
+<div class="vote-canvas" style="position: relative; width:@(Width)px; height:@(Height)px; border:1px solid #ccc;">
     @foreach (var vote in Votes)
     {
         <div class="vote-box"
              style="
                 position: absolute;
-                left:@vote.PositionX}px;
-                top:@vote.PositionY}px;
-                width:@VoteBoxWidth}px;
-                height:@VoteBoxHeigth}px;
+                left:@(vote.PositionX)px;
+                top:@(vote.PositionY)px;
+                width:@(VoteBoxWidth)px;
+                height:@(VoteBoxHeigth)px;
                 background-color: lightblue;
                 border: 1px solid #000;
                 display: flex;
@@ -52,4 +54,10 @@
 
     [Parameter]
     public int VoteBoxHeigth { get; set; } = 30;
+
+        protected override async Task OnParametersSetAsync()
+    {
+        Console.WriteLine($"Got new votes: {Votes.Count}");
+        await base.OnParametersSetAsync();
+    }
 }

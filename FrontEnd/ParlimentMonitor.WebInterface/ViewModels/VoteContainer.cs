@@ -9,6 +9,9 @@ namespace ParliamentMonitor.WebInterface.ViewModels
         public int PositionX = 0;
         public int PositionY = 0;
 
+        public static int VoteBoxWidth { get; private set; } = 0;
+        public static int VoteBoxHeigth { get; private set; } = 0;
+
         private static void SetupLocationForContainers(ISet<VoteContainer> containerSet,int availableWidth, int availableHeigth)
         {
             double totalAreea = availableHeigth * availableHeigth;
@@ -17,8 +20,8 @@ namespace ParliamentMonitor.WebInterface.ViewModels
             //double areeaOfOneSquare = factorForoneSquareWithAvialableSpace * totalAreea / containerSet.Count;
             double areeaOfOneSquare = 0.7 * totalAreea / containerSet.Count;
 
-            int heigthOfSquare = (int)Math.Sqrt(areeaOfOneSquare * 4 / 3);
-            int widthOfSquare = heigthOfSquare * 3 / 4;
+             VoteBoxHeigth = (int)Math.Sqrt(areeaOfOneSquare * 4 / 3);
+            VoteBoxWidth = VoteBoxHeigth * 3 / 4;
             int currentRadius = availableHeigth * 2;
 
             int offsetX = 5;
@@ -27,16 +30,17 @@ namespace ParliamentMonitor.WebInterface.ViewModels
             {
                 set.PositionX = offsetX; 
                 set.PositionY = offsetY;
-                offsetX += widthOfSquare * 12 / 10;
-                if(offsetX + widthOfSquare > availableWidth - 5)
+                offsetX += VoteBoxWidth * 12 / 10;
+                if(offsetX + VoteBoxWidth > availableWidth - 5)
                 {
                     offsetX = 5;
+                    offsetY += VoteBoxHeigth * 12 / 10;
+                    if (offsetY + VoteBoxHeigth > availableHeigth - 5)
+                    {
+                        offsetY = 5;
+                    }
                 }
-                offsetY += heigthOfSquare * 12 / 10;
-                if(offsetY + heigthOfSquare > availableHeigth - 5)
-                {
-                    offsetY = 5;
-                }
+                
             }
         }
         
