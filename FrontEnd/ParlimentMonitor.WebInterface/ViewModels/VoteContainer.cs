@@ -6,53 +6,59 @@ namespace ParliamentMonitor.WebInterface.ViewModels
     {
         public Vote Vote { get; set; } = null;
 
-        public int PositionX = 0;
-        public int PositionY = 0;
+        public double PositionX = 0;
+        public double PositionY = 0;
 
         public static int VoteBoxWidth { get; private set; } = 0;
         public static int VoteBoxHeigth { get; private set; } = 0;
 
-        private static void SetupLocationForContainers(ISet<VoteContainer> containerSet,int availableWidth, int availableHeigth)
+        private static void SetupLocationForContainers(IList<VoteContainer> containerSet,int availableWidth, int availableHeigth, int topX = 0, int topY = 0)
         {
             double totalAreea = availableHeigth * availableHeigth;
-            //double factorForoneSquareWithAvialableSpace = 2 * 3 * 4 * Math.Atan((double)(availableWidth) / (4 * availableHeigth)) / 10 ;
-            // TODO check for inverse sizes here
-            //double areeaOfOneSquare = factorForoneSquareWithAvialableSpace * totalAreea / containerSet.Count;
             double areeaOfOneSquare = 0.7 * totalAreea / containerSet.Count;
 
-             VoteBoxHeigth = (int)Math.Sqrt(areeaOfOneSquare * 4 / 3);
+            VoteBoxHeigth = (int)Math.Sqrt(areeaOfOneSquare * 4 / 3);
             VoteBoxWidth = VoteBoxHeigth * 3 / 4;
-            int currentRadius = availableHeigth * 2;
 
-            int offsetX = 5;
-            int offsetY = 5;
-            foreach(var set in  containerSet)
+
+            int centralPointforCirclesX = availableWidth / 2;
+            int centralPointforCircleY = availableHeigth * 7 / 8;
+
+            double currentAngle = 0;
+            int radiusIncrease = 50;
+            int radius = 150;
+            double numberOfPlaces = 7;
+            double currentPlace = 0;
+            for(int i=0;i< containerSet.Count;i++)
             {
-                set.PositionX = offsetX; 
-                set.PositionY = offsetY;
-                offsetX += VoteBoxWidth * 12 / 10;
-                if(offsetX + VoteBoxWidth > availableWidth - 5)
+                var container = containerSet.ElementAt(i);
+                container.PositionX = topX + centralPointforCirclesX - Math.Cos(currentAngle) * radius;
+                container.PositionY = topY + centralPointforCircleY - Math.Sin(currentAngle) * radius;
+
+                currentAngle = currentPlace / numberOfPlaces * Math.PI;
+                currentPlace++;
+                if(currentPlace > numberOfPlaces)
                 {
-                    offsetX = 5;
-                    offsetY += VoteBoxHeigth * 12 / 10;
-                    if (offsetY + VoteBoxHeigth > availableHeigth - 5)
+                    radius += radiusIncrease;
+                    numberOfPlaces += 7;
+                    currentPlace = 0;
+                    if( numberOfPlaces > containerSet.Count - i)
                     {
-                        offsetY = 5;
+                        numberOfPlaces = containerSet.Count - i;
                     }
                 }
-                
             }
         }
         
         public static ISet<VoteContainer> CreateContainers(ISet<Vote> votes, int width, int heigth)
         {
-            var result = new HashSet<VoteContainer>();
+            var result = new List<VoteContainer>();
             foreach(var vote in votes)
             {
                 result.Add(new VoteContainer() { Vote = vote });
             }
             SetupLocationForContainers(result, width, heigth);
-            return result;
+            return result.ToHashSet();
         }
 
         public override bool Equals(object? obj)
