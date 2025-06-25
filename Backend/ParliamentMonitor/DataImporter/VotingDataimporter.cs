@@ -27,7 +27,7 @@ namespace DataImporter
         public void ImportVotingRoundFromXml(string xmlFilePath)
         {
 
-            using (var reader = new StreamReader(xmlFilePath, Encoding.GetEncoding("ISO-8859-2")))
+            using (var reader = new StreamReader(xmlFilePath, Encoding.UTF8))
             {
                 var doc = XDocument.Load(reader);
 
@@ -88,10 +88,9 @@ namespace DataImporter
 
         private Politician getPoliticianAndPartyFromVote(XElement element)
         {
-            var prename = getUtf8String(element.Element("PRENUME")?.Value);
-            var name = getUtf8String(element.Element("NUME")?.Value);
-            var prenume = getUtf8String(element.Element("PRENUME")?.Value);
-            var partyName = getUtf8String(element.Element("GRUP")?.Value);
+            var prename = element.Element("PRENUME")?.Value;
+            var name = element.Element("NUME")?.Value;
+            var partyName = element.Element("GRUP")?.Value;
             
             var party = partyService.GetParty(acronym: partyName);
             if (party != null)

@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DataImporter;
+using Microsoft.EntityFrameworkCore;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
 using ParliamentMonitor.ServiceImplementation;
@@ -25,6 +26,7 @@ if (Directory.Exists(pathToXmlDir))
 
         var politicianService = new PoliticianService(dbContext);
         Console.WriteLine("Started Politican service");
+
 
         var dataImport = new VotingDataimporter(votingService, politicianService, partyService);
         foreach (var file in Directory.GetFiles(pathToXmlDir))

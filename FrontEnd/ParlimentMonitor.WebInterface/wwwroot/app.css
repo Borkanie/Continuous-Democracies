@@ -54,6 +54,10 @@ h1:focus {
     position: relative;
     border: 1px solid #ccc;
     overflow: hidden;
+    background-image: url('/Resources/house_of_deputies.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .vote-box {
