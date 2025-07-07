@@ -102,7 +102,7 @@ namespace DataImporter
                 party = partyService.CreateParty("partid", acronym: partyName);
             }
 
-            var politican = politicianService.GetPolitician(prename + " " + name);
+            var politican = politicianService.GetPolitician(name + " " + prename);
             if (politican != null)
             {
                 Console.WriteLine($"Politican :{politican.Name} has voted");
@@ -113,18 +113,6 @@ namespace DataImporter
             }
 
             return politican;
-        }
-
-        private static string getUtf8String(string? partyName)
-        {
-            partyName = Encoding.UTF8.GetString(
-                            Encoding.Convert(
-                                Encoding.GetEncoding("ISO-8859-2"),
-                                Encoding.UTF8,
-                                Encoding.GetEncoding("ISO-8859-2").GetBytes(partyName)
-                            )
-                        );
-            return partyName;
         }
 
         private VotePosition ConvertStringToVotePositon(string vote)

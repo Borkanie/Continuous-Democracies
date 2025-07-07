@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ParliamentMonitor.Contracts.Model.Party">
+    <Position X="5.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAoAAAAABAAAAAAAAgAAAAgAAAAAA=</HashCode>
+      <FileName>Model\Party.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParliamentMonitor.Contracts.Model.Politician">
+    <Position X="11" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAQAAAAAAAAACAgAAAAAAAAAAAAAAgAAAAAAAAAAg=</HashCode>
+      <FileName>Model\Politician.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParliamentMonitor.Contracts.Model.Entity">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParliamentMonitor.Contracts.Model.Votes.Round">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACgAEAAgAAAAAAAAAAgAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Voting\Round.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParliamentMonitor.Contracts.Model.Votes.Vote">
+    <Position X="9.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAggAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Model\Voting\Vote.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ParliamentMonitor.Contracts.Model.Gender">
+    <Position X="12.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Model\Politician.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ParliamentMonitor.Contracts.Model.WorkLocation">
+    <Position X="12.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Model\Politician.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ParliamentMonitor.Contracts.Model.Votes.VotePosition">
+    <Position X="12.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAEAAAAAAAACAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Voting\Vote.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

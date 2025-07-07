@@ -121,7 +121,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
         public Politician? GetPolitician(string name)
         {
-            return dBContext.Politicians.FirstOrDefault(x => x.Name == name);
+            return dBContext.Politicians.FirstOrDefault(x => String.Equals(x.Name.ToLower(), name.ToLower()));
         }
     }
 }

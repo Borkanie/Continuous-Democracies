@@ -103,7 +103,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 vote = new Vote();
                 vote.Position = position;
                 vote.Politician = politician;
-                dBContext.Votes.Add(vote);
+                vote.Name = $"Vote from {politician.Name} during {container.Name}";
                 container.VoteResults.Add(vote);
             }
             else

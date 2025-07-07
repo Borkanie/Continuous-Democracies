@@ -29,10 +29,18 @@ if (Directory.Exists(pathToXmlDir))
 
 
         var dataImport = new VotingDataimporter(votingService, politicianService, partyService);
-        foreach (var file in Directory.GetFiles(pathToXmlDir))
+        /*
+         * foreach (var file in Directory.GetFiles(pathToXmlDir))
         {
             ImportFile(file,dataImport);
         }
+         * */
+
+        //var imageImporter = new ImageImporter(politicianService);
+        //imageImporter.SearchForNewUrls(true);
+
+        var scrapper = new ParliamentScraper(politicianService,partyService);
+        await scrapper.ScrapeDeputiesAsync();
     }
     catch(Exception ex)
     {

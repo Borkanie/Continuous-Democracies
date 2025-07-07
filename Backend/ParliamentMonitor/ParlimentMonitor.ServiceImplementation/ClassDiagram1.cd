@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ParliamentMonitor.ServiceImplementation.PartyService" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="3.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAABAAQAAAAAAAAEABAAAAAAAAQAABAA=</HashCode>
+      <FileName>PartyService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ParliamentMonitor.ServiceImplementation.PoliticianService" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="3.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AQQBAAAAACEQAAAAAAAAAAAAAAEAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>PoliticianService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Class Name="ParliamentMonitor.ServiceImplementation.VotingService" BaseTypeListCollapsed="true">
+    <Position X="4" Y="3.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AQQAAACAgAAAAAgAAAAEAAAAAAEAAAACAAAAAIAAAAA=</HashCode>
+      <FileName>VotingService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="ParliamentMonitor.Contracts.Services.IDBMService&lt;T&gt;" Collapsed="true">
+    <Position X="8" Y="1" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="ParliamentMonitor.Contracts.Services.IPartyService&lt;T&gt;" Collapsed="true">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="ParliamentMonitor.Contracts.Services.IPoliticianService&lt;T&gt;" Collapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="ParliamentMonitor.Contracts.Services.IVotingService&lt;T, Y&gt;" Collapsed="true">
+    <Position X="10" Y="2" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

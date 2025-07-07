@@ -3,7 +3,7 @@ This project will allow us to see what the fuck the parlament is doing on our mo
 
 ## Arhitecture
 
-[Overall diagram](https://app.diagrams.net/#G1IoOFjcHjG2b3ap5Qtk5loAzpLCS3u-wf#%7B"pageId"%3A"tO0PR2FBSI-hfwW1G_-8"%7D)
+[Overall diagram](https://app.diagrams.net/?splash=0#G1IoOFjcHjG2b3ap5Qtk5loAzpLCS3u-wf#%7B%22pageId%22%3A%22tO0PR2FBSI-hfwW1G_-8%22%7D)
 
 ## DataBase
 
