@@ -52,7 +52,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
         public Round? GetVotingRound(int votingRoundId)
         {
-           var round = dBContext.VotingRounds.FirstOrDefault(x => x.VoteId == votingRoundId);
+           var round = dBContext.VotingRounds.Find(votingRoundId);
             if (round == null)
                 Console.WriteLine($"No round with Id{votingRoundId} found in db");
             else
@@ -94,7 +94,7 @@ namespace ParliamentMonitor.ServiceImplementation
         }
         public Vote CastVote(Round container, Politician politician, VotePosition position)
         {
-            if (!dBContext.VotingRounds.Contains(container))
+            if (dBContext.VotingRounds.Find(container) == null)
                 throw new Exception($"Voting round {container} not registered yet");
             dBContext.Update(container);
             var vote = container.VoteResults.FirstOrDefault(x => x.Politician == politician);
@@ -117,7 +117,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
         public Vote? UpdateCastedVote(Round container, Politician politician, VotePosition position)
         {
-            if (!dBContext.VotingRounds.Contains(container))
+            if (dBContext.VotingRounds.Find(container) == null)
                 throw new Exception($"Voting round {container} not registered yet");
             var vote = container.VoteResults.FirstOrDefault(x => x.Politician == politician);
             if (vote == null)
@@ -132,7 +132,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
         public Round? UpdateVoteResult(Guid id, DateTime? time = null, List<Vote>? votes = null, string? Description = null)
         {
-            var round = dBContext.VotingRounds.FirstOrDefault(x => x.Id == id);
+            var round = dBContext.VotingRounds.Find(id);
             if (round == null)
             {
                 return null;

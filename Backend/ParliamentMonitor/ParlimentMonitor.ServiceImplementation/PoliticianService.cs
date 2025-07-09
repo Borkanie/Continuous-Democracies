@@ -68,7 +68,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
         public Politician? GetPolitician(Guid id)
         {
-            return dBContext.Politicians.First(x => x.Id == id);
+            return dBContext.Politicians.Find(id);
         }
 
         public void Update(Politician entity)
@@ -112,7 +112,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
         public void Delete(Politician entity)
         {
-            if (dBContext.Politicians.Contains(entity))
+            if (dBContext.Politicians.Find(entity) != null)
             {
                 dBContext.Politicians.Remove(entity);
                 dBContext.SaveChanges();

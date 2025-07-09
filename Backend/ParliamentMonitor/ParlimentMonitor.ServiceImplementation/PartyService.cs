@@ -44,14 +44,20 @@ namespace ParliamentMonitor.ServiceImplementation
         /*<inheritdoc/>*/
         public Party? GetParty(Guid id)
         {
-            return dbContext.Parties.First(x => x.Id == id);
+            return dbContext.Parties.Find(id);
         }
 
         public void Update(Party item)
         {
-            if(dbContext.Parties.Contains(item))
+            var oldItem = dbContext.Parties.Find(item.Id);
+            if (oldItem != null)
             {
                 dbContext.Update(item);
+                oldItem.Active = item.Active;
+                oldItem.Acronym = item.Acronym;
+                oldItem.LogoUrl = item.LogoUrl;
+                oldItem.Politicians = item.Politicians;
+                oldItem.Color = item.Color;
                 dbContext.SaveChanges();
             }  
         }
@@ -79,7 +85,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
         public void Delete(Party entity)
         {
-            if (dbContext.Parties.Contains(entity))
+            if (dbContext.Parties.Find(entity.Id) != null)
             {
                 dbContext.Parties.Remove(entity);
                 dbContext.SaveChanges();
