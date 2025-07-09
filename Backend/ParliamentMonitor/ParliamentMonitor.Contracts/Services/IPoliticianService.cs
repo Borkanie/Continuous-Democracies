@@ -39,7 +39,7 @@ namespace ParliamentMonitor.Contracts.Services
         /// <summary>
         /// Returns all the avialable politicians in the system.
         /// </summary>
-        IList<T> GetAllPoliticians(Party? party = null,bool? isActive = null, WorkLocation? location = null,Gender? gender = null);
+        IList<T> GetAllPoliticians(Party? party = null,bool? isActive = null, WorkLocation? location = null,Gender? gender = null, int number = 100);
 
     }
 }

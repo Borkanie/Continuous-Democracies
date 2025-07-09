@@ -159,9 +159,9 @@ namespace ParliamentMonitor.ServiceImplementation
         }
 
         /// <inheritdoc/>
-        public ISet<Round> GetAllRoundsFromDB()
+        public ISet<Round> GetAllRoundsFromDB(int number = 100)
         {
-            return dBContext.VotingRounds.Where( x => x.VoteId != 0).ToHashSet();
+            return dBContext.VotingRounds.Take(number).ToHashSet();
         }
     }
 }

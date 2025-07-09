@@ -38,7 +38,7 @@ namespace ParliamentMonitor.ServiceImplementation
             return politician;
         }
 
-        public IList<Politician> GetAllPoliticians(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null)
+        public IList<Politician> GetAllPoliticians(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
         {
             var query = dBContext.Politicians.AsQueryable();
 
@@ -62,7 +62,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 query = query.Where(x => x.Gender == gender);
             }
 
-            return query.ToList(); // single SQL query executed here
+            return query.Take(number).ToList(); // single SQL query executed here
 
         }
 

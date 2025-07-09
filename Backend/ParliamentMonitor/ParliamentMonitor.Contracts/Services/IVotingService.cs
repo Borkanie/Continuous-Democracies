@@ -63,6 +63,6 @@ namespace ParliamentMonitor.Contracts.Services
         /// Unpopulated with votes they need to be fetched separately for speed.
         /// </summary>
         /// <returns></returns>
-        public ISet<Y> GetAllRoundsFromDB();
+        public ISet<Y> GetAllRoundsFromDB(int number = 100);
     }
 }

@@ -36,6 +36,6 @@ namespace ParliamentMonitor.Contracts.Services
         /// <summary>
         /// Returns all parties in the system.
         /// </summary>
-        public IList<T> GetAllParties(bool? isActive = null);
+        public IList<T> GetAllParties(bool isActive = true, int number = 100);
     }
 }

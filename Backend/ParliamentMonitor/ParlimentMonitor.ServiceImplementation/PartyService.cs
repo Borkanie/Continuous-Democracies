@@ -62,10 +62,9 @@ namespace ParliamentMonitor.ServiceImplementation
             }  
         }
 
-        public IList<Party> GetAllParties(bool? isActive = null)
+        public IList<Party> GetAllParties(bool isActive = true, int number = 100)
         {
-            return isActive==null ? dbContext.Parties.Where(x => true).ToList() : 
-                dbContext.Parties.Where(x => x.Active == isActive).ToList();
+            return dbContext.Parties.Where(x => x.Active == isActive).Take(number).ToList();
         }
 
         public Party? UpdateParty(Guid id, string? name = null, string? acronym = null, string? logoUrl = null, Color? color = null)
