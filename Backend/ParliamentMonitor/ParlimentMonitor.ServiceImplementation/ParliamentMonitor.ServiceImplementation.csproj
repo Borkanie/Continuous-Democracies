@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="StackExchange.Redis.Extension" Version="1.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ParliamentMonitor.Contracts\ParliamentMonitor.Contracts.csproj" />
     <ProjectReference Include="..\ParliamentMonitor.DataBaseConnector\ParliamentMonitor.DataBaseConnector.csproj" />
   </ItemGroup>

@@ -3,25 +3,24 @@ using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
 using StackExchange.Redis;
-using System.Drawing;
-using System.Reflection;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
     public class PoliticianService : IPoliticianService<Politician>
     {
         internal readonly IConnectionMultiplexer _redis;
-        private AppDBContext dBContext;
+        internal IDatabase _cache;
+        private AppDBContext _dbContext;
 
-        public PoliticianService(AppDBContext context)
+        public PoliticianService(AppDBContext context, IConnectionMultiplexer redis)
         {
-            dBContext = context;
-            // Cache entries form DB.
-            GetAllPoliticians();
+            _dbContext = context;
+            _redis = redis;
+            _cache = redis.GetDatabase();
         }
 
         /*<inheritdoc/>*/
-        public Politician? CreatePolitican(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
+        public async Task<Politician?> CreatePolitican(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
         {
             try
             {
@@ -35,10 +34,10 @@ namespace ParliamentMonitor.ServiceImplementation
                 {
                     politician.ImageUrl = imageUrl;
                 }
-                if (dBContext.Politicians.Any(x => x == politician))
+                if (_dbContext.Politicians.Any(x => x == politician))
                     throw new Exception("Already existing politician");
-                dBContext.Politicians.Add(politician);
-                dBContext.SaveChanges();
+                _dbContext.Politicians.Add(politician);
+                _dbContext.SaveChanges();
                 return politician;
             }
             catch(Exception ex)
@@ -49,9 +48,9 @@ namespace ParliamentMonitor.ServiceImplementation
             
         }
 
-        public IList<Politician> GetAllPoliticians(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
+        public async Task<IList<Politician>> GetAllPoliticians(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
         {
-            var query = dBContext.Politicians.AsQueryable();
+            var query = _dbContext.Politicians.AsQueryable();
 
             if (party != null)
             {
@@ -77,62 +76,73 @@ namespace ParliamentMonitor.ServiceImplementation
 
         }
 
-        public Politician? GetPolitician(Guid id)
+        public async Task<Politician?> GetPolitician(Guid id)
         {
-            return dBContext.Politicians.Find(id);
+            return _dbContext.Politicians.Find(id);
         }
 
-        public void Update(Politician entity)
+        public async Task<bool> Update(Politician entity)
         {
-            if (dBContext.Politicians.Contains(entity))
+            var old = GetPolitician(entity.Id).Result;
+            if (old!=null)
             {
-                dBContext.Update(entity);
-                dBContext.SaveChanges();
+                
+                _dbContext.Update(old);
+                old.Party = entity.Party;
+                old.Gender = entity.Gender;
+                old.WorkLocation = entity.WorkLocation;
+                old.Name = entity.Name;
+                old.Active = entity.Active;
+                _dbContext.SaveChanges();
+                return true;
             }
+            return false;
         }
 
         /*<inheritdoc/>*/
-        public Politician? UpdatePoliticianActivity(Guid id, bool isCurrentlyActive)
+        public async Task<Politician?> UpdatePoliticianActivity(Guid id, bool isCurrentlyActive)
         {
-            var item = GetPolitician(id);
+            var item = GetPolitician(id).Result;
             if(item != null)
             {
-                dBContext.Update(item);
+                _dbContext.Update(item);
                 item.Active = isCurrentlyActive;
-                dBContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
             return item;
         }
 
-        public Politician? UpdatePolitician(Guid id, string? name = null, Party? party = null, WorkLocation? location = null, Gender? gender = null, bool? isCurrentlyActive = null, string? imageUrl = null)
+        public async Task<Politician?> UpdatePolitician(Guid id, string? name = null, Party? party = null, WorkLocation? location = null, Gender? gender = null, bool? isCurrentlyActive = null, string? imageUrl = null)
         {
-            var item = GetPolitician(id);
+            var item = GetPolitician(id).Result;
             if (item != null)
             {
-                dBContext.Update(item);
+                _dbContext.Update(item);
                 item.Name = name ?? item.Name;
                 item.Party = party ?? item.Party;
                 item.WorkLocation = location ?? item.WorkLocation;
                 item.Gender = gender ?? item.Gender;
                 item.Active = isCurrentlyActive ?? item.Active;
                 item.ImageUrl = imageUrl ?? item.ImageUrl;
-                dBContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
             return item;
         }
 
-        public void Delete(Politician entity)
+        public async Task<bool> Delete(Politician entity)
         {
-            if (dBContext.Politicians.Find(entity) != null)
+            if (_dbContext.Politicians.Find(entity) != null)
             {
-                dBContext.Politicians.Remove(entity);
-                dBContext.SaveChanges();
+                _dbContext.Politicians.Remove(entity);
+                _dbContext.SaveChanges();
+                return true;
             }
+            return false;
         }
 
-        public Politician? GetPolitician(string name)
+        public async Task<Politician?> GetPolitician(string name)
         {
-            return dBContext.Politicians.FirstOrDefault(x => String.Equals(x.Name.ToLower(), name.ToLower()));
+            return _dbContext.Politicians.FirstOrDefault(x => String.Equals(x.Name.ToLower(), name.ToLower()));
         }
     }
 }

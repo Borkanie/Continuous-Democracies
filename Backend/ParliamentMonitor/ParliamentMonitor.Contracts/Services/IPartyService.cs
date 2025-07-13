@@ -13,30 +13,30 @@ namespace ParliamentMonitor.Contracts.Services
         /// Returns a party by its unique identifier.
         /// </summary>
         /// <returns>Null if not found.</returns>
-        public T? GetParty(Guid id);
+        public Task<T?> GetParty(Guid id);
 
         /// <summary>
         /// Returns a party by its unique identifier.
         /// </summary>
         /// <returns>Null if not found.</returns>
-        public T? GetParty(string? name = null,string? acronym = null);
+        public Task<T?> GetParty(string? name = null,string? acronym = null);
 
         /// <summary>
         /// Creates a new party with the specified parameters.
         /// </summary>
         /// <returns>The created instance.</returns>
-        public T? CreateParty(string name, string? acronym = null, string? logoUrl = null, Color? color = null);
+        public Task<T?> CreateParty(string name, string? acronym = null, string? logoUrl = null, Color? color = null);
         
         /// <summary>
         /// Updates a party identified by its unique identifier.
         /// All null parameters will be ignored.
         /// </summary>
         /// <returns>The updated party.</returns>
-        public T? UpdateParty(Guid id, string? name = null, string? acronym = null, string? logoUrl = null, Color? color = null);
+        public Task<T?> UpdateParty(Guid id, string? name = null, string? acronym = null, string? logoUrl = null, Color? color = null);
 
         /// <summary>
         /// Returns all parties in the system.
         /// </summary>
-        public IList<T> GetAllParties(bool isActive = true, int number = 100);
+        public Task<IList<T>> GetAllParties(bool isActive = true, int number = 100);
     }
 }

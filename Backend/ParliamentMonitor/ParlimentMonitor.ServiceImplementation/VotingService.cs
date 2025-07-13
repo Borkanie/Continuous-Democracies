@@ -10,14 +10,18 @@ namespace ParliamentMonitor.ServiceImplementation
     public class VotingService : IVotingService<Vote, Round>
     {
         internal readonly IConnectionMultiplexer _redis;
-        private readonly AppDBContext dBContext;
+        internal IDatabase _cache;
+        private readonly AppDBContext _dbContext;
 
-        public VotingService(AppDBContext context)
+        public VotingService(AppDBContext context, IConnectionMultiplexer redis)
         {
-            dBContext = context;
+            _dbContext = context;
+            _redis = redis;
+            _cache = redis.GetDatabase();
+
         }
 
-        public Round? CreateVotingRound(string title, DateTime time, int id = 0, List<Vote>? votes = null, string? description = null)
+        public async Task<Round?> CreateVotingRound(string title, DateTime time, int id = 0, List<Vote>? votes = null, string? description = null)
         {
             try
             {
@@ -31,8 +35,8 @@ namespace ParliamentMonitor.ServiceImplementation
                         round.VoteResults.Add(vote);
                 }
                 round.Description = description ?? string.Empty;
-                dBContext.VotingRounds.Add(round);
-                dBContext.SaveChanges();
+                _dbContext.VotingRounds.Add(round);
+                _dbContext.SaveChanges();
                 return round;
             }catch(Exception ex)
             {
@@ -41,27 +45,31 @@ namespace ParliamentMonitor.ServiceImplementation
             }
         }
 
-        public void Delete(Round entity)
+        public async Task<bool> Delete(Round entity)
         {
-            if(dBContext.VotingRounds.Contains(entity))
+            if(_dbContext.VotingRounds.Contains(entity))
             {
-                dBContext.VotingRounds.Remove(entity);
-                dBContext.SaveChanges();
+                _dbContext.VotingRounds.Remove(entity);
+                _dbContext.SaveChanges();
+                return true;
             }
+            return false;
         }
 
-        public void Delete(Vote entity)
+        public async Task<bool> Delete(Vote entity)
         {
-            if (dBContext.Votes.Contains(entity))
+            if (_dbContext.Votes.Contains(entity))
             {
-                dBContext.Votes.Remove(entity);
-                dBContext.SaveChanges();
+                _dbContext.Votes.Remove(entity);
+                _dbContext.SaveChanges();
+                return true;
             }
+            return false;
         }
 
-        public Round? GetVotingRound(int votingRoundId)
+        public async Task<Round?> GetVotingRound(int votingRoundId)
         {
-           var round = dBContext.VotingRounds.Find(votingRoundId);
+           var round = _dbContext.VotingRounds.Find(votingRoundId);
             if (round == null)
                 Console.WriteLine($"No round with Id{votingRoundId} found in db");
             else
@@ -70,44 +78,48 @@ namespace ParliamentMonitor.ServiceImplementation
                 if(round.VoteResults.Count == 0)
                 {
                     Console.WriteLine($"Loading vote results for round{round.VoteId}");
-                    round.VoteResults = dBContext.Votes.Include(x => x.Politician).Include(x => x.Politician.Party).Where(x => x.Round == round).ToHashSet();
+                    round.VoteResults = _dbContext.Votes.Include(x => x.Politician).Include(x => x.Politician.Party).Where(x => x.Round == round).ToHashSet();
                 }
             }
            return round;
         }
 
-        public void Update(Round voteResult)
+        public async Task<bool> Update(Round voteResult)
         {
-            var vote = dBContext.VotingRounds.FirstOrDefault(x => x.Id == voteResult.Id); 
+            var vote = _dbContext.VotingRounds.FirstOrDefault(x => x.Id == voteResult.Id); 
             if (vote != null)
             {
-                dBContext.Update(vote);
+                _dbContext.Update(vote);
                 vote.Description = voteResult.Description;
                 vote.VoteResults = voteResult.VoteResults;
                 vote.Title = voteResult.Title;
-                dBContext.SaveChanges();
+                _dbContext.SaveChanges();
+                return true;
             }
+            return false;
         }
 
-        public void Update(Vote entity)
+        public async Task<bool> Update(Vote entity)
         {
-            var vote = dBContext.Votes.FirstOrDefault(x => x.Id == entity.Id);
+            var vote = _dbContext.Votes.FirstOrDefault(x => x.Id == entity.Id);
             if (vote != null)
             {
-                dBContext.Update(vote);
+                _dbContext.Update(vote);
                 vote.Position = entity.Position;
                 vote.Politician = entity.Politician;
                 vote.Name = entity.Name;
-                dBContext.SaveChanges();
+                _dbContext.SaveChanges();
+                return true;
             }
+            return false;
         }
-        public Vote? CastVote(Round container, Politician politician, VotePosition position)
+        public async Task<Vote?> CastVote(Round container, Politician politician, VotePosition position)
         {
             try
             {
-                if (dBContext.VotingRounds.Find(container) == null)
+                if (_dbContext.VotingRounds.Find(container) == null)
                     throw new Exception($"Voting round {container} not registered yet");
-                dBContext.Update(container);
+                _dbContext.Update(container);
                 var vote = container.VoteResults.FirstOrDefault(x => x.Politician == politician);
                 if (vote == null)
                 {
@@ -121,8 +133,8 @@ namespace ParliamentMonitor.ServiceImplementation
                 {
                     vote.Position = position;
                 }
-                dBContext.Votes.Add(vote);
-                dBContext.SaveChanges();
+                _dbContext.Votes.Add(vote);
+                _dbContext.SaveChanges();
                 return vote;
             }catch(Exception ex)
             {
@@ -132,29 +144,29 @@ namespace ParliamentMonitor.ServiceImplementation
             
         }
 
-        public Vote? UpdateCastedVote(Round container, Politician politician, VotePosition position)
+        public async Task<Vote?> UpdateCastedVote(Round container, Politician politician, VotePosition position)
         {
-            if (dBContext.VotingRounds.Find(container) == null)
+            if (_dbContext.VotingRounds.Find(container) == null)
                 throw new Exception($"Voting round {container} not registered yet");
             var vote = container.VoteResults.FirstOrDefault(x => x.Politician == politician);
             if (vote == null)
             {
                 return null;
             }
-            dBContext.Update(vote);
+            _dbContext.Update(vote);
             vote.Position = position;
-            dBContext.SaveChanges();
+            _dbContext.SaveChanges();
             return vote;
         }
 
-        public Round? UpdateVoteResult(Guid id, DateTime? time = null, List<Vote>? votes = null, string? Description = null)
+        public async Task<Round?> UpdateVoteResult(Guid id, DateTime? time = null, List<Vote>? votes = null, string? Description = null)
         {
-            var round = dBContext.VotingRounds.Find(id);
+            var round = _dbContext.VotingRounds.Find(id);
             if (round == null)
             {
                 return null;
             }
-            dBContext.Update(round);
+            _dbContext.Update(round);
             if (time != null)
             {
                 round.VoteDate = time.Value;
@@ -162,7 +174,7 @@ namespace ParliamentMonitor.ServiceImplementation
             if (votes != null)
             {
                 foreach( var vote in round.VoteResults)
-                    dBContext.Remove(vote);
+                    _dbContext.Remove(vote);
                 round.VoteResults.Clear();
                 foreach (var vote in votes)
                     round.VoteResults.Add(vote);
@@ -171,14 +183,14 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 round.Description = Description;
             }
-            dBContext.SaveChanges();
+            _dbContext.SaveChanges();
             return round;
         }
 
         /// <inheritdoc/>
-        public ISet<Round> GetAllRoundsFromDB(int number = 100)
+        public async Task<ISet<Round>> GetAllRoundsFromDB(int number = 100)
         {
-            return dBContext.VotingRounds.Take(number).ToHashSet();
+            return _dbContext.VotingRounds.Take(number).ToHashSet();
         }
     }
 }

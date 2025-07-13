@@ -10,17 +10,18 @@ namespace ParliamentMonitor.ServiceImplementation
     public class PartyService : IPartyService<Party>
     {
         internal readonly IConnectionMultiplexer _redis;
-        private readonly AppDBContext dbContext;
+        internal IDatabase _cache;
+        private readonly AppDBContext _dbContext;
 
-        public PartyService(AppDBContext context)
+        public PartyService(AppDBContext context, IConnectionMultiplexer redis)
         {
-            dbContext = context;
-            // Cache parties on startup
-            GetAllParties();
+            _dbContext = context;
+            _redis = redis;
+            _cache = redis.GetDatabase();
         }
 
         /*<inheritdoc/>*/
-        public Party? CreateParty(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
+        public async Task<Party?> CreateParty(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
         {
             try
             {
@@ -33,12 +34,12 @@ namespace ParliamentMonitor.ServiceImplementation
                     newParty.LogoUrl = logoUrl;
                 if (color != null)
                     newParty.Color = (Color)color;
-                if (newParty == null || dbContext.Parties.Any(x => x == newParty))
+                if (newParty == null || _dbContext.Parties.Any(x => x == newParty))
                 {
                     throw new Exception("Already existing party");
                 }
-                dbContext.Parties.Add(newParty);
-                dbContext.SaveChanges();
+                _dbContext.Parties.Add(newParty);
+                _dbContext.SaveChanges();
                 return newParty;
             }catch(Exception ex)
             {
@@ -50,64 +51,68 @@ namespace ParliamentMonitor.ServiceImplementation
 
 
         /*<inheritdoc/>*/
-        public Party? GetParty(Guid id)
+        public async Task<Party?> GetParty(Guid id)
         {
-            return dbContext.Parties.Find(id);
+            return _dbContext.Parties.Find(id);
         }
 
-        public void Update(Party item)
+        public async Task<bool> Update(Party item)
         {
-            var oldItem = dbContext.Parties.Find(item.Id);
+            var oldItem = _dbContext.Parties.Find(item.Id);
             if (oldItem != null)
             {
-                dbContext.Update(item);
+                _dbContext.Update(item);
                 oldItem.Active = item.Active;
                 oldItem.Acronym = item.Acronym;
                 oldItem.LogoUrl = item.LogoUrl;
                 oldItem.Politicians = item.Politicians;
                 oldItem.Color = item.Color;
-                dbContext.SaveChanges();
-            }  
+                _dbContext.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
-        public IList<Party> GetAllParties(bool isActive = true, int number = 100)
+        public async Task<IList<Party>> GetAllParties(bool isActive = true, int number = 100)
         {
-            return dbContext.Parties.Where(x => x.Active == isActive).Take(number).ToList();
+            return _dbContext.Parties.Where(x => x.Active == isActive).Take(number).ToList();
         }
 
-        public Party? UpdateParty(Guid id, string? name = null, string? acronym = null, string? logoUrl = null, Color? color = null)
+        public Task<Party?> UpdateParty(Guid id, string? name = null, string? acronym = null, string? logoUrl = null, Color? color = null)
         {
-            var item = GetParty(id);
+            var item = GetParty(id).Result;
             if (item != null)
             {
-                dbContext.Update(item);
+                _dbContext.Update(item);
                 item.Name = name ?? item.Name;
                 item.Acronym = acronym ?? item.Acronym;
                 item.LogoUrl = logoUrl ?? item.LogoUrl;
                 item.Color = color ?? item.Color;
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
-            return item;
+            return Task.FromResult(item);
         }
 
-        public void Delete(Party entity)
+        public async Task<bool> Delete(Party entity)
         {
-            if (dbContext.Parties.Find(entity.Id) != null)
+            if (_dbContext.Parties.Find(entity.Id) != null)
             {
-                dbContext.Parties.Remove(entity);
-                dbContext.SaveChanges();
+                _dbContext.Parties.Remove(entity);
+                _dbContext.SaveChanges();
+                return true;
             }
+            return false;
         }
 
-        public Party? GetParty(string? name = null, string? acronym = null)
+        public async Task<Party?> GetParty(string? name = null, string? acronym = null)
         {
             if(name != null)
             {
-                return dbContext.Parties.FirstOrDefault(x => x.Name == name);
+                return _dbContext.Parties.FirstOrDefault(x => x.Name == name);
             }
             if (acronym != null)
             {
-                return dbContext.Parties.FirstOrDefault(x => x.Acronym == acronym);
+                return _dbContext.Parties.FirstOrDefault(x => x.Acronym == acronym);
             }
             return null;
         }
