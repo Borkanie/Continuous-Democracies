@@ -26,7 +26,7 @@ namespace ParliamentMonitor.Contracts.Services
         /// <param name="time">When it took ended.</param>
         /// <param name="votes">The list of votes for all present individuals.</param>
         /// <param name="Description">Short descriptiona bout the vote.</param>
-        public Y CreateVotingRound(string title, DateTime time,int id=0, List<T>? votes = null, string? Description = null);
+        public Y? CreateVotingRound(string title, DateTime time,int id=0, List<T>? votes = null, string? Description = null);
 
         /// <summary>
         /// Update a vote result in the db.
@@ -44,7 +44,7 @@ namespace ParliamentMonitor.Contracts.Services
         /// Casts a vote for a given politican in a given voting round.
         /// A politician can only give a single vote per round.
         /// </summary>
-        public T CastVote(Round container, Politician politician, VotePosition position);
+        public T? CastVote(Round container, Politician politician, VotePosition position);
 
         /// <summary>
         /// Changes the position of apolitican in a given round.

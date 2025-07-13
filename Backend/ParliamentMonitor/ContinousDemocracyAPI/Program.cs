@@ -3,8 +3,16 @@ using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
 using ParliamentMonitor.ServiceImplementation;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add Redis singleton
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    var configuration = builder.Configuration.GetConnectionString("Redis");
+    return ConnectionMultiplexer.Connect(configuration);
+});
 
 // Add services to the container.
 builder.Services.AddSingleton(new AppDBContext());

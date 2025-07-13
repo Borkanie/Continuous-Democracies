@@ -3,11 +3,13 @@ using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
+using StackExchange.Redis;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
     public class VotingService : IVotingService<Vote, Round>
     {
+        internal readonly IConnectionMultiplexer _redis;
         private readonly AppDBContext dBContext;
 
         public VotingService(AppDBContext context)
@@ -15,21 +17,28 @@ namespace ParliamentMonitor.ServiceImplementation
             dBContext = context;
         }
 
-        public Round CreateVotingRound(string title, DateTime time, int id = 0, List<Vote>? votes = null, string? description = null)
+        public Round? CreateVotingRound(string title, DateTime time, int id = 0, List<Vote>? votes = null, string? description = null)
         {
-            var round = new Round();
-            round.Title = title;
-            round.VoteDate = time;
-            round.VoteId = id;
-            if(votes!= null)
+            try
             {
-                foreach(var vote in votes)
-                    round.VoteResults.Add(vote);
+                var round = new Round();
+                round.Title = title;
+                round.VoteDate = time;
+                round.VoteId = id;
+                if (votes != null)
+                {
+                    foreach (var vote in votes)
+                        round.VoteResults.Add(vote);
+                }
+                round.Description = description ?? string.Empty;
+                dBContext.VotingRounds.Add(round);
+                dBContext.SaveChanges();
+                return round;
+            }catch(Exception ex)
+            {
+                Console.WriteLine($"Error when creating Voting Round:{ex.Message}");
+                return null;
             }
-            round.Description = description ?? string.Empty;
-            dBContext.VotingRounds.Add(round);
-            dBContext.SaveChanges();
-            return round;
         }
 
         public void Delete(Round entity)
@@ -92,27 +101,35 @@ namespace ParliamentMonitor.ServiceImplementation
                 dBContext.SaveChanges();
             }
         }
-        public Vote CastVote(Round container, Politician politician, VotePosition position)
+        public Vote? CastVote(Round container, Politician politician, VotePosition position)
         {
-            if (dBContext.VotingRounds.Find(container) == null)
-                throw new Exception($"Voting round {container} not registered yet");
-            dBContext.Update(container);
-            var vote = container.VoteResults.FirstOrDefault(x => x.Politician == politician);
-            if (vote == null)
+            try
             {
-                vote = new Vote();
-                vote.Position = position;
-                vote.Politician = politician;
-                vote.Name = $"Vote from {politician.Name} during {container.Name}";
-                container.VoteResults.Add(vote);
-            }
-            else
+                if (dBContext.VotingRounds.Find(container) == null)
+                    throw new Exception($"Voting round {container} not registered yet");
+                dBContext.Update(container);
+                var vote = container.VoteResults.FirstOrDefault(x => x.Politician == politician);
+                if (vote == null)
+                {
+                    vote = new Vote();
+                    vote.Position = position;
+                    vote.Politician = politician;
+                    vote.Name = $"Vote from {politician.Name} during {container.Name}";
+                    container.VoteResults.Add(vote);
+                }
+                else
+                {
+                    vote.Position = position;
+                }
+                dBContext.Votes.Add(vote);
+                dBContext.SaveChanges();
+                return vote;
+            }catch(Exception ex)
             {
-                vote.Position = position;    
+                Console.WriteLine($"Error when casting vote for {politician.Name} for law {container.Name} : {ex.Message}");
+                return null;
             }
-            dBContext.Votes.Add(vote);
-            dBContext.SaveChanges();
-            return vote;
+            
         }
 
         public Vote? UpdateCastedVote(Round container, Politician politician, VotePosition position)

@@ -1,4 +1,5 @@
-﻿using ParliamentMonitor.Contracts.Model;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using ParliamentMonitor.Contracts.Model;
 using System.Drawing;
 
 namespace ParliamentMonitor.Contracts.Services
@@ -24,7 +25,7 @@ namespace ParliamentMonitor.Contracts.Services
         /// Creates a new party with the specified parameters.
         /// </summary>
         /// <returns>The created instance.</returns>
-        public T CreateParty(string name, string? acronym = null, string? logoUrl = null, Color? color = null);
+        public T? CreateParty(string name, string? acronym = null, string? logoUrl = null, Color? color = null);
         
         /// <summary>
         /// Updates a party identified by its unique identifier.

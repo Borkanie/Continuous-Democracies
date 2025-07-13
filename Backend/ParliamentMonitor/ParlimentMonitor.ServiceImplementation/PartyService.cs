@@ -2,12 +2,14 @@
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
+using StackExchange.Redis;
 using System.Drawing;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
     public class PartyService : IPartyService<Party>
     {
+        internal readonly IConnectionMultiplexer _redis;
         private readonly AppDBContext dbContext;
 
         public PartyService(AppDBContext context)
@@ -18,13 +20,14 @@ namespace ParliamentMonitor.ServiceImplementation
         }
 
         /*<inheritdoc/>*/
-        public Party CreateParty(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
+        public Party? CreateParty(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
         {
-
+            try
+            {
                 var newParty = new Party();
                 newParty.Id = Guid.NewGuid();
                 newParty.Name = name;
-                if(acronym != null) 
+                if (acronym != null)
                     newParty.Acronym = acronym;
                 if (logoUrl != null)
                     newParty.LogoUrl = logoUrl;
@@ -37,6 +40,11 @@ namespace ParliamentMonitor.ServiceImplementation
                 dbContext.Parties.Add(newParty);
                 dbContext.SaveChanges();
                 return newParty;
+            }catch(Exception ex)
+            {
+                Console.WriteLine($"Error when creating new party:{ex.Message}");
+                return null; 
+            }
             
         }
 

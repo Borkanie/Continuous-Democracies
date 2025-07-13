@@ -2,6 +2,7 @@
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
+using StackExchange.Redis;
 using System.Drawing;
 using System.Reflection;
 
@@ -9,6 +10,7 @@ namespace ParliamentMonitor.ServiceImplementation
 {
     public class PoliticianService : IPoliticianService<Politician>
     {
+        internal readonly IConnectionMultiplexer _redis;
         private AppDBContext dBContext;
 
         public PoliticianService(AppDBContext context)
@@ -19,23 +21,32 @@ namespace ParliamentMonitor.ServiceImplementation
         }
 
         /*<inheritdoc/>*/
-        public Politician CreatePolitican(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
+        public Politician? CreatePolitican(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
         {
-            Politician politician = new Politician();
-            politician.Name = name;
-            politician.Party = party;
-            politician.WorkLocation = location;
-            politician.Gender = gender;
-            politician.Active = isCurrentlyActive;
-            if(imageUrl != null)
+            try
             {
-                politician.ImageUrl = imageUrl;
+                Politician politician = new Politician();
+                politician.Name = name;
+                politician.Party = party;
+                politician.WorkLocation = location;
+                politician.Gender = gender;
+                politician.Active = isCurrentlyActive;
+                if (imageUrl != null)
+                {
+                    politician.ImageUrl = imageUrl;
+                }
+                if (dBContext.Politicians.Any(x => x == politician))
+                    throw new Exception("Already existing politician");
+                dBContext.Politicians.Add(politician);
+                dBContext.SaveChanges();
+                return politician;
             }
-            if (dBContext.Politicians.Any(x => x == politician))
-                throw new Exception("Already existing politician");
-            dBContext.Politicians.Add(politician);
-            dBContext.SaveChanges();
-            return politician;
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error when creating Politician:{ex.Message}");
+                return null; 
+            }
+            
         }
 
         public IList<Politician> GetAllPoliticians(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
