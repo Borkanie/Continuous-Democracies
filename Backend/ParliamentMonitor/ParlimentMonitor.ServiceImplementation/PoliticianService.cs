@@ -3,20 +3,18 @@ using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
 using StackExchange.Redis;
+using System.IO;
+using System.Text.Json;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
-    public class PoliticianService : IPoliticianService<Politician>
+    public class PoliticianService : RedisService, IPoliticianService<Politician>
     {
-        internal readonly IConnectionMultiplexer _redis;
-        internal IDatabase _cache;
-        private AppDBContext _dbContext;
+        private AppDBContext _dbContext;       
 
-        public PoliticianService(AppDBContext context, IConnectionMultiplexer redis)
+        public PoliticianService(AppDBContext context, IConnectionMultiplexer redis)  : base(redis,"politician")
         {
             _dbContext = context;
-            _redis = redis;
-            _cache = redis.GetDatabase();
         }
 
         /*<inheritdoc/>*/
@@ -38,6 +36,7 @@ namespace ParliamentMonitor.ServiceImplementation
                     throw new Exception("Already existing politician");
                 _dbContext.Politicians.Add(politician);
                 _dbContext.SaveChanges();
+                SetAsync(MakeKey(politician.Id.ToString()), politician);
                 return politician;
             }
             catch(Exception ex)
@@ -48,8 +47,39 @@ namespace ParliamentMonitor.ServiceImplementation
             
         }
 
+        private async Task<IList<Politician>> getPoliticians(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
+        {
+            var politicians = new List<Politician>();
+            var keys = await _cache.SetMembersAsync(serviceKey);
+            foreach(var key in keys)
+            {
+                var politician = await GetAsync<Politician>(key);
+                if(politician != null)
+                {
+                    if(party!= null && politician.Party!=party
+                        || isActive != null && politician.Active != isActive
+                        || location!= null && politician.WorkLocation != location
+                        || gender!= null && politician.Gender != gender
+                        )
+                    {
+                        continue;
+                    }
+                    politicians.Add(politician);
+                    if (politicians.Count == number)
+                        return politicians;
+                }
+            }
+           
+
+            return new List<Politician>();
+
+        }
+
         public async Task<IList<Politician>> GetAllPoliticians(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
         {
+            var cachedPoliticians = await getPoliticians(party,isActive,location,gender, number);
+            if (cachedPoliticians.Count == number)
+                return cachedPoliticians;
             var query = _dbContext.Politicians.AsQueryable();
 
             if (party != null)
@@ -72,12 +102,20 @@ namespace ParliamentMonitor.ServiceImplementation
                 query = query.Where(x => x.Gender == gender);
             }
 
-            return query.Take(number).ToList(); // single SQL query executed here
+            var politicians = query.Take(number).ToList();
+            foreach(var politician in politicians)
+            {
+                SetAsync(MakeKey(politician.Id.ToString()), politician);
+            }
+            return politicians; // single SQL query executed here
 
         }
 
         public async Task<Politician?> GetPolitician(Guid id)
         {
+            var cached = await GetAsync<Politician>(MakeKey(id.ToString()));
+            if (cached != null)
+                return cached;
             return _dbContext.Politicians.Find(id);
         }
 
@@ -94,6 +132,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 old.Name = entity.Name;
                 old.Active = entity.Active;
                 _dbContext.SaveChanges();
+                SetAsync(MakeKey(entity.Id.ToString()), entity);
                 return true;
             }
             return false;
@@ -108,6 +147,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 _dbContext.Update(item);
                 item.Active = isCurrentlyActive;
                 _dbContext.SaveChanges();
+                SetAsync(MakeKey(item.Id.ToString()), item);
             }
             return item;
         }
@@ -125,6 +165,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 item.Active = isCurrentlyActive ?? item.Active;
                 item.ImageUrl = imageUrl ?? item.ImageUrl;
                 _dbContext.SaveChanges();
+                SetAsync(MakeKey(item.Id.ToString()), item);
             }
             return item;
         }
@@ -135,6 +176,7 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 _dbContext.Politicians.Remove(entity);
                 _dbContext.SaveChanges();
+                RemoveAsync(MakeKey(entity.Id.ToString()));
                 return true;
             }
             return false;
@@ -142,7 +184,13 @@ namespace ParliamentMonitor.ServiceImplementation
 
         public async Task<Politician?> GetPolitician(string name)
         {
-            return _dbContext.Politicians.FirstOrDefault(x => String.Equals(x.Name.ToLower(), name.ToLower()));
+            var politician = getPoliticians().Result.FirstOrDefault(x => string.Equals(x.Name, name));
+            if (politician != null)
+                return politician;
+            var value = _dbContext.Politicians.FirstOrDefault(x => String.Equals(x.Name.ToLower(), name.ToLower()));
+            SetAsync(MakeKey(value.Id.ToString()), value);
+            return value;
         }
+
     }
 }

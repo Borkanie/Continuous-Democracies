@@ -13,9 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParliamentMonitor.ServiceIm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataImporter", "DataImporter\DataImporter.csproj", "{84460E86-6BDB-4453-904F-E3FB59EEC692}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParliamentMonitor.WebInterface", "..\..\FrontEnd\ParlimentMonitor.WebInterface\ParliamentMonitor.WebInterface.csproj", "{03C2EC44-6462-431C-8D22-1F9E8DF62826}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinousDemocracyAPI", "ContinousDemocracyAPI\ContinousDemocracyAPI.csproj", "{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContinousDemocracyAPI", "ContinousDemocracyAPI\ContinousDemocracyAPI.csproj", "{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +41,6 @@ Global
 		{84460E86-6BDB-4453-904F-E3FB59EEC692}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84460E86-6BDB-4453-904F-E3FB59EEC692}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84460E86-6BDB-4453-904F-E3FB59EEC692}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03C2EC44-6462-431C-8D22-1F9E8DF62826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03C2EC44-6462-431C-8D22-1F9E8DF62826}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03C2EC44-6462-431C-8D22-1F9E8DF62826}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03C2EC44-6462-431C-8D22-1F9E8DF62826}.Release|Any CPU.Build.0 = Release|Any CPU
 		{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
