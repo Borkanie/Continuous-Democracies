@@ -18,7 +18,7 @@ namespace ParliamentMonitor.ServiceImplementation
         }
 
         /*<inheritdoc/>*/
-        public async Task<Politician?> CreatePolitican(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
+        public async Task<Politician?> CreatePoliticanAsync(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
         {
             try
             {
@@ -47,7 +47,8 @@ namespace ParliamentMonitor.ServiceImplementation
             
         }
 
-        private async Task<IList<Politician>> getPoliticians(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
+        /*<inheritdoc/>*/
+        private async Task<IList<Politician>> getPoliticiansAsync(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
         {
             var politicians = new List<Politician>();
             var keys = await _cache.SetMembersAsync(serviceKey);
@@ -75,9 +76,10 @@ namespace ParliamentMonitor.ServiceImplementation
 
         }
 
-        public async Task<IList<Politician>> GetAllPoliticians(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
+        /*<inheritdoc/>*/
+        public async Task<IList<Politician>> GetAllPoliticiansAsync(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
         {
-            var cachedPoliticians = await getPoliticians(party,isActive,location,gender, number);
+            var cachedPoliticians = await getPoliticiansAsync(party,isActive,location,gender, number);
             if (cachedPoliticians.Count == number)
                 return cachedPoliticians;
             var query = _dbContext.Politicians.AsQueryable();
@@ -111,7 +113,8 @@ namespace ParliamentMonitor.ServiceImplementation
 
         }
 
-        public async Task<Politician?> GetPolitician(Guid id)
+        /*<inheritdoc/>*/
+        public async Task<Politician?> GetAsync(Guid id)
         {
             var cached = await GetAsync<Politician>(MakeKey(id.ToString()));
             if (cached != null)
@@ -119,9 +122,10 @@ namespace ParliamentMonitor.ServiceImplementation
             return _dbContext.Politicians.Find(id);
         }
 
-        public async Task<bool> Update(Politician entity)
+        /*<inheritdoc/>*/
+        public async Task<bool> UpdateAsync(Politician entity)
         {
-            var old = GetPolitician(entity.Id).Result;
+            var old = GetAsync(entity.Id).Result;
             if (old!=null)
             {
                 
@@ -139,9 +143,9 @@ namespace ParliamentMonitor.ServiceImplementation
         }
 
         /*<inheritdoc/>*/
-        public async Task<Politician?> UpdatePoliticianActivity(Guid id, bool isCurrentlyActive)
+        public async Task<Politician?> UpdatePoliticianActivityAsync(Guid id, bool isCurrentlyActive)
         {
-            var item = GetPolitician(id).Result;
+            var item = GetAsync(id).Result;
             if(item != null)
             {
                 _dbContext.Update(item);
@@ -152,9 +156,10 @@ namespace ParliamentMonitor.ServiceImplementation
             return item;
         }
 
-        public async Task<Politician?> UpdatePolitician(Guid id, string? name = null, Party? party = null, WorkLocation? location = null, Gender? gender = null, bool? isCurrentlyActive = null, string? imageUrl = null)
+        /*<inheritdoc/>*/
+        public async Task<Politician?> UpdatePoliticianAsync(Guid id, string? name = null, Party? party = null, WorkLocation? location = null, Gender? gender = null, bool? isCurrentlyActive = null, string? imageUrl = null)
         {
-            var item = GetPolitician(id).Result;
+            var item = GetAsync(id).Result;
             if (item != null)
             {
                 _dbContext.Update(item);
@@ -170,7 +175,8 @@ namespace ParliamentMonitor.ServiceImplementation
             return item;
         }
 
-        public async Task<bool> Delete(Politician entity)
+        /*<inheritdoc/>*/
+        public async Task<bool> DeleteAsync(Politician entity)
         {
             if (_dbContext.Politicians.Find(entity) != null)
             {
@@ -182,9 +188,10 @@ namespace ParliamentMonitor.ServiceImplementation
             return false;
         }
 
-        public async Task<Politician?> GetPolitician(string name)
+        /*<inheritdoc/>*/
+        public async Task<Politician?> GetPoliticianAsync(string name)
         {
-            var politician = getPoliticians().Result.FirstOrDefault(x => string.Equals(x.Name, name));
+            var politician = getPoliticiansAsync().Result.FirstOrDefault(x => string.Equals(x.Name, name));
             if (politician != null)
                 return politician;
             var value = _dbContext.Politicians.FirstOrDefault(x => String.Equals(x.Name.ToLower(), name.ToLower()));

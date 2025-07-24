@@ -49,11 +49,5 @@ namespace ParliamentMonitor.Contracts.Model
         /// </summary>
         public WorkLocation WorkLocation { get; set; } = WorkLocation.Parliament;
 
-        public override bool Equals(object? obj)
-        {
-            if (obj == null) return false;
-            if(obj.GetType()!= typeof(Politician)) return false;
-            return ((Politician)obj).Id == Id;
-        }
     }
 }

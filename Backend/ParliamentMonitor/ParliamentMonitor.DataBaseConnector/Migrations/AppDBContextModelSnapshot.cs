@@ -127,7 +127,7 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                     b.Property<int>("Position")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("RoundId")
+                    b.Property<Guid?>("RoundId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -158,15 +158,11 @@ namespace ParliamentMonitor.DataBaseConnector.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ParliamentMonitor.Contracts.Model.Votes.Round", "Round")
+                    b.HasOne("ParliamentMonitor.Contracts.Model.Votes.Round", null)
                         .WithMany("VoteResults")
-                        .HasForeignKey("RoundId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoundId");
 
                     b.Navigation("Politician");
-
-                    b.Navigation("Round");
                 });
 
             modelBuilder.Entity("ParliamentMonitor.Contracts.Model.Party", b =>

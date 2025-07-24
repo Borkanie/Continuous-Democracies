@@ -10,18 +10,13 @@ namespace ParliamentMonitor.Contracts.Services
         /// <summary>
         /// Returns a politician by its unique identifier.
         /// </summary>
-        public Task<T?> GetPolitician(Guid id);
-
-        /// <summary>
-        /// Returns a politician by its unique identifier.
-        /// </summary>
-        public Task<T?> GetPolitician(String name);
+        public Task<T?> GetPoliticianAsync(String name);
 
         /// <summary>
         /// Creates a new politician with the specified parameters.
         /// </summary>
         /// <returns>The new instance of a politician.</returns>
-        public Task<T?> CreatePolitican(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null);
+        public Task<T?> CreatePoliticanAsync(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null);
 
         /// <summary>
         /// Updates a given polititacns information based on they're Id. All null informations will be ignored.
@@ -34,12 +29,12 @@ namespace ParliamentMonitor.Contracts.Services
         /// <param name="isCurrentlyActive"></param>
         /// <param name="imageUrl"></param>
         /// <returns></returns>
-        public Task<T?> UpdatePolitician(Guid id, string? name = null, Party? party = null, WorkLocation? location = null, Gender? gender = null, bool? isCurrentlyActive = null, string? imageUrl = null);
+        public Task<T?> UpdatePoliticianAsync(Guid id, string? name = null, Party? party = null, WorkLocation? location = null, Gender? gender = null, bool? isCurrentlyActive = null, string? imageUrl = null);
 
         /// <summary>
         /// Returns all the avialable politicians in the system.
         /// </summary>
-        public Task<IList<T>> GetAllPoliticians(Party? party = null,bool? isActive = null, WorkLocation? location = null,Gender? gender = null, int number = 100);
+        public Task<IList<T>> GetAllPoliticiansAsync(Party? party = null,bool? isActive = null, WorkLocation? location = null,Gender? gender = null, int number = 100);
 
     }
 }

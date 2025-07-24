@@ -16,6 +16,10 @@
     <Folder Include="Components\Images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="StackExchange.Redis.Extension" Version="1.2.1" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<RazorComponent Include="Components/App.razor" />
 	</ItemGroup>

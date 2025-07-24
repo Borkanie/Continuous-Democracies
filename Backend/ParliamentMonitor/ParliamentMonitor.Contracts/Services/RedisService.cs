@@ -11,7 +11,7 @@ namespace ParliamentMonitor.Contracts.Services
         protected readonly IConnectionMultiplexer _redis;
         protected readonly IDatabase _cache;
 
-        protected string MakeKey(String id)
+        public virtual string MakeKey(string id)
         {
             return $"{serviceKey}:{id}";
         }

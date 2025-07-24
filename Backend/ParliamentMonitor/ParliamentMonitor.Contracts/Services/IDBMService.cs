@@ -7,13 +7,17 @@ namespace ParliamentMonitor.Contracts.Services
         /// <summary>
         /// Up[dates an entity in the db based on Key.
         /// </summary>
-        /// <param name="entity"></param>
-        public Task<bool> Update(T entity);
+        public Task<bool> UpdateAsync(T entity);
 
         /// <summary>
         /// Removes an entity form the DB based on Key.
         /// </summary>
-        /// <param name="entity"></param>
-        public Task<bool> Delete(T entity);
+        public Task<bool> DeleteAsync(T entity);
+
+        /// <summary>
+        /// Returns an entity if it finds any in cache/db.
+        /// </summary>
+        public Task<T?> GetAsync(Guid id);
+
     }
 }

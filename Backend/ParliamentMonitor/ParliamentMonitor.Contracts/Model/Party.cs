@@ -31,11 +31,5 @@ namespace ParliamentMonitor.Contracts.Model
 
         public bool Active {  get; set; }
 
-        public override bool Equals(object? obj)
-        {
-            if (obj == null) return false;
-            if (obj.GetType() != typeof(Party)) return false;
-            return ((Party)obj).Id == Id;
-        }
     }
 }
