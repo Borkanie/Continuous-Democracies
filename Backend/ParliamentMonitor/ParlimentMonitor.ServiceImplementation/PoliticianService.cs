@@ -2,9 +2,8 @@
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
+using ParliamentMonitor.ServiceImplementation.Utils;
 using StackExchange.Redis;
-using System.IO;
-using System.Text.Json;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
@@ -12,19 +11,18 @@ namespace ParliamentMonitor.ServiceImplementation
     {
         private AppDBContext _dbContext;       
 
-        public PoliticianService(AppDBContext context, IConnectionMultiplexer redis)  : base(redis,"politician")
+        public PoliticianService(AppDBContext context, IConnectionMultiplexer redis)  : base(redis,"politician", new PoliticianJsonSerializer())
         {
             _dbContext = context;
         }
 
         /*<inheritdoc/>*/
-        public async Task<Politician?> CreatePoliticanAsync(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
+        public Task<Politician?> CreatePoliticanAsync(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
         {
             try
             {
-                Politician politician = new Politician();
+                Politician politician = new Politician() { Id = Guid.NewGuid(), Party = party };
                 politician.Name = name;
-                politician.Party = party;
                 politician.WorkLocation = location;
                 politician.Gender = gender;
                 politician.Active = isCurrentlyActive;
@@ -36,13 +34,13 @@ namespace ParliamentMonitor.ServiceImplementation
                     throw new Exception("Already existing politician");
                 _dbContext.Politicians.Add(politician);
                 _dbContext.SaveChanges();
-                SetAsync(MakeKey(politician.Id.ToString()), politician);
-                return politician;
+                _ = SetAsync(MakeKey(politician.Id.ToString()), politician);
+                return Task.FromResult<Politician?>(politician);
             }
             catch(Exception ex)
             {
                 Console.WriteLine($"Error when creating Politician:{ex.Message}");
-                return null; 
+                return Task.FromResult<Politician?>(null); 
             }
             
         }
@@ -107,7 +105,7 @@ namespace ParliamentMonitor.ServiceImplementation
             var politicians = query.Take(number).ToList();
             foreach(var politician in politicians)
             {
-                SetAsync(MakeKey(politician.Id.ToString()), politician);
+                _ = SetAsync(MakeKey(politician.Id.ToString()), politician);
             }
             return politicians; // single SQL query executed here
 
@@ -123,7 +121,7 @@ namespace ParliamentMonitor.ServiceImplementation
         }
 
         /*<inheritdoc/>*/
-        public async Task<bool> UpdateAsync(Politician entity)
+        public Task<bool> UpdateAsync(Politician entity)
         {
             var old = GetAsync(entity.Id).Result;
             if (old!=null)
@@ -136,14 +134,14 @@ namespace ParliamentMonitor.ServiceImplementation
                 old.Name = entity.Name;
                 old.Active = entity.Active;
                 _dbContext.SaveChanges();
-                SetAsync(MakeKey(entity.Id.ToString()), entity);
-                return true;
+                _ = SetAsync(MakeKey(entity.Id.ToString()), entity);
+                return Task.FromResult(true);
             }
-            return false;
+            return Task.FromResult(false);
         }
 
         /*<inheritdoc/>*/
-        public async Task<Politician?> UpdatePoliticianActivityAsync(Guid id, bool isCurrentlyActive)
+        public Task<Politician?> UpdatePoliticianActivityAsync(Guid id, bool isCurrentlyActive)
         {
             var item = GetAsync(id).Result;
             if(item != null)
@@ -151,13 +149,13 @@ namespace ParliamentMonitor.ServiceImplementation
                 _dbContext.Update(item);
                 item.Active = isCurrentlyActive;
                 _dbContext.SaveChanges();
-                SetAsync(MakeKey(item.Id.ToString()), item);
+                _ = SetAsync(MakeKey(item.Id.ToString()), item);
             }
-            return item;
+            return Task.FromResult(item);
         }
 
         /*<inheritdoc/>*/
-        public async Task<Politician?> UpdatePoliticianAsync(Guid id, string? name = null, Party? party = null, WorkLocation? location = null, Gender? gender = null, bool? isCurrentlyActive = null, string? imageUrl = null)
+        public Task<Politician?> UpdatePoliticianAsync(Guid id, string? name = null, Party? party = null, WorkLocation? location = null, Gender? gender = null, bool? isCurrentlyActive = null, string? imageUrl = null)
         {
             var item = GetAsync(id).Result;
             if (item != null)
@@ -170,33 +168,37 @@ namespace ParliamentMonitor.ServiceImplementation
                 item.Active = isCurrentlyActive ?? item.Active;
                 item.ImageUrl = imageUrl ?? item.ImageUrl;
                 _dbContext.SaveChanges();
-                SetAsync(MakeKey(item.Id.ToString()), item);
+                _ = SetAsync(MakeKey(item.Id.ToString()), item);
             }
-            return item;
+            return Task.FromResult(item);
         }
 
         /*<inheritdoc/>*/
-        public async Task<bool> DeleteAsync(Politician entity)
+        public Task<bool> DeleteAsync(Politician entity)
         {
             if (_dbContext.Politicians.Find(entity) != null)
             {
                 _dbContext.Politicians.Remove(entity);
                 _dbContext.SaveChanges();
-                RemoveAsync(MakeKey(entity.Id.ToString()));
-                return true;
+                _ = RemoveAsync(MakeKey(entity.Id.ToString()));
+                return Task.FromResult(true);
             }
-            return false;
+            return Task.FromResult(false);
         }
 
         /*<inheritdoc/>*/
-        public async Task<Politician?> GetPoliticianAsync(string name)
+        public Task<Politician?> GetPoliticianAsync(string name)
         {
             var politician = getPoliticiansAsync().Result.FirstOrDefault(x => string.Equals(x.Name, name));
             if (politician != null)
-                return politician;
-            var value = _dbContext.Politicians.FirstOrDefault(x => String.Equals(x.Name.ToLower(), name.ToLower()));
-            SetAsync(MakeKey(value.Id.ToString()), value);
-            return value;
+                return Task.FromResult<Politician?>(politician);
+            politician = _dbContext.Politicians.FirstOrDefault(x => String.Equals(x.Name.ToLower(), name.ToLower()));
+            if(politician == null)
+            {
+                return Task.FromResult<Politician?>(null);
+            }
+            _ = SetAsync(MakeKey(politician.Id.ToString()), politician);
+            return Task.FromResult<Politician?>(politician);
         }
 
     }

@@ -23,15 +23,24 @@ namespace ContinousDemocracyAPI.Controllers
             [FromQuery] bool active,
             [FromQuery] int number = 100)
         {
-
-            return Ok(partyService.GetAllParties(active, number));
+            var parties = partyService.GetAllPartiesAsync(active, number).Result;
+            if(parties.Count == 0)
+            {
+                return NotFound("No parties found.");
+            }
+            return Ok(parties);
         }
 
         // GET api/voting/GetById/{id}
         [HttpGet("GetById/{id}")]
         public ActionResult<string> GetPartyById(Guid id)
         {
-            return Ok(partyService.GetParty(id));
+            var party = partyService.GetAsync(id).Result;
+            if (party == null)
+            {
+                return NotFound("Party not found.");
+            }
+            return Ok(party);
         }
 
 
@@ -42,8 +51,12 @@ namespace ContinousDemocracyAPI.Controllers
             [FromQuery] string? name = null,
             [FromQuery] string? acronym = null)
         {
-
-            return Ok(partyService.GetParty(name,acronym));
+            var party = partyService.GetPartyAsync(name, acronym).Result;
+            if (party == null)
+            {
+                return NotFound("No party found with the specified criteria.");
+            }
+            return Ok(party);
         }
     }
 }

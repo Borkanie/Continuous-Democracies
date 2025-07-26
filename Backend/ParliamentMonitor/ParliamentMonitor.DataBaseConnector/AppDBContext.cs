@@ -24,6 +24,12 @@ namespace ParliamentMonitor.DataBaseConnector
 
         }
 
+        public AppDBContext(string connectionString) : base(new DbContextOptionsBuilder<AppDBContext>().UseNpgsql(connectionString).Options)
+        {
+
+
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Color <-> string converter (ARGB hex string)

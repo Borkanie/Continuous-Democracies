@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -16,7 +17,10 @@ namespace ParliamentMonitor.Contracts.Model.Votes
 
         [JsonIgnore]
         public ISet<Vote> VoteResults { get; set; } = new HashSet<Vote>();
-
         public int VoteId { get; set; }
+
+        [NotMapped]
+        [JsonPropertyName("voteResultIds")]
+        public HashSet<Guid> VoteResultIds { get;set; } = new HashSet<Guid>();  
     }
 }

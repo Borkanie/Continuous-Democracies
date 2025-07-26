@@ -2,6 +2,7 @@
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
+using ParliamentMonitor.ServiceImplementation.Utils;
 using StackExchange.Redis;
 using System.Drawing;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -12,17 +13,17 @@ namespace ParliamentMonitor.ServiceImplementation
     {
         private readonly AppDBContext _dbContext;
 
-        public PartyService(AppDBContext context, IConnectionMultiplexer redis) : base(redis,"party")
+        public PartyService(AppDBContext context, IConnectionMultiplexer redis) : base(redis,"party", new PartyJsonSerializer())
         {
             _dbContext = context;
         }
 
         /*<inheritdoc/>*/
-        public async Task<Party?> CreatePartyAsync(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
+        public Task<Party?> CreatePartyAsync(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
         {
             try
             {
-                var newParty = new Party();
+                var newParty = new Party() { Id = Guid.NewGuid() };
                 newParty.Id = Guid.NewGuid();
                 newParty.Name = name;
                 if (acronym != null)
@@ -37,27 +38,32 @@ namespace ParliamentMonitor.ServiceImplementation
                 }
                 _dbContext.Parties.Add(newParty);
                 _dbContext.SaveChanges();
-                SetAsync(MakeKey(newParty.Id.ToString()), newParty);
-                return newParty;
+                _ = SetAsync(MakeKey(newParty.Id.ToString()), newParty);
+                return Task.FromResult<Party?>(newParty);
             }catch(Exception ex)
             {
                 Console.WriteLine($"Error when creating new party:{ex.Message}");
-                return null; 
+                return Task.FromResult<Party?>(null); 
             }
             
         }
 
         /*<inheritdoc/>*/
-        public async Task<Party?> GetAsync(Guid id)
+        public Task<Party?> GetAsync(Guid id)
         {
-            var cached = await GetAsync<Party>(MakeKey(id.ToString()));
+            var cached = GetAsync<Party>(MakeKey(id.ToString())).Result;
             if (cached != null)
-                return cached;
-            return _dbContext.Parties.Find(id);
+                return Task.FromResult<Party?>(cached);
+            cached = _dbContext.Parties.Find(id);
+            if(cached != null)
+            {
+                _ = SetAsync(MakeKey(cached.Id.ToString()), cached);
+            }
+            return Task.FromResult(cached);
         }
 
         /*<inheritdoc/>*/
-        public async Task<bool> UpdateAsync(Party item)
+        public Task<bool> UpdateAsync(Party item)
         {
             var oldItem = GetAsync(item.Id).Result;
             if (oldItem != null)
@@ -69,19 +75,25 @@ namespace ParliamentMonitor.ServiceImplementation
                 oldItem.Politicians = item.Politicians;
                 oldItem.Color = item.Color;
                 _dbContext.SaveChanges();
-                SetAsync(MakeKey(item.Id.ToString()), item);
-                return true;
+                _ = SetAsync(MakeKey(item.Id.ToString()), item);
+                return Task.FromResult(true);
             }
-            return false;
+            return Task.FromResult(false);
         }
 
         /*<inheritdoc/>*/
-        public async Task<IList<Party>> GetAllPartiesAsync(bool isActive = true, int number = 100)
+        public Task<IList<Party>> GetAllPartiesAsync(bool isActive = true, int number = 100)
         {
             var parties = getPartiesAsync(isActive, number).Result;
-            if (parties.Count == number)
-                return parties;
-            return _dbContext.Parties.Where(x => x.Active == isActive).Take(number).ToList();
+            if (parties.Count < number)
+            {
+                parties = _dbContext.Parties.Where(x => x.Active == isActive).Take(number).ToList();
+                foreach (var party in parties)
+                {
+                    _ = SetAsync(MakeKey(party.Id.ToString()), party);
+                }
+            }
+            return Task.FromResult(parties);
         }
 
         /*<inheritdoc/>*/
@@ -96,45 +108,49 @@ namespace ParliamentMonitor.ServiceImplementation
                 item.LogoUrl = logoUrl ?? item.LogoUrl;
                 item.Color = color ?? item.Color;
                 _dbContext.SaveChanges();
-                SetAsync(MakeKey(item.Id.ToString()), item);
+                _ = SetAsync(MakeKey(item.Id.ToString()), item);
             }
             return Task.FromResult(item);
         }
 
         /*<inheritdoc/>*/
-        public async Task<bool> DeleteAsync(Party entity)
+        public Task<bool> DeleteAsync(Party entity)
         {
             if (_dbContext.Parties.Find(entity.Id) != null)
             {
                 _dbContext.Parties.Remove(entity);
                 _dbContext.SaveChanges();
-                RemoveAsync(MakeKey(entity.Id.ToString()));
-                return true;
+                _ = RemoveAsync(MakeKey(entity.Id.ToString()));
+                return Task.FromResult(true);
             }
-            return false;
+            return Task.FromResult(false);
         }
 
         /*<inheritdoc/>*/
-        public async Task<Party?> GetPartyAsync(string? name = null, string? acronym = null)
+        public Task<Party?> GetPartyAsync(string? name = null, string? acronym = null)
         {
             var party = getPartiesAsync(true).Result.FirstOrDefault(x => (name != null && string.Equals(x.Name, name))
                                                     || ( acronym != null && string.Equals(x.Acronym, acronym)));
             if (party != null)
-                return party;
+                return Task.FromResult<Party?>(party);
             if (name != null)
             {
-                var value = _dbContext.Parties.FirstOrDefault(x => string.Equals(x.Name, name));
-                SetAsync(MakeKey(value.Id.ToString()), value);
-                return value;
+                var value = _dbContext.Parties.FirstOrDefault(x => string.Equals(x.Name.Trim(), name.Trim()));
+                if(value == null)
+                    return Task.FromResult<Party?>(null);
+                _ = SetAsync(MakeKey(value.Id.ToString()), value);
+                return Task.FromResult<Party?>(value);
             }
             if (acronym != null)
             {
                 var value = _dbContext.Parties.FirstOrDefault(x => string.Equals(x.Acronym, acronym));
-                SetAsync(MakeKey(value.Id.ToString()), value);
-                return value;
+                if(value == null)
+                    return Task.FromResult<Party?>(null);
+                _ = SetAsync(MakeKey(value.Id.ToString()), value);
+                return Task.FromResult<Party?>(value);
 
             }
-            return null;
+            return Task.FromResult<Party?>(null);
         }
 
         private async Task<IList<Party>> getPartiesAsync(bool isActive = true, int number = 100)

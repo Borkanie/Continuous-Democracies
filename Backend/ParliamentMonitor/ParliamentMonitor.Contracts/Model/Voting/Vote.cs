@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -17,12 +18,21 @@ namespace ParliamentMonitor.Contracts.Model.Votes
     }
     public class Vote : Entity
     {
-        public required Politician Politician { get; set; }
+        [JsonIgnore]
+        public Politician Politician { get; set; }
+
+        [NotMapped]
+        [JsonPropertyName("politicianId")]
+        public Guid? PoliticianId { get; set; }
 
         public VotePosition Position { get; set; } = VotePosition.Absent;
 
         [JsonIgnore]
-        public required Round Round {get;set;}
+        public Round Round {get;set;}
 
+
+        [NotMapped]
+        [JsonPropertyName("roundId")]
+        public Guid? RoundId { get; set; }
     }
 }

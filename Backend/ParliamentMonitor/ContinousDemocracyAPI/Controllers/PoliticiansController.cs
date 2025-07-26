@@ -9,20 +9,22 @@ namespace ContinousDemocracyAPI.Controllers
     public class PoliticiansController : ControllerBase
     {
         private readonly IPoliticianService<Politician> politicianService;
+        private readonly IPartyService<Party> partyService;
 
-        public PoliticiansController(IPoliticianService<Politician> politicianService)
+        public PoliticiansController(IPoliticianService<Politician> politicianService, IPartyService<Party> partyService)
         {
             this.politicianService = politicianService;
+            this.partyService = partyService;
         }
 
         // GET api/politicians/GetById/{id}
         [HttpGet("GetById/{id}")]
         public ActionResult<string> GetPoliticianById(Guid id)
         {
-            var politician = politicianService.GetPolitician(id);
+            var politician = politicianService.GetAsync(id).Result;
             if(politician == null)
             {
-                return Ok("");
+                return NotFound("Politician not found");
             }
             return Ok(politician!);
         }
@@ -32,26 +34,33 @@ namespace ContinousDemocracyAPI.Controllers
         [HttpGet("GetByName/{name}")]
         public ActionResult<string> GetPoliticianByName(string name)
         {
-            var politician = politicianService.GetPolitician(name);
+            var politician = politicianService.GetPoliticianAsync(name);
             if (politician == null)
             {
-                return Ok("");
+                return NotFound("No Politician with this name found");
             }
             return Ok(politician!);
         }
 
         // GET api/politicians/query
         // Example: api/politicians/query?id1=1&id2=2
-        [HttpGet("query")]
+        [HttpGet("getAllPoliticians")]
         public ActionResult<string> GetAllPoliticians(
-            [FromQuery] Party? party = null, 
+            [FromQuery] string? partyAcronym = null,
+            [FromQuery] string? partyName = null,
             [FromQuery] bool? isActive = null,
             [FromQuery] WorkLocation? location = null, 
             [FromQuery] Gender? gender = null,
             [FromQuery] int number = 100)
         {
+            var party = partyService.GetPartyAsync(partyName, partyAcronym).Result;
 
-            return Ok(politicianService.GetAllPoliticians(party,isActive,location,gender,number));
+            var politicians = politicianService.GetAllPoliticiansAsync(party, isActive, location, gender, number).Result;
+            if(politicians.Count == 0)
+            {
+                return NotFound("No politicians found with the specified criteria.");
+            }
+            return Ok(politicians);
         }
 
     }

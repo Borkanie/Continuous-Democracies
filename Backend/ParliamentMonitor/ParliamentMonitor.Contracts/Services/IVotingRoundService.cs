@@ -14,7 +14,7 @@ namespace ParliamentMonitor.Contracts.Services
         /// Casts a vote for a given politican in a given voting round.
         /// A politician can only give a single vote per round.
         /// </summary>
-        public Task<Vote?> CastVoteAsync(T container, Politician politician, VotePosition position);
+        public Task<Vote?> RegisterVoteAsync(T container, Politician politician, VotePosition position);
 
         /// <summary>
         /// Creates a new voting round in the DB.
@@ -34,7 +34,7 @@ namespace ParliamentMonitor.Contracts.Services
         /// <param name="votes">The list of votes for all present individuals.</param>
         /// <param name="Description">Short descriptiona bout the vote.</param>
         /// <returns></returns>
-        public Task<T?> UpdateVoteResultAsync(Guid id, DateTime? time = null, List<Vote>? votes = null, string? Description = null);
+        public Task<T?> UpdateVoteResultAsync(Guid id, DateTime? time = null, ISet<Vote>? votes = null, string? Description = null);
 
 
         /// <summary>

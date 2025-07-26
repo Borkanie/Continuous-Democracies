@@ -1,10 +1,5 @@
 ﻿using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParliamentMonitor.Contracts.Services
 {
@@ -15,5 +10,11 @@ namespace ParliamentMonitor.Contracts.Services
         /// </summary>
         public Task<T> CreateNewVote(Round round, Politician politician, VotePosition votePosition);
 
+        /// <summary>
+        /// Removes reference to vote from cache and db withouth touching round.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<bool> DeleteWithouthRemovingFromRound(Guid id);
     }
 }

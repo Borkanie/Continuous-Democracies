@@ -3,33 +3,35 @@ using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
+using ParliamentMonitor.ServiceImplementation.Utils;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
-    internal class VotingRoundService : RedisService, IVotingRoundService<Round>
+    public class VotingRoundService : RedisService, IVotingRoundService<Round>
     {
         private readonly AppDBContext _dbContext;
         private readonly IVotingService<Vote> _votingService;
-
-        public VotingRoundService(AppDBContext context, IVotingService<Vote> votingService, IConnectionMultiplexer redis) : base(redis, "round")
+        private readonly IPoliticianService<Politician> _politicianService;
+        public VotingRoundService(
+            AppDBContext context,
+            IVotingService<Vote> votingService,
+            IPoliticianService<Politician> politicianService,
+            IConnectionMultiplexer redis
+        )
+            : base(redis, "round", new VotingRoundJsonSerializer()) // Pass your custom converter here
         {
             _dbContext = context;
             _votingService = votingService;
+            _politicianService = politicianService;
         }
 
         /// <inheritdoc/>
-        public async Task<Round?> CreateVotingRoundAsync(string title, DateTime time, int id = 0, List<Vote>? votes = null, string? description = null)
+        public Task<Round?> CreateVotingRoundAsync(string title, DateTime time, int id = 0, List<Vote>? votes = null, string? description = null)
         {
             try
             {
-                var round = new Round();
+                var round = new Round() { Id = Guid.NewGuid() };
                 round.Title = title;
                 round.VoteDate = time;
                 round.VoteId = id;
@@ -41,34 +43,53 @@ namespace ParliamentMonitor.ServiceImplementation
                 round.Description = description ?? string.Empty;
                 _dbContext.VotingRounds.Add(round);
                 _dbContext.SaveChanges();
-                SetAsync(MakeKey(round.VoteId.ToString()), round);
-                return round;
+                _ = SetAsync(MakeKey(round.VoteId.ToString()), round);
+                return Task.FromResult<Round?>(round);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error when creating Voting Round:{ex.Message}");
-                return null;
+                return Task.FromResult<Round?>(null);
             }
         }
 
         /// <inheritdoc/>
-        public async Task<bool> DeleteAsync(Round entity)
+        public Task<bool> DeleteAsync(Round entity)
         {
             if (_dbContext.VotingRounds.Contains(entity))
             {
+                foreach (var vote in entity.VoteResults)
+                {
+                    _votingService.DeleteWithouthRemovingFromRound(vote.Id).Wait();
+                }
                 _dbContext.VotingRounds.Remove(entity);
                 _dbContext.SaveChanges();
-                RemoveAsync(MakeKey(entity.VoteId.ToString()));
-                return true;
+                _ = RemoveAsync(MakeKey(entity.VoteId.ToString()));
+                return Task.FromResult(true);
             }
-            return false;
+            return Task.FromResult(false);
         }
 
-        public async Task<Round?> GetVotingRoundAsync(int votingRoundId)
+        /// <summary>
+        /// Works directly with DB.
+        /// Gets the voting round based off the voting number.
+        /// </summary>
+        /// <param name="votingRoundId"></param>
+        /// <returns></returns>
+        public Task<Round?> GetVotingRoundAsync(int votingRoundId)
         {
-            var round = GetAsync<Round>(MakeKey(votingRoundId.ToString())).Result;
-            if(round == null)
-                 round = _dbContext.VotingRounds.Find(votingRoundId);
+            Round? round = GetRoundWithVotesFromCache(votingRoundId);
+            if (round != null)
+            {
+                return Task.FromResult<Round?>(round);
+            }
+            round = GetRoundWithVotesFromDataBase(votingRoundId);
+            return Task.FromResult(round);
+        }
+
+        private Round? GetRoundWithVotesFromDataBase(int votingRoundId)
+        {
+            Round? round = _dbContext.VotingRounds.Find(votingRoundId);
             if (round == null)
                 Console.WriteLine($"No round with Id{votingRoundId} found in db");
             else
@@ -77,15 +98,43 @@ namespace ParliamentMonitor.ServiceImplementation
                 if (round.VoteResults.Count == 0)
                 {
                     Console.WriteLine($"Loading vote results for round{round.VoteId}");
-                    foreach(var id in round.VoteResults)
-                    round.VoteResults = _votingService.GetAsync()
-                      //_dbContext.Votes.Include(x => x.Politician).Include(x => x.Politician.Party).ToHashSet();
+                    foreach (var id in round.VoteResults)
+                        round.VoteResults = _dbContext.Votes.Include(x => x.Politician).Include(x => x.Politician.Party).ToHashSet();
                 }
             }
+
             return round;
         }
 
-        public async Task<bool> UpdateAsync(Round voteResult)
+        private Round? GetRoundWithVotesFromCache(int votingRoundId)
+        {
+            var round = GetAsync<Round>(MakeKey(votingRoundId.ToString())).Result;
+            if (round != null)
+            {
+                Console.WriteLine($"Returning round:{votingRoundId}");
+                if (round.VoteResults.Count < round.VoteResultIds.Count)
+                {
+                    foreach (var id in round.VoteResultIds)
+                    {
+                        if (round.VoteResults.Any(x => x.Id == id))
+                            continue;
+                        var vote = _votingService.GetAsync(id).Result;
+                        if(vote == null)
+                        {
+                            Console.WriteLine($"Vote with Id {id} not found in cache");
+                            continue;
+                        }
+                        round.VoteResults.Add(vote);
+                    }
+                }
+
+            }
+
+            return round;
+        }
+
+        /// <inheritdoc/>
+        public Task<bool> UpdateAsync(Round voteResult)
         {
             var vote = _dbContext.VotingRounds.FirstOrDefault(x => x.Id == voteResult.Id);
             if (vote != null)
@@ -95,18 +144,19 @@ namespace ParliamentMonitor.ServiceImplementation
                 vote.VoteResults = voteResult.VoteResults;
                 vote.Title = voteResult.Title;
                 _dbContext.SaveChanges();
-                SetAsync(MakeKey(vote.Id.ToString()), vote);
-                return true;
+                _ = SetAsync(MakeKey(vote.Id.ToString()), vote);
+                return Task.FromResult(true);
             }
-            return false;
+            return Task.FromResult(false);
         }
 
-        public async Task<Round?> UpdateVoteResultAsync(Guid id, DateTime? time = null, List<Vote>? votes = null, string? Description = null)
+        /// <inheritdoc/>
+        public Task<Round?> UpdateVoteResultAsync(Guid id, DateTime? time = null, ISet<Vote>? votes = null, string? Description = null)
         {
             var round = _dbContext.VotingRounds.Find(id);
             if (round == null)
             {
-                return null;
+                return Task.FromResult<Round?>(null);
             }
             _dbContext.Update(round);
             if (time != null)
@@ -115,82 +165,109 @@ namespace ParliamentMonitor.ServiceImplementation
             }
             if (votes != null)
             {
-                foreach (var vote in round.VoteResults)
-                    _dbContext.Remove(vote);
+                UpdateExistingVoteOrRemoveIfNoLongerPresentAndDeleteFromCacheAndDB(votes, round);
                 round.VoteResults.Clear();
                 foreach (var vote in votes)
-                    round.VoteResults.Add(vote);
+                {
+                    if (!round.VoteResults.Contains(vote))
+                        round.VoteResults.Add(vote);
+                }
             }
             if (Description != null)
             {
                 round.Description = Description;
             }
             _dbContext.SaveChanges();
-            SetAsync(MakeKey(round.Id.ToString()), round);
-            return round;
+            _ = SetAsync(MakeKey(round.Id.ToString()), round);
+            return Task.FromResult<Round?>(round);
         }
 
-        /// <inheritdoc/>
-        public async Task<ISet<Round>> GetAllRoundsFromDBAsync(int number = 100)
+        private void UpdateExistingVoteOrRemoveIfNoLongerPresentAndDeleteFromCacheAndDB(ISet<Vote> votes, Round round)
         {
-            return _dbContext.VotingRounds.Take(number).ToHashSet();
-        }
-
-        public async Task<Vote?> CastVoteAsync(Round container, Politician politician, VotePosition position)
-        {
-            try
+            foreach (var vote in round.VoteResults)
             {
-                if (_dbContext.VotingRounds.Find(container) == null)
-                    throw new Exception($"Voting round {container} not registered yet");
-                _dbContext.Update(container);
-                var vote = container.VoteResults.FirstOrDefault(x => x.Politician == politician);
-                if (vote == null)
+                if (votes.Contains(vote))
                 {
-                    vote = new Vote();
-                    vote.Position = position;
-                    vote.Politician = politician;
-                    vote.Name = $"Vote from {politician.Name} during {container.Name}";
-                    container.VoteResults.Add(vote);
+                    // If the vote already exists, update it
+                    var existingVote = round.VoteResults.FirstOrDefault(x => x.Id == vote.Id);
+                    if (existingVote != null)
+                    {
+                        existingVote.Position = vote.Position;
+                        existingVote.Politician = vote.Politician; // Update politician if needed
+                    }
                 }
                 else
                 {
-                    vote.Position = position;
+                    // If the vote does not exist, add it
+                    _votingService.DeleteWithouthRemovingFromRound(vote.Id).Wait();
+                    round.VoteResults.Remove(vote);
                 }
-                _dbContext.Votes.Add(vote);
-                _dbContext.SaveChanges();
-                return vote;
+            }
+        }
+
+        /// <inheritdoc/>
+        public Task<ISet<Round>> GetAllRoundsFromDBAsync(int number = 100)
+        {
+            return Task.FromResult<ISet<Round>>(_dbContext.VotingRounds.Take(number).ToHashSet());
+        }
+
+        /// <inheritdoc/>
+        public Task<Vote?> RegisterVoteAsync(Round container, Politician politician, VotePosition position)
+        {
+            try
+            {
+                checkVotingRoundAndPolitciansExist(container, politician);
+
+                var vote = _votingService.CreateNewVote(container, politician, position).Result;
+                if (vote != null)
+                {
+                    _dbContext.Update(container);
+                    container.VoteResults.Add(vote);
+                    _dbContext.SaveChanges();
+                    _ = SetAsync(MakeKey(container.Id.ToString()), container);
+                }
+                return Task.FromResult(vote);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error when casting vote for {politician.Name} for law {container.Name} : {ex.Message}");
-                return null;
+                return Task.FromResult<Vote?>(null);
             }
 
         }
 
-        public async Task<Vote?> UpdateCastedVoteAsync(Round container, Politician politician, VotePosition position)
+        private void checkVotingRoundAndPolitciansExist(Round container, Politician politician)
+        {
+            if (_politicianService.GetAsync(politician.Id).Result == null)
+                throw new Exception($"Politician {politician.Name} not registered yet");
+
+            if (GetAsync(container.Id).Result == null)
+                throw new Exception($"Voting round {container} not registered yet");
+        }
+
+        public Task<Vote?> UpdateCastedVoteAsync(Round container, Politician politician, VotePosition position)
         {
             if (_dbContext.VotingRounds.Find(container) == null)
                 throw new Exception($"Voting round {container} not registered yet");
             var vote = container.VoteResults.FirstOrDefault(x => x.Politician == politician);
             if (vote == null)
             {
-                return null;
+                return Task.FromResult<Vote?>(null);
             }
             _dbContext.Update(vote);
             vote.Position = position;
             _dbContext.SaveChanges();
-            SetAsync(MakeKey(vote.Id.ToString()), vote);
-            return vote;
+            _ = SetAsync(MakeKey(vote.Id.ToString()), vote);
+            return Task.FromResult<Vote?>(vote);
         }
 
         /// <inheritdoc/>
-        public async Task<Round?> GetAsync(Guid id)
+        public Task<Round?> GetAsync(Guid id)
         {
             var cached = GetAsync<Round>(id.ToString()).Result;
             if (cached != null)
-                return cached;
-            return _dbContext.VotingRounds.FirstOrDefault(x => x.Id == id);
+                return Task.FromResult<Round?>(cached);
+            return Task.FromResult(_dbContext.VotingRounds.FirstOrDefault(x => x.Id == id));
         }
     }
 }
