@@ -16,5 +16,7 @@ namespace ParliamentMonitor.Contracts.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public Task<bool> DeleteWithouthRemovingFromRound(Guid id);
+
+        public void SetRoundService(IVotingRoundService<Round> votingRoundService);
     }
 }

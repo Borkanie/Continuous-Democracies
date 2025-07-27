@@ -3,12 +3,10 @@ using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
-using ParliamentMonitor.ServiceImplementation.Utils;
-using StackExchange.Redis;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
-    public class VotingRoundService : RedisService, IVotingRoundService<Round>
+    public class VotingRoundService : IVotingRoundService<Round>
     {
         private readonly AppDBContext _dbContext;
         private readonly IVotingService<Vote> _votingService;
@@ -16,10 +14,7 @@ namespace ParliamentMonitor.ServiceImplementation
         public VotingRoundService(
             AppDBContext context,
             IVotingService<Vote> votingService,
-            IPoliticianService<Politician> politicianService,
-            IConnectionMultiplexer redis
-        )
-            : base(redis, "round", new VotingRoundJsonSerializer()) // Pass your custom converter here
+            IPoliticianService<Politician> politicianService)
         {
             _dbContext = context;
             _votingService = votingService;
@@ -43,7 +38,6 @@ namespace ParliamentMonitor.ServiceImplementation
                 round.Description = description ?? string.Empty;
                 _dbContext.VotingRounds.Add(round);
                 _dbContext.SaveChanges();
-                _ = SetAsync(MakeKey(round.VoteId.ToString()), round);
                 return Task.FromResult<Round?>(round);
             }
             catch (Exception ex)
@@ -64,7 +58,6 @@ namespace ParliamentMonitor.ServiceImplementation
                 }
                 _dbContext.VotingRounds.Remove(entity);
                 _dbContext.SaveChanges();
-                _ = RemoveAsync(MakeKey(entity.VoteId.ToString()));
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -78,59 +71,14 @@ namespace ParliamentMonitor.ServiceImplementation
         /// <returns></returns>
         public Task<Round?> GetVotingRoundAsync(int votingRoundId)
         {
-            Round? round = GetRoundWithVotesFromCache(votingRoundId);
-            if (round != null)
-            {
-                return Task.FromResult<Round?>(round);
-            }
-            round = GetRoundWithVotesFromDataBase(votingRoundId);
-            return Task.FromResult(round);
-        }
+            // Use SingleOrDefault to fetch the round with included VoteResults by VoteId
+            Round? round = _dbContext.VotingRounds
+                .Include(x => x.VoteResults)
+                .FirstOrDefault(x => x.VoteId == votingRoundId);
 
-        private Round? GetRoundWithVotesFromDataBase(int votingRoundId)
-        {
-            Round? round = _dbContext.VotingRounds.Find(votingRoundId);
             if (round == null)
                 Console.WriteLine($"No round with Id{votingRoundId} found in db");
-            else
-            {
-                Console.WriteLine($"Returning round:{votingRoundId}");
-                if (round.VoteResults.Count == 0)
-                {
-                    Console.WriteLine($"Loading vote results for round{round.VoteId}");
-                    foreach (var id in round.VoteResults)
-                        round.VoteResults = _dbContext.Votes.Include(x => x.Politician).Include(x => x.Politician.Party).ToHashSet();
-                }
-            }
-
-            return round;
-        }
-
-        private Round? GetRoundWithVotesFromCache(int votingRoundId)
-        {
-            var round = GetAsync<Round>(MakeKey(votingRoundId.ToString())).Result;
-            if (round != null)
-            {
-                Console.WriteLine($"Returning round:{votingRoundId}");
-                if (round.VoteResults.Count < round.VoteResultIds.Count)
-                {
-                    foreach (var id in round.VoteResultIds)
-                    {
-                        if (round.VoteResults.Any(x => x.Id == id))
-                            continue;
-                        var vote = _votingService.GetAsync(id).Result;
-                        if(vote == null)
-                        {
-                            Console.WriteLine($"Vote with Id {id} not found in cache");
-                            continue;
-                        }
-                        round.VoteResults.Add(vote);
-                    }
-                }
-
-            }
-
-            return round;
+            return Task.FromResult(round);
         }
 
         /// <inheritdoc/>
@@ -144,7 +92,6 @@ namespace ParliamentMonitor.ServiceImplementation
                 vote.VoteResults = voteResult.VoteResults;
                 vote.Title = voteResult.Title;
                 _dbContext.SaveChanges();
-                _ = SetAsync(MakeKey(vote.Id.ToString()), vote);
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -178,7 +125,6 @@ namespace ParliamentMonitor.ServiceImplementation
                 round.Description = Description;
             }
             _dbContext.SaveChanges();
-            _ = SetAsync(MakeKey(round.Id.ToString()), round);
             return Task.FromResult<Round?>(round);
         }
 
@@ -224,7 +170,6 @@ namespace ParliamentMonitor.ServiceImplementation
                     _dbContext.Update(container);
                     container.VoteResults.Add(vote);
                     _dbContext.SaveChanges();
-                    _ = SetAsync(MakeKey(container.Id.ToString()), container);
                 }
                 return Task.FromResult(vote);
             }
@@ -257,17 +202,13 @@ namespace ParliamentMonitor.ServiceImplementation
             _dbContext.Update(vote);
             vote.Position = position;
             _dbContext.SaveChanges();
-            _ = SetAsync(MakeKey(vote.Id.ToString()), vote);
             return Task.FromResult<Vote?>(vote);
         }
 
         /// <inheritdoc/>
         public Task<Round?> GetAsync(Guid id)
         {
-            var cached = GetAsync<Round>(id.ToString()).Result;
-            if (cached != null)
-                return Task.FromResult<Round?>(cached);
-            return Task.FromResult(_dbContext.VotingRounds.FirstOrDefault(x => x.Id == id));
+            return Task.FromResult(_dbContext.VotingRounds.Include(x => x.VoteResults).FirstOrDefault(x => x.Id == id));
         }
     }
 }

@@ -3,22 +3,15 @@ using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
 using ParliamentMonitor.ServiceImplementation;
-using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add Redis singleton
-builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-{
-    var configuration = builder.Configuration.GetConnectionString("Redis");
-    return ConnectionMultiplexer.Connect(configuration);
-});
 
 // Add services to the container.
 builder.Services.AddSingleton(new AppDBContext(builder.Configuration.GetConnectionString("RDS")!));
-builder.Services.AddScoped<IVotingService<Vote>, VotingService>();
 builder.Services.AddScoped<IPartyService<Party>, PartyService>();
 builder.Services.AddScoped<IPoliticianService<Politician>, PoliticianService>();
+builder.Services.AddScoped<IVotingService<Vote>, VotingService>();
 builder.Services.AddScoped<IVotingRoundService<Round>, VotingRoundService>();
 builder.Services.AddControllers();
 
@@ -42,3 +35,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+app.Services.GetRequiredService<IVotingService<Vote>>().SetRoundService(app.Services.GetRequiredService<IVotingRoundService<Round>>());

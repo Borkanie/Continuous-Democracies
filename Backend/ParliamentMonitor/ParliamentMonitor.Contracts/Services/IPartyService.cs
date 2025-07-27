@@ -9,7 +9,6 @@ namespace ParliamentMonitor.Contracts.Services
     /// </summary>
     public interface IPartyService<T> : IDBMService<T> where T: Party
     {
-
         /// <summary>
         /// Returns a party by its unique identifier.
         /// </summary>

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-
-namespace ParliamentMonitor.Contracts.Model
+﻿namespace ParliamentMonitor.Contracts.Model
 {
     public enum Gender
     {
@@ -35,12 +32,7 @@ namespace ParliamentMonitor.Contracts.Model
         /// <summary>
         /// The party the politician belongs to.
         /// </summary>
-        [JsonIgnore]
         public Party Party { get; set; }
-
-        [NotMapped]
-        [JsonPropertyName("partyId")]
-        public Guid? PartyId { get; set; }
 
         /// <summary>
         /// True if the politician is currently in active an official capacity, false otherwise.
