@@ -17,7 +17,6 @@ namespace ContinousDemocracyAPI.Controllers
             this.partyService = partyService;
         }
 
-        // GET api/party/all
         [HttpGet("all")]
         public ActionResult<string> GetAllPartys(
             [FromQuery] bool active,
@@ -31,8 +30,7 @@ namespace ContinousDemocracyAPI.Controllers
             return Ok(parties);
         }
 
-        // GET api/voting/GetById/{id}
-        [HttpGet("GetById/{id}")]
+        [HttpGet("GetById/")]
         public ActionResult<string> GetPartyById(Guid id)
         {
             var party = partyService.GetAsync(id).Result;

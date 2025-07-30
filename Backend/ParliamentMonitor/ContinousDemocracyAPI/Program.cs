@@ -35,5 +35,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-app.Services.GetRequiredService<IVotingService<Vote>>().SetRoundService(app.Services.GetRequiredService<IVotingRoundService<Round>>());

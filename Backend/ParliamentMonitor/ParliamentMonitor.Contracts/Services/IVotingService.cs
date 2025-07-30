@@ -10,13 +10,8 @@ namespace ParliamentMonitor.Contracts.Services
         /// </summary>
         public Task<T> CreateNewVote(Round round, Politician politician, VotePosition votePosition);
 
-        /// <summary>
-        /// Removes reference to vote from cache and db withouth touching round.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Task<bool> DeleteWithouthRemovingFromRound(Guid id);
+        public Task<List<Vote>> GetAllVotesForRound(Guid roundId);
 
-        public void SetRoundService(IVotingRoundService<Round> votingRoundService);
+        public Task<List<Vote>> GetAllVotesForRound(int roundVoteId);
     }
 }

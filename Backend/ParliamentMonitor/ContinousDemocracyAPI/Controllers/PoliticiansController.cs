@@ -17,9 +17,8 @@ namespace ContinousDemocracyAPI.Controllers
             this.partyService = partyService;
         }
 
-        // GET api/politicians/GetById/{id}
-        [HttpGet("GetById/{id}")]
-        public ActionResult<string> GetPoliticianById(Guid id)
+        [HttpGet("GetById/")]
+        public ActionResult<string> GetPoliticianById([FromQuery] Guid id)
         {
             var politician = politicianService.GetAsync(id).Result;
             if(politician == null)
@@ -29,10 +28,8 @@ namespace ContinousDemocracyAPI.Controllers
             return Ok(politician!);
         }
 
-
-        // GET api/politicians/GetByName/{name}
-        [HttpGet("GetByName/{name}")]
-        public ActionResult<string> GetPoliticianByName(string name)
+        [HttpGet("GetByName/")]
+        public ActionResult<string> GetPoliticianByName([FromQuery] string name)
         {
             var politician = politicianService.GetPoliticianAsync(name);
             if (politician == null)

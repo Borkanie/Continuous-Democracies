@@ -9,22 +9,16 @@ namespace ParliamentMonitor.ServiceImplementation
     public class VotingService : IVotingService<Vote>
     {
         private readonly AppDBContext _dbContext;
-        private IVotingRoundService<Round>? _votingRoundService;
 
         public VotingService(AppDBContext context,IPoliticianService<Politician> politicianService) 
         {
             _dbContext = context;
         }
 
-        public void SetRoundService(IVotingRoundService<Round> votingRoundService)
-        {
-            _votingRoundService = votingRoundService;
-        }
-
         /// <inheritdoc/>
         public Task<Vote> CreateNewVote(Round round, Politician politician, VotePosition votePosition)
         {
-            if (round.VoteResults.Any(x => x.Politician.Id == politician.Id))
+            if (_dbContext.Votes.Any(x => x.Round.Id == round.Id && x.Politician.Id == politician.Id))
             {
                 throw new InvalidOperationException("Politician has already voted in this round.");
             }
@@ -38,18 +32,14 @@ namespace ParliamentMonitor.ServiceImplementation
 
             _dbContext.Votes.Add(vote);
             _dbContext.SaveChanges();
-            AddVoteToRound(round, vote);
             return Task.FromResult(vote);
 
         }
 
-        private void AddVoteToRound(Round round, Vote vote)
+        /// <inheritdoc/>
+        public Task<List<Vote>> GetAllVotesForRound(Guid roundId)
         {
-            round.VoteResults.Add(vote);
-            if (_votingRoundService!=null)
-            {
-                _ = _votingRoundService.UpdateVoteResultAsync(round.Id, votes: round.VoteResults);
-            } 
+            return Task.FromResult(_dbContext.Votes.Include(x => x.Politician).Include(x => x.Round).Where(x => x.Round.Id == roundId).ToList());
         }
 
         /// <inheritdoc/>
@@ -57,35 +47,12 @@ namespace ParliamentMonitor.ServiceImplementation
         {
             if (_dbContext.Votes.Contains(entity))
             {
-                RemoveEntityFromRoundDbAndCache(entity);
+                _dbContext.Votes.Remove(entity);
+                _dbContext.SaveChanges();
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
         }
-
-        private void RemoveEntityFromRoundDbAndCache(Vote entity)
-        {
-            entity.Round.VoteResults.Remove(entity);
-            if (_votingRoundService != null)
-            {
-                _ = _votingRoundService.UpdateVoteResultAsync(entity.Round.Id, votes: entity.Round.VoteResults);
-            }
-        }
-
-        /// <inheritdoc/>
-        public Task<bool> DeleteWithouthRemovingFromRound(Guid id)
-        {
-            var entity = GetAsync(id).Result;
-            if (entity != null)
-            {
-                _dbContext.Votes.Remove(entity);
-                _dbContext.VotingRounds.Update(entity.Round);
-                return Task.FromResult(true);
-            }
-            return Task.FromResult(true);
-        }
-
-        
 
         /// <inheritdoc/>
         public Task<Vote?> GetAsync(Guid id)
@@ -103,16 +70,16 @@ namespace ParliamentMonitor.ServiceImplementation
                 vote.Position = entity.Position;
                 vote.Politician = entity.Politician;
                 vote.Name = entity.Name;
-                if(entity.Round != vote.Round)
-                {
-                    RemoveEntityFromRoundDbAndCache(vote);
-                    vote.Round = entity.Round;
-                    AddVoteToRound(vote.Round, vote);
-                }
+                vote.Round = entity.Round;
                 _dbContext.SaveChanges();
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
+        }
+
+        public Task<List<Vote>> GetAllVotesForRound(int roundVoteId)
+        {
+            return Task.FromResult(_dbContext.Votes.Include(x => x.Politician).Include(x => x.Round).Where(x => x.Round.VoteId == roundVoteId).ToList());
         }
     }
 }

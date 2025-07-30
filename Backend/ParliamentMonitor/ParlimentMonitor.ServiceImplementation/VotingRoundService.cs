@@ -22,7 +22,7 @@ namespace ParliamentMonitor.ServiceImplementation
         }
 
         /// <inheritdoc/>
-        public Task<Round?> CreateVotingRoundAsync(string title, DateTime time, int id = 0, List<Vote>? votes = null, string? description = null)
+        public Task<Round?> CreateVotingRoundAsync(string title, DateTime time, int id = 0, string? description = null)
         {
             try
             {
@@ -30,11 +30,6 @@ namespace ParliamentMonitor.ServiceImplementation
                 round.Title = title;
                 round.VoteDate = time;
                 round.VoteId = id;
-                if (votes != null)
-                {
-                    foreach (var vote in votes)
-                        round.VoteResults.Add(vote);
-                }
                 round.Description = description ?? string.Empty;
                 _dbContext.VotingRounds.Add(round);
                 _dbContext.SaveChanges();
@@ -52,10 +47,6 @@ namespace ParliamentMonitor.ServiceImplementation
         {
             if (_dbContext.VotingRounds.Contains(entity))
             {
-                foreach (var vote in entity.VoteResults)
-                {
-                    _votingService.DeleteWithouthRemovingFromRound(vote.Id).Wait();
-                }
                 _dbContext.VotingRounds.Remove(entity);
                 _dbContext.SaveChanges();
                 return Task.FromResult(true);
@@ -72,9 +63,7 @@ namespace ParliamentMonitor.ServiceImplementation
         public Task<Round?> GetVotingRoundAsync(int votingRoundId)
         {
             // Use SingleOrDefault to fetch the round with included VoteResults by VoteId
-            Round? round = _dbContext.VotingRounds
-                .Include(x => x.VoteResults)
-                .FirstOrDefault(x => x.VoteId == votingRoundId);
+            Round? round = _dbContext.VotingRounds.FirstOrDefault(x => x.VoteId == votingRoundId);
 
             if (round == null)
                 Console.WriteLine($"No round with Id{votingRoundId} found in db");
@@ -89,7 +78,6 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 _dbContext.Update(vote);
                 vote.Description = voteResult.Description;
-                vote.VoteResults = voteResult.VoteResults;
                 vote.Title = voteResult.Title;
                 _dbContext.SaveChanges();
                 return Task.FromResult(true);
@@ -98,7 +86,7 @@ namespace ParliamentMonitor.ServiceImplementation
         }
 
         /// <inheritdoc/>
-        public Task<Round?> UpdateVoteResultAsync(Guid id, DateTime? time = null, ISet<Vote>? votes = null, string? Description = null)
+        public Task<Round?> UpdateVoteResultAsync(Guid id, DateTime? time = null, string? Description = null)
         {
             var round = _dbContext.VotingRounds.Find(id);
             if (round == null)
@@ -110,45 +98,12 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 round.VoteDate = time.Value;
             }
-            if (votes != null)
-            {
-                UpdateExistingVoteOrRemoveIfNoLongerPresentAndDeleteFromCacheAndDB(votes, round);
-                round.VoteResults.Clear();
-                foreach (var vote in votes)
-                {
-                    if (!round.VoteResults.Contains(vote))
-                        round.VoteResults.Add(vote);
-                }
-            }
             if (Description != null)
             {
                 round.Description = Description;
             }
             _dbContext.SaveChanges();
             return Task.FromResult<Round?>(round);
-        }
-
-        private void UpdateExistingVoteOrRemoveIfNoLongerPresentAndDeleteFromCacheAndDB(ISet<Vote> votes, Round round)
-        {
-            foreach (var vote in round.VoteResults)
-            {
-                if (votes.Contains(vote))
-                {
-                    // If the vote already exists, update it
-                    var existingVote = round.VoteResults.FirstOrDefault(x => x.Id == vote.Id);
-                    if (existingVote != null)
-                    {
-                        existingVote.Position = vote.Position;
-                        existingVote.Politician = vote.Politician; // Update politician if needed
-                    }
-                }
-                else
-                {
-                    // If the vote does not exist, add it
-                    _votingService.DeleteWithouthRemovingFromRound(vote.Id).Wait();
-                    round.VoteResults.Remove(vote);
-                }
-            }
         }
 
         /// <inheritdoc/>
@@ -168,7 +123,6 @@ namespace ParliamentMonitor.ServiceImplementation
                 if (vote != null)
                 {
                     _dbContext.Update(container);
-                    container.VoteResults.Add(vote);
                     _dbContext.SaveChanges();
                 }
                 return Task.FromResult(vote);
@@ -190,25 +144,10 @@ namespace ParliamentMonitor.ServiceImplementation
                 throw new Exception($"Voting round {container} not registered yet");
         }
 
-        public Task<Vote?> UpdateCastedVoteAsync(Round container, Politician politician, VotePosition position)
-        {
-            if (_dbContext.VotingRounds.Find(container) == null)
-                throw new Exception($"Voting round {container} not registered yet");
-            var vote = container.VoteResults.FirstOrDefault(x => x.Politician == politician);
-            if (vote == null)
-            {
-                return Task.FromResult<Vote?>(null);
-            }
-            _dbContext.Update(vote);
-            vote.Position = position;
-            _dbContext.SaveChanges();
-            return Task.FromResult<Vote?>(vote);
-        }
-
         /// <inheritdoc/>
         public Task<Round?> GetAsync(Guid id)
         {
-            return Task.FromResult(_dbContext.VotingRounds.Include(x => x.VoteResults).FirstOrDefault(x => x.Id == id));
+            return Task.FromResult(_dbContext.VotingRounds.FirstOrDefault(x => x.Id == id));
         }
     }
 }

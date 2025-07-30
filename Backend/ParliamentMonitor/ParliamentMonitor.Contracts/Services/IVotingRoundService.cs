@@ -23,19 +23,7 @@ namespace ParliamentMonitor.Contracts.Services
         /// <param name="time">When it took ended.</param>
         /// <param name="votes">The list of votes for all present individuals.</param>
         /// <param name="Description">Short descriptiona bout the vote.</param>
-        public Task<T?> CreateVotingRoundAsync(string title, DateTime time, int id = 0, List<Vote>? votes = null, string? Description = null);
-
-        /// <summary>
-        /// Update a vote result in the db.
-        /// Null values will be ignored.
-        /// </summary>
-        /// <param name="title">Title of the vote that happened.</param>
-        /// <param name="time">When it took ended.</param>
-        /// <param name="votes">The list of votes for all present individuals.</param>
-        /// <param name="Description">Short descriptiona bout the vote.</param>
-        /// <returns></returns>
-        public Task<T?> UpdateVoteResultAsync(Guid id, DateTime? time = null, ISet<Vote>? votes = null, string? Description = null);
-
+        public Task<T?> CreateVotingRoundAsync(string title, DateTime time, int id = 0, string? Description = null);
 
         /// <summary>
         /// Return voting round based off voting number.
