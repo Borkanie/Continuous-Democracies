@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  navigate_to_backend:
+    commands:
+      - cd Backend/ParliamentMonitor
+  install:
+    runtime-versions:
+      dotnet: 8.0
+    commands:
+      - echo Installing .NET dependencies...
+      - dotnet restore
+  build:
+    commands:
+      - echo Building solution...
+      - dotnet build --configuration Release
+  post_build:
+    commands:
+      - echo Publishing ContinousDemocracyAPI...
+      - dotnet publish ContinousDemocracyAPI/ContinousDemocracyAPI.csproj --configuration Release --output ./publish
+
+artifacts:
+  files:
+    - publish/**/*
+  base-directory: publish
