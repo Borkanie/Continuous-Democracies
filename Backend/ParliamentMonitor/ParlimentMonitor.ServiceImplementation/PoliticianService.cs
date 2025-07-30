@@ -2,45 +2,51 @@
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
-using System.Drawing;
-using System.Reflection;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
     public class PoliticianService : IPoliticianService<Politician>
     {
-        private AppDBContext dBContext;
+        private AppDBContext _dbContext;    
 
-        public PoliticianService(AppDBContext context)
+        public PoliticianService(AppDBContext context)  
         {
-            dBContext = context;
-            // Cache entries form DB.
-            GetAllPoliticians();
+            _dbContext = context;
         }
 
         /*<inheritdoc/>*/
-        public Politician CreatePolitican(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
+        public Task<Politician?> CreatePoliticanAsync(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
         {
-            Politician politician = new Politician();
-            politician.Name = name;
-            politician.Party = party;
-            politician.WorkLocation = location;
-            politician.Gender = gender;
-            politician.Active = isCurrentlyActive;
-            if(imageUrl != null)
+            try
             {
-                politician.ImageUrl = imageUrl;
+                Politician politician = new Politician() { Id = Guid.NewGuid(), Party = party };
+                politician.Name = name;
+                politician.WorkLocation = location;
+                politician.Gender = gender;
+                politician.Active = isCurrentlyActive;
+                if (imageUrl != null)
+                {
+                    politician.ImageUrl = imageUrl;
+                }
+                if (_dbContext.Politicians.Any(x => x == politician))
+                    throw new Exception("Already existing politician");
+                _dbContext.Politicians.Add(politician);
+                _dbContext.SaveChanges();
+                return Task.FromResult<Politician?>(politician);
             }
-            if (dBContext.Politicians.Any(x => x == politician))
-                throw new Exception("Already existing politician");
-            dBContext.Politicians.Add(politician);
-            dBContext.SaveChanges();
-            return politician;
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error when creating Politician:{ex.Message}");
+                return Task.FromResult<Politician?>(null); 
+            }
+            
         }
 
-        public IList<Politician> GetAllPoliticians(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
+
+        /*<inheritdoc/>*/
+        public async Task<IList<Politician>> GetAllPoliticiansAsync(Party? party = null, bool? isActive = null, WorkLocation? location = null, Gender? gender = null, int number = 100)
         {
-            var query = dBContext.Politicians.AsQueryable();
+            var query = _dbContext.Politicians.Include(x => x.Party).AsQueryable();
 
             if (party != null)
             {
@@ -62,66 +68,95 @@ namespace ParliamentMonitor.ServiceImplementation
                 query = query.Where(x => x.Gender == gender);
             }
 
-            return query.Take(number).ToList(); // single SQL query executed here
+            var politicians = query.Take(number).ToList();
 
-        }
+            return politicians; // single SQL query executed here
 
-        public Politician? GetPolitician(Guid id)
-        {
-            return dBContext.Politicians.Find(id);
-        }
-
-        public void Update(Politician entity)
-        {
-            if (dBContext.Politicians.Contains(entity))
-            {
-                dBContext.Update(entity);
-                dBContext.SaveChanges();
-            }
         }
 
         /*<inheritdoc/>*/
-        public Politician? UpdatePoliticianActivity(Guid id, bool isCurrentlyActive)
+        public async Task<Politician?> GetAsync(Guid id)
         {
-            var item = GetPolitician(id);
-            if(item != null)
+            var politician = _dbContext.Politicians.Find(id);
+            if (politician == null)
             {
-                dBContext.Update(item);
-                item.Active = isCurrentlyActive;
-                dBContext.SaveChanges();
+                throw new Exception($"Politician with Id: {id} does not exist in DB");
             }
-            return item;
+            return politician;
         }
 
-        public Politician? UpdatePolitician(Guid id, string? name = null, Party? party = null, WorkLocation? location = null, Gender? gender = null, bool? isCurrentlyActive = null, string? imageUrl = null)
+        /*<inheritdoc/>*/
+        public Task<bool> UpdateAsync(Politician entity)
         {
-            var item = GetPolitician(id);
+            var old = GetAsync(entity.Id).Result;
+            if (old!=null)
+            {
+                
+                _dbContext.Update(old);
+                old.Party = entity.Party;
+                old.Gender = entity.Gender;
+                old.WorkLocation = entity.WorkLocation;
+                old.Name = entity.Name;
+                old.Active = entity.Active;
+                _dbContext.SaveChanges();
+                return Task.FromResult(true);
+            }
+            return Task.FromResult(false);
+        }
+
+        /*<inheritdoc/>*/
+        public Task<Politician?> UpdatePoliticianActivityAsync(Guid id, bool isCurrentlyActive)
+        {
+            var item = GetAsync(id).Result;
+            if(item != null)
+            {
+                _dbContext.Update(item);
+                item.Active = isCurrentlyActive;
+                _dbContext.SaveChanges();
+            }
+            return Task.FromResult(item);
+        }
+
+        /*<inheritdoc/>*/
+        public Task<Politician?> UpdatePoliticianAsync(Guid id, string? name = null, Party? party = null, WorkLocation? location = null, Gender? gender = null, bool? isCurrentlyActive = null, string? imageUrl = null)
+        {
+            var item = GetAsync(id).Result;
             if (item != null)
             {
-                dBContext.Update(item);
+                _dbContext.Update(item);
                 item.Name = name ?? item.Name;
                 item.Party = party ?? item.Party;
                 item.WorkLocation = location ?? item.WorkLocation;
                 item.Gender = gender ?? item.Gender;
                 item.Active = isCurrentlyActive ?? item.Active;
                 item.ImageUrl = imageUrl ?? item.ImageUrl;
-                dBContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
-            return item;
+            return Task.FromResult(item);
         }
 
-        public void Delete(Politician entity)
+        /*<inheritdoc/>*/
+        public Task<bool> DeleteAsync(Politician entity)
         {
-            if (dBContext.Politicians.Find(entity) != null)
+            if (_dbContext.Politicians.Find(entity) != null)
             {
-                dBContext.Politicians.Remove(entity);
-                dBContext.SaveChanges();
+                _dbContext.Politicians.Remove(entity);
+                _dbContext.SaveChanges();
+                return Task.FromResult(true);
             }
+            return Task.FromResult(false);
         }
 
-        public Politician? GetPolitician(string name)
+        /*<inheritdoc/>*/
+        public Task<Politician?> GetPoliticianAsync(string name)
         {
-            return dBContext.Politicians.FirstOrDefault(x => String.Equals(x.Name.ToLower(), name.ToLower()));
+            var politician = _dbContext.Politicians.Include(x => x.Party).FirstOrDefault(x => String.Equals(x.Name.ToLower(), name.ToLower()));
+            if(politician == null)
+            {
+                return Task.FromResult<Politician?>(null);
+            }
+            return Task.FromResult<Politician?>(politician);
         }
+
     }
 }

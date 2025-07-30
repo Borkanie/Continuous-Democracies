@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
 using ParliamentMonitor.Contracts.Services;
-using ParliamentMonitor.ServiceImplementation;
 
 namespace ContinousDemocracyAPI.Controllers
 {
@@ -10,26 +8,70 @@ namespace ContinousDemocracyAPI.Controllers
     [ApiController]
     public class VotingController : Controller
     {
-        private IVotingService<Vote, Round> votingService;
+        private IVotingService<Vote> votingService;
 
-        public VotingController(IVotingService<Vote, Round> votingService)
+        private IVotingRoundService<Round> votingRoundService;
+
+        public VotingController(IVotingService<Vote> votingService, IVotingRoundService<Round> votingRoundService)
         {
             this.votingService = votingService;
+            this.votingRoundService = votingRoundService;
         }
 
-        // GET api/voting/all
-        [HttpGet("all")]
-        public ActionResult<string> GetAllPoliticians([FromQuery] int number = 100)
+        [HttpGet("getAllRounds")]
+        public ActionResult<string> GetAllRounds()
         {
-
-            return Ok(votingService.GetAllRoundsFromDB());
+            
+            var result = votingRoundService.GetAllRoundsFromDBAsync().Result;
+            if (result.Count == 0)
+            {
+                return NotFound("No results where available in the db");
+            }
+            return Ok(result);
         }
 
-        // GET api/voting/GetById/{id}
-        [HttpGet("GetById/{id}")]
-        public ActionResult<string> GetPoliticianById(int id)
+        [HttpGet("getTheLastRounds/")]
+        public ActionResult<string> GetAllRounds([FromQuery] int number = 10)
         {
-            return Ok(votingService.GetVotingRound(id));
+            var result = votingRoundService.GetAllRoundsFromDBAsync(number).Result;
+            if(result.Count == 0)
+            {
+                return NotFound("No results where available in the db");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("getRoundById/")]
+        public ActionResult<string> GetVotingRoundByVoteId([FromQuery] int voteId)
+        {
+            var round = votingRoundService.GetVotingRoundAsync(voteId).Result;
+            if(round == null)
+            {
+                return NotFound("Voting votes not found.");
+            }   
+            return Ok(round);
+        }
+
+        [HttpGet("GetResultForVote/")]
+        public ActionResult<string> GetVotesForRound([FromQuery] int number)
+        {
+            var votes = votingService.GetAllVotesForRound(number).Result;
+            if (votes == null)
+            {
+                return NotFound("Voting votes not found.");
+            }
+            return Ok(votes);
+        }
+
+        [HttpGet("GetAllVotesForARoundById/")]
+        public ActionResult<string> GetAllVotesForARoundById([FromQuery] Guid roundId)
+        {
+            var votes = votingService.GetAllVotesForRound(roundId).Result;
+            if(votes == null)
+            {
+                return NotFound("Voting votes not found.");
+            }
+            return Ok(votes);
         }
     }
 }

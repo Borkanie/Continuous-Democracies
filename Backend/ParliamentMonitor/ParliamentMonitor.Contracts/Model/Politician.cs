@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace ParliamentMonitor.Contracts.Model
+﻿namespace ParliamentMonitor.Contracts.Model
 {
     public enum Gender
     {
@@ -22,8 +19,6 @@ namespace ParliamentMonitor.Contracts.Model
     /// </summary>
     public class Politician: Entity
     {
-
-
         /// <summary>
         /// Gender of the politician, used for demographic purposes.
         /// </summary>
@@ -49,11 +44,5 @@ namespace ParliamentMonitor.Contracts.Model
         /// </summary>
         public WorkLocation WorkLocation { get; set; } = WorkLocation.Parliament;
 
-        public override bool Equals(object? obj)
-        {
-            if (obj == null) return false;
-            if(obj.GetType()!= typeof(Politician)) return false;
-            return ((Politician)obj).Id == Id;
-        }
     }
 }

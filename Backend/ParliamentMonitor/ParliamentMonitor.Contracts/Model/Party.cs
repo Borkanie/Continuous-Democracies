@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Drawing;
+﻿using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace ParliamentMonitor.Contracts.Model
 {
@@ -8,7 +8,6 @@ namespace ParliamentMonitor.Contracts.Model
     /// </summary>
     public class Party : Entity
     {
-
         /// <summary>
         /// The Acronym of the Party, used for quick identification.
         /// </summary>
@@ -24,18 +23,7 @@ namespace ParliamentMonitor.Contracts.Model
         /// </summary>
         public Color Color { get; set; } = Color.LightGray;
 
-        /// <summary>
-        /// List of politicans affiliated with this party.
-        /// </summary>
-        public List<Politician> Politicians { get; set; }
-
         public bool Active {  get; set; }
 
-        public override bool Equals(object? obj)
-        {
-            if (obj == null) return false;
-            if (obj.GetType() != typeof(Party)) return false;
-            return ((Party)obj).Id == Id;
-        }
     }
 }

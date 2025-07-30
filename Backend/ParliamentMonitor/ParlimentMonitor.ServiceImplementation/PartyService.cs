@@ -8,100 +8,124 @@ namespace ParliamentMonitor.ServiceImplementation
 {
     public class PartyService : IPartyService<Party>
     {
-        private readonly AppDBContext dbContext;
+        private readonly AppDBContext _dbContext;
 
-        public PartyService(AppDBContext context)
+        public PartyService(AppDBContext context) 
         {
-            dbContext = context;
-            // Cache parties on startup
-            GetAllParties();
+            _dbContext = context;
         }
 
         /*<inheritdoc/>*/
-        public Party CreateParty(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
+        public Task<Party?> CreatePartyAsync(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
         {
-
-                var newParty = new Party();
+            try
+            {
+                var newParty = new Party() { Id = Guid.NewGuid() };
                 newParty.Id = Guid.NewGuid();
                 newParty.Name = name;
-                if(acronym != null) 
+                if (acronym != null)
                     newParty.Acronym = acronym;
                 if (logoUrl != null)
                     newParty.LogoUrl = logoUrl;
                 if (color != null)
                     newParty.Color = (Color)color;
-                if (newParty == null || dbContext.Parties.Any(x => x == newParty))
+                if (newParty == null || _dbContext.Parties.Any(x => x.Name == newParty.Name && x.Acronym == newParty.Acronym))
                 {
                     throw new Exception("Already existing party");
                 }
-                dbContext.Parties.Add(newParty);
-                dbContext.SaveChanges();
-                return newParty;
+                _dbContext.Parties.Add(newParty);
+                _dbContext.SaveChanges();
+                return Task.FromResult<Party?>(newParty);
+            }catch(Exception ex)
+            {
+                Console.WriteLine($"Error when creating new party:{ex.Message}");
+                return Task.FromResult<Party?>(null); 
+            }
             
         }
 
-
         /*<inheritdoc/>*/
-        public Party? GetParty(Guid id)
-        {
-            return dbContext.Parties.Find(id);
+        public Task<Party?> GetAsync(Guid id)
+        {         
+            var party = _dbContext.Parties.Find(id);
+            return Task.FromResult(party);
         }
 
-        public void Update(Party item)
+        /*<inheritdoc/>*/
+        public Task<bool> UpdateAsync(Party item)
         {
-            var oldItem = dbContext.Parties.Find(item.Id);
+            var oldItem = GetAsync(item.Id).Result;
             if (oldItem != null)
             {
-                dbContext.Update(item);
+                _dbContext.Update(item);
                 oldItem.Active = item.Active;
                 oldItem.Acronym = item.Acronym;
                 oldItem.LogoUrl = item.LogoUrl;
-                oldItem.Politicians = item.Politicians;
                 oldItem.Color = item.Color;
-                dbContext.SaveChanges();
-            }  
+                _dbContext.SaveChanges();
+                return Task.FromResult(true);
+            }
+            return Task.FromResult(false);
         }
 
-        public IList<Party> GetAllParties(bool isActive = true, int number = 100)
+        /*<inheritdoc/>*/
+        public Task<IList<Party>> GetAllPartiesAsync(bool isActive = true, int number = 100)
         {
-            return dbContext.Parties.Where(x => x.Active == isActive).Take(number).ToList();
+            var parties = _dbContext.Parties.Where(x => x.Active == isActive).Take(number).ToList();
+            if (parties == null)
+            {
+                return Task.FromResult<IList<Party>>(new List<Party>());
+            }
+            return Task.FromResult<IList<Party>>(parties);
         }
 
-        public Party? UpdateParty(Guid id, string? name = null, string? acronym = null, string? logoUrl = null, Color? color = null)
+        /*<inheritdoc/>*/
+        public Task<Party?> UpdatePartyAsync(Guid id, string? name = null, string? acronym = null, string? logoUrl = null, Color? color = null)
         {
-            var item = GetParty(id);
+            var item = GetAsync(id).Result;
             if (item != null)
             {
-                dbContext.Update(item);
+                _dbContext.Update(item);
                 item.Name = name ?? item.Name;
                 item.Acronym = acronym ?? item.Acronym;
                 item.LogoUrl = logoUrl ?? item.LogoUrl;
                 item.Color = color ?? item.Color;
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
-            return item;
+            return Task.FromResult(item);
         }
 
-        public void Delete(Party entity)
+        /*<inheritdoc/>*/
+        public Task<bool> DeleteAsync(Party entity)
         {
-            if (dbContext.Parties.Find(entity.Id) != null)
+            if (_dbContext.Parties.Find(entity.Id) != null)
             {
-                dbContext.Parties.Remove(entity);
-                dbContext.SaveChanges();
+                _dbContext.Parties.Remove(entity);
+                _dbContext.SaveChanges();
+                return Task.FromResult(true);
             }
+            return Task.FromResult(false);
         }
 
-        public Party? GetParty(string? name = null, string? acronym = null)
+        /*<inheritdoc/>*/
+        public Task<Party?> GetPartyAsync(string? name = null, string? acronym = null)
         {
-            if(name != null)
+            if (name != null)
             {
-                return dbContext.Parties.FirstOrDefault(x => x.Name == name);
+                var value = _dbContext.Parties.FirstOrDefault(x => string.Equals(x.Name.Trim(), name.Trim()));
+                if (value == null)
+                    return Task.FromResult<Party?>(null);
+                return Task.FromResult<Party?>(value);
             }
             if (acronym != null)
             {
-                return dbContext.Parties.FirstOrDefault(x => x.Acronym == acronym);
+                var value = _dbContext.Parties.FirstOrDefault(x => string.Equals(x.Acronym, acronym));
+                if(value == null)
+                    return Task.FromResult<Party?>(null);
+                return Task.FromResult<Party?>(value);
+
             }
-            return null;
+            return Task.FromResult<Party?>(null);
         }
     }
 }
