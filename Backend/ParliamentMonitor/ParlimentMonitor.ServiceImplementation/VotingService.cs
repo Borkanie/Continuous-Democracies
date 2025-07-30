@@ -39,7 +39,7 @@ namespace ParliamentMonitor.ServiceImplementation
         /// <inheritdoc/>
         public Task<List<Vote>> GetAllVotesForRound(Guid roundId)
         {
-            return Task.FromResult(_dbContext.Votes.Include(x => x.Politician).Include(x => x.Round).Where(x => x.Round.Id == roundId).ToList());
+            return Task.FromResult(_dbContext.Votes.Include(x => x.Politician).Include(x => x.Politician.Party).Include(x => x.Round).Where(x => x.Round.Id == roundId).ToList());
         }
 
         /// <inheritdoc/>
@@ -57,7 +57,7 @@ namespace ParliamentMonitor.ServiceImplementation
         /// <inheritdoc/>
         public Task<Vote?> GetAsync(Guid id)
         {
-            return Task.FromResult(_dbContext.Votes.Include(x => x.Politician).Include(x => x.Round).FirstOrDefault(x => x.Id == id));
+            return Task.FromResult(_dbContext.Votes.Include(x => x.Politician).Include(x => x.Politician.Party).Include(x => x.Round).FirstOrDefault(x => x.Id == id));
         }
 
         /// <inheritdoc/>
@@ -79,7 +79,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
         public Task<List<Vote>> GetAllVotesForRound(int roundVoteId)
         {
-            return Task.FromResult(_dbContext.Votes.Include(x => x.Politician).Include(x => x.Round).Where(x => x.Round.VoteId == roundVoteId).ToList());
+            return Task.FromResult(_dbContext.Votes.Include(x => x.Politician).Include(x => x.Politician.Party).Include(x => x.Round).Where(x => x.Round.VoteId == roundVoteId).ToList());
         }
     }
 }
