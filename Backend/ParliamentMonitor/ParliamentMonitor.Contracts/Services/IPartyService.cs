@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using ParliamentMonitor.Contracts.Model;
 using System.Drawing;
 

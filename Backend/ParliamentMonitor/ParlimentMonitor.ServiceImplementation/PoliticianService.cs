@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
@@ -7,39 +8,36 @@ namespace ParliamentMonitor.ServiceImplementation
 {
     public class PoliticianService : IPoliticianService<Politician>
     {
-        private AppDBContext _dbContext;    
+        private AppDBContext _dbContext;
+        private ILogger<IPoliticianService<Politician>> _logger;
 
-        public PoliticianService(AppDBContext context)  
+        public ILogger Logger { get => _logger; }
+
+        public PoliticianService(AppDBContext context, ILogger<IPoliticianService<Politician>> logger)
         {
             _dbContext = context;
+            _logger = logger;
         }
 
         /*<inheritdoc/>*/
         public Task<Politician?> CreatePoliticanAsync(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
         {
-            try
+            Politician politician = new Politician() { Id = Guid.NewGuid(), Party = party };
+            politician.Name = name;
+            politician.WorkLocation = location;
+            politician.Gender = gender;
+            politician.Active = isCurrentlyActive;
+            if (imageUrl != null)
             {
-                Politician politician = new Politician() { Id = Guid.NewGuid(), Party = party };
-                politician.Name = name;
-                politician.WorkLocation = location;
-                politician.Gender = gender;
-                politician.Active = isCurrentlyActive;
-                if (imageUrl != null)
-                {
-                    politician.ImageUrl = imageUrl;
-                }
-                if (_dbContext.Politicians.Any(x => x == politician))
-                    throw new Exception("Already existing politician");
-                _dbContext.Politicians.Add(politician);
-                _dbContext.SaveChanges();
-                return Task.FromResult<Politician?>(politician);
+                politician.ImageUrl = imageUrl;
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine($"Error when creating Politician:{ex.Message}");
-                return Task.FromResult<Politician?>(null); 
-            }
-            
+            if (_dbContext.Politicians.Any(x => x == politician))
+                throw new Exception($"Already existing politician:{politician}");
+            _dbContext.Politicians.Add(politician);
+            _dbContext.SaveChanges();
+            _logger.LogInformation($"Created new politician:{politician}");
+            return Task.FromResult<Politician?>(politician);
+
         }
 
 
@@ -70,7 +68,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
             var politicians = query.Take(number).ToList();
 
-            return politicians; // single SQL query executed here
+            return politicians;
 
         }
 
@@ -91,7 +89,6 @@ namespace ParliamentMonitor.ServiceImplementation
             var old = GetAsync(entity.Id).Result;
             if (old!=null)
             {
-                
                 _dbContext.Update(old);
                 old.Party = entity.Party;
                 old.Gender = entity.Gender;
@@ -99,6 +96,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 old.Name = entity.Name;
                 old.Active = entity.Active;
                 _dbContext.SaveChanges();
+                _logger.LogInformation($"Updated politician:{entity}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -113,6 +111,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 _dbContext.Update(item);
                 item.Active = isCurrentlyActive;
                 _dbContext.SaveChanges();
+                _logger.LogInformation($"Updated politician activity:{item}");
             }
             return Task.FromResult(item);
         }
@@ -131,6 +130,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 item.Active = isCurrentlyActive ?? item.Active;
                 item.ImageUrl = imageUrl ?? item.ImageUrl;
                 _dbContext.SaveChanges();
+                _logger.LogInformation($"Updated politician:{item}");
             }
             return Task.FromResult(item);
         }
@@ -142,6 +142,7 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 _dbContext.Politicians.Remove(entity);
                 _dbContext.SaveChanges();
+                _logger.LogInformation($"Deleted politician:{entity}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
