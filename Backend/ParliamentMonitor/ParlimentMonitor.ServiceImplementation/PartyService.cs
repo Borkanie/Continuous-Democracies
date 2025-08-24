@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
@@ -9,39 +10,36 @@ namespace ParliamentMonitor.ServiceImplementation
     public class PartyService : IPartyService<Party>
     {
         private readonly AppDBContext _dbContext;
+        private ILogger<IPartyService<Party>> _logger;
 
-        public PartyService(AppDBContext context) 
+        public ILogger Logger { get => _logger; }
+
+        public PartyService(AppDBContext context, ILogger<IPartyService<Party>> logger) 
         {
             _dbContext = context;
+            _logger = logger;
         }
 
         /*<inheritdoc/>*/
         public Task<Party?> CreatePartyAsync(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
         {
-            try
+            var newParty = new Party() { Id = Guid.NewGuid() };
+            newParty.Id = Guid.NewGuid();
+            newParty.Name = name;
+            if (acronym != null)
+                newParty.Acronym = acronym;
+            if (logoUrl != null)
+                newParty.LogoUrl = logoUrl;
+            if (color != null)
+                newParty.Color = (Color)color;
+            if (newParty == null || _dbContext.Parties.Any(x => x.Name == newParty.Name && x.Acronym == newParty.Acronym))
             {
-                var newParty = new Party() { Id = Guid.NewGuid() };
-                newParty.Id = Guid.NewGuid();
-                newParty.Name = name;
-                if (acronym != null)
-                    newParty.Acronym = acronym;
-                if (logoUrl != null)
-                    newParty.LogoUrl = logoUrl;
-                if (color != null)
-                    newParty.Color = (Color)color;
-                if (newParty == null || _dbContext.Parties.Any(x => x.Name == newParty.Name && x.Acronym == newParty.Acronym))
-                {
-                    throw new Exception("Already existing party");
-                }
-                _dbContext.Parties.Add(newParty);
-                _dbContext.SaveChanges();
-                return Task.FromResult<Party?>(newParty);
-            }catch(Exception ex)
-            {
-                Console.WriteLine($"Error when creating new party:{ex.Message}");
-                return Task.FromResult<Party?>(null); 
+                throw new Exception($"The party:{newParty} already exists.");
             }
-            
+            _dbContext.Parties.Add(newParty);
+            _dbContext.SaveChanges();
+            _logger.LogInformation($"Created new party:{newParty}");
+            return Task.FromResult<Party?>(newParty);
         }
 
         /*<inheritdoc/>*/
@@ -63,6 +61,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 oldItem.LogoUrl = item.LogoUrl;
                 oldItem.Color = item.Color;
                 _dbContext.SaveChanges();
+                _logger.LogInformation($"Updated party:{item}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -91,6 +90,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 item.LogoUrl = logoUrl ?? item.LogoUrl;
                 item.Color = color ?? item.Color;
                 _dbContext.SaveChanges();
+                _logger.LogInformation($"Updated party:{item}");
             }
             return Task.FromResult(item);
         }
@@ -102,6 +102,7 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 _dbContext.Parties.Remove(entity);
                 _dbContext.SaveChanges();
+                _logger.LogInformation($"Deleted party:{entity}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);

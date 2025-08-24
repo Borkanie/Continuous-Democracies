@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
 using ParliamentMonitor.Contracts.Services;
@@ -9,18 +10,23 @@ namespace ParliamentMonitor.ServiceImplementation
     public class VotingService : IVotingService<Vote>
     {
         private readonly AppDBContext _dbContext;
+        private readonly ILogger<IPoliticianService<Politician>> _logger;
 
-        public VotingService(AppDBContext context,IPoliticianService<Politician> politicianService) 
+        public ILogger Logger { get => _logger; }
+
+        public VotingService(AppDBContext context,IPoliticianService<Politician> politicianService, ILogger<IPoliticianService<Politician>> logger) 
         {
             _dbContext = context;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
         public Task<Vote> CreateNewVote(Round round, Politician politician, VotePosition votePosition)
         {
-            if (_dbContext.Votes.Any(x => x.Round.Id == round.Id && x.Politician.Id == politician.Id))
+            var oldvote = _dbContext.Votes.FirstOrDefault(x => x.Round.Id == round.Id && x.Politician.Id == politician.Id);
+            if (oldvote != null)
             {
-                throw new InvalidOperationException("Politician has already voted in this round.");
+                throw new InvalidOperationException($"Politician:{politician} has already voted in this round:{round} and voted:{oldvote}");
             }
             var vote = new Vote()
             {
@@ -32,6 +38,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
             _dbContext.Votes.Add(vote);
             _dbContext.SaveChanges();
+            _logger.LogInformation($"Created new vote:{vote} for politician:{politician} in round:{round}");
             return Task.FromResult(vote);
 
         }
@@ -49,6 +56,7 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 _dbContext.Votes.Remove(entity);
                 _dbContext.SaveChanges();
+                _logger.LogInformation($"Deleted vote:{entity}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -72,6 +80,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 vote.Name = entity.Name;
                 vote.Round = entity.Round;
                 _dbContext.SaveChanges();
+                _logger.LogInformation($"Updated vote:{vote}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
