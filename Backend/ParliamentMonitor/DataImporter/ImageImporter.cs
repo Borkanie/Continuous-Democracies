@@ -34,7 +34,7 @@ namespace DataImporter
 
         public void SearchForNewUrls(bool overrideExisting)
         {
-            var politicians = politicianService.GetAllPoliticians();
+            var politicians = politicianService.GetAllPoliticiansAsync(number:10000).Result;
             var baseUrl = "https://www.cdep.ro/parlamentari/l2024/";
             foreach (var politician in politicians)
             {
@@ -107,7 +107,7 @@ namespace DataImporter
                 try
                 {
                     DownloadFileAsync(targetUrl, file).Wait();
-                    politicianService.UpdatePolitician(target.Id, imageUrl: file);
+                    politicianService.UpdatePoliticianAsync(target.Id, imageUrl: file);
                 }catch(Exception ex)
                 {
                     Console.WriteLine($" Error when lading image for: {target.Name}. \n Message:{ex.Message}");

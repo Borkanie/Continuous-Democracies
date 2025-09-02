@@ -41,28 +41,28 @@ namespace DataImporter
             return string.Join(" ", words);
         }
 
-        private Party GetPartyById(int id)
+        private Party? GetPartyById(int id)
         {
             lock (partyService)
             {
                 switch (id)
                 {
                     case 1:
-                        return partyService.GetParty(acronym: "PSD");
+                        return partyService.GetPartyAsync(acronym: "PSD").Result;
                     case 2:
-                        return partyService.GetParty(acronym: "AUR");
+                        return partyService.GetPartyAsync(acronym: "AUR").Result;
                     case 3:
-                        return partyService.GetParty(acronym: "PNL");
+                        return partyService.GetPartyAsync(acronym: "PNL").Result;
                     case 4:
-                        return partyService.GetParty(acronym: "USR");
+                        return partyService.GetPartyAsync(acronym: "USR").Result;
                     case 5:
-                        return partyService.GetParty(acronym: "SOS");
+                        return partyService.GetPartyAsync(acronym: "SOS").Result;
                     case 6:
-                        return partyService.GetParty(acronym: "POT");
+                        return partyService.GetPartyAsync(acronym: "POT").Result;
                     case 7:
-                        return partyService.GetParty(acronym: "UDMR");
+                        return partyService.GetPartyAsync(acronym: "UDMR").Result;
                     default:
-                        return partyService.GetParty(acronym: "neafiliat");
+                        return partyService.GetPartyAsync(acronym: "neafiliat").Result;
                 }
             }
         }
@@ -103,10 +103,10 @@ namespace DataImporter
                             name = MoveCapsNameToEnd(name);
                             lock (politicianService)
                             {
-                                var politician = politicianService.GetPolitician(name);
+                                var politician = politicianService.GetPoliticianAsync(name: name).Result;
                                 if(politician == null)
                                 {
-                                    politician = politicianService.CreatePolitican(name, GetPartyById(partyId), cam == 1 ? WorkLocation.Parliament : WorkLocation.Senate, Gender.Male);
+                                    politician = politicianService.CreatePoliticanAsync(name, GetPartyById(partyId), cam == 1 ? WorkLocation.Parliament : WorkLocation.Senate, Gender.Male).Result;
                                 }
                                 if (!String.IsNullOrEmpty(imageUrl) && String.IsNullOrEmpty(politician.ImageUrl))
                                 {
@@ -136,7 +136,7 @@ namespace DataImporter
                 try
                 {
                     ImageImporter.DownloadFileAsync(imageUrl, file).Wait();
-                    politicianService.UpdatePolitician(target.Id, imageUrl: file);
+                    politicianService.UpdatePoliticianAsync(target.Id, imageUrl: file);
                 }
                 catch (Exception ex)
                 {

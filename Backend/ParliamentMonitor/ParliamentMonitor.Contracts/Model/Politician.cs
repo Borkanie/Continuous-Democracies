@@ -17,6 +17,7 @@
     /// <summary>
     /// Abstraction of a politician in a political context.
     /// </summary>
+    [ToString]
     public class Politician: Entity
     {
         /// <summary>

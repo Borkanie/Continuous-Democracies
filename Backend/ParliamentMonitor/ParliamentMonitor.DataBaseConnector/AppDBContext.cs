@@ -17,7 +17,7 @@ namespace ParliamentMonitor.DataBaseConnector
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
 
         public AppDBContext() : base(new DbContextOptionsBuilder<AppDBContext>()
-                .UseNpgsql("Server=localhost;Port=5432;Database=parliment_8;Username=ps_user;Password=password123;Client Encoding=UTF8;")
+                .UseNpgsql("Server=parliment.cf4u4my6w7cs.eu-central-1.rds.amazonaws.com;Port=5432;Database=parliment;Username=postgres;Password=Qweasdzxc123Halo02*;")
                 .Options)
         {
          
