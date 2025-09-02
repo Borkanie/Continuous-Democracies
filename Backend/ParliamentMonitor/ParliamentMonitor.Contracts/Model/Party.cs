@@ -6,6 +6,7 @@ namespace ParliamentMonitor.Contracts.Model
     /// <summary>
     /// Abstraction of a party in a political context.
     /// </summary>
+    [ToString]
     public class Party : Entity
     {
         /// <summary>

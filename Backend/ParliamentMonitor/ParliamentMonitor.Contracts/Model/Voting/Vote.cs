@@ -8,6 +8,7 @@
         Absent
     }
 
+    [ToString]
     public class Vote : Entity
     {
         public Politician Politician { get; set; }

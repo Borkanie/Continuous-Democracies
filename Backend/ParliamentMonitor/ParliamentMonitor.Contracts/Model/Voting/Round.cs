@@ -1,5 +1,6 @@
 ﻿namespace ParliamentMonitor.Contracts.Model.Votes
 {
+    [ToString]
     public class Round : Entity
     {
         public string Title { get => Name; set => Name = value; }
