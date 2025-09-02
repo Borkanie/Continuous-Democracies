@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging.Console;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
+using ParliamentDownloader;
 
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -21,6 +22,10 @@ if (key.Key == ConsoleKey.I)
 }
 else
 {
+    var downloader = new VoteDownloader("D:\\Voturi\\Votes");
+
+    // par1 = 2, download from 35000 down to 34000, wait 5s each request
+    await downloader.DownloadVotesAsync(par1: 2, startVoteIndex: 35000, endVoteIndex: 34990, delaySeconds: 2);
     await ImportDataFromVoteFolder();
 }
 
@@ -103,7 +108,7 @@ static async Task ImportDataFromVoteFolder()
                 var partyService = new PartyService(dbContext, factory.CreateLogger<IPartyService<Party>>());
                 Console.WriteLine("Started Party Service");
 
-                var roundService = new VotingRoundService(dbContext, votingService, (IPoliticianService<Politician>)partyService, factory.CreateLogger<IVotingRoundService<Round>>());
+                var roundService = new VotingRoundService(dbContext, votingService, politicianService, factory.CreateLogger<IVotingRoundService<Round>>());
                 Console.WriteLine("Started roundService");
 
                 var dataImport = new VotingDataimporter(votingService, politicianService, partyService, roundService);
