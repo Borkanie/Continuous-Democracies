@@ -139,8 +139,8 @@ export const PieChart = (props: Props) => {
   const handleBack = () => navigate({ to: '/' });
 
   return (
-    <div>
-      <h2>{isFirstLevel ? 'Vot' : `Subcategories of: ${current.label}`}</h2>
+    <>
+      {!isFirstLevel && <h2>Subcategories of: {current.label}</h2>}
       {!isFirstLevel && <button onClick={handleBack}>⬅ Back</button>}
       <div className={pie}>
         <Pie
@@ -155,12 +155,12 @@ export const PieChart = (props: Props) => {
                 enabled: false, // Disable default tooltip for sections
               },
               legend: {
-                position: 'bottom',
-                onClick: () => {}, // Disable legend click
+                display: false,
               },
               datalabels: {
                 color: '#fff',
                 font: {
+                  family: 'Montserrat, sans-serif',
                   weight: 'bold',
                   size: 14,
                 },
@@ -182,6 +182,6 @@ export const PieChart = (props: Props) => {
           }}
         />
       </div>
-    </div>
+    </>
   );
 };
