@@ -1,5 +1,18 @@
+body {
+  --background-color-primary: #ffffff;
+  --background-color-secondary: #eff6ff;
+  --theme-color-primary: #626aff;
+  --theme-font-color-primary: #231f20;
+
+  font-family: 'Montserrat', sans-serif;
+  font-optical-sizing: auto;
+  background-color: var(--background-color-secondary);
+  color: var(--theme-font-color-primary);
+  box-sizing: border-box;
+}
+
 .wrapper {
-  max-width: calc(1280px - 24px);
+  max-width: calc(1280px - 24px - 20px);
   margin: 0 auto;
-  padding-inline: 12px;
+  padding-inline: 10px;
 }
