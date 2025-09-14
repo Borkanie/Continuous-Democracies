@@ -3,7 +3,7 @@ import { RoundCard } from '../round-card/RoundCard';
 import { Search } from '../search/Search';
 import styles from './RoundsList.module.css';
 import { getAllRounds } from '../../utils/api/rounds';
-import { useState } from 'react';
+import { useNavigate, useParams } from '@tanstack/react-router';
 
 const { Div, header, roundsContainer } = styles;
 
@@ -13,7 +13,9 @@ export const RoundsList = () => {
     queryFn: getAllRounds,
   });
 
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const navigate = useNavigate();
+  const params = useParams({ strict: false });
+  const { roundId } = params;
 
   if (!data) {
     // TODO: Add empty state here
@@ -32,8 +34,10 @@ export const RoundsList = () => {
           <RoundCard
             key={round.voteId}
             round={round}
-            isSelected={selectedId === round.voteId}
-            onSelect={() => setSelectedId(round.voteId)}
+            isSelected={roundId === round.voteId.toString()}
+            onSelect={() => {
+              navigate({ to: `round/${round.voteId}` });
+            }}
           />
         ))}
       </div>
