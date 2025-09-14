@@ -3,14 +3,17 @@ import { RoundCard } from '../round-card/RoundCard';
 import { Search } from '../search/Search';
 import styles from './RoundsList.module.css';
 import { getAllRounds } from '../../utils/api/rounds';
+import { useState } from 'react';
 
-const { Div, header } = styles;
+const { Div, header, roundsContainer } = styles;
 
 export const RoundsList = () => {
   const { data } = useQuery({
     queryKey: ['rounds'],
     queryFn: getAllRounds,
   });
+
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   if (!data) {
     // TODO: Add empty state here
@@ -24,9 +27,16 @@ export const RoundsList = () => {
         <p>244</p>
       </div>
       <Search />
-      {data.map((round) => (
-        <RoundCard key={round.voteId} round={round} />
-      ))}
+      <div className={roundsContainer}>
+        {data.map((round) => (
+          <RoundCard
+            key={round.voteId}
+            round={round}
+            isSelected={selectedId === round.voteId}
+            onSelect={() => setSelectedId(round.voteId)}
+          />
+        ))}
+      </div>
     </div>
   );
 };

@@ -24,3 +24,11 @@
     color: var(--theme-font-color-secondary);
   }
 }
+
+.roundsContainer {
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}

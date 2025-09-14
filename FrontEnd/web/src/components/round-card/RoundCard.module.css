@@ -12,6 +12,12 @@
     box-shadow: var(--theme-box-shadow-primary);
     cursor: pointer;
   }
+
+  &.selected {
+    border: 1px solid var(--theme-color-primary);
+    box-shadow: var(--theme-box-shadow-primary);
+    background-color: var(--background-color-secondary);
+  }
 }
 
 .header {
