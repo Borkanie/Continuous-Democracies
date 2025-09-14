@@ -1,16 +1,16 @@
 import { Outlet } from '@tanstack/react-router';
-import styles from './styles/root.module.css';
+import styles from './styles/App.module.css';
 import { Header } from '../components/header/Header';
-import { LawsList } from '../components/laws-list/LawsList';
+import { RoundsList } from '../components/rounds-list/RoundsList';
 
 const { wrapper } = styles;
 
-export const Root = () => {
+export const App = () => {
   return (
     <>
       <Header />
       <div className={wrapper}>
-        <LawsList />
+        <RoundsList />
         <Outlet />
       </div>
     </>

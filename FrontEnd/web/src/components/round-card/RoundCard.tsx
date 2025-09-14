@@ -1,18 +1,21 @@
-import styles from './LawCard.module.css';
+import type { Round } from '../../utils/api/rounds';
+import styles from './RoundCard.module.css';
 
 const { Div, title, description, footer, status, date, icon, header } = styles;
 
-export const LawCard = () => {
+type Props = {
+  round: Round;
+};
+
+export const RoundCard = (props: Props) => {
+  const { round } = props;
+
+  // TODO: Use real data from `round` prop when available for date, description, and status
   return (
     <div className={Div}>
       <div className={header}>
-        <h3 className={title}>Climate Change Mitigation Act 2024</h3>
-        {/* <div className={status}>
-          <div className={icon}></div>
-          <p>Activ</p>
-        </div> */}
+        <h3 className={title}>{round.title}</h3>
       </div>
-
       <p className={description}>
         Comprehensive legislation to reduce carbon emissions by 50% by 2030
       </p>
