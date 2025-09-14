@@ -3,12 +3,12 @@ import {
   createRootRoute,
   createRoute,
 } from '@tanstack/react-router';
-import { Root } from './routes/root';
+import { App } from './routes/App';
 import { Index } from './routes';
 import { Section } from './routes/section';
 
 const rootRoute = createRootRoute({
-  component: Root,
+  component: App,
 });
 
 const indexRoute = createRoute({
