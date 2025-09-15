@@ -38,5 +38,12 @@ namespace ParliamentMonitor.Contracts.Services
         /// </summary>
         /// <returns></returns>
         public Task<ISet<T>> GetAllRoundsFromDBAsync(int number = 100);
+
+        /// <summary>
+        /// Returns all the votes that happened in a given interval.
+        /// </summary>
+        /// <param name="startDate">The lower bound of the interval.</param>
+        /// <param name="endDate">The upper bound of the interval.</param>
+        public Task<List<T>> GetAllVotesInInterval(DateTime startDate, DateTime endDate);
     }
 }

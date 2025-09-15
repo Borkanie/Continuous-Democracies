@@ -73,5 +73,17 @@ namespace ContinousDemocracyAPI.Controllers
             }
             return Ok(votes);
         }
+
+        /// <inheritdoc path="GetAllVotesInInterval" cref="IVotingRoundService{T}"/>
+        [HttpGet("GetVotesInInterval/")]
+        public ActionResult<string> GetVotesInInterval([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            var votes = votingRoundService.GetAllVotesInInterval(startDate, endDate).Result;
+            if (votes == null)
+            {
+                return NotFound("No votes in that timespan are recored.");
+            }
+            return Ok(votes);
+        }
     }
 }

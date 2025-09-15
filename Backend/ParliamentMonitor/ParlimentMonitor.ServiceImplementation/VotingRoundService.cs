@@ -155,5 +155,17 @@ namespace ParliamentMonitor.ServiceImplementation
         {
             return Task.FromResult(_dbContext.VotingRounds.FirstOrDefault(x => x.Id == id));
         }
+
+        /// <inheritdoc/>
+        public Task<List<Round>> GetAllVotesInInterval(DateTime startDate, DateTime endDate)
+        {
+            if(startDate > endDate)
+            {
+                var dummy = endDate;
+                endDate = startDate;
+                startDate = dummy;
+            }
+            return Task.FromResult(_dbContext.VotingRounds.Where(x => x.VoteDate >= startDate && x.VoteDate <= endDate).ToList());
+        }
     }
 }
