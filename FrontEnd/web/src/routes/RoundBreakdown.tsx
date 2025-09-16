@@ -1,12 +1,14 @@
-import { useParams } from '@tanstack/react-router';
-import { PieChart } from '../components/chart/PieChart';
+import { useNavigate, useParams } from '@tanstack/react-router';
+import { PieChart, type DrilldownEntry } from '../components/chart/PieChart';
 import styles from './styles/RoundBreakdown.module.css';
 import { useQuery } from '@tanstack/react-query';
-import { getResultsByRoundId, getRound } from '../utils/api/rounds';
+import { getRound } from '../utils/api/rounds';
 import { Status } from '../components/status/Status';
 import { DateComp } from '../components/date/DateComp';
 import { Legend } from '../components/legend/Legend';
 import classNames from 'classnames';
+import { useResultsByRoundId } from '../utils/hooks/useResultsByRoundId';
+import type { Position } from '../utils/types';
 
 const {
   Div,
@@ -22,6 +24,7 @@ const {
 } = styles;
 
 export const RoundBreakdown = () => {
+  const navigate = useNavigate();
   const params = useParams({ strict: false });
   const { roundId } = params;
 
@@ -32,19 +35,38 @@ export const RoundBreakdown = () => {
     staleTime: 5 * 60 * 1000, // cache data for 5 minutes
   });
 
-  const { data: roundResults } = useQuery({
-    queryKey: ['roundResults', roundId],
-    enabled: !!roundId,
-    queryFn: ({ queryKey }) => getResultsByRoundId(queryKey[1] || ''),
-    staleTime: 5 * 60 * 1000, // cache data for 5 minutes
-  });
+  const { data: groupedRoundResults } = useResultsByRoundId(roundId);
 
-  if (!roundData) {
+  if (!roundData || !groupedRoundResults) {
     // TODO: Add empty state here
     return <></>;
   }
 
-  console.log({ roundData, roundResults });
+  const positionLabel = (position: Position): string => {
+    switch (position) {
+      case 0:
+        return 'Da';
+      case 1:
+        return 'Nu';
+      case 2:
+        return 'Abtinere';
+      case 3:
+        return 'Absent';
+      default:
+        return 'Unknown';
+    }
+  };
+
+  const topLevelData: DrilldownEntry = {
+    id: '0',
+    label: 'Vot',
+    children: Object.entries(groupedRoundResults).map(([key, votes]) => ({
+      id: key,
+      label: positionLabel(Number(key) as Position),
+      value: votes.length,
+    })),
+  };
+
   return (
     <div className={Div}>
       <div className={header}>
@@ -67,7 +89,10 @@ export const RoundBreakdown = () => {
             <p className={classNames(bold, chartTitle)}>
               Distributia voturilor
             </p>
-            <PieChart isFirstLevel={true} />
+            <PieChart
+              data={topLevelData}
+              onSliceClick={(id) => navigate({ to: `section/${id}` })}
+            />
             <p className={info}>
               Apasati click pe o sectiune pentru a vedea impartirea pe partide
             </p>

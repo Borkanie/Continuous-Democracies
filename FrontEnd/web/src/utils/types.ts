@@ -38,9 +38,11 @@ export type Round = {
   name: string;
 };
 
+export type Position = 0 | 1 | 2 | 3;
+
 export type VoteResult = {
   politician: Politician;
-  position: number;
+  position: Position;
   round: Round;
   id: string;
   name: string;
