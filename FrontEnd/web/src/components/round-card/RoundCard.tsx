@@ -1,18 +1,10 @@
-import type { Round } from '../../utils/api/rounds';
+import type { Round } from '../../utils/types';
+import { DateComp } from '../Date/DateComp';
+import { Status } from '../status/Status';
 import styles from './RoundCard.module.css';
 import classNames from 'classnames';
 
-const {
-  Div,
-  title,
-  description,
-  footer,
-  status,
-  date,
-  icon,
-  header,
-  selected,
-} = styles;
+const { Div, title, description, footer, header, selected } = styles;
 
 type Props = {
   round: Round;
@@ -36,11 +28,8 @@ export const RoundCard = (props: Props) => {
         Comprehensive legislation to reduce carbon emissions by 50% by 2030
       </p>
       <div className={footer}>
-        <p className={date}>25.11.2024</p>
-        <div className={status}>
-          <div className={icon}></div>
-          <p>Activa</p>
-        </div>
+        <DateComp text={round.voteDate} />
+        <Status text={'ACTIV'} />
       </div>
     </div>
   );

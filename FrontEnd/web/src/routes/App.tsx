@@ -1,7 +1,7 @@
-import { Outlet } from '@tanstack/react-router';
 import styles from './styles/App.module.css';
 import { Header } from '../components/header/Header';
 import { RoundsList } from '../components/rounds-list/RoundsList';
+import { RoundSection } from '../components/round-section/RoundSection';
 
 const { wrapper } = styles;
 
@@ -11,7 +11,7 @@ export const App = () => {
       <Header />
       <div className={wrapper}>
         <RoundsList />
-        <Outlet />
+        <RoundSection />
       </div>
     </>
   );

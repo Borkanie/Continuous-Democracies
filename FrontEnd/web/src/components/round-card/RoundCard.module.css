@@ -40,23 +40,3 @@
   justify-content: space-between;
   align-items: center;
 }
-
-.date {
-  font-size: var(--theme-font-size-m);
-  color: var(--theme-font-color-secondary);
-}
-
-.status {
-  font-size: var(--theme-font-size-m);
-  border-radius: 50px;
-  display: flex;
-  gap: 6px;
-  align-items: center;
-
-  .icon {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #8bbcfc;
-  }
-}

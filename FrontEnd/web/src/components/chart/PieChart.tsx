@@ -3,9 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import styles from './PieChart.module.css';
-import { useNavigate, useParams } from '@tanstack/react-router';
-import { useQuery } from '@tanstack/react-query';
-import { getRound } from '../../utils/api/rounds';
+import { useNavigate } from '@tanstack/react-router';
 
 const { pie } = styles;
 
@@ -82,18 +80,6 @@ type Props = {
 
 export const PieChart = (props: Props) => {
   const { isFirstLevel = false, drilldownId } = props;
-
-  const params = useParams({ strict: false });
-  const { roundId } = params;
-
-  const { data } = useQuery({
-    queryKey: ['roundById', roundId],
-    enabled: !!roundId,
-    queryFn: ({ queryKey }) => getRound(queryKey[1] || ''),
-    staleTime: 5 * 60 * 1000, // cache data for 5 minutes
-  });
-
-  console.log(data);
 
   const chartRef = useRef<ChartJS<'pie'> | null>(null);
   const navigate = useNavigate();

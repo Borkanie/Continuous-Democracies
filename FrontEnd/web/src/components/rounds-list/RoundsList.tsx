@@ -4,8 +4,9 @@ import { Search } from '../search/Search';
 import styles from './RoundsList.module.css';
 import { getAllRounds } from '../../utils/api/rounds';
 import { useNavigate, useParams } from '@tanstack/react-router';
+import classNames from 'classnames';
 
-const { Div, header, roundsContainer } = styles;
+const { Div, header, roundsContainer, separator, top, bottom } = styles;
 
 export const RoundsList = () => {
   const { data } = useQuery({
@@ -30,6 +31,7 @@ export const RoundsList = () => {
       </div>
       <Search />
       <div className={roundsContainer}>
+        <div className={classNames(separator, top)}></div>
         {data.map((round) => (
           <RoundCard
             key={round.voteId}
@@ -40,6 +42,7 @@ export const RoundsList = () => {
             }}
           />
         ))}
+        <div className={classNames(separator, bottom)}></div>
       </div>
     </div>
   );

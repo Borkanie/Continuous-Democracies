@@ -31,4 +31,21 @@
   flex-direction: column;
   gap: 8px;
   overflow-y: auto;
+  position: relative;
+}
+
+.separator {
+  border-bottom: var(--theme-border-primary);
+  position: sticky;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+
+  &.top {
+    top: 0;
+  }
+
+  &.bottom {
+    bottom: 0;
+  }
 }
