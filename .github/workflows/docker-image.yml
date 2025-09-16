@@ -21,28 +21,23 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     # 3. Build and push Docker image
-    - name: Navigate to docker file
-      run: |
-        cd Backend/ParliamentMonitor/
-
-
-    # 4. Build and push Docker image
     - name: Build and push Docker image
       run: |
-        pwd
-
-    # 5. Build and push Docker image
-    - name: Go back to base
-      run: |
-        cd ../../
-    
-    # 6. Configure kubectl (for MicroK8s cluster)
+        cd Backend/ParliamentMonitor/
+        pwd 
+        IMAGE=borkanie/continousdemocracyapi:${{ github.sha }}
+        docker build \
+          -t $IMAGE \
+          .
+        docker push $IMAGE
+        
+    # 4. Configure kubectl (for MicroK8s cluster)
     - name: Configure kubeconfig
       run: |
         mkdir -p ~/.kube
         echo "${{ secrets.KUBECONFIG_FILE }}" > ~/.kube/config
 
-    # 7. Deploy to MicroK8s
+    # 5. Deploy to MicroK8s
     - name: Deploy to MicroK8s
       run: |
         kubectl set image deployment/continuous-democracies app=borkanie/continousdemocracyapi:${{ github.sha }} --record
