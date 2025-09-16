@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParliamentMonitor.ServiceIm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataImporter", "DataImporter\DataImporter.csproj", "{84460E86-6BDB-4453-904F-E3FB59EEC692}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContinousDemocracyAPI", "ContinousDemocracyAPI\ContinousDemocracyAPI.csproj", "{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinousDemocracyAPI", "ContinousDemocracyAPI\ContinousDemocracyAPI.csproj", "{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

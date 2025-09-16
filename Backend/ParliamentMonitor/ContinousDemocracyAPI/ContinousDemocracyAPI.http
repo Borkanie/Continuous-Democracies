@@ -1,6 +1,0 @@
-@ContinousDemocracyAPI_HostAddress = http://localhost:5212
-
-
-GET {{ContinousDemocracyAPI_HostAddress}}/api/politicians/0197cb65-97fc-7e23-b671-b63c1ec74b4c
-
-###
