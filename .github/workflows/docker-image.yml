@@ -25,7 +25,7 @@ jobs:
       run: |
         cd Backend/ParliamentMonitor/
         ls -a 
-        IMAGE=borkanie/continousdemocracyapi:${{ github.sha }}
+        IMAGE=borkanie/continousdemocracyapi:latest
         docker build \
           -t $IMAGE \
           .
