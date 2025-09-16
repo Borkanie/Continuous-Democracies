@@ -3,9 +3,9 @@
   background-color: var(--background-color-primary);
   border: var(--theme-border-primary);
   border-radius: 8px;
-  padding: 24px;
   box-shadow: var(--theme-box-shadow-primary);
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: fit-content;
 }

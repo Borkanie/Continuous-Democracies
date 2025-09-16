@@ -26,7 +26,7 @@ export const RoundsList = () => {
   return (
     <div className={Div}>
       <div className={header}>
-        <h2>Lista legi</h2>
+        <h3>Lista legi</h3>
         <p>244</p>
       </div>
       <Search />
