@@ -1,6 +1,0 @@
-.Div {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  grid-column: span 2;
-}
