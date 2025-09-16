@@ -23,12 +23,12 @@ jobs:
     # 3. Build and push Docker image
     - name: Navigate to docker file
       run: |
-        cd Backend/ParliamentMonitor/ | pwd
+        cd Backend/ParliamentMonitor/ 
 
     # 4. Build and push Docker image
     - name: Build and push Docker image
       run: |
-        ls -a
+        pwd
 
     # 5. Build and push Docker image
     - name: Go back to base
