@@ -24,7 +24,7 @@ jobs:
     - name: Build and push Docker image
       run: |
         cd Backend/ParliamentMonitor/
-        pwd 
+        ls -a 
         IMAGE=borkanie/continousdemocracyapi:${{ github.sha }}
         docker build \
           -t $IMAGE \
