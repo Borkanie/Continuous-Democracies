@@ -3,127 +3,72 @@
   "WorkspaceRootPath": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parliamentmonitor.contracts\\modelclassdiagram.cd||{59B0B277-7DDF-4E36-A3ED-02DAC5B9E2FA}|",
-      "RelativeMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|solutionrelative:parliamentmonitor.contracts\\modelclassdiagram.cd||{59B0B277-7DDF-4E36-A3ED-02DAC5B9E2FA}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parlimentmonitor.serviceimplementation\\classdiagram1.cd||{59B0B277-7DDF-4E36-A3ED-02DAC5B9E2FA}|",
-      "RelativeMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|solutionrelative:parlimentmonitor.serviceimplementation\\classdiagram1.cd||{59B0B277-7DDF-4E36-A3ED-02DAC5B9E2FA}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParlimentMonitor.ServiceImplementation.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parlimentmonitor.serviceimplementation\\partyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParlimentMonitor.ServiceImplementation.csproj|solutionrelative:parlimentmonitor.serviceimplementation\\partyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{84460E86-6BDB-4453-904F-E3FB59EEC692}|DataImporter\\DataImporter.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\dataimporter\\parliamentscraper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84460E86-6BDB-4453-904F-E3FB59EEC692}|DataImporter\\DataImporter.csproj|solutionrelative:dataimporter\\parliamentscraper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parlimentmonitor.serviceimplementation\\politicianservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parlimentmonitor.serviceimplementation\\politicianservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|solutionrelative:parlimentmonitor.serviceimplementation\\politicianservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84460E86-6BDB-4453-904F-E3FB59EEC692}|DataImporter\\DataImporter.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\dataimporter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84460E86-6BDB-4453-904F-E3FB59EEC692}|DataImporter\\DataImporter.csproj|solutionrelative:dataimporter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parlimentmonitor.serviceimplementation\\partyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|solutionrelative:parlimentmonitor.serviceimplementation\\partyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84460E86-6BDB-4453-904F-E3FB59EEC692}|DataImporter\\DataImporter.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\dataimporter\\imageimporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84460E86-6BDB-4453-904F-E3FB59EEC692}|DataImporter\\DataImporter.csproj|solutionrelative:dataimporter\\imageimporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\continousdemocracyapi\\controllers\\partycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|solutionrelative:continousdemocracyapi\\controllers\\partycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84460E86-6BDB-4453-904F-E3FB59EEC692}|DataImporter\\DataImporter.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\dataimporter\\votingdataimporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84460E86-6BDB-4453-904F-E3FB59EEC692}|DataImporter\\DataImporter.csproj|solutionrelative:dataimporter\\votingdataimporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\continousdemocracyapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|solutionrelative:continousdemocracyapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parlimentmonitor.serviceimplementation\\votingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|solutionrelative:parlimentmonitor.serviceimplementation\\votingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\continousdemocracyapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|solutionrelative:continousdemocracyapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParliamentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\viewmodels\\votecontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\continousdemocracyapi\\controllers\\votingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|solutionrelative:continousdemocracyapi\\controllers\\votingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParliamentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\modules\\votingcanvas.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\continousdemocracyapi\\controllers\\politicianscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|solutionrelative:continousdemocracyapi\\controllers\\politicianscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParliamentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\pages\\parliament.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\continousdemocracyapi\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|solutionrelative:continousdemocracyapi\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParliamentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\continousdemocracyapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{127C0C28-0F6E-43E6-8F0F-8EEDF629FD2E}|ContinousDemocracyAPI\\ContinousDemocracyAPI.csproj|solutionrelative:continousdemocracyapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParliamentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parliamentmonitor.databaseconnector\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|solutionrelative:parliamentmonitor.databaseconnector\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parliamentmonitor.databaseconnector\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parliamentmonitor.databaseconnector\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|solutionrelative:parliamentmonitor.databaseconnector\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParlimentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parlimentmonitor.serviceimplementation\\votingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParliamentMonitor.ServiceImplementation.csproj|solutionrelative:parlimentmonitor.serviceimplementation\\votingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParliamentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParliamentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParlimentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParlimentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParliamentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParlimentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParlimentMonitor.ServiceImplementation.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parlimentmonitor.serviceimplementation\\votingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{34A8BA9D-20AF-4DB1-9800-4A43C867F484}|ParlimentMonitor.ServiceImplementation\\ParlimentMonitor.ServiceImplementation.csproj|solutionrelative:parlimentmonitor.serviceimplementation\\votingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParliamentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParlimentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParlimentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{84460E86-6BDB-4453-904F-E3FB59EEC692}|DataImporter\\DataImporter.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\dataimporter\\dataimporter.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{84460E86-6BDB-4453-904F-E3FB59EEC692}|DataImporter\\DataImporter.csproj|solutionrelative:dataimporter\\dataimporter.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parliamentmonitor.databaseconnector\\parliamentmonitor.databaseconnector.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|solutionrelative:parliamentmonitor.databaseconnector\\parliamentmonitor.databaseconnector.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parliamentmonitor.contracts\\services\\ipartyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parliamentmonitor.contracts\\services\\ipartyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|solutionrelative:parliamentmonitor.contracts\\services\\ipartyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parliamentmonitor.databaseconnector\\migrations\\20250614103116_initialcreate.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|solutionrelative:parliamentmonitor.databaseconnector\\migrations\\20250614103116_initialcreate.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parliamentmonitor.contracts\\services\\ipoliticianservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|solutionrelative:parliamentmonitor.contracts\\services\\ipoliticianservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parliamentmonitor.databaseconnector\\appdbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|solutionrelative:parliamentmonitor.databaseconnector\\appdbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parliamentmonitor.contracts\\model\\party.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|solutionrelative:parliamentmonitor.contracts\\model\\party.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parliamentmonitor.databaseconnector\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|solutionrelative:parliamentmonitor.databaseconnector\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parliamentmonitor.contracts\\model\\politician.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|solutionrelative:parliamentmonitor.contracts\\model\\politician.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParlimentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\pages\\error.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03C2EC44-6462-431C-8D22-1F9E8DF62826}|..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ParlimentMonitor.WebInterface.csproj|d:\\continuous-democracies\\frontend\\parlimentmonitor.webinterface\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\parliamentmonitor.databaseconnector\\parliamentmonitor.databaseconnector.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{DF944A06-345C-4124-A2F5-9FF89A589E43}|ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj|solutionrelative:parliamentmonitor.databaseconnector\\parliamentmonitor.databaseconnector.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+      "AbsoluteMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|d:\\continuous-democracies\\backend\\parliamentmonitor\\parliamentmonitor.contracts\\model\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F9BDE9E-2769-46DF-FF1F-47C222BB9C75}|ParliamentMonitor.Contracts\\ParliamentMonitor.Contracts.csproj|solutionrelative:parliamentmonitor.contracts\\model\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -133,8 +78,35 @@
       "DocumentGroups": [
         {
           "DockedWidth": 772,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 13,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Program.cs",
+              "RelativeDocumentMoniker": "ContinousDemocracyAPI\\Program.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Program.cs",
+              "RelativeToolTip": "ContinousDemocracyAPI\\Program.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAABQAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-02T12:25:12.176Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "ContinousDemocracyAPI\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Properties\\launchSettings.json",
+              "RelativeToolTip": "ContinousDemocracyAPI\\Properties\\launchSettings.json",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAADAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-13T18:05:52.416Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
@@ -161,426 +133,192 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ModelClassDiagram.cd",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\ModelClassDiagram.cd",
-              "RelativeDocumentMoniker": "ParliamentMonitor.Contracts\\ModelClassDiagram.cd",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\ModelClassDiagram.cd",
-              "RelativeToolTip": "ParliamentMonitor.Contracts\\ModelClassDiagram.cd",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000463|",
-              "WhenOpened": "2025-07-05T15:54:59.359Z",
+              "DocumentIndex": 7,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Dockerfile",
+              "RelativeDocumentMoniker": "ContinousDemocracyAPI\\Dockerfile",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Dockerfile",
+              "RelativeToolTip": "ContinousDemocracyAPI\\Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-09-13T17:38:16.331Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ClassDiagram1.cd",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\ClassDiagram1.cd",
-              "RelativeDocumentMoniker": "ParlimentMonitor.ServiceImplementation\\ClassDiagram1.cd",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\ClassDiagram1.cd*",
-              "RelativeToolTip": "ParlimentMonitor.ServiceImplementation\\ClassDiagram1.cd*",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000463|",
-              "WhenOpened": "2025-07-05T15:52:00.797Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ParliamentScraper.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\DataImporter\\ParliamentScraper.cs",
-              "RelativeDocumentMoniker": "DataImporter\\ParliamentScraper.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\DataImporter\\ParliamentScraper.cs*",
-              "RelativeToolTip": "DataImporter\\ParliamentScraper.cs*",
-              "ViewState": "AQIAAGYAAAAAAAAAAAAkwG4AAABwAAAA",
+              "DocumentIndex": 13,
+              "Title": "IPoliticianService.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\Services\\IPoliticianService.cs",
+              "RelativeDocumentMoniker": "ParliamentMonitor.Contracts\\Services\\IPoliticianService.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\Services\\IPoliticianService.cs",
+              "RelativeToolTip": "ParliamentMonitor.Contracts\\Services\\IPoliticianService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T09:38:33.238Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PartyService.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\PartyService.cs",
-              "RelativeDocumentMoniker": "ParlimentMonitor.ServiceImplementation\\PartyService.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\PartyService.cs",
-              "RelativeToolTip": "ParlimentMonitor.ServiceImplementation\\PartyService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAbAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T11:25:47.371Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "VotingCanvas.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Modules\\VotingCanvas.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Modules\\VotingCanvas.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Modules\\VotingCanvas.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Modules\\VotingCanvas.razor",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAA4AAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-19T09:50:13.024Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "app.css",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\wwwroot\\app.css",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\wwwroot\\app.css",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\wwwroot\\app.css",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\wwwroot\\app.css",
-              "ViewState": "AQIAAC4AAAAAAAAAAADwvzUAAAAXAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-06-19T09:59:31.191Z"
+              "WhenOpened": "2025-08-23T18:08:15.509Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "ImageImporter.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\DataImporter\\ImageImporter.cs",
-              "RelativeDocumentMoniker": "DataImporter\\ImageImporter.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\DataImporter\\ImageImporter.cs",
-              "RelativeToolTip": "DataImporter\\ImageImporter.cs",
-              "ViewState": "AQIAADAAAAAAAAAAAIAwwDoAAAAmAAAA",
+              "Title": "PoliticiansController.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Controllers\\PoliticiansController.cs",
+              "RelativeDocumentMoniker": "ContinousDemocracyAPI\\Controllers\\PoliticiansController.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Controllers\\PoliticiansController.cs",
+              "RelativeToolTip": "ContinousDemocracyAPI\\Controllers\\PoliticiansController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBcAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T09:20:04.056Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\DataImporter\\Program.cs",
-              "RelativeDocumentMoniker": "DataImporter\\Program.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\DataImporter\\Program.cs",
-              "RelativeToolTip": "DataImporter\\Program.cs",
-              "ViewState": "AQIAABgAAAAAAAAAAAAAACoAAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T11:49:49.396Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Counter.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Counter.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Counter.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Counter.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Counter.razor",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAHAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-19T09:03:56.979Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PoliticianService.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\PoliticianService.cs",
-              "RelativeDocumentMoniker": "ParlimentMonitor.ServiceImplementation\\PoliticianService.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\PoliticianService.cs",
-              "RelativeToolTip": "ParlimentMonitor.ServiceImplementation\\PoliticianService.cs",
-              "ViewState": "AQIAAG8AAAAAAAAAAAAjwHwAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T12:18:26.268Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "VoteContainer.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\ViewModels\\VoteContainer.cs",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ViewModels\\VoteContainer.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\ViewModels\\VoteContainer.cs",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\ViewModels\\VoteContainer.cs",
-              "ViewState": "AQIAABUAAAAAAAAAAAAQwB0AAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-25T14:36:53.43Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "VotingDataimporter.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\DataImporter\\VotingDataimporter.cs",
-              "RelativeDocumentMoniker": "DataImporter\\VotingDataimporter.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\DataImporter\\VotingDataimporter.cs",
-              "RelativeToolTip": "DataImporter\\VotingDataimporter.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAD4vxMAAAChAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T07:28:05.799Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "VotingService.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\VotingService.cs",
-              "RelativeDocumentMoniker": "ParlimentMonitor.ServiceImplementation\\VotingService.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\VotingService.cs",
-              "RelativeToolTip": "ParlimentMonitor.ServiceImplementation\\VotingService.cs",
-              "ViewState": "AQIAAC4AAAAAAAAAAAAkwDUAAABWAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T09:03:14.24Z",
+              "WhenOpened": "2025-07-30T06:06:14.376Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "Parliament.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Parliament.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Parliament.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Parliament.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Parliament.razor",
-              "ViewState": "AQIAABcAAAAAAAAAAADgvxkAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-19T08:23:50.185Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Program.cs",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Program.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Program.cs",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Program.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAA4AAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-14T13:22:04.984Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Routes.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Routes.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Routes.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Routes.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Routes.razor",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-14T13:05:05.463Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "AppDBContext.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\AppDBContext.cs",
-              "RelativeDocumentMoniker": "ParliamentMonitor.DataBaseConnector\\AppDBContext.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\AppDBContext.cs",
-              "RelativeToolTip": "ParliamentMonitor.DataBaseConnector\\AppDBContext.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAWwBMAAABLAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T16:19:49.389Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Weather.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Weather.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Weather.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Weather.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Weather.razor",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-19T09:03:52.6Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Weather.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Weather.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Weather.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Weather.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Weather.razor",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-14T13:06:15.395Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Counter.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Counter.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Counter.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Counter.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Counter.razor",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAHAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-14T13:20:24.544Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "App.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\App.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\App.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\App.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\App.razor",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-18T08:55:25.908Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "_Imports.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\_Imports.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\_Imports.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\_Imports.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\_Imports.razor",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAkAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-14T13:05:25.256Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "_Imports.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\_Imports.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\_Imports.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\_Imports.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\_Imports.razor",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAkAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-19T08:34:59.135Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "App.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\App.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\App.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\App.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\App.razor",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAyAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-14T13:05:17.169Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
               "Title": "VotingService.cs",
               "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\VotingService.cs",
               "RelativeDocumentMoniker": "ParlimentMonitor.ServiceImplementation\\VotingService.cs",
               "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\VotingService.cs",
               "RelativeToolTip": "ParlimentMonitor.ServiceImplementation\\VotingService.cs",
-              "ViewState": "AQIAAC4AAAAAAAAAAAAkwDUAAABWAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFIAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T07:52:08.129Z"
+              "WhenOpened": "2025-07-30T05:59:02.371Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "NavMenu.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Layout\\NavMenu.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Layout\\NavMenu.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Layout\\NavMenu.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Layout\\NavMenu.razor",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAYwB4AAABaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-14T13:05:00.203Z"
+              "DocumentIndex": 1,
+              "Title": "PartyService.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\PartyService.cs",
+              "RelativeDocumentMoniker": "ParlimentMonitor.ServiceImplementation\\PartyService.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\PartyService.cs",
+              "RelativeToolTip": "ParlimentMonitor.ServiceImplementation\\PartyService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-27T06:17:14.019Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "ParliamentMonitor.DataBaseConnector.csproj",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj",
-              "RelativeDocumentMoniker": "ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj",
-              "RelativeToolTip": "ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-05-27T15:32:24.066Z"
+              "DocumentIndex": 0,
+              "Title": "PoliticianService.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\PoliticianService.cs",
+              "RelativeDocumentMoniker": "ParlimentMonitor.ServiceImplementation\\PoliticianService.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParlimentMonitor.ServiceImplementation\\PoliticianService.cs",
+              "RelativeToolTip": "ParlimentMonitor.ServiceImplementation\\PoliticianService.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwBkAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-27T06:15:18.513Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "DataImporter.csproj",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\DataImporter\\DataImporter.csproj",
-              "RelativeDocumentMoniker": "DataImporter\\DataImporter.csproj",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\DataImporter\\DataImporter.csproj",
-              "RelativeToolTip": "DataImporter\\DataImporter.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-06-18T08:01:05.096Z"
+              "DocumentIndex": 15,
+              "Title": "Politician.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\Model\\Politician.cs",
+              "RelativeDocumentMoniker": "ParliamentMonitor.Contracts\\Model\\Politician.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\Model\\Politician.cs",
+              "RelativeToolTip": "ParliamentMonitor.Contracts\\Model\\Politician.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwDAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-27T06:11:53.888Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 14,
+              "Title": "Party.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\Model\\Party.cs",
+              "RelativeDocumentMoniker": "ParliamentMonitor.Contracts\\Model\\Party.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\Model\\Party.cs",
+              "RelativeToolTip": "ParliamentMonitor.Contracts\\Model\\Party.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-27T06:11:47.049Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "IPartyService.cs",
               "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\Services\\IPartyService.cs",
               "RelativeDocumentMoniker": "ParliamentMonitor.Contracts\\Services\\IPartyService.cs",
               "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\Services\\IPartyService.cs",
               "RelativeToolTip": "ParliamentMonitor.Contracts\\Services\\IPartyService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T07:52:06.936Z",
+              "WhenOpened": "2025-07-27T06:05:44.61Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Entity.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\Model\\Entity.cs",
+              "RelativeDocumentMoniker": "ParliamentMonitor.Contracts\\Model\\Entity.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.Contracts\\Model\\Entity.cs",
+              "RelativeToolTip": "ParliamentMonitor.Contracts\\Model\\Entity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-27T05:32:51.512Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "ContinousDemocracyAPI\\appsettings.json",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\appsettings.json",
+              "RelativeToolTip": "ContinousDemocracyAPI\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-27T04:29:22.671Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "20250614103116_InitialCreate.Designer.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\Migrations\\20250614103116_InitialCreate.Designer.cs",
-              "RelativeDocumentMoniker": "ParliamentMonitor.DataBaseConnector\\Migrations\\20250614103116_InitialCreate.Designer.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\Migrations\\20250614103116_InitialCreate.Designer.cs",
-              "RelativeToolTip": "ParliamentMonitor.DataBaseConnector\\Migrations\\20250614103116_InitialCreate.Designer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 2,
+              "Title": "PartyController.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Controllers\\PartyController.cs",
+              "RelativeDocumentMoniker": "ContinousDemocracyAPI\\Controllers\\PartyController.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Controllers\\PartyController.cs",
+              "RelativeToolTip": "ContinousDemocracyAPI\\Controllers\\PartyController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAQwBgAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T07:52:06.652Z"
+              "WhenOpened": "2025-07-26T07:50:06.078Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "AppDBContextModelSnapshot.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\Migrations\\AppDBContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "ParliamentMonitor.DataBaseConnector\\Migrations\\AppDBContextModelSnapshot.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\Migrations\\AppDBContextModelSnapshot.cs",
-              "RelativeToolTip": "ParliamentMonitor.DataBaseConnector\\Migrations\\AppDBContextModelSnapshot.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 5,
+              "Title": "VotingController.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Controllers\\VotingController.cs",
+              "RelativeDocumentMoniker": "ContinousDemocracyAPI\\Controllers\\VotingController.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ContinousDemocracyAPI\\Controllers\\VotingController.cs",
+              "RelativeToolTip": "ContinousDemocracyAPI\\Controllers\\VotingController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T07:52:06.113Z"
+              "WhenOpened": "2025-07-26T07:44:34.259Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "Error.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Error.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Error.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Error.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Pages\\Error.razor",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-18T07:50:24.463Z"
+              "DocumentIndex": 9,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\appsettings.json",
+              "RelativeDocumentMoniker": "ParliamentMonitor.DataBaseConnector\\appsettings.json",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\appsettings.json",
+              "RelativeToolTip": "ParliamentMonitor.DataBaseConnector\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-25T14:17:31.163Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "AppDBContextFactory.cs",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\AppDBContextFactory.cs",
-              "RelativeDocumentMoniker": "ParliamentMonitor.DataBaseConnector\\AppDBContextFactory.cs",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\AppDBContextFactory.cs",
-              "RelativeToolTip": "ParliamentMonitor.DataBaseConnector\\AppDBContextFactory.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAqwBEAAAA6AAAA",
+              "DocumentIndex": 10,
+              "Title": "AppDBContext.cs",
+              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\AppDBContext.cs",
+              "RelativeDocumentMoniker": "ParliamentMonitor.DataBaseConnector\\AppDBContext.cs",
+              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\AppDBContext.cs",
+              "RelativeToolTip": "ParliamentMonitor.DataBaseConnector\\AppDBContext.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABMAAACnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T15:59:50.991Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "MainLayout.razor",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Layout\\MainLayout.razor",
-              "RelativeDocumentMoniker": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Layout\\MainLayout.razor",
-              "ToolTip": "D:\\Continuous-Democracies\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Layout\\MainLayout.razor",
-              "RelativeToolTip": "..\\..\\FrontEnd\\ParlimentMonitor.WebInterface\\Components\\Layout\\MainLayout.razor",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-14T13:04:56.28Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "ParliamentMonitor.DataBaseConnector",
-              "DocumentMoniker": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj",
-              "RelativeDocumentMoniker": "ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj",
-              "ToolTip": "D:\\Continuous-Democracies\\Backend\\ParliamentMonitor\\ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj",
-              "RelativeToolTip": "ParliamentMonitor.DataBaseConnector\\ParliamentMonitor.DataBaseConnector.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-05-27T15:34:29.624Z"
+              "WhenOpened": "2025-07-25T14:17:30.11Z",
+              "EditorCaption": ""
             }
           ]
         },
