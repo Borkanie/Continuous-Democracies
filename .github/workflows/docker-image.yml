@@ -13,4 +13,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file ../../Backend/ParliamentMonitor/Dockerfile --tag borkanie/continousdemocracyapi:$(date +%s)
+      run: cd Backend/ParliamentMonitor
+            docker build  --file Dockerfile  --tag borkanie/continousdemocracyapi:$(date +%s)  .
