@@ -31,14 +31,10 @@ jobs:
           .
         docker push $IMAGE
         
-    # 4. Configure kubectl (for MicroK8s cluster)
-    - name: Configure kubeconfig
-      run: |
-        mkdir -p ~/.kube
-        echo "${{ secrets.KUBECONFIG_FILE }}" > ~/.kube/config
-
-    # 5. Deploy to MicroK8s
+    # 4. Deploy to MicroK8s
     - name: Deploy to MicroK8s
       run: |
-        kubectl set image deployment/continuous-democracies app=borkanie/continousdemocracyapi:${{ github.sha }} --record
-        kubectl rollout status deployment/continuous-democracies
+        microk8s kubectl apply -f deployment.yaml
+        microk8s kubectl set image deployment/continuous-democracies app=borkanie/continousdemocracyapi:${{ github.sha }}
+        microk8s kubectl rollout status deployment/continuous-democracies
+
