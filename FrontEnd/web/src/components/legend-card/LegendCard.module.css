@@ -1,0 +1,44 @@
+.Div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border: var(--theme-border-primary);
+  border-radius: 6px;
+  transition: all 0.2s ease-in;
+
+  &:hover {
+    border: var(--theme-border-secondary);
+    box-shadow: var(--theme-box-shadow-primary);
+    cursor: pointer;
+  }
+}
+
+.leftSide {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.marker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.countContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.percentageText {
+  color: var(--theme-font-color-secondary);
+  font-size: var(--theme-font-size-m);
+}

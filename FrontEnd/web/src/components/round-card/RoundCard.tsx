@@ -1,5 +1,5 @@
 import type { Round } from '../../utils/types';
-import { DateComp } from '../Date/DateComp';
+import { DateComp } from '../date/DateComp';
 import { Status } from '../status/Status';
 import styles from './RoundCard.module.css';
 import classNames from 'classnames';
