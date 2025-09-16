@@ -31,8 +31,8 @@ spec:
     - name: http
       port: 8080
       targetPort: 8080
-      nodePort: 8080
+      nodePort: 30080
     - name: https
       port: 8081
       targetPort: 8081
-      nodePort: 8081
+      nodePort: 30081
