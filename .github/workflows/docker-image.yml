@@ -31,10 +31,33 @@ jobs:
           .
         docker push $IMAGE
         
-    # 4. Deploy to MicroK8s
-    - name: Deploy to MicroK8s
+    # 4. Deploy to Docker
+    - name: Deploy to 
       run: |
-        microk8s kubectl apply -f deployment.yaml
-        microk8s kubectl set image deployment/continuous-democracies app=borkanie/continousdemocracyapi:${{ github.sha }}
-        microk8s kubectl rollout status deployment/continuous-democracies
+        IMAGE_NAME="borkanie/continousdemocracyapi"
+        CONTAINER_NAME="continuous-democracies"
+        HOST_PORT1=8080
+        HOST_PORT2=8081
+        CONTAINER_PORT1=8080
+        CONTAINER_PORT2=8081
+
+        echo "Pulling latest image $IMAGE_NAME..."
+        docker pull $IMAGE_NAME
+
+        if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
+          echo "Stopping and removing existing container $CONTAINER_NAME..."
+          docker stop $CONTAINER_NAME
+          docker rm $CONTAINER_NAME
+        fi
+
+        echo "Starting new container $CONTAINER_NAME..."
+        docker run -d \
+          --name $CONTAINER_NAME \
+          -p $HOST_PORT1:$CONTAINER_PORT1 \
+          -p $HOST_PORT2:$CONTAINER_PORT2 \
+          --restart unless-stopped \
+          $IMAGE_NAME
+
+        echo "Deployment complete!"
+
 
