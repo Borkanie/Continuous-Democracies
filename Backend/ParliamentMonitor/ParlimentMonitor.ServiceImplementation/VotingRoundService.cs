@@ -112,8 +112,20 @@ namespace ParliamentMonitor.ServiceImplementation
         }
 
         /// <inheritdoc/>
-        public Task<ISet<Round>> GetAllRoundsFromDBAsync(int number = 100)
+        public Task<ISet<Round>> GetAllRoundsFromDBAsync(DateTime? startDate, DateTime? endDate, int number = 100)
         {
+            if(startDate != null && endDate == null)
+            {
+                if (DateTime.Now < startDate)
+                {
+                    throw new Exception("End date cannot be in the future");
+                }
+                endDate = DateTime.Now;
+            }
+            if (startDate != null && endDate != null)
+            {
+                return Task.FromResult<ISet<Round>>(_dbContext.VotingRounds.Where(x => x.VoteDate >= startDate && x.VoteDate <= endDate).Take(number).ToHashSet());
+            }
             return Task.FromResult<ISet<Round>>(_dbContext.VotingRounds.Take(number).ToHashSet());
         }
 

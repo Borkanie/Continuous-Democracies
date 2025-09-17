@@ -35,8 +35,9 @@ namespace ParliamentMonitor.Contracts.Services
         /// <summary>
         /// Returns all the rounds from DB.
         /// Unpopulated with votes they need to be fetched separately for speed.
+        /// This will return all the rounds in a given time interval.
         /// </summary>
         /// <returns></returns>
-        public Task<ISet<T>> GetAllRoundsFromDBAsync(int number = 100);
+        public Task<ISet<T>> GetAllRoundsFromDBAsync(DateTime? startDate, DateTime? endDate, int number = 100);
     }
 }

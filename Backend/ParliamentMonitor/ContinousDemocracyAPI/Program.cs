@@ -8,6 +8,21 @@ using ContinousDemocracyAPI.MiddleWare;
 var builder = WebApplication.CreateBuilder(args);
 Console.WriteLine("Starting ContinousDemocracyAPI...");
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1",
+        new Microsoft.OpenApi.Models.OpenApiInfo
+        {
+            Title = "API democratia contiua",
+            Version = "v1"
+        }
+     );
+
+    var filePath = Path.Combine(System.AppContext.BaseDirectory, "MyApi.xml");
+    c.IncludeXmlComments(filePath);
+}
+);
+
 // Add services to the container.
 builder.Services.AddSingleton(new AppDBContext(builder.Configuration.GetConnectionString("RDS")!));
 builder.Services.AddScoped<IPartyService<Party>, PartyService>();
