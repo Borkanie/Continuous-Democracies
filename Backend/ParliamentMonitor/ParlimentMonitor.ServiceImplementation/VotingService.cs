@@ -7,18 +7,12 @@ using ParliamentMonitor.DataBaseConnector;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
-    public class VotingService : IVotingService<Vote>
+    public class VotingService(AppDBContext context, IPoliticianService<Politician> politicianService, ILogger<IPoliticianService<Politician>> logger) : IVotingService<Vote>
     {
-        private readonly AppDBContext _dbContext;
-        private readonly ILogger<IPoliticianService<Politician>> _logger;
+        private readonly AppDBContext _dbContext = context;
+        private readonly ILogger<IPoliticianService<Politician>> _logger = logger;
 
         public ILogger Logger { get => _logger; }
-
-        public VotingService(AppDBContext context,IPoliticianService<Politician> politicianService, ILogger<IPoliticianService<Politician>> logger) 
-        {
-            _dbContext = context;
-            _logger = logger;
-        }
 
         /// <inheritdoc/>
         public Task<Vote> CreateNewVote(Round round, Politician politician, VotePosition votePosition)
@@ -38,7 +32,7 @@ namespace ParliamentMonitor.ServiceImplementation
 
             _dbContext.Votes.Add(vote);
             _dbContext.SaveChanges();
-            _logger.LogInformation($"Created new vote:{vote} for politician:{politician} in round:{round}");
+            _logger.LogInformation($"Created new vote:{vote.Position} for politician:{politician.Name} in round:{round.VoteId}");
             return Task.FromResult(vote);
 
         }
@@ -56,7 +50,7 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 _dbContext.Votes.Remove(entity);
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Deleted vote:{entity}");
+                _logger.LogInformation($"Deleted vote:{entity.Id}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -80,7 +74,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 vote.Name = entity.Name;
                 vote.Round = entity.Round;
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Updated vote:{vote}");
+                _logger.LogInformation($"Updated vote:{vote.Id}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);

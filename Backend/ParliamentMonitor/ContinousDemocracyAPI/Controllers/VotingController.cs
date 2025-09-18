@@ -7,17 +7,15 @@ namespace ContinousDemocracyAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VotingController : Controller
+    public class VotingController(
+        IVotingService<Vote> votingService,
+        IVotingRoundService<Round> votingRoundService,
+        ILogger<VotingController> logger) : Controller
     {
-        private IVotingService<Vote> votingService;
+        private readonly IVotingService<Vote> votingService = votingService;
+        private readonly IVotingRoundService<Round> votingRoundService = votingRoundService;
+        private readonly ILogger<VotingController> logger = logger;
 
-        private IVotingRoundService<Round> votingRoundService;
-
-        public VotingController(IVotingService<Vote> votingService, IVotingRoundService<Round> votingRoundService)
-        {
-            this.votingService = votingService;
-            this.votingRoundService = votingRoundService;
-        }
 
         /// <summary>
         /// Retrieves a list of voting rounds from the database based on the specified date range and maximum number of
@@ -38,12 +36,22 @@ namespace ContinousDemocracyAPI.Controllers
             [FromQuery] DateTime? endDate,
             [FromQuery] int maxNumberOfEntries = 100)
         {
-            
+
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var ts = DateTime.UtcNow;
+
+            logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/voting/getAllRounds (startDate={StartDate}, endDate={EndDate}, max={Max})",
+                ts, ip, startDate, endDate, maxNumberOfEntries);
+
             var result = votingRoundService.GetAllRoundsFromDBAsync(startDate, endDate, maxNumberOfEntries).Result;
+
             if (result.Count == 0)
             {
-                return NotFound("No results where available in the db");
+                logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (No rounds)", ts, ip);
+                return Ok("No results where available in the db");
             }
+
+            logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK ({Count} rounds)", ts, ip, result.Count);
             return Ok(result);
         }
 
@@ -59,11 +67,19 @@ namespace ContinousDemocracyAPI.Controllers
         [HttpGet("getRoundById/")]
         public ActionResult<string> GetVotingRoundByVoteId([FromQuery] int voteNumber)
         {
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var ts = DateTime.UtcNow;
+
+            logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/voting/getRoundById?voteNumber={VoteNumber}", ts, ip, voteNumber);
+
             var round = votingRoundService.GetVotingRoundAsync(voteNumber).Result;
-            if(round == null)
+            if (round == null)
             {
-                return NotFound("Voting votes not found.");
-            }   
+                logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (VoteNumber={VoteNumber})", ts, ip, voteNumber);
+                return Ok("Voting votes not found.");
+            }
+
+            logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK (Round found for VoteNumber={VoteNumber})", ts, ip, voteNumber);
             return Ok(round);
         }
 
@@ -80,21 +96,36 @@ namespace ContinousDemocracyAPI.Controllers
             [FromQuery] Guid? partyId,
             [FromQuery] string? partyAcronim)
         {
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var ts = DateTime.UtcNow;
+
+            logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/voting/GetResultForVote (number={Number}, partyId={PartyId}, partyAcronim={PartyAcronim})",
+                ts, ip, number, partyId, partyAcronim);
+
             var votes = votingService.GetAllVotesForRound(number).Result;
             if (votes == null)
             {
-                return NotFound("Voting votes not found.");
+                logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (Round {Number})", ts, ip, number);
+                return Ok("Voting votes not found.");
             }
+
             if (partyId != null)
             {
                 votes = votes.Where(v => v.Politician.Party != null && v.Politician.Party.Id == partyId).ToList();
+                logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK ({Count} votes filtered by PartyId={PartyId})", ts, ip, votes.Count, partyId);
                 return Ok(votes);
             }
+
             if (partyAcronim != null)
             {
-                votes = votes.Where(v => v.Politician.Party != null && string.Equals(v.Politician.Party.Acronym, partyAcronim)).ToList();
+                votes = votes.Where(v => v.Politician.Party != null &&
+                                         string.Equals(v.Politician.Party.Acronym, partyAcronim, StringComparison.OrdinalIgnoreCase))
+                             .ToList();
+                logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK ({Count} votes filtered by Acronym={PartyAcronim})", ts, ip, votes.Count, partyAcronim);
                 return Ok(votes);
             }
+
+            logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK ({Count} total votes)", ts, ip, votes.Count);
             return Ok(votes);
 
         }
@@ -110,11 +141,19 @@ namespace ContinousDemocracyAPI.Controllers
         [HttpGet("GetAllVotesForARoundById/")]
         public ActionResult<string> GetAllVotesForARoundById([FromQuery] Guid roundId)
         {
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var ts = DateTime.UtcNow;
+
+            logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/voting/GetAllVotesForARoundById?roundId={RoundId}", ts, ip, roundId);
+
             var votes = votingService.GetAllVotesForRound(roundId).Result;
-            if(votes == null)
+            if (votes == null)
             {
-                return NotFound("Voting votes not found.");
+                logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (RoundId={RoundId})", ts, ip, roundId);
+                return Ok("Voting votes not found.");
             }
+
+            logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK ({Count} votes for RoundId={RoundId})", ts, ip, votes.Count, roundId);
             return Ok(votes);
         }
     }

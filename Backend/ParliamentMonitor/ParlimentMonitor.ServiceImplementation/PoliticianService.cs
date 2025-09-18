@@ -6,18 +6,12 @@ using ParliamentMonitor.DataBaseConnector;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
-    public class PoliticianService : IPoliticianService<Politician>
+    public class PoliticianService(AppDBContext context, ILogger<IPoliticianService<Politician>> logger) : IPoliticianService<Politician>
     {
-        private AppDBContext _dbContext;
-        private ILogger<IPoliticianService<Politician>> _logger;
+        private AppDBContext _dbContext = context;
+        private ILogger<IPoliticianService<Politician>> _logger = logger;
 
         public ILogger Logger { get => _logger; }
-
-        public PoliticianService(AppDBContext context, ILogger<IPoliticianService<Politician>> logger)
-        {
-            _dbContext = context;
-            _logger = logger;
-        }
 
         /*<inheritdoc/>*/
         public Task<Politician?> CreatePoliticanAsync(string name, Party party, WorkLocation location, Gender gender, bool isCurrentlyActive = true, string? imageUrl = null)
@@ -32,10 +26,10 @@ namespace ParliamentMonitor.ServiceImplementation
                 politician.ImageUrl = imageUrl;
             }
             if (_dbContext.Politicians.Any(x => x == politician))
-                throw new Exception($"Already existing politician:{politician}");
+                throw new Exception($"Already existing politician:{politician.Name}");
             _dbContext.Politicians.Add(politician);
             _dbContext.SaveChanges();
-            _logger.LogInformation($"Created new politician:{politician}");
+            _logger.LogInformation($"Created new politician:{politician.Name}");
             return Task.FromResult<Politician?>(politician);
 
         }
@@ -48,21 +42,26 @@ namespace ParliamentMonitor.ServiceImplementation
 
             if (party != null)
             {
+                _logger.LogInformation($"Fitlering by Part: {party.Name}");
                 query = query.Where(x => x.Party == party);
             }
 
             if (isActive != null)
             {
+                _logger.LogInformation($"Fitlering by Activity: {isActive}");
                 query = query.Where(x => x.Active == isActive);
             }
 
             if (location != null)
             {
+                _logger.LogInformation($"Fitlering by Location: {location}");
                 query = query.Where(x => x.WorkLocation == location);
             }
 
             if (gender != null)
             {
+
+                _logger.LogInformation($"Fitlering by Gender: {gender}");
                 query = query.Where(x => x.Gender == gender);
             }
 
@@ -96,7 +95,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 old.Name = entity.Name;
                 old.Active = entity.Active;
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Updated politician:{entity}");
+                _logger.LogInformation($"Updated politician:{entity.Id}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -111,7 +110,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 _dbContext.Update(item);
                 item.Active = isCurrentlyActive;
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Updated politician activity:{item}");
+                _logger.LogInformation($"Updated politician activity:{item.Id}");
             }
             return Task.FromResult(item);
         }
@@ -130,7 +129,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 item.Active = isCurrentlyActive ?? item.Active;
                 item.ImageUrl = imageUrl ?? item.ImageUrl;
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Updated politician:{item}");
+                _logger.LogInformation($"Updated politician:{item.Id}");
             }
             return Task.FromResult(item);
         }
@@ -142,7 +141,7 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 _dbContext.Politicians.Remove(entity);
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Deleted politician:{entity}");
+                _logger.LogInformation($"Deleted politician:{entity.Id}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);

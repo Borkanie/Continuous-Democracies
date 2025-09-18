@@ -7,18 +7,12 @@ using System.Drawing;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
-    public class PartyService : IPartyService<Party>
+    public class PartyService(AppDBContext context, ILogger<IPartyService<Party>> logger) : IPartyService<Party>
     {
-        private readonly AppDBContext _dbContext;
-        private ILogger<IPartyService<Party>> _logger;
+        private readonly AppDBContext _dbContext = context;
+        private ILogger<IPartyService<Party>> _logger = logger;
 
         public ILogger Logger { get => _logger; }
-
-        public PartyService(AppDBContext context, ILogger<IPartyService<Party>> logger) 
-        {
-            _dbContext = context;
-            _logger = logger;
-        }
 
         /*<inheritdoc/>*/
         public Task<Party?> CreatePartyAsync(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
@@ -34,11 +28,11 @@ namespace ParliamentMonitor.ServiceImplementation
                 newParty.Color = (Color)color;
             if (newParty == null || _dbContext.Parties.Any(x => x.Name == newParty.Name && x.Acronym == newParty.Acronym))
             {
-                throw new Exception($"The party:{newParty} already exists.");
+                throw new Exception($"The party:{newParty.Name} already exists.");
             }
             _dbContext.Parties.Add(newParty);
             _dbContext.SaveChanges();
-            _logger.LogInformation($"Created new party:{newParty}");
+            _logger.LogInformation($"Created new party:{newParty.Name}");
             return Task.FromResult<Party?>(newParty);
         }
 
@@ -61,7 +55,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 oldItem.LogoUrl = item.LogoUrl;
                 oldItem.Color = item.Color;
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Updated party:{item}");
+                _logger.LogInformation($"Updated party:{item.Id}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -90,7 +84,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 item.LogoUrl = logoUrl ?? item.LogoUrl;
                 item.Color = color ?? item.Color;
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Updated party:{item}");
+                _logger.LogInformation($"Updated party:{item.Id}");
             }
             return Task.FromResult(item);
         }
@@ -102,7 +96,7 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 _dbContext.Parties.Remove(entity);
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Deleted party:{entity}");
+                _logger.LogInformation($"Deleted party:{entity.Id}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);

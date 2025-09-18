@@ -7,26 +7,18 @@ using ParliamentMonitor.DataBaseConnector;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
-    public class VotingRoundService : IVotingRoundService<Round>
+    public class VotingRoundService(
+        AppDBContext context,
+        IVotingService<Vote> votingService,
+        IPoliticianService<Politician> politicianService,
+        ILogger<IVotingRoundService<Round>> logger) : IVotingRoundService<Round>
     {
-        private readonly AppDBContext _dbContext;
-        private readonly IVotingService<Vote> _votingService;
-        private readonly IPoliticianService<Politician> _politicianService;
-        private readonly ILogger<IVotingRoundService<Round>> _logger;
+        private readonly AppDBContext _dbContext = context;
+        private readonly IVotingService<Vote> _votingService = votingService;
+        private readonly IPoliticianService<Politician> _politicianService = politicianService;
+        private readonly ILogger<IVotingRoundService<Round>> _logger = logger;
 
         public ILogger Logger { get => _logger; }
-
-        public VotingRoundService(
-            AppDBContext context,
-            IVotingService<Vote> votingService,
-            IPoliticianService<Politician> politicianService,
-            ILogger<IVotingRoundService<Round>> logger)
-        {
-            _dbContext = context;
-            _votingService = votingService;
-            _politicianService = politicianService;
-            _logger = logger;
-        }
 
         /// <inheritdoc/>
         public Task<Round?> CreateVotingRoundAsync(string title, DateTime time, int id = 0, string? description = null)
@@ -37,10 +29,10 @@ namespace ParliamentMonitor.ServiceImplementation
             round.VoteId = id;
             round.Description = description ?? string.Empty;
             if (_dbContext.VotingRounds.Any(x => x == round))
-                throw new Exception($"Already existing voting round:{round}");
+                throw new Exception($"Already existing voting round:{round.VoteId}");
             _dbContext.VotingRounds.Add(round);
             _dbContext.SaveChanges();
-            _logger.LogInformation($"Created new voting round:{round}");
+            _logger.LogInformation($"Created new voting round:{round.VoteId}");
             return Task.FromResult<Round?>(round);
         }
 
@@ -51,7 +43,7 @@ namespace ParliamentMonitor.ServiceImplementation
             {
                 _dbContext.VotingRounds.Remove(entity);
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Deleted voting round:{entity}");
+                _logger.LogInformation($"Deleted voting round:{entity.Id}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -69,7 +61,7 @@ namespace ParliamentMonitor.ServiceImplementation
             Round? round = _dbContext.VotingRounds.FirstOrDefault(x => x.VoteId == votingRoundId);
 
             if (round == null)
-                Console.WriteLine($"No round with Id{votingRoundId} found in db");
+                Console.WriteLine($"No round with Id {votingRoundId} found in db");
             return Task.FromResult(round);
         }
 
@@ -83,7 +75,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 vote.Description = voteResult.Description;
                 vote.Title = voteResult.Title;
                 _dbContext.SaveChanges();
-                _logger.LogInformation($"Updated voting round:{vote}");
+                _logger.LogInformation($"Updated voting round:{vote.Id}");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -107,7 +99,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 round.Description = Description;
             }
             _dbContext.SaveChanges();
-            _logger.LogInformation($"Updated voting round:{round}");
+            _logger.LogInformation($"Updated voting round:{round.Id}");
             return Task.FromResult<Round?>(round);
         }
 
@@ -141,7 +133,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 {
                     _dbContext.Update(container);
                     _dbContext.SaveChanges();
-                    _logger.LogInformation($"Registered vote:{vote} for politician:{politician} in voting round:{container}");
+                    _logger.LogInformation($"Registered vote:{vote.Position} for politician:{politician.Name} in voting round:{container.VoteId}");
                 }
                 return Task.FromResult(vote);
             }
@@ -159,7 +151,7 @@ namespace ParliamentMonitor.ServiceImplementation
                 throw new Exception($"Politician {politician.Name} not registered yet");
 
             if (GetAsync(container.Id).Result == null)
-                throw new Exception($"Voting round {container} not registered yet");
+                throw new Exception($"Voting round {container.VoteId} not registered yet");
         }
 
         /// <inheritdoc/>

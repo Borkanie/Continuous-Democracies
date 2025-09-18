@@ -8,14 +8,10 @@ namespace ContinousDemocracyAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PartyController : Controller
+    public class PartyController(IPartyService<Party> partyService, ILogger<PartyController> logger) : Controller
     {
-        private IPartyService<Party> partyService;
-
-        public PartyController(IPartyService<Party> partyService)
-        {
-            this.partyService = partyService;
-        }
+        private readonly IPartyService<Party> partyService = partyService;
+        private readonly ILogger<PartyController> logger = logger;
 
         /// <summary>
         /// Retrieves a list of parties based on their active status and a specified limit.
@@ -32,11 +28,20 @@ namespace ContinousDemocracyAPI.Controllers
             [FromQuery] bool active,
             [FromQuery] int number = 100)
         {
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var timestamp = DateTime.UtcNow;
+
+            logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/party/all?active={Active}&number={Number}",
+                timestamp, ip, active, number);
+
             var parties = partyService.GetAllPartiesAsync(active, number).Result;
-            if(parties.Count == 0)
+            if (parties.Count == 0)
             {
-                return NotFound("No parties found.");
+                logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (No parties)", timestamp, ip);
+                return Ok("No parties found.");
             }
+
+            logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK ({Count} parties)", timestamp, ip, parties.Count);
             return Ok(parties);
         }
 
@@ -49,11 +54,19 @@ namespace ContinousDemocracyAPI.Controllers
         [HttpGet("GetById/")]
         public ActionResult<string> GetPartyById(Guid id)
         {
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var timestamp = DateTime.UtcNow;
+
+            logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/party/GetById?id={Id}", timestamp, ip, id);
+
             var party = partyService.GetAsync(id).Result;
             if (party == null)
             {
-                return NotFound("Party not found.");
+                logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (Party {Id} not found)", timestamp, ip, id);
+                return Ok("Party not found.");
             }
+
+            logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK (Party {Id})", timestamp, ip, id);
             return Ok(party);
         }
 
@@ -73,11 +86,22 @@ namespace ContinousDemocracyAPI.Controllers
             [FromQuery] string? name = null,
             [FromQuery] string? acronym = null)
         {
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var timestamp = DateTime.UtcNow;
+
+            logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/party/query?name={Name}&acronym={Acronym}",
+                timestamp, ip, name, acronym);
+
             var party = partyService.GetPartyAsync(name, acronym).Result;
             if (party == null)
             {
-                return NotFound("No party found with the specified criteria.");
+                logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (name={Name}, acronym={Acronym})",
+                    timestamp, ip, name, acronym);
+                return Ok("No party found with the specified criteria.");
             }
+
+            logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK (Party {Party})",
+                timestamp, ip, party);
             return Ok(party);
         }
     }

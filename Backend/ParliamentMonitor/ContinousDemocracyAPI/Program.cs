@@ -8,6 +8,11 @@ using ContinousDemocracyAPI.MiddleWare;
 var builder = WebApplication.CreateBuilder(args);
 Console.WriteLine("Starting ContinousDemocracyAPI...");
 
+builder.Logging.ClearProviders(); // optional: remove default ones
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+builder.Logging.SetMinimumLevel(LogLevel.Information);
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1",

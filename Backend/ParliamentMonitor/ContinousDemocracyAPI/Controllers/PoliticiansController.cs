@@ -6,16 +6,14 @@ namespace ContinousDemocracyAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PoliticiansController : ControllerBase
+    public class PoliticiansController(
+        IPoliticianService<Politician> politicianService,
+        IPartyService<Party> partyService,
+        ILogger<PoliticiansController> logger) : ControllerBase
     {
-        private readonly IPoliticianService<Politician> politicianService;
-        private readonly IPartyService<Party> partyService;
-
-        public PoliticiansController(IPoliticianService<Politician> politicianService, IPartyService<Party> partyService)
-        {
-            this.politicianService = politicianService;
-            this.partyService = partyService;
-        }
+        private readonly IPoliticianService<Politician> politicianService = politicianService;
+        private readonly IPartyService<Party> partyService = partyService;
+        private readonly ILogger<PoliticiansController> logger = logger;
 
         /// <summary>
         /// Retrieves a politician's details by their unique identifier.
@@ -28,11 +26,22 @@ namespace ContinousDemocracyAPI.Controllers
         [HttpGet("GetById/")]
         public ActionResult<string> GetPoliticianById([FromQuery] Guid id)
         {
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var timestamp = DateTime.UtcNow;
+
+            logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/politicians/GetById?id={Id}",
+                timestamp, ip, id);
+
             var politician = politicianService.GetAsync(id).Result;
-            if(politician == null)
+            if (politician == null)
             {
-                return NotFound("Politician not found");
+                logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (Politician {Id} not found)",
+                    timestamp, ip, id);
+                return Ok("Politician not found");
             }
+
+            logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK (Politician {Id})",
+                timestamp, ip, id);
             return Ok(politician!);
         }
 
@@ -47,11 +56,22 @@ namespace ContinousDemocracyAPI.Controllers
         [HttpGet("GetByName/")]
         public ActionResult<string> GetPoliticianByName([FromQuery] string name)
         {
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var timestamp = DateTime.UtcNow;
+
+            logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/politicians/GetByName?name={Name}",
+                timestamp, ip, name);
+
             var politician = politicianService.GetPoliticianAsync(name);
             if (politician == null)
             {
-                return NotFound("No Politician with this name found");
+                logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (No Politician with name={Name})",
+                    timestamp, ip, name);
+                return Ok("No Politician with this name found");
             }
+
+            logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK (Politician {Name})",
+                timestamp, ip, name);
             return Ok(politician!);
         }
 
@@ -79,13 +99,25 @@ namespace ContinousDemocracyAPI.Controllers
             [FromQuery] Gender? gender = null,
             [FromQuery] int number = 100)
         {
-            var party = partyService.GetPartyAsync(partyName, partyAcronym).Result;
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var timestamp = DateTime.UtcNow;
 
+            logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/politicians/getAllPoliticians " +
+                                  "(partyAcronym={PartyAcronym}, partyName={PartyName}, isActive={IsActive}, location={Location}, gender={Gender}, number={Number})",
+                timestamp, ip, partyAcronym, partyName, isActive, location, gender, number);
+
+            var party = partyService.GetPartyAsync(partyName, partyAcronym).Result;
             var politicians = politicianService.GetAllPoliticiansAsync(party, isActive, location, gender, number).Result;
-            if(politicians.Count == 0)
+
+            if (politicians.Count == 0)
             {
-                return NotFound("No politicians found with the specified criteria.");
+                logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (No politicians matching criteria)",
+                    timestamp, ip);
+                return Ok("No politicians found with the specified criteria.");
             }
+
+            logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK ({Count} politicians)",
+                timestamp, ip, politicians.Count);
             return Ok(politicians);
         }
 
