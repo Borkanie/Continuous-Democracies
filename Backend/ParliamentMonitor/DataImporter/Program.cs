@@ -1,11 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DataImporter;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ParliamentMonitor.DataBaseConnector;
 using ParliamentMonitor.ServiceImplementation;
 using System.Text;
-using Microsoft.Extensions.Logging.Console;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Model.Votes;
@@ -16,13 +14,16 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 Console.WriteLine("Choose intended behaviour: for image mapper type I for anything else press any other key");
 var key = Console.ReadKey();
 
+const string outputFolder = "D:\\Voturi\\Votes";
+const string imagefolderPath = "D:\\Continuous-Democracies\\Resources\\DeputyPortraits\\";
+
 if (key.Key == ConsoleKey.I)
 {
     UpdateImagesBasedOnImagefolder();
 }
 else
 {
-    var downloader = new VoteDownloader("D:\\Voturi\\Votes");
+    var downloader = new VoteDownloader(outputFolder);
 
     // par1 = 2, download from 35000 down to 34000, wait 5s each request
     await downloader.DownloadVotesAsync(par1: 2, startVoteIndex: 35000, endVoteIndex: 34990, delaySeconds: 2);
@@ -32,7 +33,6 @@ else
 static void UpdateImagesBasedOnImagefolder()
 {
 
-    var imagefolderPath = "D:\\Continuous-Democracies\\Resources\\DeputyPortraits\\";
     Console.WriteLine($"Currently importing: {imagefolderPath}");
     using (ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole()))
     {
@@ -85,10 +85,9 @@ static void ImportFile(string pathToXmlFile, VotingDataimporter dataImporter)
 
 static async Task ImportDataFromVoteFolder()
 {
-    var pathToXmlDir = "D:\\Voturi\\Votes";
-    Console.WriteLine($"Currently importing: {pathToXmlDir}");
+    Console.WriteLine($"Currently importing: {outputFolder}");
 
-    if (Directory.Exists(pathToXmlDir))
+    if (Directory.Exists(outputFolder))
     {
         try
         {
