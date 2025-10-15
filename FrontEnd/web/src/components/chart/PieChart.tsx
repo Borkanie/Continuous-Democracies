@@ -8,20 +8,19 @@ const { pie } = styles;
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
-type ChildEntry = {
+export type Slice = {
   id: string | number;
   label: string;
-  value: number;
+  value: { count: number; percentage: number };
 };
 
-export type DrilldownEntry = {
-  id?: string | number;
+export type PieChartData = {
   label?: string;
-  children: ChildEntry[];
+  slices: Slice[];
 };
 
 type Props = {
-  data: DrilldownEntry;
+  data: PieChartData;
   onSliceClick?: (id: string | number) => void;
 };
 const COLORS = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
@@ -32,11 +31,11 @@ export const PieChart = (props: Props) => {
   const chartRef = useRef<ChartJS<'pie'> | null>(null);
 
   const chartData = {
-    labels: data.children.map((child) => child.label),
+    labels: data.slices.map((child) => child.label),
     datasets: [
       {
         label: data.label || '',
-        data: data.children.map((child) => child.value),
+        data: data.slices.map((child) => child.value.count), // 👈 use count
         backgroundColor: COLORS,
         borderWidth: 2,
         borderColor: '#fff',
@@ -63,7 +62,7 @@ export const PieChart = (props: Props) => {
     }
 
     const clickedIndex = points[0].index;
-    const clickedChild = data.children[clickedIndex];
+    const clickedChild = data.slices[clickedIndex];
 
     if (clickedChild?.id != null) {
       onSliceClick(clickedChild.id);
@@ -90,8 +89,12 @@ export const PieChart = (props: Props) => {
                 size: 14,
               },
               formatter: (value, context) => {
-                const label = context.chart.data.labels?.[context.dataIndex];
-                return `${label}: ${value}`;
+                const slice = data.slices[context.dataIndex];
+                if (slice.value.count <= 0) {
+                  return null;
+                }
+                const label = slice.label;
+                return `${label}: ${slice.value.count} (${slice.value.percentage}%)`;
               },
             },
           },

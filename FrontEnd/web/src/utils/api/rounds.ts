@@ -7,7 +7,9 @@ export const getAllRounds = async (): Promise<Round[]> => {
 };
 
 export const getRound = async (roundId: string): Promise<Round> => {
-  const response = await fetch(`/api/Voting/getRoundById?voteId=${roundId}`);
+  const response = await fetch(
+    `/api/Voting/getRoundById?voteNumber=${roundId}`
+  );
 
   return response.json();
 };

@@ -1,14 +1,30 @@
+import type { Slice } from '../chart/PieChart';
 import { LegendCard } from '../legend-card/LegendCard';
 import styles from './Legend.module.css';
 
 const { Div, bold, cardsContainer } = styles;
 
-export const Legend = () => {
+type Props = {
+  slices: Slice[];
+};
+
+export const Legend = (props: Props) => {
+  const { slices } = props;
+
   return (
     <div className={Div}>
       <p className={bold}>Legenda voturilor</p>
       <div className={cardsContainer}>
-        <LegendCard
+        {slices.map((slice) => (
+          <LegendCard
+            key={slice.id}
+            text={slice.label}
+            color='#4CAF50'
+            count={slice.value.count}
+            percentage={slice.value.percentage}
+          />
+        ))}
+        {/* <LegendCard
           text='Pentru'
           color='#4CAF50'
           count={23333}
@@ -79,7 +95,7 @@ export const Legend = () => {
           color='#9E9E9E'
           count={233}
           percentage={33}
-        />
+        /> */}
       </div>
     </div>
   );
