@@ -13,6 +13,7 @@ import {
 } from '../utils/hooks/useResultsByRoundId';
 import type { Position } from '../utils/types';
 import { VOTERS_TOTAL_NUMBER } from '../utils/constants';
+import { Spinner } from '../components/spinner/Spinner';
 
 const {
   Div,
@@ -32,7 +33,7 @@ export const RoundBreakdown = () => {
   const params = useParams({ strict: false });
   const { roundId } = params;
 
-  const { data: roundData } = useQuery({
+  const { data: roundData, isFetching } = useQuery({
     queryKey: ['roundById', roundId],
     enabled: !!roundId,
     queryFn: ({ queryKey }) => getRound(queryKey[1] || ''),
@@ -41,55 +42,62 @@ export const RoundBreakdown = () => {
 
   const { data: groupedRoundResults } = useResultsByRoundId(roundId);
 
-  if (!roundData || !groupedRoundResults) {
-    // TODO: Add empty state here
-    return <></>;
-  }
-
   const roundBreakdownData = buildRoundBreakdownData(groupedRoundResults);
 
   return (
     <div className={Div}>
-      <div className={header}>
-        <div className={title}>
-          <h3>{roundData.title}</h3>
-          <Status text={'ACTIV'} />
-        </div>
-        {/* TODO: Use roundData.description when available */}
-        <p>
-          Comprehensive legislation to reduce carbon emissions by 50% by 2030
-        </p>
-        <div className={extraDetails}>
-          <DateComp text={roundData.voteDate} />
-        </div>
-      </div>
-      <div className={separator}></div>
-      <div className={content}>
-        <div className={chartContainer}>
-          <div>
-            <p className={classNames(bold, chartTitle)}>
-              Distributia voturilor
+      {isFetching ? (
+        <Spinner />
+      ) : (
+        <>
+          <div className={header}>
+            <div className={title}>
+              <h3>{roundData?.title}</h3>
+              <Status text={'ACTIV'} />
+            </div>
+            {/* TODO: Use roundData.description when available */}
+            <p>
+              Comprehensive legislation to reduce carbon emissions by 50% by
+              2030
             </p>
-            <PieChart
-              data={roundBreakdownData}
-              onSliceClick={(id) => navigate({ to: `section/${id}` })}
-            />
-            <p className={info}>
-              Apasati click pe o sectiune pentru a vedea impartirea pe partide
-            </p>
+            <div className={extraDetails}>
+              {roundData?.voteDate && <DateComp text={roundData.voteDate} />}
+            </div>
           </div>
-          <div>
-            <Legend slices={roundBreakdownData.slices} />
+          <div className={separator}></div>
+          <div className={content}>
+            <div className={chartContainer}>
+              <div>
+                <p className={classNames(bold, chartTitle)}>
+                  Distributia voturilor
+                </p>
+                <PieChart
+                  data={roundBreakdownData}
+                  onSliceClick={(id) => navigate({ to: `section/${id}` })}
+                />
+                <p className={info}>
+                  Apasati click pe o sectiune pentru a vedea impartirea pe
+                  partide
+                </p>
+              </div>
+              <div>
+                <Legend slices={roundBreakdownData.slices} />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };
 
 const buildRoundBreakdownData = (
-  groupedRoundResults: GroupedVotes
+  groupedRoundResults: GroupedVotes | undefined
 ): PieChartData => {
+  if (!groupedRoundResults) {
+    return { slices: [] };
+  }
+
   const total = VOTERS_TOTAL_NUMBER;
   const nonAbsentPositions: Position[] = [0, 1, 2];
 
