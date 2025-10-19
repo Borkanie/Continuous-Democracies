@@ -111,6 +111,7 @@ const buildRoundBreakdownData = (
       id: pos,
       label: positionLabel(pos),
       value: { count, percentage },
+      color: positionColor(pos),
     };
   });
 
@@ -124,6 +125,7 @@ const buildRoundBreakdownData = (
     id: 3,
     label: positionLabel(3),
     value: { count: absentCount, percentage: absentPercentage },
+    color: positionColor(3),
   });
 
   return { slices };
@@ -141,5 +143,21 @@ const positionLabel = (position: Position): string => {
       return 'Absent';
     default:
       return 'Unknown';
+  }
+};
+
+/* Vote colors (YES, NO, ABSENT, NO VOTE) */
+const positionColor = (position: Position): string => {
+  switch (position) {
+    case 0:
+      return '#36A2EB';
+    case 1:
+      return '#ff6384';
+    case 2:
+      return '#ffce56';
+    case 3:
+      return '#cccccc';
+    default:
+      return '#cccccc';
   }
 };

@@ -19,83 +19,11 @@ export const Legend = (props: Props) => {
           <LegendCard
             key={slice.id}
             text={slice.label}
-            color='#4CAF50'
+            color={slice.color}
             count={slice.value.count}
             percentage={slice.value.percentage}
           />
         ))}
-        {/* <LegendCard
-          text='Pentru'
-          color='#4CAF50'
-          count={23333}
-          percentage={33}
-        />
-        <LegendCard
-          text='Impotriva'
-          color='#F44336'
-          count={233}
-          percentage={33}
-        />
-        <LegendCard
-          text='Abtinere'
-          color='#FF9800'
-          count={233}
-          percentage={33}
-        />
-        <LegendCard
-          text='Nespecificat'
-          color='#9E9E9E'
-          count={233}
-          percentage={33}
-        />
-        <LegendCard
-          text='Pentru'
-          color='#4CAF50'
-          count={23333}
-          percentage={33}
-        />
-        <LegendCard
-          text='Impotriva'
-          color='#F44336'
-          count={233}
-          percentage={33}
-        />
-        <LegendCard
-          text='Abtinere'
-          color='#FF9800'
-          count={233}
-          percentage={33}
-        />
-        <LegendCard
-          text='Nespecificat'
-          color='#9E9E9E'
-          count={233}
-          percentage={33}
-        />
-        <LegendCard
-          text='Pentru'
-          color='#4CAF50'
-          count={23333}
-          percentage={33}
-        />
-        <LegendCard
-          text='Impotriva'
-          color='#F44336'
-          count={233}
-          percentage={33}
-        />
-        <LegendCard
-          text='Abtinere'
-          color='#FF9800'
-          count={233}
-          percentage={33}
-        />
-        <LegendCard
-          text='Nespecificat'
-          color='#9E9E9E'
-          count={233}
-          percentage={33}
-        /> */}
       </div>
     </div>
   );
