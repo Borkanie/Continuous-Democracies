@@ -12,6 +12,7 @@ export type Slice = {
   id: string | number;
   label: string;
   value: { count: number; percentage: number };
+  color: string;
 };
 
 export type PieChartData = {
@@ -23,20 +24,21 @@ type Props = {
   data: PieChartData;
   onSliceClick?: (id: string | number) => void;
 };
-const COLORS = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
 
 export const PieChart = (props: Props) => {
   const { data, onSliceClick } = props;
 
   const chartRef = useRef<ChartJS<'pie'> | null>(null);
 
+  const colors = data.slices.map((slice) => slice.color);
+
   const chartData = {
     labels: data.slices.map((child) => child.label),
     datasets: [
       {
         label: data.label || '',
-        data: data.slices.map((child) => child.value.count), // 👈 use count
-        backgroundColor: COLORS,
+        data: data.slices.map((child) => child.value.count),
+        backgroundColor: colors,
         borderWidth: 2,
         borderColor: '#fff',
         hoverBorderWidth: 2,
@@ -79,23 +81,30 @@ export const PieChart = (props: Props) => {
           maintainAspectRatio: false,
           responsive: true,
           plugins: {
-            tooltip: { enabled: false },
+            tooltip: {
+              enabled: true,
+              mode: 'nearest',
+              intersect: true,
+              position: 'nearest',
+              displayColors: false,
+              backgroundColor: 'rgba(0,0,0,0.75)',
+              padding: 8,
+              callbacks: {
+                title: (items) => {
+                  const idx = items?.[0]?.dataIndex;
+                  return typeof idx === 'number' ? data.slices[idx].label : '';
+                },
+                label: (ctx) => {
+                  const idx = ctx.dataIndex;
+                  const slice = data.slices[idx];
+                  if (!slice) return '';
+                  return `${slice.value.count} — ${slice.value.percentage}%`;
+                },
+              },
+            },
             legend: { display: false },
             datalabels: {
-              color: '#fff',
-              font: {
-                family: 'Montserrat, sans-serif',
-                weight: 'bold',
-                size: 14,
-              },
-              formatter: (value, context) => {
-                const slice = data.slices[context.dataIndex];
-                if (slice.value.count <= 0) {
-                  return null;
-                }
-                const label = slice.label;
-                return `${label}: ${slice.value.count} (${slice.value.percentage}%)`;
-              },
+              display: false,
             },
           },
           cutout: '35%',
