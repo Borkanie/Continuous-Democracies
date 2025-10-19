@@ -38,6 +38,6 @@ namespace ParliamentMonitor.Contracts.Services
         /// This will return all the rounds in a given time interval.
         /// </summary>
         /// <returns></returns>
-        public Task<ISet<T>> GetAllRoundsFromDBAsync(DateTime? startDate, DateTime? endDate, int number = 100);
+        public Task<ISet<T>> GetAllRoundsFromDBAsync(DateTime? startDate, DateTime? endDate, string?[] keywords, int number = 100);
     }
 }
