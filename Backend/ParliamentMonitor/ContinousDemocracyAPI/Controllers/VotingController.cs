@@ -34,6 +34,7 @@ namespace ContinousDemocracyAPI.Controllers
         public ActionResult<string> GetAllRounds(
             [FromQuery] DateTime? startDate,
             [FromQuery] DateTime? endDate,
+            [FromQuery] string?[] keywords,
             [FromQuery] int maxNumberOfEntries = 100)
         {
 
@@ -43,7 +44,7 @@ namespace ContinousDemocracyAPI.Controllers
             logger.LogInformation("Request at {Timestamp} from {IP} -> GET /api/voting/getAllRounds (startDate={StartDate}, endDate={EndDate}, max={Max})",
                 ts, ip, startDate, endDate, maxNumberOfEntries);
 
-            var result = votingRoundService.GetAllRoundsFromDBAsync(startDate, endDate, maxNumberOfEntries).Result;
+            var result = votingRoundService.GetAllRoundsFromDBAsync(startDate, endDate, keywords, maxNumberOfEntries).Result;
 
             if (result.Count == 0)
             {

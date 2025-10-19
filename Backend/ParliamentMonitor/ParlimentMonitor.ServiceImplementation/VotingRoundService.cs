@@ -104,8 +104,20 @@ namespace ParliamentMonitor.ServiceImplementation
         }
 
         /// <inheritdoc/>
-        public Task<ISet<Round>> GetAllRoundsFromDBAsync(DateTime? startDate, DateTime? endDate, int number = 100)
+        public Task<ISet<Round>> GetAllRoundsFromDBAsync(DateTime? startDate, DateTime? endDate, string?[] keywords, int number = 100)
         {
+            var query = _dbContext.VotingRounds.AsQueryable();
+            if (keywords != null && keywords.Length > 0)
+            {
+                // TODO: increase efficiency here because with a big DB this will be slow
+                foreach (var keyword in keywords)
+                {
+                    if(keyword == null) 
+                        continue;
+                    var tempKeyword = keyword.ToLower();
+                    query = query.Where(x => x.Title.ToLower().Contains(tempKeyword) || (x.Description != null && x.Description.ToLower().Contains(tempKeyword)));
+                }
+            }
             if(startDate != null && endDate == null)
             {
                 if (DateTime.Now < startDate)
@@ -116,9 +128,9 @@ namespace ParliamentMonitor.ServiceImplementation
             }
             if (startDate != null && endDate != null)
             {
-                return Task.FromResult<ISet<Round>>(_dbContext.VotingRounds.Where(x => x.VoteDate >= startDate && x.VoteDate <= endDate).Take(number).ToHashSet());
+                return Task.FromResult<ISet<Round>>(query.Where(x => x.VoteDate >= startDate && x.VoteDate <= endDate).Take(number).ToHashSet());
             }
-            return Task.FromResult<ISet<Round>>(_dbContext.VotingRounds.Take(number).ToHashSet());
+            return Task.FromResult<ISet<Round>>(query.Take(number).ToHashSet());
         }
 
         /// <inheritdoc/>
