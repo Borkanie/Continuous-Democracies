@@ -12,7 +12,7 @@ corepack enable
 corepack prepare pnpm@latest --activate
 ```
 
-**Verify instalation:**
+**Verify installation:**
 
 ```bash
 pnpm -v
