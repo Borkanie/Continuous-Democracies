@@ -1,0 +1,13 @@
+.Div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.pText {
+  font-size: var(--theme-font-size-l);
+  color: var(--theme-font-color-secondary);
+}

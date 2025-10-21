@@ -1,0 +1,16 @@
+.Div {
+  overflow-y: auto;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.cardsContainer {
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-block: 16px 0;
+  overflow-y: auto;
+}

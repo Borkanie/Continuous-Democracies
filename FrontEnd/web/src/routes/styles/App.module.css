@@ -1,0 +1,41 @@
+body {
+  --background-color-primary: #ffffff;
+  --background-color-secondary: #f3f8ff;
+  --background-color-tertiary: #f5f5f5;
+  --theme-color-primary: #2563eb;
+  --theme-font-color-primary: #231f20;
+  --theme-font-color-secondary: #8a8a8a;
+  --theme-border-primary: 1px solid #e6e6e6;
+  --theme-border-secondary: 1px solid #d1d5db;
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  --theme-box-shadow-primary: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --theme-font-size-s: 12px;
+  --theme-font-size-m: 14px;
+  --theme-font-size-l: 16px;
+  --theme-font-size-xl: 18px;
+  --theme-color-info: #c6ddfc;
+  --theme-color-success: #83fda1;
+  --theme-color-error: rgb(255, 128, 128);
+
+  font-family: 'Montserrat', sans-serif;
+  font-optical-sizing: auto;
+  background-color: var(--background-color-secondary);
+  color: var(--theme-font-color-primary);
+  box-sizing: border-box;
+
+  p {
+    line-height: 1rem;
+  }
+}
+
+.wrapper {
+  max-width: calc(1280px - 24px - 20px);
+  margin: 0 auto;
+  padding-inline: 10px;
+  padding-block: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}

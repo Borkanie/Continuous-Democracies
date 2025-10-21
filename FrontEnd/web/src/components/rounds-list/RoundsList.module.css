@@ -1,0 +1,52 @@
+.Div {
+  grid-column: span 1;
+  background-color: var(--background-color-primary);
+  border: var(--theme-border-primary);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: var(--theme-box-shadow-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 70vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    width: fit-content;
+  }
+
+  p {
+    font-size: var(--theme-font-size-m);
+    color: var(--theme-font-color-secondary);
+  }
+}
+
+.roundsContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.separator {
+  border-bottom: var(--theme-border-primary);
+  position: sticky;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+
+  &.top {
+    top: 0;
+  }
+
+  &.bottom {
+    bottom: 0;
+  }
+}
