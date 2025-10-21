@@ -14,5 +14,5 @@ export const useDebounce = (value: string, delay = 500) => {
     return () => clearTimeout(handler);
   }, [value, delay]);
 
-  return debouncedValue;
+  return { debouncedValue, isTyping: debouncedValue !== value };
 };
