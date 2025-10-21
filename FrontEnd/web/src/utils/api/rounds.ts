@@ -1,7 +1,16 @@
 import type { Round, VoteResult } from '../types';
 
-export const getAllRounds = async (): Promise<Round[]> => {
-  const response = await fetch('/api/Voting/getAllRounds');
+export const getAllRounds = async (searchTerm?: string): Promise<Round[]> => {
+  const params = new URLSearchParams();
+
+  if (searchTerm) {
+    params.set('keywords', encodeURIComponent(searchTerm));
+  }
+
+  const url = `/api/Voting/getAllRounds${
+    params.toString() ? `?${params.toString()}` : ''
+  }`;
+  const response = await fetch(url);
 
   return response.json();
 };

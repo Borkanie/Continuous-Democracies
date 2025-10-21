@@ -5,7 +5,7 @@ import {
   redirect,
 } from '@tanstack/react-router';
 import { App } from './routes/App';
-import { Section } from './routes/section';
+import { Section } from './routes/Section';
 import { getAllRounds } from './utils/api/rounds';
 import { RoundBreakdown } from './routes/RoundBreakdown';
 
@@ -48,7 +48,7 @@ const routeTree = rootRoute.addChildren([
 
 export const router = createRouter({ routeTree });
 
-// 👇 tells TS what router you're using
+// 👇 tells TS what router we're using
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;

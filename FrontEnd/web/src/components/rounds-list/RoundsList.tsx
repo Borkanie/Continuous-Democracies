@@ -6,13 +6,19 @@ import { getAllRounds } from '../../utils/api/rounds';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import classNames from 'classnames';
 import { Spinner } from '../spinner/Spinner';
+import { useState } from 'react';
+import { useDebounce } from '../../utils/hooks/useDebounce';
 
 const { Div, header, roundsContainer, separator, top, bottom } = styles;
 
 export const RoundsList = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedQuery = useDebounce(searchTerm);
+
   const { data, isFetching } = useQuery({
-    queryKey: ['rounds'],
-    queryFn: getAllRounds,
+    queryKey: ['rounds', debouncedQuery],
+    queryFn: () => getAllRounds(debouncedQuery),
+    retry: false,
   });
 
   const navigate = useNavigate();
@@ -25,7 +31,7 @@ export const RoundsList = () => {
         <h3>Lista legi</h3>
         <p>{data?.length}</p>
       </div>
-      <Search />
+      <Search value={searchTerm} onChange={setSearchTerm} />
       <div className={roundsContainer}>
         {isFetching ? (
           <Spinner />
