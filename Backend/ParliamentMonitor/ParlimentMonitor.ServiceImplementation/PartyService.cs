@@ -4,21 +4,31 @@ using ParliamentMonitor.Contracts.Model;
 using ParliamentMonitor.Contracts.Services;
 using ParliamentMonitor.DataBaseConnector;
 using System.Drawing;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace ParliamentMonitor.ServiceImplementation
 {
-    public class PartyService(AppDBContext context, ILogger<IPartyService<Party>> logger) : IPartyService<Party>
+    public class PartyService : IPartyService<Party>
     {
-        private readonly AppDBContext _dbContext = context;
-        private ILogger<IPartyService<Party>> _logger = logger;
+        private readonly IAppDbContext _dbContext;
+        private readonly ILogger<IPartyService<Party>> _logger;
+
+        public PartyService(IAppDbContext context, ILogger<IPartyService<Party>> logger)
+        {
+            _dbContext = context;
+            _logger = logger;
+        }
 
         public ILogger Logger { get => _logger; }
 
         /*<inheritdoc/>*/
         public Task<Party?> CreatePartyAsync(string name, string? acronym = null, string? logoUrl = null, Color? color = null)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                return Task.FromResult<Party?>(null);
+
             var newParty = new Party() { Id = Guid.NewGuid() };
-            newParty.Id = Guid.NewGuid();
             newParty.Name = name;
             if (acronym != null)
                 newParty.Acronym = acronym;
@@ -26,10 +36,11 @@ namespace ParliamentMonitor.ServiceImplementation
                 newParty.LogoUrl = logoUrl;
             if (color != null)
                 newParty.Color = (Color)color;
-            if (newParty == null || _dbContext.Parties.Any(x => x.Name == newParty.Name && x.Acronym == newParty.Acronym))
+            if (_dbContext.Parties.Any(x => x.Name == newParty.Name && x.Acronym == newParty.Acronym))
             {
-                throw new Exception($"The party:{newParty.Name} already exists.");
+                return Task.FromResult<Party?>(null);
             }
+
             _dbContext.Parties.Add(newParty);
             _dbContext.SaveChanges();
             _logger.LogInformation($"Created new party:{newParty.Name}");
@@ -38,18 +49,19 @@ namespace ParliamentMonitor.ServiceImplementation
 
         /*<inheritdoc/>*/
         public Task<Party?> GetAsync(Guid id)
-        {         
-            var party = _dbContext.Parties.Find(id);
+        {
+            if (id == default) return Task.FromResult<Party?>(null);
+            var party = _dbContext.Parties.FirstOrDefault(p => p.Id == id);
             return Task.FromResult(party);
         }
 
         /*<inheritdoc/>*/
         public Task<bool> UpdateAsync(Party item)
         {
-            var oldItem = GetAsync(item.Id).Result;
+            if (item == null) return Task.FromResult(false);
+            var oldItem = _dbContext.Parties.FirstOrDefault(p => p.Id == item.Id);
             if (oldItem != null)
             {
-                _dbContext.Update(item);
                 oldItem.Active = item.Active;
                 oldItem.Acronym = item.Acronym;
                 oldItem.LogoUrl = item.LogoUrl;
@@ -65,20 +77,15 @@ namespace ParliamentMonitor.ServiceImplementation
         public Task<IList<Party>> GetAllPartiesAsync(bool isActive = true, int number = 100)
         {
             var parties = _dbContext.Parties.Where(x => x.Active == isActive).Take(number).ToList();
-            if (parties == null)
-            {
-                return Task.FromResult<IList<Party>>(new List<Party>());
-            }
-            return Task.FromResult<IList<Party>>(parties);
+            return Task.FromResult<IList<Party>>(parties ?? new List<Party>());
         }
 
         /*<inheritdoc/>*/
         public Task<Party?> UpdatePartyAsync(Guid id, string? name = null, string? acronym = null, string? logoUrl = null, Color? color = null)
         {
-            var item = GetAsync(id).Result;
+            var item = _dbContext.Parties.FirstOrDefault(p => p.Id == id);
             if (item != null)
             {
-                _dbContext.Update(item);
                 item.Name = name ?? item.Name;
                 item.Acronym = acronym ?? item.Acronym;
                 item.LogoUrl = logoUrl ?? item.LogoUrl;
@@ -92,9 +99,11 @@ namespace ParliamentMonitor.ServiceImplementation
         /*<inheritdoc/>*/
         public Task<bool> DeleteAsync(Party entity)
         {
-            if (_dbContext.Parties.Find(entity.Id) != null)
+            if (entity == null) return Task.FromResult(false);
+            var existing = _dbContext.Parties.FirstOrDefault(p => p.Id == entity.Id);
+            if (existing != null)
             {
-                _dbContext.Parties.Remove(entity);
+                _dbContext.Parties.Remove(existing);
                 _dbContext.SaveChanges();
                 _logger.LogInformation($"Deleted party:{entity.Id}");
                 return Task.FromResult(true);
@@ -105,19 +114,15 @@ namespace ParliamentMonitor.ServiceImplementation
         /*<inheritdoc/>*/
         public Task<Party?> GetPartyAsync(string? name = null, string? acronym = null)
         {
-            if (name != null)
+            if (!string.IsNullOrWhiteSpace(name))
             {
                 var value = _dbContext.Parties.FirstOrDefault(x => string.Equals(x.Name.Trim(), name.Trim()));
-                if (value == null)
-                    return Task.FromResult<Party?>(null);
-                return Task.FromResult<Party?>(value);
+                return Task.FromResult(value);
             }
-            if (acronym != null)
+            if (!string.IsNullOrWhiteSpace(acronym))
             {
                 var value = _dbContext.Parties.FirstOrDefault(x => string.Equals(x.Acronym, acronym));
-                if(value == null)
-                    return Task.FromResult<Party?>(null);
-                return Task.FromResult<Party?>(value);
+                return Task.FromResult(value);
 
             }
             return Task.FromResult<Party?>(null);

@@ -29,7 +29,7 @@ builder.Services.AddSwaggerGen(c =>
 );
 
 // Add services to the container.
-builder.Services.AddSingleton(new AppDBContext(builder.Configuration.GetConnectionString("RDS")!));
+builder.Services.AddSingleton<IAppDbContext>(sp => new AppDBContext(builder.Configuration.GetConnectionString("RDS")!));
 builder.Services.AddScoped<IPartyService<Party>, PartyService>();
 builder.Services.AddScoped<IPoliticianService<Politician>, PoliticianService>();
 builder.Services.AddScoped<IVotingService<Vote>, VotingService>();

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ParliamentMonitor.DataBaseConnector 
 {
-    public class AppDBContext : DbContext
+    public class AppDBContext : DbContext, IAppDbContext
     {
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
 
@@ -51,5 +51,15 @@ namespace ParliamentMonitor.DataBaseConnector
         public DbSet<Round> VotingRounds { get; set; }
 
         public DbSet<Vote> Votes { get; set; }
+
+        public new int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(System.Threading.CancellationToken cancellationToken = default)
+        {
+            return base.SaveChangesAsync(cancellationToken);
+        }
     }
 }
