@@ -1,4 +1,4 @@
-name: CI/CD to MicroK8s
+name: CI/CD deploy Backend Docker Image
 
 on:
   push:
