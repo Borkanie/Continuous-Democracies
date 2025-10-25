@@ -4,7 +4,7 @@ import styles from './styles/RoundBreakdown.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { getRound } from '../utils/api/rounds';
 import { Status } from '../components/status/Status';
-import { DateComp } from '../components/date/DateComp';
+import { DateComp } from '../components/Date/DateComp';
 import { Legend } from '../components/legend/Legend';
 import classNames from 'classnames';
 import {

@@ -5,7 +5,7 @@ import {
   redirect,
 } from '@tanstack/react-router';
 import { App } from './routes/App';
-import { Section } from './routes/Section';
+import { Section } from './routes/section';
 import { getAllRounds } from './utils/api/rounds';
 import { RoundBreakdown } from './routes/RoundBreakdown';
 

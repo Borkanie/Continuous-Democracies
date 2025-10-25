@@ -1,0 +1,53 @@
+name: Build and Run Frontend Docker Image
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'FrontEnd/web/**'
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    # This is designed to run on your self-hosted runner with Docker available
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          cd FrontEnd/web
+          IMAGE_NAME="borkanie/parliament-web:latest"
+          docker build -t "$IMAGE_NAME" -f Dockerfile .
+
+      - name: Stop and remove existing container (if any)
+        run: |
+          CONTAINER_NAME=parliament-web
+          if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
+            echo "Stopping and removing existing container $CONTAINER_NAME"
+            docker stop $CONTAINER_NAME || true
+            docker rm $CONTAINER_NAME || true
+          fi
+
+      - name: Run Docker container and expose to host port 5147
+        run: |
+          IMAGE_NAME="borkanie/parliament-web:latest"
+          CONTAINER_NAME=parliament-web
+          docker run -d \
+            --name "$CONTAINER_NAME" \
+            -p 5147:80 \
+            --restart unless-stopped \
+            "$IMAGE_NAME"
+
+      - name: Show running containers
+        run: docker ps --filter name=parliament-web --format "table {{.Names}}\t{{.Image}}\t{{.Ports}}"
+
+      - name:  Log in to Docker Hub and Push Image
+        run: |
+          cd FrontEnd/web
+          IMAGE_NAME="${{ github.repository_owner }}/parliament-web:latest"
+          echo "Logging in to Docker registry..."
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push "$IMAGE_NAME"
