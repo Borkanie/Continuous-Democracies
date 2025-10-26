@@ -50,13 +50,13 @@ jobs:
             docker rm $CONTAINER_NAME || true
           fi
 
-      - name: Run Docker container and expose to host port 5147
+      - name: Run Docker container and expose to host port 5173
         run: |
           IMAGE_NAME="borkanie/parliament-web:latest"
           CONTAINER_NAME=parliament-web
           docker run -d \
             --name "$CONTAINER_NAME" \
-            -p 5147:80 \
+            -p 5173:5173 \
             --restart unless-stopped \
             "$IMAGE_NAME"
 
