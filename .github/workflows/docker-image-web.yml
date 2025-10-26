@@ -3,6 +3,8 @@ name: Build and Run Frontend Docker Image
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - FrontEnd/**
 
 jobs:
   build-and-run:
