@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'FrontEnd/web/**'
+      - 'Frontend/web/**'
   workflow_dispatch:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cd FrontEnd/web
+          cd Frontend/web
           IMAGE_NAME="borkanie/parliament-web:latest"
           docker build -t "$IMAGE_NAME" -f Dockerfile .
 
@@ -46,7 +46,7 @@ jobs:
 
       - name:  Log in to Docker Hub and Push Image
         run: |
-          cd FrontEnd/web
+          cd Frontend/web
           IMAGE_NAME="borkanie/parliament-web:latest"
           echo "Logging in to Docker registry..."
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin
