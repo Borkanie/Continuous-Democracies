@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'http://backend.democratiacontinua.eu',
-        changeOrigin: true,
+        changeOrigin: true, 
       },
     },
   },
