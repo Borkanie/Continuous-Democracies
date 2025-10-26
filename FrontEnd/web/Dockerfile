@@ -1,25 +1,22 @@
-# Multi-stage Dockerfile for building and serving the Vite React app
-FROM node:22-alpine AS build
+# Use Node.js 22 on Alpine
+FROM node:22-alpine
+
 WORKDIR /app
 
-# Enable pnpm via corepack
+# Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy package files first for better layer caching
-COPY package.json ./
-COPY pnpm-lock.yaml ./
+# Copy package files first (layer caching)
+COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
-# Copy source files and build
+# Copy the source code
 COPY . .
-RUN pnpm run build
 
-# Production image: serve with nginx
-FROM nginx:stable-alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-# Add custom nginx config (proxies /api and /swagger to backend)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Expose the dev server port (default 5173)
+EXPOSE 5173
+
+# Command to run Vite in dev mode
+CMD ["pnpm", "dev", "--host", "0.0.0.0"]
