@@ -4,8 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'Frontend/web/**'
-  workflow_dispatch:
+      - 'Frontend/**'
 
 jobs:
   build-and-run:
