@@ -1,0 +1,152 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Get lgeislation data",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "VoteId",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Cam",
+              "fieldType": "number",
+              "placeholder": "2"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "543c516c-e769-4d46-a209-d8cca0eb8a02",
+      "name": "On form submission",
+      "webhookId": "cc0e2604-e680-464d-9e6d-15fb699e4f88"
+    },
+    {
+      "parameters": {
+        "url": "https://www.cdep.ro/pls/proiecte/upl_pck2015.proiect?",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "cam",
+              "value": "={{ $json.Cam }}"
+            },
+            {
+              "name": "idp",
+              "value": "={{ $json[\"VoteId\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        624,
+        0
+      ],
+      "id": "71ac4982-7df1-4819-8161-2cd643006ce5",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://www.cdep.ro/pls/steno/evot2015.nominal",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "idl",
+              "value": "={{ $json.Cam }}"
+            },
+            {
+              "name": "idv",
+              "value": "={{ $json.VoteId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "db2991ce-2b25-47fa-94dc-93fac9493d25",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const text = item.json.data || '';\n  const match = text.match(/\\/pls\\/proiecte\\/upl_pck2015\\.proiect\\?idp=(\\d+)/);\n  const id = match ? match[1] : null;\n\n  return {\n    json: {\n      VoteId: id  // store it as 'Cam' for the next step\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        0
+      ],
+      "id": "bc98f834-e25f-4be5-b069-ece60d3e6389",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "18b0f100-3286-41b1-9184-e65b6e557c3d",
+  "meta": {
+    "instanceId": "2ef6cdab9de71981241ab2aacec215e3f58446b12adfbc1b22288e0081674c31"
+  },
+  "id": "ygwGNNrVkk7Dl9ia",
+  "tags": []
+}
