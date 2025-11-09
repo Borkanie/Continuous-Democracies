@@ -1,4 +1,4 @@
-type PartyColor = {
+export type PartyColor = {
   r: number;
   g: number;
   b: number;
