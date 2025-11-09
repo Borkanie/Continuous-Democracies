@@ -9,13 +9,13 @@ type Props = { text: Date };
 export const DateComp = (props: Props) => {
   const { text } = props;
 
-  const datee = new Date(text);
+  const dateText = new Date(text);
 
   return (
     <div className={Div}>
       <FontAwesomeIcon icon={faCalendar} className={icon} />
       <p className={date}>
-        {datee.toLocaleDateString('ro-RO', {
+        {dateText.toLocaleDateString('ro-RO', {
           year: 'numeric',
           month: 'numeric',
           day: 'numeric',
