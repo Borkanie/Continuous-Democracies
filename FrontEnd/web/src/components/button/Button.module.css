@@ -1,0 +1,27 @@
+.button {
+  border: var(--theme-border-primary);
+  background-color: transparent;
+  padding: 4px 4px;
+  border-radius: 4px;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s;
+
+  &:hover {
+    border: 1px solid var(--theme-color-primary);
+    background-color: var(--theme-color-primary);
+
+    .iconCls {
+      color: #ffffff;
+    }
+  }
+
+  .iconCls {
+    color: var(--theme-font-color-secondary);
+    font-size: 12px;
+    transition: all 0.1s;
+  }
+}

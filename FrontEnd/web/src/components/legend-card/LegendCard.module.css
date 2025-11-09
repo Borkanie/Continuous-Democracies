@@ -1,4 +1,4 @@
-.Div {
+.button {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -7,6 +7,7 @@
   border: var(--theme-border-primary);
   border-radius: 6px;
   transition: all 0.2s ease-in;
+  background-color: transparent;
 
   &:hover {
     border: var(--theme-border-secondary);

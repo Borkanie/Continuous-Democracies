@@ -5,7 +5,7 @@ import {
   redirect,
 } from '@tanstack/react-router';
 import { App } from './routes/App';
-import { Section } from './routes/section';
+import { RoundSection } from './routes/RoundSection';
 import { getAllRounds } from './utils/api/rounds';
 import { RoundBreakdown } from './routes/RoundBreakdown';
 
@@ -37,7 +37,7 @@ const roundBreakdownRoute = createRoute({
 const sectionRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/round/$roundId/section/$sectionId',
-  component: Section,
+  component: RoundSection,
 });
 
 const routeTree = rootRoute.addChildren([
