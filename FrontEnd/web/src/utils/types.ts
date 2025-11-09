@@ -19,7 +19,7 @@ type Party = {
   name: string;
 };
 
-type Politician = {
+export type Politician = {
   gender: number;
   imageUrl: string | null;
   party: Party;
