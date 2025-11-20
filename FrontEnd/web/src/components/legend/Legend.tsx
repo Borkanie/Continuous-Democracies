@@ -25,7 +25,11 @@ export const Legend = (props: Props) => {
             color={slice.color}
             count={slice.value.count}
             percentage={slice.value.percentage}
-            onClick={() => navigate({ to: `section/${slice.id}` })}
+            onClick={() =>
+              slice.value.percentage > 0
+                ? navigate({ to: `section/${slice.id}` })
+                : undefined
+            }
           />
         ))}
       </div>

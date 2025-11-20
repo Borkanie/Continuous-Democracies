@@ -3,8 +3,6 @@ import { PieChart, type PieChartData } from '../components/chart/PieChart';
 import styles from './styles/RoundBreakdown.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { getRound } from '../utils/api/rounds';
-import { Status } from '../components/status/Status';
-import { DateComp } from '../components/Date/DateComp';
 import { Legend } from '../components/legend/Legend';
 import classNames from 'classnames';
 import {
@@ -14,19 +12,10 @@ import {
 import type { Position } from '../utils/types';
 import { VOTERS_TOTAL_NUMBER } from '../utils/constants';
 import { Spinner } from '../components/spinner/Spinner';
+import { Header } from '../components/section/header';
 
-const {
-  Div,
-  header,
-  title,
-  extraDetails,
-  separator,
-  content,
-  bold,
-  chartContainer,
-  chartTitle,
-  info,
-} = styles;
+const { Div, separator, content, bold, chartContainer, chartTitle, info } =
+  styles;
 
 export const RoundBreakdown = () => {
   const navigate = useNavigate();
@@ -50,21 +39,13 @@ export const RoundBreakdown = () => {
         <Spinner />
       ) : (
         <>
-          <div className={header}>
-            <div className={title}>
-              <h3>{roundData?.title}</h3>
-              <Status text={'ACTIV'} />
-            </div>
-            {/* TODO: Use roundData.description when available */}
-            <p>
-              Comprehensive legislation to reduce carbon emissions by 50% by
-              2030
-            </p>
-            <div className={extraDetails}>
-              {roundData?.voteDate && <DateComp text={roundData.voteDate} />}
-            </div>
-          </div>
+          <Header
+            title={roundData?.title || ''}
+            status={'ACTIV'}
+            extraDetails={{ voteDate: roundData?.voteDate }}
+          />
           <div className={separator}></div>
+
           <div className={content}>
             <div className={chartContainer}>
               <div>
