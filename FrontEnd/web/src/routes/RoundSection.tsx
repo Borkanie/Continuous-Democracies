@@ -1,21 +1,18 @@
 import { useParams, useRouter } from '@tanstack/react-router';
 import sharedStyles from './styles/RoundBreakdown.module.css';
-import styles from './styles/RoundSection.module.css';
-import { Status } from '../components/status/Status';
 import { useQuery } from '@tanstack/react-query';
 import { getRound } from '../utils/api/rounds';
 import { Spinner } from '../components/spinner/Spinner';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Button } from '../components/button/Button';
-import { DateComp } from '../components/Date/DateComp';
 import { useResultsByRoundId } from '../utils/hooks/useResultsByRoundId';
 import type { PartyColor, Position, VoteResult } from '../utils/types';
 import { PieChart, type PieChartData } from '../components/chart/PieChart';
 import { Legend } from '../components/legend/Legend';
+import classNames from 'classnames';
+import { Header } from '../components/section/header';
+import { SECTION_LABELS } from '../utils/constants';
 
-const { Div, header, title, extraDetails, separator, content, chartContainer } =
+const { Div, separator, content, chartContainer, bold, chartTitle } =
   sharedStyles;
-const { flex } = styles;
 
 export const RoundSection = () => {
   const { roundId, sectionId } = useParams({ strict: false });
@@ -31,39 +28,31 @@ export const RoundSection = () => {
 
   const partyPieData = buildPartyPieData(groupedRoundResults, sectionId);
 
+  const title = `${roundData?.title} - ${
+    SECTION_LABELS[Number(sectionId) as Position] || ''
+  }`;
+
   return (
     <div className={Div}>
       {isFetching ? (
         <Spinner />
       ) : (
         <>
-          <div className={header}>
-            <div className={title}>
-              <div className={flex}>
-                <Button
-                  icon={faArrowLeft}
-                  onClick={() => router.history.back()}
-                />
-                <h3>{roundData?.title}</h3>
-              </div>
-              <Status text={'ACTIV'} />
-            </div>
-            {/* TODO: Use roundData.description when available */}
-            <p>
-              Comprehensive legislation to reduce carbon emissions by 50% by
-              2030
-            </p>
-            <div className={extraDetails}>
-              {roundData?.voteDate && <DateComp text={roundData.voteDate} />}
-            </div>
-          </div>
+          <Header
+            title={title}
+            onBack={() => router.history.back()}
+            status={'ACTIV'}
+            extraDetails={{ voteDate: roundData?.voteDate }}
+          />
           <div className={separator}></div>
 
           {/* Party distribution pie + legend for selected section */}
           <div className={content}>
             <div className={chartContainer}>
               <div>
-                <p>Distributia pe partide</p>
+                <p className={classNames(bold, chartTitle)}>
+                  Distributia pe partide
+                </p>
                 <PieChart
                   data={partyPieData}
                   onSliceClick={(id) =>

@@ -4,27 +4,6 @@
   min-height: 400px;
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-inline: 24px;
-  padding-block: 24px 12px;
-}
-
-.title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.extraDetails {
-  display: flex;
-  margin-block: 8px 0;
-  gap: 16px;
-}
-
 .separator {
   border-bottom: var(--theme-border-primary);
   width: 100%;
