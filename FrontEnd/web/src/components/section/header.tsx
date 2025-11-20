@@ -2,7 +2,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import styles from './header.module.css';
 import { Button } from '../button/Button';
 import { Status } from '../status/Status';
-import { DateComp } from '../Date/DateComp';
+import { DateComponent } from '../date/DateComponent';
 
 const { header, title, extraDetails, flex } = styles;
 
@@ -39,7 +39,7 @@ export const Header = (props: Props) => {
       {/* {description && <p>{description}</p>} */}
       <p>Comprehensive legislation to reduce carbon emissions by 50% by 2030</p>
       <div className={extraDetails}>
-        {details?.voteDate && <DateComp text={details.voteDate} />}
+        {details?.voteDate && <DateComponent text={details.voteDate} />}
       </div>
     </div>
   );

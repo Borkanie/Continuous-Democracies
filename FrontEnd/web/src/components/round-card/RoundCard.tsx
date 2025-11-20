@@ -1,5 +1,5 @@
 import type { Round } from '../../utils/types';
-import { DateComp } from '../Date/DateComp';
+import { DateComponent } from '../date/DateComponent';
 import { Status } from '../status/Status';
 import styles from './RoundCard.module.css';
 import classNames from 'classnames';
@@ -28,7 +28,7 @@ export const RoundCard = (props: Props) => {
         Comprehensive legislation to reduce carbon emissions by 50% by 2030
       </p>
       <div className={footer}>
-        <DateComp text={round.voteDate} />
+        <DateComponent text={round.voteDate} />
         <Status text={'ACTIV'} />
       </div>
     </div>
