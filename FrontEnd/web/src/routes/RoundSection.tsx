@@ -1,4 +1,4 @@
-import { useParams, useRouter } from '@tanstack/react-router';
+import { useNavigate, useParams, useRouter } from '@tanstack/react-router';
 import sharedStyles from './styles/RoundBreakdown.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { getRound } from '../utils/api/rounds';
@@ -17,6 +17,7 @@ const { Div, separator, content, chartContainer, bold, chartTitle } =
 export const RoundSection = () => {
   const { roundId, sectionId } = useParams({ strict: false });
   const router = useRouter();
+  const navigate = useNavigate();
 
   const { data: roundData, isFetching } = useQuery({
     queryKey: ['roundById', roundId],
@@ -55,11 +56,7 @@ export const RoundSection = () => {
                 </p>
                 <PieChart
                   data={partyPieData}
-                  onSliceClick={(id) =>
-                    router.navigate({
-                      to: `/party/${encodeURIComponent(String(id))}`,
-                    })
-                  }
+                  onSliceClick={(id) => navigate({ to: `party/${id}` })}
                 />
               </div>
               <div>

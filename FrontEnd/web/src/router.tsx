@@ -8,6 +8,7 @@ import { App } from './routes/App';
 import { RoundSection } from './routes/RoundSection';
 import { getAllRounds } from './utils/api/rounds';
 import { RoundBreakdown } from './routes/RoundBreakdown';
+import { PartySection } from './routes/PartySection';
 
 const rootRoute = createRootRoute({
   component: App,
@@ -40,10 +41,17 @@ const sectionRoute = createRoute({
   component: RoundSection,
 });
 
+const politicianListRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/round/$roundId/section/$sectionId/party/$partyId',
+  component: PartySection,
+});
+
 const routeTree = rootRoute.addChildren([
   rootIndexRoute,
   roundBreakdownRoute,
   sectionRoute,
+  politicianListRoute,
 ]);
 
 export const router = createRouter({ routeTree });
