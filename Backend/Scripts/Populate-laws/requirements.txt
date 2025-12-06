@@ -1,0 +1,7 @@
+psycopg2-binary
+requests
+charset-normalizer
+Pillow
+pytesseract
+pdf2image
+PyPDF2
