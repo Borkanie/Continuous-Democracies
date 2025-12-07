@@ -2,7 +2,6 @@ import re
 import requests
 import os
 import time
-from charset_normalizer import from_path
 import unicodedata
 import shutil
 import subprocess
@@ -15,6 +14,7 @@ from log_writer import file_log
 from PyPDF2 import PdfReader
 from typing import Optional
 from dataBaseInteraction import getLaws, update_law, delete_law
+from utils import downloadFileFormUrl, get
 
 
 promulgareKey = "promulgare"
@@ -184,51 +184,11 @@ def extract_text_from_pdf(pdf_path: str, poppler_path: str, tesseract_cmd: str =
             shutil.rmtree(temp_dir)
       
 
-def downloadFIleFormUrl(url, output_file):
-
-    cmd = f'curl "{url}" -o "{output_file}"'
-    # internal download messages go to file
-    file_log("Running curl for:", url, "->", output_file)
-    #os.system(cmd)
-    result = subprocess.run(
-        cmd,
-        shell=True,
-        stdout=subprocess.DEVNULL,   # hide normal output
-        stderr=subprocess.PIPE,      # capture errors
-        text=True
-    )
-
-    if result.stderr:
-        print(result.stderr)
-
-    if result.returncode != 0:
-        raise RuntimeError(f"curl command failed with exit code {result.returncode} for URL: {url}")
-
-def get(url, file= "temp_response.txt"):
-        output_file = "E:\\populate-laws\\temp" + file
-        downloadFIleFormUrl(url, output_file)
-
-        # Read the response from the file
-        with open(output_file, 'r', encoding=from_path(output_file).best().encoding, errors='replace') as f:
-            response_text = f.read()
-        
-        # Delete the temporary file
-        try:
-            os.remove(output_file)
-        except Exception:
-            file_log("Failed to remove temp file:", output_file)
-        return response_text
-
-def first_if_list(value):
-    if isinstance(value, (list, tuple)):
-        return value[0] if value else None
-    return value
-
 def getTextTroughOCRFromUrl(lawUrl):
     file_log("Fetching motivatie URL:", lawUrl)
     output_file = "E:\\populate-laws\\temp\\motivatie.pdf" 
     output_file = unicodedata.normalize("NFKD", output_file).replace("\\", "/")
-    downloadFIleFormUrl(lawUrl, output_file)
+    downloadFileFormUrl(lawUrl, output_file)
     time.sleep(1)  # allow OS to release file handle
     text = extract_text_from_pdf(output_file, "E:/poppler-25.11.0/Library/bin", "D:/tesseract-docker/tesseract.exe", dpi=300)
     try:
@@ -270,7 +230,7 @@ def getTextFromLawByForm(getlawForm):
     if getlawForm[promulgareKey]:
         lawUrl = baseUrl + "/pls/proiecte/" + getlawForm[promulgareKey]
         output_file = "E:\\populate-laws\\temp\\promulgare.pdf"
-        downloadFIleFormUrl(lawUrl, output_file)
+        downloadFileFormUrl(lawUrl, output_file)
         text =  extract_text_from_selectable_pdf(output_file)
         try:
             os.remove(output_file)

@@ -5,3 +5,6 @@ Pillow
 pytesseract
 pdf2image
 PyPDF2
+uuid
+beautifulsoup4
+time
