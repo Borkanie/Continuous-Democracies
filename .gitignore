@@ -22,7 +22,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
-_pycache__/
+*_pycache__*
 *output.txt
 
 # .NET Core

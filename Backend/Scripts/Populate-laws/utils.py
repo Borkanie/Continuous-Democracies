@@ -9,6 +9,84 @@ from datetime import datetime, timezone, timedelta
 import locale
 import re
 
+def normalize_romanian_reversed_name(full_name: str) -> str:
+    if not full_name:
+        return ""
+
+    words = full_name.strip().split()
+
+    # Last word is always the FAMILY NAME and always full caps
+    family_raw = words[-1]
+    first_names_raw = words[:-1]
+
+    # Safety check: ensure last word is really the FAMILY name
+    if not family_raw.isupper():
+        # If not full caps, fallback: treat whole name normally
+        # Capitalize all words and return unchanged order
+        return " ".join(w.capitalize() for w in words)
+
+    # Helper: Romanian-aware capitalization
+    def cap(word):
+        if not word:
+            return word
+        return word[0].upper() + word[1:].lower()
+
+    family_name = cap(family_raw)
+
+    first_names = " ".join(cap(w) for w in first_names_raw)
+
+    # Return FAMILY first
+    return f"{family_name} {first_names}".strip()
+
+def generate_party_acronym(name: str) -> str:
+    if not name or not isinstance(name, str):
+        return ""
+
+    words = re.split(r"\s+", name.strip())
+    acronym_letters = []
+
+    for word in words:
+        clean_word = re.sub(r"[^a-zA-ZăîâșțĂÎÂȘȚ]", "", word)  # remove punctuation
+
+        # Skip words that are ALL CAPS
+        if clean_word.isupper():
+            continue
+
+        # Skip short words
+        if len(clean_word) <= 3:
+            continue
+
+        acronym_letters.append(clean_word[0])
+
+    # Uppercase final acronym
+    return "".join(acronym_letters).upper()
+
+def deputy_exists(dom_str: str) -> str | None:
+    """
+    Returns True if the DOM contains a real deputy profile,
+    False if the page is an empty placeholder.
+    """
+    soup = BeautifulSoup(dom_str, "html.parser")
+
+    # 1) Best source: the main headline
+    tag = soup.select_one("td.headline")
+    if tag:
+        text = tag.get_text(" ", strip=True)
+        # Headline always contains: "<NAME> Sinteza ..."
+        name = text.split(" Sinteza")[0].strip()
+        return name
+
+    # 2) Fallback: small profile block (left column)
+    block = soup.select_one("tr[id^=itm974] td")
+    if block:
+        text = block.get_text(" ", strip=True)
+        # Usually: "Name n. 17 apr. 1985"
+        name = text.split(" n.")[0].strip()
+        return name
+
+    return None
+
+
 def extract_datetime_from_dom(dom_str):
     # Set Romanian locale (fallback for Windows)
     try:

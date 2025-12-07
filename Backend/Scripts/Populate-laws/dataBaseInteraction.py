@@ -52,7 +52,7 @@ def getParties() -> list[dict]:
         cursor = connection.cursor()
 
         # Define your SELECT query
-        select_query = f"SELECT \"Id\", \"Acronym\"  FROM public.\"Parties\";"
+        select_query = f"SELECT \"Id\", \"Acronym\", \"Name\"  FROM public.\"Parties\";"
 
         # Execute the query
         cursor.execute(select_query)
@@ -60,7 +60,7 @@ def getParties() -> list[dict]:
         parties = []
         # Iterate over the results and convert to a list of maps
         for row in cursor.fetchall():
-            party = {"Id": row[0], "Acronym": row[1]}
+            party = {"Id": row[0], "Acronym": row[1], "Name": row[2]}
             parties.append(party)
         file_log(f"Retrieved {len(parties)} parties from the database.")
         return parties
@@ -107,7 +107,7 @@ def getLaws(IdKey : str, VoteIdKey : str, TitleKey : str) -> list[dict]:
         if connection:
             connection.close()
 
-def insertNewParty(acronym: str) -> str:
+def insertNewParty(acronym: str, partyName = "Unknown Party") -> str:
     """
     Insert a new party into the Parties table.
 
@@ -131,14 +131,14 @@ def insertNewParty(acronym: str) -> str:
             "",
             "#727272",
             True,
-            "Unknown Party"
+            partyName
         ))
         connection.commit()
         file_log(f"Inserted new party with ID {new_party_id} and acronym {acronym}.")
 
     except psycopg2.Error as e:
         # error prints should remain on console
-        file_log(f"Database error while inserting voting round: {e}", alsoPrint=True)
+        file_log(f"Database error while inserting Party: {e}", alsoPrint=True)
         if connection:
             connection.rollback()
         new_party_id = None
@@ -191,7 +191,7 @@ def insertVotingRound(voting_round: VotingRounds):
         if connection:
             connection.close()
 
-def insertPolitician(name: str, partyId: str) -> str:
+def insertPolitician(name: str, partyId: str, imageUrl = "", gender = 2, active = True) -> str:
     """
     Insert a new politician record into the Politicians table.
     Args:
@@ -226,8 +226,8 @@ def insertPolitician(name: str, partyId: str) -> str:
         id = str(uuid.uuid4())
         cursor.execute(insert_query, (
             id,
-            "2",
-            "",
+            gender,
+            imageUrl,
             partyId,
             True,
             "0",
@@ -238,7 +238,7 @@ def insertPolitician(name: str, partyId: str) -> str:
 
     except psycopg2.Error as e:
         # error prints should remain on console
-        file_log(f"Database error while inserting voting round: {e}", alsoPrint=True)
+        file_log(f"Database error while inserting Politician: {e}", alsoPrint=True)
         if connection:
             connection.rollback()
         id = None
