@@ -13,7 +13,7 @@ from typing import Optional
 from log_writer import file_log
 from PyPDF2 import PdfReader
 from typing import Optional
-from dataBaseInteraction import getLaws, update_law, delete_law
+from dataBaseInteraction import getLaws, update_law, update_law_description
 from utils import downloadFileFormUrl, get
 
 
@@ -23,6 +23,7 @@ motivatieKey = "motivatie"
 ougKey = "oug"
 
 VoteIdKey = "VoteId"
+DescriptionKey = "Description"
 TitleKey = "Title"
 IdKey = "Id"
 
@@ -255,7 +256,7 @@ def getTextFromLawByForm(getlawForm):
 
 
 # Example usage
-def getNewNameAndDescriptionForLaw(first_law):
+def getNewNameAndDescriptionForLaw(first_law, onlyDesc: bool = False) -> Optional[dict]:
     vote_id = first_law[VoteIdKey]  # Get the VoteId of the first law
     voteURL = f"https://www.cdep.ro/pls/steno/evot2015.nominal?idv={vote_id}&idl=1"
     file_log("Fetching URL:", voteURL)
@@ -312,7 +313,10 @@ def getNewNameAndDescriptionForLaw(first_law):
 
     if text:
         file_log("Extracted text length:", len(text))
-        prompt = f"Extrage un titlu si o scurta descriere pentru legea urmatoare si returneaza-le in format JSON:\n\n{text[:5000]}"  # limit to first 4000 chars
+        if onlyDesc:
+            prompt = f"Extrage o scurta descriere pentru legea urmatoare si returneaza-o in format JSON cu cheia descriere:\n\n{text[:5000]}"  # limit to first 4000 chars
+        else:
+            prompt = f"Extrage un titlu si o scurta descriere pentru legea urmatoare si returneaza-le in format JSON cu cheile titlu is descriere:\n\n{text[:5000]}"  # limit to first 4000 chars
         json_response = ask_chatgpt_json(prompt)
         file_log("ChatGPT JSON response:", json_response)
         return json_response
@@ -328,34 +332,40 @@ if __name__ == "__main__":
     print("Starting hourly processing loop. Running once every hour.")
     try:
         while True:
-            laws = getLaws(IdKey, TitleKey, VoteIdKey)
+            laws = getLaws(IdKey, TitleKey, VoteIdKey, DescriptionKey)
             for law in laws:
                 time.sleep(2)  # to avoid hitting API rate limits
                 try:
-                    if "Vot electronic" in str(law[TitleKey]):
-                        print("Processing law with title:", law[TitleKey])
-                        desc = getNewNameAndDescriptionForLaw(law)
+                    onlyDesc = "Comprehensive legislation to reduce carbon emissions by" in str(law[DescriptionKey])
+                    if onlyDesc:
+                        file_log("Processing only description update for law with title:" + law[TitleKey], alsoPrint=True)
+                    if "Vot electronic" in str(law[TitleKey]) or "Comprehensive legislation to reduce carbon emissions by" in str(law[DescriptionKey]):
+                        file_log("Processing law with title:" + law[TitleKey], alsoPrint=True)
+                        desc = getNewNameAndDescriptionForLaw(law, onlyDesc=onlyDesc)
                         if desc:
-                            update_law(law[IdKey], desc)
-                            print("Updated law ID:", law[VoteIdKey])
-                            file_log(f"Updated law ID {law.get(IdKey)} successfully.")
+                            if onlyDesc:
+                                file_log(f"Updating only description for law ID {law[IdKey]}.", alsoPrint=True)
+                                update_law_description(law[IdKey], desc['descriere'])
+                            else:
+                                file_log(f"Updating TITLE and description for law ID {law[IdKey]}.", alsoPrint=True)
+                                update_law(law[IdKey], desc)
+                            file_log(f"Updated law ID {law.get(IdKey)} successfully.", alsoPrint=True)
                         else:
-                            print(f"No description produced for law ID {law.get(IdKey)}; deleting record.")
-                            file_log(f"No description produced for law ID {law.get(IdKey)}; deleting record.")
+                            file_log(f"No description produced for law ID {law.get(IdKey)}; deleting record.", alsoPrint=True)
                             #try:
                                 #delete_law(law.get(IdKey))
                             #except Exception as e:
                             #    print(f"Failed to delete law ID {law.get(IdKey)}: {e}")
                     else:
-                        print("Skipping law with title:", law[TitleKey])
+                        file_log("Skipping law with title:" + law[TitleKey], alsoPrint=True)
                 except Exception as e:
-                    print(f"Error processing law ID {law[IdKey]}: {e}")
+                    file_log(f"Error processing law ID {law[IdKey]}: {e}", alsoPrint=True)
 
             # finished one pass
-            print(f"Cycle complete — sleeping {INTERVAL_SECONDS} seconds until next run.")
+            file_log(f"Cycle complete — sleeping {INTERVAL_SECONDS} seconds until next run.", alsoPrint=True)
             time.sleep(INTERVAL_SECONDS)
     except KeyboardInterrupt:
-        print("Interrupted by user; exiting.")
+        file_log("Interrupted by user; exiting.", alsoPrint=True)
 
 
         

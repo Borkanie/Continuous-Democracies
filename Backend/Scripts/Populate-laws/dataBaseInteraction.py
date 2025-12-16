@@ -77,14 +77,14 @@ def getParties() -> list[dict]:
 
 
 
-def getLaws(IdKey : str, VoteIdKey : str, TitleKey : str) -> list[dict]:
+def getLaws(IdKey : str, VoteIdKey : str, TitleKey : str, DescriptionKey : str = None) -> list[dict]:
     try:
         # Connect to the PostgreSQL database
         connection = psycopg2.connect(**db_params)
         cursor = connection.cursor()
 
         # Define your SELECT query
-        select_query = f"SELECT \"{IdKey}\", \"{VoteIdKey}\", \"{TitleKey}\"  FROM public.\"VotingRounds\";"
+        select_query = f"SELECT \"{IdKey}\", \"{VoteIdKey}\", \"{TitleKey}\", \"{DescriptionKey}\" FROM public.\"VotingRounds\";"
 
         # Execute the query
         cursor.execute(select_query)
@@ -92,7 +92,7 @@ def getLaws(IdKey : str, VoteIdKey : str, TitleKey : str) -> list[dict]:
         laws = []
         # Iterate over the results and convert to a list of maps
         for row in cursor.fetchall():
-            law = {IdKey: row[0], VoteIdKey: row[1], TitleKey: row[2]}
+            law = {IdKey: row[0], VoteIdKey: row[1], TitleKey: row[2], DescriptionKey: row[3]}
             laws.append(law)
         file_log(f"Retrieved {len(laws)} laws from the database.")
         return laws
@@ -249,6 +249,43 @@ def insertPolitician(name: str, partyId: str, imageUrl = "", gender = 2, active 
         if connection:
             connection.close()
     return id
+
+def update_law_description(law_id: int, description: str):
+    """
+    Update a law in the VotingRounds table by its ID using data from a JSON object.
+
+    Args:
+        law_id: ID of the law to update.
+        law_json: JSON object with 'titlu' and 'descriere' keys.
+        db_params: Dictionary with psycopg2 connection parameters.
+    """
+    try:
+        connection = psycopg2.connect(**db_params)
+        cursor = connection.cursor()
+        file_log(f"Updating law ID {law_id} with data: {description}")
+        # Prepare SQL update statement safely using psycopg2.sql
+        update_query = sql.SQL("""
+            UPDATE public."VotingRounds"
+            SET "Description" = %s
+            WHERE "Id" = %s;
+        """)
+
+
+        cursor.execute(update_query, (description, law_id))
+        connection.commit()
+        file_log(f"Updated law ID {law_id} successfully.")
+
+    except psycopg2.Error as e:
+        # error prints should remain on console
+        print(f"Database error while updating law ID {law_id}: {e}")
+        if connection:
+            connection.rollback()
+
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
 
 def update_law(law_id: int, law_json: dict):
     """

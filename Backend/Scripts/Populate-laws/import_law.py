@@ -132,10 +132,10 @@ def getVoteListForALawById(lawId : int, existing_law_id : str) -> list[Vote]:
     return result
 
 
-def checkifLawIsNotEMpty(lawId: int) -> bool:
+def checkifLawIsNotEMpty(lawId: int, file:str) -> bool:
     url = f"https://www.cdep.ro/pls/steno/evot2015.xml?par1=2&par2={lawId}"
-    response_text = get(url, file=f"law_{lawId}_response.txt", keep=True)
-    
+    response_text = get(url, file=file, keep=True)
+
     root = ET.fromstring(response_text)
     votes = [row for row in root.findall('ROW')]
     return len(votes) > 0
@@ -144,8 +144,13 @@ def importLaws(startingIndex : int, endingIndex : int) -> list:
     existinglaws = getLaws("Id", "VoteId", "Title")
     for lawId in range(startingIndex, endingIndex + 1):
         try:
-            if checkifLawIsNotEMpty(lawId) == False:
+            file = f"law_{lawId}_response.txt"
+            if checkifLawIsNotEMpty(lawId, file) == False:
                 file_log(f"Law ID {lawId} has no votes. Skipping import.", alsoPrint=True)
+                try:
+                    os.remove(os.path.join(createtempDir(), file))
+                except Exception:
+                    file_log(f"Failed to remove temp file for law ID {lawId}: {file}")
                 continue
             existing_law_id = None
             if any(law for law in existinglaws if law["VoteId"] == lawId):
@@ -166,6 +171,6 @@ def importLaws(startingIndex : int, endingIndex : int) -> list:
 
 if __name__ == "__main__":
     createtempDir()
-    importLaws(30000, 36000)
+    importLaws(250, 2000)
     removeTempDir()
     

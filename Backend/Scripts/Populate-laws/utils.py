@@ -145,7 +145,7 @@ def downloadFileFormUrl(url, output_file):
     Returns:
         None
     """
-    cmd = f'curl "{url}" -o "{output_file}"'
+    cmd = f'curl -s "{url}" -o "{output_file}"'
     # internal download messages go to file
     file_log("Running curl for:", url, "->", output_file)
     #os.system(cmd)
