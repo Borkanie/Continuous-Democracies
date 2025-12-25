@@ -1,11 +1,11 @@
 import os
 from log_writer import file_log
 from utils import get, extract_datetime_from_dom, createtempDir, removeTempDir
-from dataBaseInteraction import *
+from dataBase_interaction import *
 import xml.etree.ElementTree as ET
 import uuid
-from Vote import Vote
-from VotingRounds  import VotingRounds
+from vote import Vote
+from voting_rounds  import VotingRounds
 
 def extractNewVotingRound(lawId: int) -> VotingRounds:
     """
@@ -141,7 +141,7 @@ def checkifLawIsNotEMpty(lawId: int, file:str) -> bool:
     return len(votes) > 0
 
 def importLaws(startingIndex : int, endingIndex : int) -> list:
-    existinglaws = getLaws("Id", "VoteId", "Title")
+    existinglaws = getLaws()
     for lawId in range(startingIndex, endingIndex + 1):
         try:
             file = f"law_{lawId}_response.txt"
@@ -167,7 +167,11 @@ def importLaws(startingIndex : int, endingIndex : int) -> list:
         except Exception as e:
             file_log(f"Error processing law ID {lawId}: {e}")
 
-
+def goFromLastforward(numberOfForwardSearaches: int):
+    lastNumber = get_max_vote_id()
+    startingIndex = lastNumber + 1
+    endingIndex = startingIndex + numberOfForwardSearaches - 1
+    importLaws(startingIndex, endingIndex)
 
 if __name__ == "__main__":
     createtempDir()

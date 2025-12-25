@@ -13,20 +13,8 @@ from typing import Optional
 from log_writer import file_log
 from PyPDF2 import PdfReader
 from typing import Optional
-from dataBaseInteraction import getLaws, update_law, update_law_description
+from dataBase_interaction import getUnpopulatedLaws, update_law, update_law_description, promulgareKey, adoptedKey, motivatieKey, ougKey, VoteIdKey, DescriptionKey, TitleKey, IdKey
 from utils import downloadFileFormUrl, get
-
-
-promulgareKey = "promulgare"
-adoptedKey = "adopted"
-motivatieKey = "motivatie"
-ougKey = "oug"
-
-VoteIdKey = "VoteId"
-DescriptionKey = "Description"
-TitleKey = "Title"
-IdKey = "Id"
-
 
 def extract_text_from_selectable_pdf(pdf_path: str) -> str:
     """
@@ -325,6 +313,37 @@ def getNewNameAndDescriptionForLaw(first_law, onlyDesc: bool = False) -> Optiona
 
     return None
 
+
+def tryPopulateAllLawsFromDBWithDefautlName():
+    laws = getUnpopulatedLaws()
+    for law in laws:
+        time.sleep(2)  # to avoid hitting API rate limits
+        try:
+            onlyDesc = "Comprehensive legislation to reduce carbon emissions by" in str(law[DescriptionKey])
+            if onlyDesc:
+                file_log("Processing only description update for law with title:" + law[TitleKey], alsoPrint=True)
+            if "Vot electronic" in str(law[TitleKey]) or "Comprehensive legislation to reduce carbon emissions by" in str(law[DescriptionKey]):
+                file_log("Processing law with title:" + law[TitleKey], alsoPrint=True)
+                desc = getNewNameAndDescriptionForLaw(law, onlyDesc=onlyDesc)
+                if desc:
+                    if onlyDesc:
+                        file_log(f"Updating only description for law ID {law[IdKey]}.", alsoPrint=True)
+                        update_law_description(law[IdKey], desc['descriere'])
+                    else:
+                        file_log(f"Updating TITLE and description for law ID {law[IdKey]}.", alsoPrint=True)
+                        update_law(law[IdKey], desc)
+                    file_log(f"Updated law ID {law.get(IdKey)} successfully.", alsoPrint=True)
+                else:
+                    file_log(f"No description produced for law ID {law.get(IdKey)}; deleting record.", alsoPrint=True)
+                    #try:
+                        #delete_law(law.get(IdKey))
+                    #except Exception as e:
+                    #    print(f"Failed to delete law ID {law.get(IdKey)}: {e}")
+            else:
+                file_log("Skipping law with title:" + law[TitleKey], alsoPrint=True)
+        except Exception as e:
+            file_log(f"Error processing law ID {law[IdKey]}: {e}", alsoPrint=True)        
+
 if __name__ == "__main__":
     # Run the processing loop once every hour. Main-level prints/errors remain
     # on the console as requested; internal logs are written to output.txt.
@@ -332,34 +351,7 @@ if __name__ == "__main__":
     print("Starting hourly processing loop. Running once every hour.")
     try:
         while True:
-            laws = getLaws(IdKey, TitleKey, VoteIdKey, DescriptionKey)
-            for law in laws:
-                time.sleep(2)  # to avoid hitting API rate limits
-                try:
-                    onlyDesc = "Comprehensive legislation to reduce carbon emissions by" in str(law[DescriptionKey])
-                    if onlyDesc:
-                        file_log("Processing only description update for law with title:" + law[TitleKey], alsoPrint=True)
-                    if "Vot electronic" in str(law[TitleKey]) or "Comprehensive legislation to reduce carbon emissions by" in str(law[DescriptionKey]):
-                        file_log("Processing law with title:" + law[TitleKey], alsoPrint=True)
-                        desc = getNewNameAndDescriptionForLaw(law, onlyDesc=onlyDesc)
-                        if desc:
-                            if onlyDesc:
-                                file_log(f"Updating only description for law ID {law[IdKey]}.", alsoPrint=True)
-                                update_law_description(law[IdKey], desc['descriere'])
-                            else:
-                                file_log(f"Updating TITLE and description for law ID {law[IdKey]}.", alsoPrint=True)
-                                update_law(law[IdKey], desc)
-                            file_log(f"Updated law ID {law.get(IdKey)} successfully.", alsoPrint=True)
-                        else:
-                            file_log(f"No description produced for law ID {law.get(IdKey)}; deleting record.", alsoPrint=True)
-                            #try:
-                                #delete_law(law.get(IdKey))
-                            #except Exception as e:
-                            #    print(f"Failed to delete law ID {law.get(IdKey)}: {e}")
-                    else:
-                        file_log("Skipping law with title:" + law[TitleKey], alsoPrint=True)
-                except Exception as e:
-                    file_log(f"Error processing law ID {law[IdKey]}: {e}", alsoPrint=True)
+            tryPopulateAllLawsFromDBWithDefautlName()
 
             # finished one pass
             file_log(f"Cycle complete — sleeping {INTERVAL_SECONDS} seconds until next run.", alsoPrint=True)

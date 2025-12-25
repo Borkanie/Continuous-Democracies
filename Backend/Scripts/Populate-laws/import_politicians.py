@@ -1,5 +1,5 @@
 from utils import createtempDir, removeTempDir
-from dataBaseInteraction import getLaws, getPoliticans, insertPolitician, insertNewParty, getParties
+from dataBase_interaction import getPoliticans, insertPolitician, insertNewParty, getParties
 from uuid import uuid4
 from utils import file_log, get, deputy_exists, generate_party_acronym
 from bs4 import BeautifulSoup

@@ -3,17 +3,29 @@ import psycopg2
 from log_writer import file_log
 from psycopg2 import sql
 import os
-from Vote import Vote
-from VotingRounds  import VotingRounds
+from vote import Vote
+from voting_rounds  import VotingRounds
+
+promulgareKey = "promulgare"
+adoptedKey = "adopted"
+motivatieKey = "motivatie"
+ougKey = "oug"
+
+VoteIdKey = "VoteId"
+DescriptionKey = "Description"
+TitleKey = "Title"
+IdKey = "Id"
 
 # Database connection parameters
 db_params = {
     'dbname': os.getenv('DBName'),
     'user': os.getenv('DBUser'),
     'password': os.getenv('DBPassword'),
-    'host': '192.168.1.108',  # Change to your database host
+    'host': os.getenv('DBServerAddress'),  # Change to your database host
     'port': '5432'        # Default PostgreSQL port
 }
+
+print("Database connection parameters loaded:", db_params)
 
 def getPoliticans() -> list[dict]:
     try:
@@ -75,9 +87,78 @@ def getParties() -> list[dict]:
         if connection:
             connection.close()
 
+def get_max_vote_id() -> int | str | None:
+    """
+    Return the highest VoteId from public."VotingRounds".
+    Tries numeric MAX(CAST(... AS BIGINT)) first, falls back to lexical ORDER BY DESC.
+    """
+    try:
+        connection = psycopg2.connect(**db_params)
+        cursor = connection.cursor()
 
+        # Try numeric max (works if VoteId is numeric or numeric-like)
+        try:
+            query = sql.SQL('SELECT MAX(CAST({voteid} AS BIGINT)) FROM public."VotingRounds";').format(
+                voteid=sql.Identifier(VoteIdKey)
+            )
+            cursor.execute(query)
+            res = cursor.fetchone()[0]
+            if res is not None:
+                file_log(f"Max numeric VoteId found: {res}")
+                return int(res)
+        except Exception:
+            # Fallback to lexical max if casting fails
+            query = sql.SQL('SELECT {voteid} FROM public."VotingRounds" ORDER BY {voteid} DESC LIMIT 1;').format(
+                voteid=sql.Identifier(VoteIdKey)
+            )
+            cursor.execute(query)
+            row = cursor.fetchone()
+            if row:
+                file_log(f"Max VoteId (fallback) found: {row[0]}")
+                return row[0]
+        return None
 
-def getLaws(IdKey : str, VoteIdKey : str, TitleKey : str, DescriptionKey : str = None) -> list[dict]:
+    except psycopg2.Error as e:
+        print(f"Database error while fetching max VoteId: {e}")
+        return None
+
+    finally:
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+        if 'connection' in locals() and connection:
+            connection.close()
+            
+def getUnpopulatedLaws() -> list[dict]:
+    try:
+        # Connect to the PostgreSQL database
+        connection = psycopg2.connect(**db_params)
+        cursor = connection.cursor()
+
+        # Define your SELECT query (only rows whose Title contains "Vot electronic")
+        select_query = f"SELECT \"{IdKey}\", \"{VoteIdKey}\", \"{TitleKey}\", \"{DescriptionKey}\" FROM public.\"VotingRounds\" WHERE \"{TitleKey}\" ILIKE '%Vot electronic%';"
+
+        # Execute the query
+        cursor.execute(select_query)
+
+        laws = []
+        # Iterate over the results and convert to a list of maps
+        for row in cursor.fetchall():
+            law = {IdKey: row[0], VoteIdKey: row[1], TitleKey: row[2], DescriptionKey: row[3]}
+            laws.append(law)
+        file_log(f"Retrieved {len(laws)} laws from the database.")
+        return laws
+    except psycopg2.Error as e:
+        # error prints should remain on console
+        print(f"Database error: {e}")
+        return []
+    finally:
+        # Close the cursor and connection
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+
+def getLaws() -> list[dict]:
     try:
         # Connect to the PostgreSQL database
         connection = psycopg2.connect(**db_params)
