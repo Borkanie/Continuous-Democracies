@@ -5,23 +5,6 @@ on:
     branches: ["main"]
     paths:
       - Backend/Scripts/Populate-laws/**
-    inputs:
-      DBName:
-        description: 'Database name'
-        required: false
-        default: ${{ secrets.DBName }}
-      DBUser:
-        description: 'Database user'
-        required: false
-        default: ${{ secrets.DBUser }}
-      DBPassword:
-        description: 'Database password (use secrets for sensitive values)'
-        required: false
-        default: ${{ secrets.DBPassword }}
-      DBServerAddress:
-        description: 'Database host/address'
-        required: false
-        default: ${{ secrets.DBServerAddress }}
 
 jobs:
   build-and-push:
@@ -59,6 +42,7 @@ jobs:
 
   deploy-local:
     name: Pull latest image and (re)start container on self-hosted runner
+    needs: build-and-push
     runs-on: self-hosted
 
     steps:
@@ -67,10 +51,10 @@ jobs:
 
       - name: Pull image and restart container
         env:
-          DBName: ${{ github.event.inputs.DBName }}
-          DBUser: ${{ github.event.inputs.DBUser }}
-          DBPassword: ${{ github.event.inputs.DBPassword }}
-          DBServerAddress: ${{ github.event.inputs.DBServerAddress }}
+          DBName: ${{ secrets.DBName }}
+          DBUser: ${{ secrets.DBUser }}
+          DBPassword: ${{ secrets.DBPassword }}
+          DBServerAddress: ${{ secrets.DBServerAddress }}
           IMAGE_NAME: borkanie/populate-laws:latest
           CONTAINER_NAME: populate-laws
         run: |
