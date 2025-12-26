@@ -5,6 +5,23 @@ on:
     branches: ["main"]
     paths:
       - Backend/Scripts/Populate-laws/**
+    inputs:
+      DBName:
+        description: 'Database name'
+        required: false
+        default: ${{ secrets.DBName }}
+      DBUser:
+        description: 'Database user'
+        required: false
+        default: ${{ secrets.DBUser }}
+      DBPassword:
+        description: 'Database password (use secrets for sensitive values)'
+        required: false
+        default: ${{ secrets.DBPassword }}
+      DBServerAddress:
+        description: 'Database host/address'
+        required: false
+        default: ${{ secrets.DBServerAddress }}
 
 jobs:
   build-and-push:
@@ -39,29 +56,7 @@ jobs:
       - name: Image pushed
         run: echo "Image borkanie/populate-laws pushed (latest + ${{ github.sha }})"
 
-name: Deploy populate-laws on Local Runner
 
-on:
-  workflow_dispatch:
-    inputs:
-      DBName:
-        description: 'Database name'
-        required: false
-        default: ${{ secrets.DBName }}
-      DBUser:
-        description: 'Database user'
-        required: false
-        default: ${{ secrets.DBUser }}
-      DBPassword:
-        description: 'Database password (use secrets for sensitive values)'
-        required: false
-        default: ${{ secrets.DBPassword }}
-      DBServerAddress:
-        description: 'Database host/address'
-        required: false
-        default: ${{ secrets.DBServerAddress }}
-
-jobs:
   deploy-local:
     name: Pull latest image and (re)start container on self-hosted runner
     runs-on: self-hosted
