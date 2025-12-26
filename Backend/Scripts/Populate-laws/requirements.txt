@@ -1,7 +1,7 @@
-psycopg2-binary
-requests
-charset-normalizer
-Pillow
-pytesseract
-pdf2image
-PyPDF2
+beautifulsoup4==4.14.3
+charset_normalizer==3.4.4
+Pillow==12.0.0
+psycopg2==2.9.11
+PyPDF2==3.0.1
+pytesseract==0.3.13
+Requests==2.32.5

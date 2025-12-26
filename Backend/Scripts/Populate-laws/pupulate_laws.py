@@ -1,10 +1,7 @@
-import psycopg2
-from psycopg2 import sql
 import re
 import requests
 import os
 import time
-from charset_normalizer import from_path
 import unicodedata
 import shutil
 import subprocess
@@ -16,17 +13,8 @@ from typing import Optional
 from log_writer import file_log
 from PyPDF2 import PdfReader
 from typing import Optional
-
-
-promulgareKey = "promulgare"
-adoptedKey = "adopted"
-motivatieKey = "motivatie"
-ougKey = "oug"
-
-VoteIdKey = "VoteId"
-TitleKey = "Title"
-IdKey = "Id"
-
+from dataBase_interaction import getUnpopulatedLaws, update_law, update_law_description, promulgareKey, adoptedKey, motivatieKey, ougKey, VoteIdKey, DescriptionKey, TitleKey, IdKey
+from utils import downloadFileFormUrl, get
 
 def extract_text_from_selectable_pdf(pdf_path: str) -> str:
     """
@@ -185,160 +173,11 @@ def extract_text_from_pdf(pdf_path: str, poppler_path: str, tesseract_cmd: str =
             shutil.rmtree(temp_dir)
       
 
-# Database connection parameters
-db_params = {
-    'dbname': 'parlimentdb',
-    'user': 'bobo',
-    'password': 'password123',
-    'host': '192.168.1.108',  # Change to your database host
-    'port': '5432'        # Default PostgreSQL port
-}
-
-
-def getLaws():
-    try:
-        # Connect to the PostgreSQL database
-        connection = psycopg2.connect(**db_params)
-        cursor = connection.cursor()
-
-        # Define your SELECT query
-        select_query = f"SELECT \"{IdKey}\", \"{VoteIdKey}\", \"{TitleKey}\"  FROM public.\"VotingRounds\";"
-
-        # Execute the query
-        cursor.execute(select_query)
-
-        laws = []
-        # Iterate over the results and convert to a list of maps
-        for row in cursor.fetchall():
-            law = {IdKey: row[0], VoteIdKey: row[1], TitleKey: row[2]}
-            laws.append(law)
-        file_log(f"Retrieved {len(laws)} laws from the database.")
-        return laws
-    except psycopg2.Error as e:
-        # error prints should remain on console
-        print(f"Database error: {e}")
-        return []
-    finally:
-        # Close the cursor and connection
-        if cursor:
-            cursor.close()
-        if connection:
-            connection.close()
-
-def update_law(law_id: int, law_json: dict):
-    """
-    Update a law in the VotingRounds table by its ID using data from a JSON object.
-
-    Args:
-        law_id: ID of the law to update.
-        law_json: JSON object with 'titlu' and 'descriere' keys.
-        db_params: Dictionary with psycopg2 connection parameters.
-    """
-    try:
-        connection = psycopg2.connect(**db_params)
-        cursor = connection.cursor()
-        file_log(f"Updating law ID {law_id} with data: {law_json}")
-        # Prepare SQL update statement safely using psycopg2.sql
-        update_query = sql.SQL("""
-            UPDATE public."VotingRounds"
-            SET "Title" = %s,
-                "Description" = %s
-            WHERE "Id" = %s;
-        """)
-
-        title = law_json.get("titlu")
-        description = law_json.get("descriere")
-
-        cursor.execute(update_query, (title, description, law_id))
-        connection.commit()
-        file_log(f"Updated law ID {law_id} successfully.")
-
-    except psycopg2.Error as e:
-        # error prints should remain on console
-        print(f"Database error while updating law ID {law_id}: {e}")
-        if connection:
-            connection.rollback()
-
-    finally:
-        if cursor:
-            cursor.close()
-        if connection:
-            connection.close()
-
-
-def delete_law(law_id: int):
-    """
-    Delete a law row from public."VotingRounds" by Id.
-
-    Args:
-        law_id: ID of the law to delete.
-    """
-    try:
-        connection = psycopg2.connect(**db_params)
-        cursor = connection.cursor()
-        file_log(f"Deleting law ID {law_id} from database")
-        delete_query = sql.SQL('''
-            DELETE FROM public."VotingRounds"
-            WHERE "Id" = %s;
-        ''')
-        cursor.execute(delete_query, (law_id,))
-        connection.commit()
-        file_log(f"Deleted law ID {law_id} successfully.")
-    except psycopg2.Error as e:
-        print(f"Database error while deleting law ID {law_id}: {e}")
-        if connection:
-            connection.rollback()
-    finally:
-        if cursor:
-            cursor.close()
-        if connection:
-            connection.close()
-
-def downloadFIleFormUrl(url, output_file):
-
-    cmd = f'curl "{url}" -o "{output_file}"'
-    # internal download messages go to file
-    file_log("Running curl for:", url, "->", output_file)
-    #os.system(cmd)
-    result = subprocess.run(
-        cmd,
-        shell=True,
-        stdout=subprocess.DEVNULL,   # hide normal output
-        stderr=subprocess.PIPE,      # capture errors
-        text=True
-    )
-
-    if result.stderr:
-        print(result.stderr)
-
-    if result.returncode != 0:
-        raise RuntimeError(f"curl command failed with exit code {result.returncode} for URL: {url}")
-
-def get(url, file= "temp_response.txt"):
-        output_file = "E:\\populate-laws\\temp" + file
-        downloadFIleFormUrl(url, output_file)
-
-        # Read the response from the file
-        with open(output_file, 'r', encoding=from_path(output_file).best().encoding, errors='replace') as f:
-            response_text = f.read()
-        
-        # Delete the temporary file
-        try:
-            os.remove(output_file)
-        except Exception:
-            file_log("Failed to remove temp file:", output_file)
-        return response_text
-
-def first_if_list(value):
-    if isinstance(value, (list, tuple)):
-        return value[0] if value else None
-    return value
-
 def getTextTroughOCRFromUrl(lawUrl):
     file_log("Fetching motivatie URL:", lawUrl)
     output_file = "E:\\populate-laws\\temp\\motivatie.pdf" 
     output_file = unicodedata.normalize("NFKD", output_file).replace("\\", "/")
-    downloadFIleFormUrl(lawUrl, output_file)
+    downloadFileFormUrl(lawUrl, output_file)
     time.sleep(1)  # allow OS to release file handle
     text = extract_text_from_pdf(output_file, "E:/poppler-25.11.0/Library/bin", "D:/tesseract-docker/tesseract.exe", dpi=300)
     try:
@@ -380,7 +219,7 @@ def getTextFromLawByForm(getlawForm):
     if getlawForm[promulgareKey]:
         lawUrl = baseUrl + "/pls/proiecte/" + getlawForm[promulgareKey]
         output_file = "E:\\populate-laws\\temp\\promulgare.pdf"
-        downloadFIleFormUrl(lawUrl, output_file)
+        downloadFileFormUrl(lawUrl, output_file)
         text =  extract_text_from_selectable_pdf(output_file)
         try:
             os.remove(output_file)
@@ -405,7 +244,7 @@ def getTextFromLawByForm(getlawForm):
 
 
 # Example usage
-def getNewNameAndDescriptionForLaw(first_law):
+def getNewNameAndDescriptionForLaw(first_law, onlyDesc: bool = False) -> Optional[dict]:
     vote_id = first_law[VoteIdKey]  # Get the VoteId of the first law
     voteURL = f"https://www.cdep.ro/pls/steno/evot2015.nominal?idv={vote_id}&idl=1"
     file_log("Fetching URL:", voteURL)
@@ -462,7 +301,10 @@ def getNewNameAndDescriptionForLaw(first_law):
 
     if text:
         file_log("Extracted text length:", len(text))
-        prompt = f"Extrage un titlu si o scurta descriere pentru legea urmatoare si returneaza-le in format JSON:\n\n{text[:5000]}"  # limit to first 4000 chars
+        if onlyDesc:
+            prompt = f"Extrage o scurta descriere pentru legea urmatoare si returneaza-o in format JSON cu cheia descriere:\n\n{text[:5000]}"  # limit to first 4000 chars
+        else:
+            prompt = f"Extrage un titlu si o scurta descriere pentru legea urmatoare si returneaza-le in format JSON cu cheile titlu is descriere:\n\n{text[:5000]}"  # limit to first 4000 chars
         json_response = ask_chatgpt_json(prompt)
         file_log("ChatGPT JSON response:", json_response)
         return json_response
@@ -471,6 +313,37 @@ def getNewNameAndDescriptionForLaw(first_law):
 
     return None
 
+
+def tryPopulateAllLawsFromDBWithDefautlName():
+    laws = getUnpopulatedLaws()
+    for law in laws:
+        time.sleep(2)  # to avoid hitting API rate limits
+        try:
+            onlyDesc = "Comprehensive legislation to reduce carbon emissions by" in str(law[DescriptionKey])
+            if onlyDesc:
+                file_log("Processing only description update for law with title:" + law[TitleKey], alsoPrint=True)
+            if "Vot electronic" in str(law[TitleKey]) or "Comprehensive legislation to reduce carbon emissions by" in str(law[DescriptionKey]):
+                file_log("Processing law with title:" + law[TitleKey], alsoPrint=True)
+                desc = getNewNameAndDescriptionForLaw(law, onlyDesc=onlyDesc)
+                if desc:
+                    if onlyDesc:
+                        file_log(f"Updating only description for law ID {law[IdKey]}.", alsoPrint=True)
+                        update_law_description(law[IdKey], desc['descriere'])
+                    else:
+                        file_log(f"Updating TITLE and description for law ID {law[IdKey]}.", alsoPrint=True)
+                        update_law(law[IdKey], desc)
+                    file_log(f"Updated law ID {law.get(IdKey)} successfully.", alsoPrint=True)
+                else:
+                    file_log(f"No description produced for law ID {law.get(IdKey)}; deleting record.", alsoPrint=True)
+                    #try:
+                        #delete_law(law.get(IdKey))
+                    #except Exception as e:
+                    #    print(f"Failed to delete law ID {law.get(IdKey)}: {e}")
+            else:
+                file_log("Skipping law with title:" + law[TitleKey], alsoPrint=True)
+        except Exception as e:
+            file_log(f"Error processing law ID {law[IdKey]}: {e}", alsoPrint=True)        
+
 if __name__ == "__main__":
     # Run the processing loop once every hour. Main-level prints/errors remain
     # on the console as requested; internal logs are written to output.txt.
@@ -478,34 +351,13 @@ if __name__ == "__main__":
     print("Starting hourly processing loop. Running once every hour.")
     try:
         while True:
-            laws = getLaws()
-            for law in laws:
-                time.sleep(2)  # to avoid hitting API rate limits
-                try:
-                    if "Vot electronic" in str(law[TitleKey]):
-                        print("Processing law with title:", law[TitleKey])
-                        desc = getNewNameAndDescriptionForLaw(law)
-                        if desc:
-                            update_law(law[IdKey], desc)
-                            print("Updated law ID:", law[VoteIdKey])
-                            file_log(f"Updated law ID {law.get(IdKey)} successfully.")
-                        else:
-                            print(f"No description produced for law ID {law.get(IdKey)}; deleting record.")
-                            file_log(f"No description produced for law ID {law.get(IdKey)}; deleting record.")
-                            #try:
-                                #delete_law(law.get(IdKey))
-                            #except Exception as e:
-                            #    print(f"Failed to delete law ID {law.get(IdKey)}: {e}")
-                    else:
-                        print("Skipping law with title:", law[TitleKey])
-                except Exception as e:
-                    print(f"Error processing law ID {law[IdKey]}: {e}")
+            tryPopulateAllLawsFromDBWithDefautlName()
 
             # finished one pass
-            print(f"Cycle complete — sleeping {INTERVAL_SECONDS} seconds until next run.")
+            file_log(f"Cycle complete — sleeping {INTERVAL_SECONDS} seconds until next run.", alsoPrint=True)
             time.sleep(INTERVAL_SECONDS)
     except KeyboardInterrupt:
-        print("Interrupted by user; exiting.")
+        file_log("Interrupted by user; exiting.", alsoPrint=True)
 
 
         
