@@ -1,18 +1,15 @@
-import os
 from datetime import datetime
 
-OUTPUT_PATH = os.path.join(os.getcwd(), "output.txt")
-
-def file_log(*args, sep=' ', end='\n', alsoPrint = False):
-    """Append a message to the output file with a timestamp."""
+def file_log(*args, sep=' ', end='\n', alsoPrint=False):
+    """
+    Log messages to console only (stdout) with a timestamp.
+    No file logging to prevent large log files on disk.
+    Docker console logs are temporary and size-limited.
+    """
     try:
-        if alsoPrint:
-            print(sep.join(str(a) for a in args))
-        with open(OUTPUT_PATH, 'a', encoding='utf-8') as f:
-            timestamp = datetime.utcnow().isoformat() + 'Z'
-            f.write(timestamp + ' ')
-            f.write(sep.join(str(a) for a in args))
-            f.write(end)
+        timestamp = datetime.utcnow().isoformat() + 'Z'
+        message = sep.join(str(a) for a in args)
+        print(f"{timestamp} {message}", end=end)
     except Exception:
         # best-effort: avoid raising from logging
         pass
