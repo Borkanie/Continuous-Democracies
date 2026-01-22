@@ -42,9 +42,9 @@ export const RoundsList = () => {
           <>
             <div className={classNames(separator, top)} />
             {data && data.length > 0 ? (
-              data?.map((round) => (
+              data?.map((round, index) => (
                 <RoundCard
-                  key={round.voteId}
+                  key={round.voteId + '-' + index}
                   round={round}
                   isSelected={roundId === round.voteId.toString()}
                   onSelect={() => {

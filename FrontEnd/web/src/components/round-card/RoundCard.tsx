@@ -12,25 +12,18 @@ type Props = {
   onSelect?: () => void;
 };
 
-export const RoundCard = (props: Props) => {
-  const { round, isSelected, onSelect } = props;
-
-  // TODO: Use real data from `round` prop when available for date, description, and status
-  return (
-    <div
-      className={classNames(Div, isSelected ? selected : '')}
-      onClick={onSelect}
-    >
-      <div className={header}>
-        <h3 className={title}>{round.title}</h3>
-      </div>
-      <p className={description}>
-        Comprehensive legislation to reduce carbon emissions by 50% by 2030
-      </p>
-      <div className={footer}>
-        <DateComponent text={round.voteDate} />
-        <Status text={'ACTIV'} />
-      </div>
+export const RoundCard = ({ round, isSelected, onSelect }: Props) => (
+  <div
+    className={classNames(Div, isSelected ? selected : '')}
+    onClick={onSelect}
+  >
+    <div className={header}>
+      <h3 className={title}>{round.title}</h3>
     </div>
-  );
-};
+    {round.description && <p className={description}>{round.description}</p>}
+    <div className={footer}>
+      <DateComponent text={round.voteDate} />
+      <Status text={'ACTIV'} />
+    </div>
+  </div>
+);

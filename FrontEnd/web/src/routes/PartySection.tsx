@@ -13,7 +13,7 @@ export const PartySection = () => {
 
   const router = useRouter();
 
-  const { data: roundData, isFetching } = useQuery({
+  const { data: roundData } = useQuery({
     queryKey: ['roundById', roundId],
     enabled: !!roundId,
     queryFn: ({ queryKey }) => getRound(queryKey[1] || ''),
@@ -28,6 +28,7 @@ export const PartySection = () => {
         title={title}
         onBack={() => router.history.back()}
         status={'ACTIV'}
+        description={roundData?.description}
         extraDetails={{ voteDate: roundData?.voteDate }}
       />
       <div className={separator}></div>

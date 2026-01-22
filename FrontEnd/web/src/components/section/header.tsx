@@ -4,7 +4,7 @@ import { Button } from '../button/Button';
 import { Status } from '../status/Status';
 import { DateComponent } from '../date/DateComponent';
 
-const { header, title, extraDetails, flex } = styles;
+const { header, title, extraDetails, flex, backButton } = styles;
 
 type Props = {
   title: string;
@@ -30,14 +30,18 @@ export const Header = (props: Props) => {
     <div className={header}>
       <div className={title}>
         <div className={flex}>
-          {onBack && <Button icon={faArrowLeft} onClick={onBack} />}
+          {onBack && (
+            <Button
+              className={backButton}
+              icon={faArrowLeft}
+              onClick={onBack}
+            />
+          )}
           <h3>{headerTitle}</h3>
         </div>
         {status && <Status text={'ACTIV'} />}
       </div>
-      {/* TODO: Use roundData.description when available */}
-      {/* {description && <p>{description}</p>} */}
-      <p>Comprehensive legislation to reduce carbon emissions by 50% by 2030</p>
+      {description && <p>{description}</p>}
       <div className={extraDetails}>
         {details?.voteDate && <DateComponent text={details.voteDate} />}
       </div>
