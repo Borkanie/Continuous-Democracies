@@ -44,6 +44,7 @@ export const RoundBreakdown = () => {
             title={roundData?.title || ''}
             status={'ACTIV'}
             extraDetails={{ voteDate: roundData?.voteDate }}
+            description={roundData?.description}
           />
           <div className={separator}></div>
 
@@ -74,7 +75,7 @@ export const RoundBreakdown = () => {
 };
 
 const buildRoundBreakdownData = (
-  groupedRoundResults: GroupedVotes | undefined
+  groupedRoundResults: GroupedVotes | undefined,
 ): PieChartData => {
   if (!groupedRoundResults) {
     return { slices: [] };

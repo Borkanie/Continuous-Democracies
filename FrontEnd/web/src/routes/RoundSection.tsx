@@ -49,6 +49,7 @@ export const RoundSection = () => {
             onBack={() => router.history.back()}
             status={'ACTIV'}
             extraDetails={{ voteDate: roundData?.voteDate }}
+            description={roundData?.description}
           />
           <div className={separator}></div>
 
