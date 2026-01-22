@@ -42,7 +42,6 @@ export const RoundBreakdown = () => {
         <>
           <Header
             title={roundData?.title || ''}
-            status={'ACTIV'}
             extraDetails={{ voteDate: roundData?.voteDate }}
             description={roundData?.description}
           />
