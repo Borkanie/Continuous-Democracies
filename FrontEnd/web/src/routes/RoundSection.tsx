@@ -10,9 +10,18 @@ import { Legend } from '../components/legend/Legend';
 import classNames from 'classnames';
 import { Header } from '../components/section/header';
 import { SECTION_LABELS } from '../utils/constants';
+import { positionColor } from '../utils/helper';
 
-const { Div, separator, content, chartContainer, bold, chartTitle } =
-  sharedStyles;
+const {
+  Div,
+  separator,
+  content,
+  chartContainer,
+  bold,
+  chartTitle,
+  highlight,
+  info,
+} = sharedStyles;
 
 export const RoundSection = () => {
   const { roundId, sectionId } = useParams({ strict: false });
@@ -28,11 +37,7 @@ export const RoundSection = () => {
   const { data: groupedRoundResults } = useResultsByRoundId(roundId);
 
   const partyPieData = buildPartyPieData(groupedRoundResults, sectionId);
-
-  const title = `${roundData?.title} - ${
-    SECTION_LABELS[Number(sectionId) as Position] || ''
-  }`;
-
+  console.log('partyPieData', partyPieData);
   return (
     <div className={Div}>
       {isFetching ? (
@@ -40,7 +45,7 @@ export const RoundSection = () => {
       ) : (
         <>
           <Header
-            title={title}
+            title={roundData?.title || ''}
             onBack={() => router.history.back()}
             status={'ACTIV'}
             extraDetails={{ voteDate: roundData?.voteDate }}
@@ -52,12 +57,24 @@ export const RoundSection = () => {
             <div className={chartContainer}>
               <div>
                 <p className={classNames(bold, chartTitle)}>
-                  Distributia pe partide
+                  Partide care au votat:{' '}
+                  <span
+                    className={highlight}
+                    style={{
+                      color: positionColor(Number(sectionId) as Position),
+                    }}
+                  >
+                    {SECTION_LABELS[Number(sectionId) as Position]}
+                  </span>
                 </p>
                 <PieChart
                   data={partyPieData}
                   onSliceClick={(id) => navigate({ to: `party/${id}` })}
                 />
+                <p className={info}>
+                  Apasati click pe o sectiune pentru a vedea lista votantilor
+                  din partid
+                </p>
               </div>
               <div>
                 <Legend slices={partyPieData.slices} />
@@ -72,7 +89,7 @@ export const RoundSection = () => {
 
 const groupVotesByPartyForPosition = (
   grouped: Record<Position, VoteResult[]> | undefined,
-  sectionId?: string
+  sectionId?: string,
 ): Record<string, VoteResult[]> => {
   if (!grouped || !sectionId) {
     return {};
@@ -120,7 +137,7 @@ const partyColorToCss = (color?: PartyColor): string => {
 
 const buildPartyPieData = (
   groupedByPosition: Record<Position, VoteResult[]> | undefined,
-  sectionId?: string
+  sectionId?: string,
 ): PieChartData => {
   const grouped = groupVotesByPartyForPosition(groupedByPosition, sectionId);
   const entries = Object.entries(grouped);
