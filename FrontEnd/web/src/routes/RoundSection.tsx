@@ -47,7 +47,6 @@ export const RoundSection = () => {
           <Header
             title={roundData?.title || ''}
             onBack={() => router.history.back()}
-            status={'ACTIV'}
             extraDetails={{ voteDate: roundData?.voteDate }}
             description={roundData?.description}
           />

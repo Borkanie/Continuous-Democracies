@@ -27,7 +27,6 @@ export const PartySection = () => {
       <Header
         title={title}
         onBack={() => router.history.back()}
-        status={'ACTIV'}
         description={roundData?.description}
         extraDetails={{ voteDate: roundData?.voteDate }}
       />
