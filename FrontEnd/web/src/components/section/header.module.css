@@ -6,19 +6,9 @@
   padding-block: 24px 12px;
 }
 
-.title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-
-  .backButton {
-    align-self: flex-start;
-  }
-}
-
 .extraDetails {
   display: flex;
   margin-block: 8px 0;
   gap: 16px;
+  align-items: center;
 }
