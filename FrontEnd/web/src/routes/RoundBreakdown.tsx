@@ -13,6 +13,7 @@ import type { Position } from '../utils/types';
 import { VOTERS_TOTAL_NUMBER } from '../utils/constants';
 import { Spinner } from '../components/spinner/Spinner';
 import { Header } from '../components/section/header';
+import { positionColor, positionLabel } from '../utils/helper';
 
 const { Div, separator, content, bold, chartContainer, chartTitle, info } =
   styles;
@@ -110,35 +111,4 @@ const buildRoundBreakdownData = (
   });
 
   return { slices };
-};
-
-const positionLabel = (position: Position): string => {
-  switch (position) {
-    case 0:
-      return 'Da';
-    case 1:
-      return 'Nu';
-    case 2:
-      return 'Abtinere';
-    case 3:
-      return 'Absent';
-    default:
-      return 'Unknown';
-  }
-};
-
-/* Vote colors (YES, NO, ABSENT, NO VOTE) */
-const positionColor = (position: Position): string => {
-  switch (position) {
-    case 0:
-      return '#36A2EB';
-    case 1:
-      return '#ff6384';
-    case 2:
-      return '#ffce56';
-    case 3:
-      return '#cccccc';
-    default:
-      return '#cccccc';
-  }
 };

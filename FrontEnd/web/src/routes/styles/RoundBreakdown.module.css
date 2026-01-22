@@ -38,3 +38,7 @@
   color: var(--theme-font-color-secondary);
   font-size: var(--theme-font-size-s);
 }
+
+.highlight {
+  color: var(--theme-color-accent);
+}
