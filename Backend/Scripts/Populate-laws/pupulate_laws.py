@@ -260,7 +260,7 @@ def getNewNameAndDescriptionForLaw(first_law, onlyDesc: bool = False) -> Optiona
         file_log("Special case: presence check only, no law associated for URL:", voteURL)
         return {
             'titlu': "Verificare prezenta",
-            'descriere': "Verificare prezenta in parlament pentur aceasta sesiune."
+            'descriere': "Verificare prezenta in parlament pentru aceasta sesiune."
         }
     secondParams = {
             VoteIdKey: results[VoteIdKey] if results[VoteIdKey] else None
