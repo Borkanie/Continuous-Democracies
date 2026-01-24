@@ -1,4 +1,9 @@
-import { useNavigate, useParams, useRouter } from '@tanstack/react-router';
+import {
+  useNavigate,
+  useParams,
+  Outlet,
+  useMatches,
+} from '@tanstack/react-router';
 import sharedStyles from './styles/RoundBreakdown.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { getRound } from '../utils/api/rounds';
@@ -25,8 +30,9 @@ const {
 
 export const RoundSection = () => {
   const { roundId, sectionId } = useParams({ strict: false });
-  const router = useRouter();
   const navigate = useNavigate();
+  const matches = useMatches();
+  const hasChildRoute = matches.length > 3;
 
   const { data: roundData, isFetching } = useQuery({
     queryKey: ['roundById', roundId],
@@ -44,43 +50,48 @@ export const RoundSection = () => {
         <Spinner />
       ) : (
         <>
-          <Header
-            title={roundData?.title || ''}
-            onBack={() => router.history.back()}
-            extraDetails={{ voteDate: roundData?.voteDate }}
-            description={roundData?.description}
-          />
-          <div className={separator}></div>
+          <Outlet />
+          {!hasChildRoute && (
+            <>
+              <Header
+                title={roundData?.title || ''}
+                extraDetails={{ voteDate: roundData?.voteDate }}
+                description={roundData?.description}
+              />
 
-          {/* Party distribution pie + legend for selected section */}
-          <div className={content}>
-            <div className={chartContainer}>
-              <div>
-                <p className={classNames(bold, chartTitle)}>
-                  Partide care au votat:{' '}
-                  <span
-                    className={highlight}
-                    style={{
-                      color: positionColor(Number(sectionId) as Position),
-                    }}
-                  >
-                    {SECTION_LABELS[Number(sectionId) as Position]}
-                  </span>
-                </p>
-                <PieChart
-                  data={partyPieData}
-                  onSliceClick={(id) => navigate({ to: `party/${id}` })}
-                />
-                <p className={info}>
-                  Apasati click pe o sectiune pentru a vedea lista votantilor
-                  din partid
-                </p>
+              <div className={separator}></div>
+
+              {/* Party distribution pie + legend for selected section */}
+              <div className={content}>
+                <div className={chartContainer}>
+                  <div>
+                    <p className={classNames(bold, chartTitle)}>
+                      Partide care au votat:{' '}
+                      <span
+                        className={highlight}
+                        style={{
+                          color: positionColor(Number(sectionId) as Position),
+                        }}
+                      >
+                        {SECTION_LABELS[Number(sectionId) as Position]}
+                      </span>
+                    </p>
+                    <PieChart
+                      data={partyPieData}
+                      onSliceClick={(id) => navigate({ to: `party/${id}` })}
+                    />
+                    <p className={info}>
+                      Apasati click pe o sectiune pentru a vedea lista
+                      votantilor din partid
+                    </p>
+                  </div>
+                  <div>
+                    <Legend slices={partyPieData.slices} />
+                  </div>
+                </div>
               </div>
-              <div>
-                <Legend slices={partyPieData.slices} />
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </>
       )}
     </div>

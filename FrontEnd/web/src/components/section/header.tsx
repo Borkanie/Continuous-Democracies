@@ -1,37 +1,35 @@
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import styles from './header.module.css';
-import { Button } from '../button/Button';
 import { DateComponent } from '../date/DateComponent';
 import { UiText } from '../ui/text/UiText';
+import { UiBreadcrumbs } from '../ui/breadcrumbs/UiBreadcrumbs';
+import { useBreadcrumbs } from '../../utils/hooks/useBreadcrumbs';
 
-const { header, extraDetails, backButton } = styles;
+const { header, extraDetails } = styles;
 
 type Props = {
   title: string;
   subtitle?: string;
   description?: string;
-  onBack?: () => void;
   extraDetails?: {
     voteDate?: Date;
   };
 };
 
 export const Header = (props: Props) => {
-  const {
-    title: headerTitle,
-    description,
-    onBack,
-    extraDetails: details,
-  } = props;
+  const { title: headerTitle, description, extraDetails: details } = props;
+
+  const breadcrumbs = useBreadcrumbs();
 
   return (
     <div className={header}>
+      {breadcrumbs.length > 1 && (
+        <UiBreadcrumbs
+          breadcrumbs={breadcrumbs.length > 1 ? breadcrumbs : []}
+        />
+      )}
       <h3>{headerTitle}</h3>
       {description && <UiText text={description} />}
       <div className={extraDetails}>
-        {onBack && (
-          <Button className={backButton} icon={faArrowLeft} onClick={onBack} />
-        )}
         {details?.voteDate && <DateComponent text={details.voteDate} />}
       </div>
     </div>

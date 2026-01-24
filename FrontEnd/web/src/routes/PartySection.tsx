@@ -1,4 +1,4 @@
-import { useParams, useRouter } from '@tanstack/react-router';
+import { useParams } from '@tanstack/react-router';
 import { Header } from '../components/section/header';
 import sharedStyles from './styles/RoundBreakdown.module.css';
 import { useQuery } from '@tanstack/react-query';
@@ -10,8 +10,6 @@ const { Div, separator, content, chartContainer, bold, chartTitle } =
 
 export const PartySection = () => {
   const { roundId, sectionId } = useParams({ strict: false });
-
-  const router = useRouter();
 
   const { data: roundData } = useQuery({
     queryKey: ['roundById', roundId],
@@ -26,7 +24,6 @@ export const PartySection = () => {
     <div className={Div}>
       <Header
         title={title}
-        onBack={() => router.history.back()}
         description={roundData?.description}
         extraDetails={{ voteDate: roundData?.voteDate }}
       />

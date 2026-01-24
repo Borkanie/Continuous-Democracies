@@ -6,15 +6,32 @@ const { uiTextComp, trunc } = styles;
 type Size = 'small' | 'medium' | 'large' | 'xlarge';
 
 type Props = {
+  className?: string;
   text: string | number;
   title?: string;
+  /* If true, text will be truncated with ellipsis.
+   * Used only together with maxLines.
+   * Default is false.
+   */
   truncate?: boolean;
+  /* Maximum number of lines to show when truncating.
+   * Should be used only if truncate is true.
+   * Default is 3.
+   */
   maxLines?: number;
+  /* Size of the text. Default is 'large' */
   size?: Size;
 };
 
 export const UiText = (props: Props) => {
-  const { text, title, truncate = false, maxLines = 3, size = 'large' } = props;
+  const {
+    className,
+    text,
+    title,
+    truncate = false,
+    maxLines = 3,
+    size = 'large',
+  } = props;
 
   const sizeStyle = {
     small: { fontSize: 'var(--theme-font-size-s)' },
@@ -29,7 +46,7 @@ export const UiText = (props: Props) => {
 
   return (
     <p
-      className={classNames('UiText', uiTextComp, truncate && trunc)}
+      className={classNames('UiText', className, uiTextComp, truncate && trunc)}
       style={{ ...lineClamp, ...sizeStyle[size] }}
       title={title}
     >
