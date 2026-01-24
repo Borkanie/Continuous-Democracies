@@ -43,7 +43,7 @@ export const RoundSection = () => {
   const { data: groupedRoundResults } = useResultsByRoundId(roundId);
 
   const partyPieData = buildPartyPieData(groupedRoundResults, sectionId);
-  console.log('partyPieData', partyPieData);
+
   return (
     <div className={Div}>
       {isFetching ? (
