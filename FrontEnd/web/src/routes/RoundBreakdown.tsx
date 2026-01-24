@@ -1,4 +1,9 @@
-import { useNavigate, useParams } from '@tanstack/react-router';
+import {
+  useNavigate,
+  useParams,
+  Outlet,
+  useMatches,
+} from '@tanstack/react-router';
 import { PieChart, type PieChartData } from '../components/chart/PieChart';
 import styles from './styles/RoundBreakdown.module.css';
 import { useQuery } from '@tanstack/react-query';
@@ -22,6 +27,8 @@ export const RoundBreakdown = () => {
   const navigate = useNavigate();
   const params = useParams({ strict: false });
   const { roundId } = params;
+  const matches = useMatches();
+  const hasChildRoute = matches.length > 2;
 
   const { data: roundData, isFetching } = useQuery({
     queryKey: ['roundById', roundId],
@@ -40,33 +47,39 @@ export const RoundBreakdown = () => {
         <Spinner />
       ) : (
         <>
-          <Header
-            title={roundData?.title || ''}
-            extraDetails={{ voteDate: roundData?.voteDate }}
-            description={roundData?.description}
-          />
-          <div className={separator}></div>
+          <Outlet />
+          {!hasChildRoute && (
+            <>
+              <Header
+                title={roundData?.title || ''}
+                extraDetails={{ voteDate: roundData?.voteDate }}
+                description={roundData?.description}
+              />
 
-          <div className={content}>
-            <div className={chartContainer}>
-              <div>
-                <p className={classNames(bold, chartTitle)}>
-                  Distributia voturilor
-                </p>
-                <PieChart
-                  data={roundBreakdownData}
-                  onSliceClick={(id) => navigate({ to: `section/${id}` })}
-                />
-                <p className={info}>
-                  Apasati click pe o sectiune pentru a vedea impartirea pe
-                  partide
-                </p>
+              <div className={separator}></div>
+
+              <div className={content}>
+                <div className={chartContainer}>
+                  <div>
+                    <p className={classNames(bold, chartTitle)}>
+                      Distributia voturilor
+                    </p>
+                    <PieChart
+                      data={roundBreakdownData}
+                      onSliceClick={(id) => navigate({ to: `section/${id}` })}
+                    />
+                    <p className={info}>
+                      Apasati click pe o sectiune pentru a vedea impartirea pe
+                      partide
+                    </p>
+                  </div>
+                  <div>
+                    <Legend slices={roundBreakdownData.slices} />
+                  </div>
+                </div>
               </div>
-              <div>
-                <Legend slices={roundBreakdownData.slices} />
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </>
       )}
     </div>

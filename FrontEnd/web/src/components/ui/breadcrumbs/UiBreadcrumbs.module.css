@@ -1,0 +1,15 @@
+.link {
+  color: var(--theme-font-color-secondary);
+  text-decoration: none;
+  font-size: var(--theme-font-size-m);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.current {
+  color: var(--theme-font-color-primary);
+  font-weight: 500;
+  line-height: unset;
+}

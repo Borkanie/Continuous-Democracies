@@ -10,6 +10,12 @@ import { getAllRounds } from './utils/api/rounds';
 import { RoundBreakdown } from './routes/RoundBreakdown';
 import { PartySection } from './routes/PartySection';
 
+declare module '@tanstack/react-router' {
+  interface StaticDataRouteOption {
+    breadcrumb?: string;
+  }
+}
+
 const rootRoute = createRootRoute({
   component: App,
 });
@@ -33,18 +39,27 @@ const roundBreakdownRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/round/$roundId',
   component: RoundBreakdown,
+  staticData: {
+    breadcrumb: 'Distributia voturilor',
+  },
 });
 
 const sectionRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/round/$roundId/section/$sectionId',
+  getParentRoute: () => roundBreakdownRoute,
+  path: '/section/$sectionId',
   component: RoundSection,
+  staticData: {
+    breadcrumb: 'Impartirea pe partide',
+  },
 });
 
 const politicianListRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/round/$roundId/section/$sectionId/party/$partyId',
+  getParentRoute: () => sectionRoute,
+  path: '/party/$partyId',
   component: PartySection,
+  staticData: {
+    breadcrumb: 'Votanti per partid',
+  },
 });
 
 const routeTree = rootRoute.addChildren([
