@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import styles from './Text.module.css';
 
-const { textComp, trunc } = styles;
+const { uiTextComp, trunc } = styles;
 
 type Size = 'small' | 'medium' | 'large' | 'xlarge';
 
@@ -13,7 +13,7 @@ type Props = {
   size?: Size;
 };
 
-export const Text = (props: Props) => {
+export const UiText = (props: Props) => {
   const { text, title, truncate = false, maxLines = 3, size = 'large' } = props;
 
   const sizeStyle = {
@@ -29,7 +29,7 @@ export const Text = (props: Props) => {
 
   return (
     <p
-      className={classNames('Text', textComp, truncate && trunc)}
+      className={classNames('UiText', uiTextComp, truncate && trunc)}
       style={{ ...lineClamp, ...sizeStyle[size] }}
       title={title}
     >

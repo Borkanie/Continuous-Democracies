@@ -1,4 +1,4 @@
-.textComp {
+.uiTextComp {
   font-size: var(--theme-font-size-m);
 
   &.trunc {
