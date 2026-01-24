@@ -1,9 +1,9 @@
 import { Outlet } from '@tanstack/react-router';
-import styles from './RoundSection.module.css';
+import styles from './OutletSection.module.css';
 
 const { Div } = styles;
 
-export const RoundSection = () => {
+export const OutletSection = () => {
   return (
     <div className={Div}>
       <Outlet />

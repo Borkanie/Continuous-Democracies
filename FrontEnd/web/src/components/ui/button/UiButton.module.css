@@ -1,27 +1,37 @@
 .button {
   border: var(--theme-border-primary);
   background-color: transparent;
-  padding: 4px 4px;
+  padding: 4px;
   border-radius: 4px;
   margin: 0;
   cursor: pointer;
   display: flex;
+  gap: 4px;
   align-items: center;
   justify-content: center;
   transition: all 0.1s;
+
+  &.hasBoth {
+    padding: 4px 8px 4px 4px;
+  }
 
   &:hover {
     border: 1px solid var(--theme-color-primary);
     background-color: var(--theme-color-primary);
 
-    .iconCls {
-      color: #ffffff;
+    .iconCls,
+    .textCls {
+      color: var(--background-color-primary);
     }
   }
 
   .iconCls {
     color: var(--theme-font-color-secondary);
-    font-size: 12px;
+    font-size: 16px;
     transition: all 0.1s;
+  }
+
+  .textCls {
+    color: var(--theme-font-color-primary);
   }
 }

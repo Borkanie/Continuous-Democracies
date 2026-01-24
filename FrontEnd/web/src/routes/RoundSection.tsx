@@ -38,7 +38,6 @@ export const RoundSection = () => {
     queryKey: ['roundById', roundId],
     enabled: !!roundId,
     queryFn: ({ queryKey }) => getRound(queryKey[1] || ''),
-    staleTime: 5 * 60 * 1000, // cache data for 5 minutes
   });
   const { data: groupedRoundResults } = useResultsByRoundId(roundId);
 
@@ -50,8 +49,9 @@ export const RoundSection = () => {
         <Spinner />
       ) : (
         <>
-          <Outlet />
-          {!hasChildRoute && (
+          {hasChildRoute ? (
+            <Outlet />
+          ) : (
             <>
               <Header
                 title={roundData?.title || ''}
