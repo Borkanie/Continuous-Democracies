@@ -31,10 +31,6 @@
   font-weight: bold;
 }
 
-.description {
-  font-size: var(--theme-font-size-m);
-}
-
 .footer {
   display: flex;
   justify-content: space-between;

@@ -1,13 +1,13 @@
 import classNames from 'classnames';
-import styles from './Text.module.css';
+import styles from './UiText.module.css';
 
 const { uiTextComp, trunc } = styles;
 
 type Size = 'small' | 'medium' | 'large' | 'xlarge';
 
 type Props = {
-  text: string;
-  title: string;
+  text: string | number;
+  title?: string;
   truncate?: boolean;
   maxLines?: number;
   size?: Size;

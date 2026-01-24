@@ -9,6 +9,7 @@ import { Spinner } from '../spinner/Spinner';
 import { useState } from 'react';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { EmptyState } from '../empty-state/EmptyState';
+import { UiText } from '../ui/text/UiText';
 
 const { Div, header, roundsContainer, separator, top, bottom } = styles;
 
@@ -32,7 +33,7 @@ export const RoundsList = () => {
     <div className={Div}>
       <div className={header}>
         <h3>Lista legi</h3>
-        <p>{data?.length}</p>
+        <UiText text={data?.length || 0} />
       </div>
       <Search value={searchTerm} onChange={setSearchTerm} />
       <div className={roundsContainer}>

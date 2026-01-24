@@ -2,6 +2,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import styles from './header.module.css';
 import { Button } from '../button/Button';
 import { DateComponent } from '../date/DateComponent';
+import { UiText } from '../ui/text/UiText';
 
 const { header, extraDetails, backButton } = styles;
 
@@ -26,7 +27,7 @@ export const Header = (props: Props) => {
   return (
     <div className={header}>
       <h3>{headerTitle}</h3>
-      {description && <p>{description}</p>}
+      {description && <UiText text={description} />}
       <div className={extraDetails}>
         {onBack && (
           <Button className={backButton} icon={faArrowLeft} onClick={onBack} />
