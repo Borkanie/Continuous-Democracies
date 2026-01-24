@@ -19,7 +19,6 @@ export const useResultsByRoundId = (roundId: string | undefined) => {
   const { data: politicians } = useQuery({
     queryKey: ['allPoliticians'],
     queryFn: () => getAllPoliticians(),
-    staleTime: 5 * 60 * 1000, // cache data for 5 minutes
   });
 
   return useQuery({
@@ -30,7 +29,6 @@ export const useResultsByRoundId = (roundId: string | undefined) => {
       return addAbsentPoliticians(grouped, politicians, results);
     },
     enabled: !!roundId, // query only runs if roundId is truthy
-    staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
 };
@@ -61,7 +59,7 @@ const groupResultsByPosition = (results: VoteResult[]): GroupedVotes => {
 const addAbsentPoliticians = (
   grouped: GroupedVotes,
   politicians: Politician[] | undefined,
-  results: VoteResult[]
+  results: VoteResult[],
 ): GroupedVotes => {
   if (!politicians || !Array.isArray(politicians)) {
     return grouped;
@@ -69,7 +67,7 @@ const addAbsentPoliticians = (
 
   const presentIds = new Set<string>();
   [0, 1, 2].forEach((pos) =>
-    grouped[pos as Position].forEach((v) => presentIds.add(v.politician.id))
+    grouped[pos as Position].forEach((v) => presentIds.add(v.politician.id)),
   );
   const sampleRound = results[0]?.round;
 

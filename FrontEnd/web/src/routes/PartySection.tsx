@@ -15,7 +15,6 @@ export const PartySection = () => {
     queryKey: ['roundById', roundId],
     enabled: !!roundId,
     queryFn: ({ queryKey }) => getRound(queryKey[1] || ''),
-    staleTime: 5 * 60 * 1000, // cache data for 5 minutes
   });
 
   const title = `${roundData?.title} `;

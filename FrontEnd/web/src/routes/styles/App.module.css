@@ -9,8 +9,9 @@ body {
   --theme-border-secondary: 1px solid #d1d5db;
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  --theme-box-shadow-primary: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --theme-box-shadow-primary:
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
   --theme-font-size-s: 12px;
   --theme-font-size-m: 14px;
   --theme-font-size-l: 16px;
@@ -36,6 +37,9 @@ body {
   padding-inline: 10px;
   padding-block: 24px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+
+  @media only screen and (min-width: 1024px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
