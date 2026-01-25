@@ -19,6 +19,7 @@ import { VOTERS_TOTAL_NUMBER } from '../utils/constants';
 import { Spinner } from '../components/spinner/Spinner';
 import { Header } from '../components/section/header';
 import { positionColor, positionLabel } from '../utils/helper';
+import { UiText } from '../components/ui/text/UiText';
 
 const { Div, separator, content, bold, chartContainer, chartTitle, info } =
   styles;
@@ -61,17 +62,21 @@ export const RoundBreakdown = () => {
               <div className={content}>
                 <div className={chartContainer}>
                   <div>
-                    <p className={classNames(bold, chartTitle)}>
-                      Distributia voturilor
-                    </p>
+                    <UiText
+                      className={classNames(bold, chartTitle)}
+                      text={'Distributia voturilor'}
+                    />
                     <PieChart
                       data={roundBreakdownData}
                       onSliceClick={(id) => navigate({ to: `section/${id}` })}
                     />
-                    <p className={info}>
-                      Apasati click pe o sectiune pentru a vedea impartirea pe
-                      partide
-                    </p>
+                    <UiText
+                      className={info}
+                      text={
+                        'Apasati click pe o sectiune pentru a vedea impartirea pe partide'
+                      }
+                      size={'small'}
+                    />
                   </div>
                   <div>
                     <Legend slices={roundBreakdownData.slices} />

@@ -10,6 +10,5 @@
 }
 
 .date {
-  font-size: var(--theme-font-size-m);
   color: var(--theme-font-color-secondary);
 }

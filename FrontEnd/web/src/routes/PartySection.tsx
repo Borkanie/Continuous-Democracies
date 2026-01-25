@@ -4,6 +4,7 @@ import sharedStyles from './styles/RoundBreakdown.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { getRound } from '../utils/api/rounds';
 import classNames from 'classnames';
+import { UiText } from '../components/ui/text/UiText';
 
 const { Div, separator, content, chartContainer, bold, chartTitle } =
   sharedStyles;
@@ -32,9 +33,10 @@ export const PartySection = () => {
       <div className={content}>
         <div className={chartContainer}>
           <div>
-            <p className={classNames(bold, chartTitle)}>
-              Lista politicieni - sectiunea {sectionId}
-            </p>
+            <UiText
+              className={classNames(bold, chartTitle)}
+              text={`Lista politicieni - sectiunea ${sectionId}`}
+            />
           </div>
         </div>
       </div>

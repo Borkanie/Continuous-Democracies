@@ -2,6 +2,7 @@ import { useNavigate } from '@tanstack/react-router';
 import type { Slice } from '../chart/PieChart';
 import { LegendCard } from '../legend-card/LegendCard';
 import styles from './Legend.module.css';
+import { UiText } from '../ui/text/UiText';
 
 const { Div, bold, cardsContainer } = styles;
 
@@ -16,7 +17,7 @@ export const Legend = (props: Props) => {
 
   return (
     <div className={Div}>
-      <p className={bold}>Legenda voturilor</p>
+      <UiText className={bold} text={'Legenda voturilor'} />
       <div className={cardsContainer}>
         {slices.map((slice) => (
           <LegendCard
