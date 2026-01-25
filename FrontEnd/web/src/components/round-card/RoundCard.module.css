@@ -6,6 +6,7 @@
   flex-direction: column;
   gap: 16px;
   transition: all 0.2s ease-in;
+  background-color: var(--background-color-primary);
 
   &:hover {
     border: var(--theme-border-secondary);

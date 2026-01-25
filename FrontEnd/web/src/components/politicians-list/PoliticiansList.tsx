@@ -10,10 +10,10 @@ export const PoliticiansList = (props: Props) => {
   const { vote, className } = props;
   return (
     <ul className={classNames(className, list)}>
-      {vote.map(({ politician }) => (
+      {vote?.map(({ politician }) => (
         <li key={politician.id} className={card}>
           <div className={imageContainer}>
-            <img src={'https://picsum.photos/200'} alt={politician.name} />
+            <img src={politician.imageUrl || undefined} alt={politician.name} />
           </div>
           <div>{politician.name}</div>
         </li>

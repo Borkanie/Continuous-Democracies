@@ -18,8 +18,6 @@ const {
   Div,
   header,
   roundsContainer,
-  separator,
-  bottom,
   inDrawer: inDrawerClass,
   topSide,
   headerRight,
@@ -64,8 +62,6 @@ export const RoundsList = ({ inDrawer = false }) => {
           <Spinner />
         ) : (
           <>
-            {/* Empty div for spacing hack with gap  */}
-            <div />
             {data && data.length > 0 ? (
               data?.map((round, index) => (
                 <RoundCard
@@ -83,7 +79,6 @@ export const RoundsList = ({ inDrawer = false }) => {
             ) : (
               <EmptyState text={'Nu au fost gasite rezultate.'} />
             )}
-            <div className={classNames(separator, bottom)} />
           </>
         )}
       </div>
