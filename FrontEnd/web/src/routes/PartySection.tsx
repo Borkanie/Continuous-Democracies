@@ -51,7 +51,7 @@ export const PartySection = () => {
           className={classNames(bold, chartTitle)}
           text={`Votanti per partid - ${party?.label} (${party?.acronym || ''})`}
         />
-        <PoliticiansList vote={votes} />
+        <PoliticiansList vote={votes || []} />
       </div>
     </div>
   );
