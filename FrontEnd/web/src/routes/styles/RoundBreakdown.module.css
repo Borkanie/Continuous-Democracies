@@ -12,6 +12,9 @@
 .content {
   padding-inline: 24px;
   padding-block: 16px 24px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .bold {

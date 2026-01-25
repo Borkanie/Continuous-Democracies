@@ -1,0 +1,38 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  margin: 0;
+  list-style: none;
+  max-height: 60vh;
+  overflow-y: auto;
+  border: var(--theme-border-primary);
+  border-radius: 6px;
+  background-color: var(--background-color-tertiary);
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: var(--theme-border-primary);
+  border-radius: 6px;
+  padding: 8px;
+  background-color: var(--background-color-primary);
+}
+
+.imageContainer {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: var(--theme-border-secondary);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

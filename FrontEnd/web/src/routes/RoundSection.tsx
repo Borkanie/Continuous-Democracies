@@ -67,7 +67,7 @@ export const RoundSection = () => {
                 <div className={chartContainer}>
                   <div>
                     <p className={classNames(bold, chartTitle)}>
-                      Partide care au votat:{' '}
+                      Impartirea pe partide pentru:{' '}
                       <span
                         className={highlight}
                         style={{
@@ -102,7 +102,7 @@ export const RoundSection = () => {
   );
 };
 
-const groupVotesByPartyForPosition = (
+export const groupVotesByPartyForPosition = (
   grouped: Record<Position, VoteResult[]> | undefined,
   sectionId?: string,
 ): Record<string, VoteResult[]> => {
@@ -150,7 +150,7 @@ const partyColorToCss = (color?: PartyColor): string => {
   return `${rgbHex}${alphaHex}`;
 };
 
-const buildPartyPieData = (
+export const buildPartyPieData = (
   groupedByPosition: Record<Position, VoteResult[]> | undefined,
   sectionId?: string,
 ): PieChartData => {
@@ -170,6 +170,7 @@ const buildPartyPieData = (
       label: party?.name ?? party?.acronym ?? partyId,
       value: { count, percentage },
       color: party ? partyColorToCss(party.color) : '#888888',
+      acronym: party?.acronym || '',
     };
   });
 
