@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import { Header } from '../components/section/header';
 import { SECTION_LABELS } from '../utils/constants';
 import { positionColor } from '../utils/helper';
+import { UiText } from '../components/ui/text/UiText';
 
 const {
   Div,
@@ -80,10 +81,13 @@ export const RoundSection = () => {
                       data={partyPieData}
                       onSliceClick={(id) => navigate({ to: `party/${id}` })}
                     />
-                    <p className={info}>
-                      Apasati click pe o sectiune pentru a vedea lista
-                      votantilor din partid
-                    </p>
+                    <UiText
+                      className={info}
+                      size={'small'}
+                      text={
+                        'Apasati click pe o sectiune pentru a vedea lista votantilor din partid'
+                      }
+                    />
                   </div>
                   <div>
                     <Legend slices={partyPieData.slices} />

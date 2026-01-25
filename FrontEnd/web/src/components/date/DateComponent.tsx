@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './DateComponent.module.css';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
+import { UiText } from '../ui/text/UiText';
 
 const { Div, icon, date } = styles;
 
@@ -14,13 +15,15 @@ export const DateComponent = (props: Props) => {
   return (
     <div className={Div}>
       <FontAwesomeIcon icon={faCalendar} className={icon} />
-      <p className={date}>
-        {dateText.toLocaleDateString('ro-RO', {
+      <UiText
+        className={date}
+        size={'medium'}
+        text={dateText.toLocaleDateString('ro-RO', {
           year: 'numeric',
           month: 'numeric',
           day: 'numeric',
         })}
-      </p>
+      />
     </div>
   );
 };

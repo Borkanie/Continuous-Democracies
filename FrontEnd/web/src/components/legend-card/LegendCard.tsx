@@ -14,7 +14,6 @@ type Props = {
 
 export const LegendCard = (props: Props) => {
   const { text, color, count, percentage, onClick } = props;
-
   return (
     <button onClick={onClick} className={button}>
       <div className={leftSide}>
@@ -22,8 +21,12 @@ export const LegendCard = (props: Props) => {
         <UiText text={text} title={text} />
       </div>
       <div className={countContainer}>
-        <p className={bold}>{count}</p>
-        <p className={percentageText}>{percentage}%</p>
+        <UiText className={bold} text={count} size={'medium'} />
+        <UiText
+          className={percentageText}
+          text={percentage + '%'}
+          size={'medium'}
+        />
       </div>
     </button>
   );

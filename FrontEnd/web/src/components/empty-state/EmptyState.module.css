@@ -8,6 +8,5 @@
 }
 
 .pText {
-  font-size: var(--theme-font-size-l);
   color: var(--theme-font-color-secondary);
 }
