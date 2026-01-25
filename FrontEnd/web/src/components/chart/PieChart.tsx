@@ -13,6 +13,7 @@ export type Slice = {
   label: string;
   value: { count: number; percentage: number };
   color: string;
+  acronym?: string;
 };
 
 export type PieChartData = {
@@ -56,7 +57,7 @@ export const PieChart = (props: Props) => {
       event.nativeEvent,
       'nearest',
       { intersect: true },
-      true
+      true,
     );
 
     if (!points.length) {

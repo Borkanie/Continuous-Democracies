@@ -28,7 +28,7 @@ export const Legend = (props: Props) => {
             percentage={slice.value.percentage}
             onClick={() =>
               slice.value.percentage > 0
-                ? navigate({ to: `section/${slice.id}` })
+                ? navigate({ to: `party/${slice.id}` })
                 : undefined
             }
           />

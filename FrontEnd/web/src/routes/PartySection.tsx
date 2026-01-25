@@ -5,18 +5,34 @@ import { useQuery } from '@tanstack/react-query';
 import { getRound } from '../utils/api/rounds';
 import classNames from 'classnames';
 import { UiText } from '../components/ui/text/UiText';
+import {
+  buildPartyPieData,
+  groupVotesByPartyForPosition,
+} from './RoundSection';
+import { useResultsByRoundId } from '../utils/hooks/useResultsByRoundId';
+import type { PieChartData } from '../components/chart/PieChart';
+import { PoliticiansList } from '../components/politicians-list/PoliticiansList';
 
-const { Div, separator, content, chartContainer, bold, chartTitle } =
-  sharedStyles;
+const { Div, separator, content, bold, chartTitle } = sharedStyles;
 
 export const PartySection = () => {
-  const { roundId, sectionId } = useParams({ strict: false });
+  const { roundId, sectionId, partyId } = useParams({ strict: false });
 
   const { data: roundData } = useQuery({
     queryKey: ['roundById', roundId],
     enabled: !!roundId,
     queryFn: ({ queryKey }) => getRound(queryKey[1] || ''),
   });
+
+  const { data: groupedRoundResults } = useResultsByRoundId(roundId);
+  const partyPieData = buildPartyPieData(groupedRoundResults, sectionId);
+  const getPartyById = (partyPieData: PieChartData, partyId: string) => {
+    return partyPieData.slices.find((party) => party.id === partyId);
+  };
+  const party = getPartyById(partyPieData, partyId || '');
+  const votes = groupVotesByPartyForPosition(groupedRoundResults, sectionId)[
+    partyId || ''
+  ];
 
   const title = `${roundData?.title} `;
 
@@ -31,14 +47,11 @@ export const PartySection = () => {
 
       {/* Party distribution pie + legend for selected section */}
       <div className={content}>
-        <div className={chartContainer}>
-          <div>
-            <UiText
-              className={classNames(bold, chartTitle)}
-              text={`Lista politicieni - sectiunea ${sectionId}`}
-            />
-          </div>
-        </div>
+        <UiText
+          className={classNames(bold, chartTitle)}
+          text={`Votanti per partid - ${party?.label} (${party?.acronym || ''})`}
+        />
+        <PoliticiansList vote={votes} />
       </div>
     </div>
   );
