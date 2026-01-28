@@ -11,7 +11,14 @@
   padding-inline: 10px;
   margin: 0 auto;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
+
+  @media only screen and (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
   .iconContainer {
     display: flex;
@@ -34,4 +41,10 @@
     flex-direction: column;
     gap: 6px;
   }
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }

@@ -15,4 +15,7 @@
   padding: 12px;
   flex-direction: column;
   gap: 8px;
+
+  /* Scrollbar styling */
+  scrollbar-color: var(--theme-scrollbar);
 }

@@ -1,25 +1,50 @@
-body {
-  --background-color-primary: #ffffff;
-  --background-color-secondary: #f3f8ff;
-  --background-color-tertiary: #f8f8f8;
-  --theme-color-primary: #2563eb;
-  --theme-font-color-primary: #231f20;
-  --theme-font-color-secondary: #8a8a8a;
-  --theme-border-primary: 1px solid #e6e6e6;
-  --theme-border-secondary: 1px solid #d1d5db;
-  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  --theme-box-shadow-primary:
-    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
-    var(--tw-shadow);
+:root {
   --theme-font-size-s: 12px;
   --theme-font-size-m: 14px;
   --theme-font-size-l: 16px;
   --theme-font-size-xl: 18px;
-  --theme-color-info: #c6ddfc;
-  --theme-color-success: #83fda1;
-  --theme-color-error: rgb(255, 128, 128);
 
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+
+  --theme-box-shadow-primary:
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
+}
+
+:root[data-theme='light'] {
+  --background-color-primary: #ffffff;
+  --background-color-secondary: #f3f8ff;
+  --background-color-tertiary: #f8f8f8;
+
+  --theme-color-primary: #2563eb;
+  --theme-font-color-primary: #231f20;
+  --theme-font-color-secondary: #8a8a8a;
+
+  --theme-border-primary: 1px solid #e6e6e6;
+  --theme-border-secondary: 1px solid #d1d5db;
+
+  --tw-shadow-color: rgb(0 0 0 / 0.05);
+}
+
+:root[data-theme='dark'] {
+  --background-color-primary: #232524;
+  --background-color-secondary: #171717;
+  --background-color-tertiary: #1d1d1d;
+
+  --theme-color-primary: #2563eb;
+  --theme-font-color-primary: #e5e7eb;
+  --theme-font-color-secondary: #9ca3af;
+
+  --theme-border-primary: 1px solid #353837;
+  --theme-border-secondary: 1px solid #494d4b;
+
+  --tw-shadow-color: rgb(0 0 0 / 0.4);
+
+  --theme-scrollbar: #888 var(--background-color-secondary);
+}
+
+body {
   font-family: 'Montserrat', sans-serif;
   font-optical-sizing: auto;
   background-color: var(--background-color-secondary);
