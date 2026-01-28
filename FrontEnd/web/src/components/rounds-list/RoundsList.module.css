@@ -57,16 +57,3 @@
     }
   }
 }
-
-.roundsContainer {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 8px;
-  overflow-y: auto;
-  position: relative;
-  padding: 12px;
-  background-color: var(--background-color-tertiary);
-  border-radius: 6px;
-  border: var(--theme-border-primary);
-}

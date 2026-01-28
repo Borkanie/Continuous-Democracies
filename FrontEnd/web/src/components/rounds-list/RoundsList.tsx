@@ -13,15 +13,9 @@ import { UiText } from '../ui/text/UiText';
 import { useDrawer } from '../../utils/context/DrawerContext';
 import { UiButton } from '../ui/button/UiButton';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { ScrollableArea } from '../ui/scrollable-area/ScrollableArea';
 
-const {
-  Div,
-  header,
-  roundsContainer,
-  inDrawer: inDrawerClass,
-  topSide,
-  headerRight,
-} = styles;
+const { Div, header, inDrawer: inDrawerClass, topSide, headerRight } = styles;
 
 export const RoundsList = ({ inDrawer = false }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -57,7 +51,7 @@ export const RoundsList = ({ inDrawer = false }) => {
         </div>
         <Search value={searchTerm} onChange={setSearchTerm} />
       </div>
-      <div className={roundsContainer}>
+      <ScrollableArea>
         {showSpinner ? (
           <Spinner />
         ) : (
@@ -81,7 +75,7 @@ export const RoundsList = ({ inDrawer = false }) => {
             )}
           </>
         )}
-      </div>
+      </ScrollableArea>
     </div>
   );
 };
