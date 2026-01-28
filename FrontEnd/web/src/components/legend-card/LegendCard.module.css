@@ -46,3 +46,7 @@
 .percentageText {
   color: var(--theme-font-color-secondary);
 }
+
+.textColor {
+  color: var(--theme-font-color-primary);
+}

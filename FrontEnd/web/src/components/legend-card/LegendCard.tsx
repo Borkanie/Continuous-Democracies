@@ -1,8 +1,16 @@
+import classNames from 'classnames';
 import { UiText } from '../ui/text/UiText';
 import styles from './LegendCard.module.css';
 
-const { button, marker, countContainer, bold, percentageText, leftSide } =
-  styles;
+const {
+  button,
+  marker,
+  countContainer,
+  bold,
+  percentageText,
+  leftSide,
+  textColor,
+} = styles;
 
 type Props = {
   text: string;
@@ -18,10 +26,14 @@ export const LegendCard = (props: Props) => {
     <button onClick={onClick} className={button}>
       <div className={leftSide}>
         <div className={marker} style={{ backgroundColor: color }}></div>
-        <UiText text={text} title={text} />
+        <UiText text={text} title={text} className={textColor} />
       </div>
       <div className={countContainer}>
-        <UiText className={bold} text={count} size={'medium'} />
+        <UiText
+          className={classNames(bold, textColor)}
+          text={count}
+          size={'medium'}
+        />
         <UiText
           className={percentageText}
           text={percentage + '%'}
