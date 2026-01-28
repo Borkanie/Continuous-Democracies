@@ -1,0 +1,18 @@
+.outer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--background-color-tertiary);
+  border-radius: 6px;
+  border: var(--theme-border-primary);
+}
+
+.inner {
+  overflow-y: auto;
+  display: flex;
+  padding: 12px;
+  flex-direction: column;
+  gap: 8px;
+}

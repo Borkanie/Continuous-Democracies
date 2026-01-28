@@ -1,5 +1,7 @@
 .Div {
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .bold {
@@ -7,10 +9,15 @@
 }
 
 .cardsContainer {
-  max-height: 400px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-block: 16px 0;
-  overflow-y: auto;
+
+  li {
+    list-style: none;
+  }
+}
+
+.mh400 {
+  max-height: 400px;
 }

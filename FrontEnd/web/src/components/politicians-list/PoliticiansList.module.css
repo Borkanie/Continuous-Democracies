@@ -2,14 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 12px;
   margin: 0;
   list-style: none;
-  max-height: 60vh;
-  overflow-y: auto;
-  border: var(--theme-border-primary);
-  border-radius: 6px;
-  background-color: var(--background-color-tertiary);
 }
 
 .card {
@@ -35,4 +29,8 @@
     height: 100%;
     object-fit: cover;
   }
+}
+
+.mh60 {
+  max-height: 60vh;
 }
