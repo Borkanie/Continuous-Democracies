@@ -1,5 +1,5 @@
 import styles from './styles/App.module.css';
-import { Header } from '../components/header/Header';
+import { Header } from '../components/ui/header/Header';
 import { RoundsList } from '../components/rounds-list/RoundsList';
 import { useBreakpoints } from '../utils/hooks/useBreakpoints';
 import { useDrawer } from '../utils/context/DrawerContext';
