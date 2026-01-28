@@ -9,10 +9,11 @@ const { Div, bold, cardsContainer, mh400 } = styles;
 
 type Props = {
   slices: Slice[];
+  text: string;
 };
 
 export const Legend = (props: Props) => {
-  const { slices } = props;
+  const { slices, text } = props;
 
   const navigate = useNavigate();
   const { roundId, sectionId } = useParams({ strict: false });
@@ -27,7 +28,7 @@ export const Legend = (props: Props) => {
 
   return (
     <div className={Div}>
-      <UiText className={bold} text={'Legenda voturilor'} />
+      <UiText className={bold} text={text} />
       <ScrollableArea className={mh400}>
         <ul className={cardsContainer}>
           {slices.map((slice) => (

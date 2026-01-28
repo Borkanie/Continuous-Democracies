@@ -73,13 +73,16 @@ export const RoundBreakdown = () => {
                     <UiText
                       className={info}
                       text={
-                        'Apasati click pe o sectiune pentru a vedea impartirea pe partide'
+                        'Apasa pe o sectiune din grafic sau pe legenda pentru a vedea impartirea pe partide'
                       }
-                      size={'small'}
+                      size={'medium'}
                     />
                   </div>
                   <div>
-                    <Legend slices={roundBreakdownData.slices} />
+                    <Legend
+                      text={'Legenda voturilor'}
+                      slices={roundBreakdownData.slices}
+                    />
                   </div>
                 </div>
               </div>
