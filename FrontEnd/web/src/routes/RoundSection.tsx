@@ -83,14 +83,17 @@ export const RoundSection = () => {
                     />
                     <UiText
                       className={info}
-                      size={'small'}
+                      size={'medium'}
                       text={
-                        'Apasati click pe o sectiune pentru a vedea lista votantilor din partid'
+                        'Apasa pe o sectiune din grafic sau pe legenda pentru a vedea lista votantilor per partid'
                       }
                     />
                   </div>
                   <div>
-                    <Legend slices={partyPieData.slices} />
+                    <Legend
+                      text={'Legenda partidelor'}
+                      slices={partyPieData.slices}
+                    />
                   </div>
                 </div>
               </div>
