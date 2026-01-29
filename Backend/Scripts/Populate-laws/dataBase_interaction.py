@@ -21,16 +21,45 @@ db_params = {
     'dbname': os.getenv('DBName'),
     'user': os.getenv('DBUser'),
     'password': os.getenv('DBPassword'),
-    'host': os.getenv('DBServerAddress'),  # Change to your database host
+    'host': '192.168.1.108',  # Change to your database host
     'port': '5432'        # Default PostgreSQL port
 }
 
-print("Database connection parameters loaded:", db_params)
+# Shared connection support: initialize once and reuse across calls.
+_shared_connection = None
+_shared_db_params = dict(db_params)
+
+def init_db(params: dict | None = None):
+    global _shared_connection, _shared_db_params
+    if params:
+        _shared_db_params = dict(params)
+    if _shared_connection is None:
+        _shared_connection = psycopg2.connect(**_shared_db_params)
+    return _shared_connection
+
+def _get_connection():
+    global _shared_connection, _shared_db_params
+    if _shared_connection is None:
+        _shared_connection = psycopg2.connect(**_shared_db_params)
+    try:
+        if getattr(_shared_connection, 'closed', False):
+            _shared_connection = psycopg2.connect(**_shared_db_params)
+    except Exception:
+        _shared_connection = psycopg2.connect(**_shared_db_params)
+    return _shared_connection
+
+def close_db():
+    global _shared_connection
+    try:
+        if _shared_connection is not None and not getattr(_shared_connection, 'closed', False):
+            _shared_connection.close()
+    finally:
+        _shared_connection = None
 
 def getPoliticans() -> list[dict]:
     try:
-        # Connect to the PostgreSQL database
-        connection = psycopg2.connect(**db_params)
+        # Reuse shared connection
+        connection = _get_connection()
         cursor = connection.cursor()
 
         # Define your SELECT query
@@ -51,16 +80,13 @@ def getPoliticans() -> list[dict]:
         print(f"Database error: {e}")
         return []
     finally:
-        # Close the cursor and connection
+        # Close the cursor only; shared connection is reused
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
 
 def getParties() -> list[dict]:
     try:
-        # Connect to the PostgreSQL database
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
 
         # Define your SELECT query
@@ -81,11 +107,8 @@ def getParties() -> list[dict]:
         print(f"Database error: {e}")
         return []
     finally:
-        # Close the cursor and connection
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
 
 def get_max_vote_id() -> int | str | None:
     """
@@ -93,7 +116,7 @@ def get_max_vote_id() -> int | str | None:
     Tries numeric MAX(CAST(... AS BIGINT)) first, falls back to lexical ORDER BY DESC.
     """
     try:
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
 
         # Try numeric max (works if VoteId is numeric or numeric-like)
@@ -125,13 +148,10 @@ def get_max_vote_id() -> int | str | None:
     finally:
         if 'cursor' in locals() and cursor:
             cursor.close()
-        if 'connection' in locals() and connection:
-            connection.close()
             
 def getUnpopulatedLaws() -> list[dict]:
     try:
-        # Connect to the PostgreSQL database
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
 
         # Define your SELECT query (only rows whose Title contains "Vot electronic")
@@ -152,16 +172,12 @@ def getUnpopulatedLaws() -> list[dict]:
         print(f"Database error: {e}")
         return []
     finally:
-        # Close the cursor and connection
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
 
 def getLaws() -> list[dict]:
     try:
-        # Connect to the PostgreSQL database
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
 
         # Define your SELECT query
@@ -182,11 +198,8 @@ def getLaws() -> list[dict]:
         print(f"Database error: {e}")
         return []
     finally:
-        # Close the cursor and connection
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
 
 def insertNewParty(acronym: str, partyName = "Unknown Party") -> str:
     """
@@ -199,7 +212,7 @@ def insertNewParty(acronym: str, partyName = "Unknown Party") -> str:
         The ID of the newly inserted party.
     """
     try:
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
         insert_query = sql.SQL("""
             INSERT INTO public."Parties"("Id", "Acronym", "LogoUrl", "Color", "Active", "Name")
@@ -227,8 +240,6 @@ def insertNewParty(acronym: str, partyName = "Unknown Party") -> str:
     finally:
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
     return new_party_id
 
 def insertVotingRound(voting_round: VotingRounds):
@@ -239,7 +250,7 @@ def insertVotingRound(voting_round: VotingRounds):
         voting_round: VotingRounds object containing the data to insert.
     """
     try:
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
         print(f"Inserting new voting round: {voting_round.__dict__}")
         file_log(f"Inserting new voting round: {voting_round.__dict__}")
@@ -269,8 +280,6 @@ def insertVotingRound(voting_round: VotingRounds):
     finally:
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
 
 def insertPolitician(name: str, partyId: str, imageUrl = "", gender = 2, active = True) -> str:
     """
@@ -295,7 +304,7 @@ def insertPolitician(name: str, partyId: str, imageUrl = "", gender = 2, active 
     """
     
     try:
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
         file_log(f"Inserting new politician: Name={name}, PartyId={partyId}", alsoPrint=True)
         # Prepare SQL insert statement safely using psycopg2.sql
@@ -327,9 +336,87 @@ def insertPolitician(name: str, partyId: str, imageUrl = "", gender = 2, active 
     finally:
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
     return id
+
+
+def set_politician_active_by_name(name_like: str) -> int:
+    """
+    Set Active = true for politician rows whose Name matches the provided pattern (case-insensitive ILIKE).
+
+    `name_like` should include SQL wildcards if desired (e.g. '%Popa Ştefan%').
+    Returns the number of rows updated.
+    """
+    try:
+        connection = _get_connection()
+        cursor = connection.cursor()
+        file_log(f"Setting Active=true for politicians matching: {name_like}")
+        update_query = sql.SQL('''
+            UPDATE public."Politicians"
+            SET "Active" = TRUE
+            WHERE "Name" ILIKE %s
+            RETURNING "Id";
+        ''')
+        cursor.execute(update_query, (name_like,))
+        rows = cursor.fetchall()
+        # commit to persist changes
+        connection.commit()
+        count = len(rows)
+        file_log(f"Updated Active for {count} politician(s) matching '{name_like}'")
+        return count
+    except psycopg2.Error as e:
+        file_log(f"Database error while updating politician Active flag: {e}", alsoPrint=True)
+        if connection:
+            connection.rollback()
+        return 0
+    finally:
+        if cursor:
+            cursor.close()
+
+
+def replace_active_politicians_by_names(names: list[str]) -> dict:
+    """
+    Replace the active politicians set in a single transaction.
+
+    Steps (single transaction):
+      1. Set ALL politicians Active = FALSE
+      2. For each name in `names`, set Active = TRUE where Name ILIKE '%name%'
+
+    Returns a dict with counts: {'deactivated': int, 'activated': int}
+    """
+    if names is None:
+        names = []
+    try:
+        connection = _get_connection()
+        cursor = connection.cursor()
+        file_log("Starting replace_active_politicians_by_names transaction", alsoPrint=True)
+
+        # Start transaction (psycopg2 starts one by default)
+        cursor.execute('UPDATE public."Politicians" SET "Active" = FALSE;')
+        deactivated = cursor.rowcount if cursor.rowcount is not None else 0
+
+        activated_total = 0
+        for raw_name in names:
+            pattern = f"%{raw_name}%"
+            cursor.execute('UPDATE public."Politicians" SET "Active" = TRUE WHERE "Name" ILIKE %s RETURNING "Id";', (pattern,))
+            rows = cursor.fetchall()
+            activated = len(rows)
+            activated_total += activated
+            file_log(f"Activated {activated} rows for pattern: {pattern}")
+
+        connection.commit()
+        file_log(f"replace_active_politicians_by_names committed: deactivated={deactivated}, activated={activated_total}")
+        return {'deactivated': deactivated, 'activated': activated_total}
+
+    except psycopg2.Error as e:
+        file_log(f"Database error in replace_active_politicians_by_names: {e}", alsoPrint=True)
+        try:
+            connection.rollback()
+        except Exception:
+            pass
+        return {'deactivated': 0, 'activated': 0}
+    finally:
+        if cursor:
+            cursor.close()
 
 def update_law_description(law_id: int, description: str):
     """
@@ -341,7 +428,7 @@ def update_law_description(law_id: int, description: str):
         db_params: Dictionary with psycopg2 connection parameters.
     """
     try:
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
         file_log(f"Updating law ID {law_id} with data: {description}")
         # Prepare SQL update statement safely using psycopg2.sql
@@ -365,8 +452,6 @@ def update_law_description(law_id: int, description: str):
     finally:
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
 
 def update_law(law_id: int, law_json: dict):
     """
@@ -378,7 +463,7 @@ def update_law(law_id: int, law_json: dict):
         db_params: Dictionary with psycopg2 connection parameters.
     """
     try:
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
         file_log(f"Updating law ID {law_id} with data: {law_json}")
         # Prepare SQL update statement safely using psycopg2.sql
@@ -405,8 +490,6 @@ def update_law(law_id: int, law_json: dict):
     finally:
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
 
 
 def delete_law(law_id: int):
@@ -417,7 +500,7 @@ def delete_law(law_id: int):
         law_id: ID of the law to delete.
     """
     try:
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
         file_log(f"Deleting law ID {law_id} from database")
         delete_query = sql.SQL('''
@@ -434,8 +517,6 @@ def delete_law(law_id: int):
     finally:
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
 
 
 def insert_votes(votes: list[Vote]) -> int:
@@ -455,7 +536,7 @@ def insert_votes(votes: list[Vote]) -> int:
 
     inserted = 0
     try:
-        connection = psycopg2.connect(**db_params)
+        connection = _get_connection()
         cursor = connection.cursor()
 
         # Prepare parameterized insert; use %s placeholders for psycopg2
@@ -502,6 +583,4 @@ def insert_votes(votes: list[Vote]) -> int:
     finally:
         if cursor:
             cursor.close()
-        if connection:
-            connection.close()
     return inserted

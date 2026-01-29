@@ -61,6 +61,29 @@ def generate_party_acronym(name: str) -> str:
     # Uppercase final acronym
     return "".join(acronym_letters).upper()
 
+
+def move_first_word_to_end(full_name: str) -> str:
+    """
+    Move the first word of a full name to the end.
+
+    Examples:
+        'Popa Ştefan-Ovidiu' -> 'Ştefan-Ovidiu Popa'
+        'Adomnicăi Mirela Elena' -> 'Mirela Elena Adomnicăi'
+
+    This function preserves Unicode characters (Romanian/Hungarian diacritics)
+    and collapses multiple whitespace characters. If the input contains only
+    one word, it is returned unchanged.
+    """
+    if not full_name or not isinstance(full_name, str):
+        return full_name
+
+    parts = re.split(r"\s+", full_name.strip())
+    if len(parts) <= 1:
+        return full_name.strip()
+
+    reordered = parts[1:] + [parts[0]]
+    return " ".join(reordered)
+
 def deputy_exists(dom_str: str) -> str | None:
     """
     Returns True if the DOM contains a real deputy profile,

@@ -116,7 +116,7 @@ def extract_politician(dom_str: str, year: int) -> Politician | None:
     # ------------------------------------------------------
     # 6) ACTIVE FLAG
     # ------------------------------------------------------
-    active = True
+    active = False
 
     # ------------------------------------------------------
     # 7) CREATE Politician OBJECT
