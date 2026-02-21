@@ -13,7 +13,7 @@ from typing import Optional
 from log_writer import file_log
 from PyPDF2 import PdfReader
 from typing import Optional
-from dataBase_interaction import getUnpopulatedLaws, update_law, update_law_description, promulgareKey, adoptedKey, motivatieKey, ougKey, VoteIdKey, DescriptionKey, TitleKey, IdKey
+from dataBase_interaction import delete_law, getUnpopulatedLaws, update_law, update_law_description, promulgareKey, adoptedKey, motivatieKey, ougKey, VoteIdKey, DescriptionKey, TitleKey, IdKey
 from utils import downloadFileFormUrl, get
 
 def extract_text_from_selectable_pdf(pdf_path: str) -> str:
@@ -335,10 +335,10 @@ def tryPopulateAllLawsFromDBWithDefautlName():
                     file_log(f"Updated law ID {law.get(IdKey)} successfully.", alsoPrint=True)
                 else:
                     file_log(f"No description produced for law ID {law.get(IdKey)}; deleting record.", alsoPrint=True)
-                    #try:
-                        #delete_law(law.get(IdKey))
-                    #except Exception as e:
-                    #    print(f"Failed to delete law ID {law.get(IdKey)}: {e}")
+                    try:
+                        delete_law(law.get(IdKey))
+                    except Exception as e:
+                        file_log(f"Failed to delete law ID {law.get(IdKey)}: {e}", alsoPrint=True)
             else:
                 file_log("Skipping law with title:" + law[TitleKey], alsoPrint=True)
         except Exception as e:
