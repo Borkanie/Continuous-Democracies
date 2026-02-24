@@ -1,7 +1,7 @@
 from utils import createtempDir, removeTempDir
 from dataBase_interaction import getPoliticans, insertPolitician, insertNewParty, getParties
 from uuid import uuid4
-from utils import file_log, get, deputy_exists, generate_party_acronym
+from utils import log, get, deputy_exists, generate_party_acronym
 from bs4 import BeautifulSoup
 
 parties = getParties()
@@ -97,11 +97,11 @@ def extract_politician(dom_str: str, year: int) -> Politician | None:
     # If no full name found → use acronym
     partyId = checkIfPartyExists(full_party_name)
     if partyId is None:
-        file_log(f"Party not found for politician {name}, party acronym: {full_party_name}", alsoPrint=True)
+        log(f"Party not found for politician {name}, party acronym: {full_party_name}")
         party_acronym = party_acronym if party_acronym is not None else generate_party_acronym(full_party_name)
         partyId = insertNewParty(party_acronym, full_party_name)
         if partyId is None:
-            file_log(f"Failed to insert new party for politician {name}, party acronym: {full_party_name}", alsoPrint=True)
+            log(f"Failed to insert new party for politician {name}, party acronym: {full_party_name}")
             return None
         
     # ------------------------------------------------------
@@ -136,16 +136,16 @@ def importPoitician(politicianId: int, year: int) -> bool:
     if deputy_exists(text):
         politician = extract_politician(text, year)
         if politician is None:
-            file_log(f"Failed to extract politician with ID {politicianId} for year {year}.", alsoPrint=True)
+            log(f"Failed to extract politician with ID {politicianId} for year {year}.")
             return False
         matching = [pol for pol in politicians if pol["Name"] is politician.name]
         if len(matching) > 0:
-            file_log(f"Politician {politician.name} already exists in database.", alsoPrint=True)
+            log(f"Politician {politician.name} already exists in database.")
             return True
         else:
             insertPolitician(politician.name, politician.partyId, politician.imageUrl, politician.gender, politician.active)
     else:
-        file_log(f"Politician with ID {politicianId} does not exist for year {year}.", alsoPrint=True)
+        log(f"Politician with ID {politicianId} does not exist for year {year}.")
         return False
 
 def importPoliticians(startId: int, endId: int,year: int):
@@ -160,7 +160,7 @@ def importPoliticians(startId: int, endId: int,year: int):
             print(f"Importing politician with ID: {politicianId}")
             importPoitician(politicianId, year)
         except Exception as e:
-            file_log(f"Error importing politician with ID {politicianId} for year{year}: {e}", alsoPrint=True)
+            log(f"Error importing politician with ID {politicianId} for year{year}: {e}")
         
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 from time import timezone
-from log_writer import file_log
+from log_writer import log
 import os
 import subprocess
 from charset_normalizer import from_path
@@ -173,7 +173,7 @@ def downloadFileFormUrl(url, output_file):
     """
     cmd = f'curl -s "{url}" -o "{output_file}"'
     # internal download messages go to file
-    file_log("Running curl for:", url, "->", output_file)
+    log("Running curl for:", url, "->", output_file)
     #os.system(cmd)
     result = subprocess.run(
         cmd,
@@ -214,7 +214,7 @@ def get(url, file= "temp_response.txt", keep = False) -> str:
             if  not keep:
                 os.remove(output_file)
         except Exception:
-            file_log("Failed to remove temp file:", output_file)
+            log("Failed to remove temp file:", output_file)
         return response_text
 
 def createtempDir():

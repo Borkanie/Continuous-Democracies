@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from utils import get, createtempDir, removeTempDir, file_log, move_first_word_to_end 
+from utils import get, createtempDir, removeTempDir, log, move_first_word_to_end 
 from dataBase_interaction import replace_active_politicians_by_names, set_politician_active_by_name
 
 
@@ -22,7 +22,7 @@ def activate_all_groups(idl: int = 1, start_idg: int = 1) -> int:
             soup = BeautifulSoup(html, "html.parser")
             grp = soup.select_one("div.grup-parlamentar-list.grupuri-parlamentare-list")
             if not grp:
-                file_log(f"No group div found for idg={idg}; stopping iteration.", alsoPrint=True)
+                log(f"No group div found for idg={idg}; stopping iteration.")
                 break
 
             # collect names from the group anchors
@@ -35,16 +35,16 @@ def activate_all_groups(idl: int = 1, start_idg: int = 1) -> int:
 
         # deduplicate across all groups
         unique_names = list(dict.fromkeys(all_names))
-        file_log(f"Activating {len(unique_names)} politicians across all groups", alsoPrint=True)
+        log(f"Activating {len(unique_names)} politicians across all groups")
         result = replace_active_politicians_by_names(unique_names)
         total_updated = result.get('activated', 0)
 
     except Exception as e:
-        file_log(f"Error while activating groups: {e}", alsoPrint=True)
+        log(f"Error while activating groups: {e}")
     finally:
         removeTempDir()
 
-    file_log(f"Finished group activation. Total DB rows updated: {total_updated}")
+    log(f"Finished group activation. Total DB rows updated: {total_updated}")
     return total_updated
 
 

@@ -1,5 +1,5 @@
 import os
-from log_writer import file_log
+from log_writer import log
 from utils import get, extract_datetime_from_dom, createtempDir, removeTempDir
 from dataBase_interaction import *
 import xml.etree.ElementTree as ET
@@ -27,7 +27,7 @@ def extractNewVotingRound(lawId: int) -> VotingRounds:
     """
 
     print(f"Extracting new voting round for law ID: {lawId}")
-    file_log(f"Extracting new voting round for law ID: {lawId}")
+    log(f"Extracting new voting round for law ID: {lawId}")
     # Implementation to extract and add a new voting round to the database
     getUrl = f"https://cdep.ro/pls/steno/evot2015.Nominal?idv={lawId}"
     response_text = get(url=getUrl, file=f"voting_round_{lawId}.html")
@@ -44,11 +44,11 @@ def addPoliticianMatching(politicians, vote : Vote) -> bool:
 
     if len(matching_politician) > 0:
         matching_politician = matching_politician[0]
-        file_log(f"Matched politician: {matching_politician}")
+        log(f"Matched politician: {matching_politician}")
         vote.id = str(uuid.uuid4())
         vote.politicianId = matching_politician["Id"]
     else:
-        file_log(f"No matching politician found for vote: {vote.name}")
+        log(f"No matching politician found for vote: {vote.name}")
         return insertPolitician(vote.name, vote.partyId) is not None
 
     return True
@@ -58,16 +58,16 @@ def findPartyForVote(parties, vote : Vote) -> str:
         vote.grup = "MIN"
     matching_parties = [party for party in parties if party["Acronym"] == vote.grup]
     if len(matching_parties) == 0:
-        file_log(f"No matching party found for acronym: {vote.grup}")
+        log(f"No matching party found for acronym: {vote.grup}")
         id = insertNewParty(vote.grup)
         if id is None:
-            file_log(f"Failed to insert new party for acronym: {vote.grup}", alsoPrint=True)
+            log(f"Failed to insert new party for acronym: {vote.grup}")
             return False
         else:
-            file_log(f"Inserted new party with ID: {id} for acronym: {vote.grup}", alsoPrint=True)
+            log(f"Inserted new party with ID: {id} for acronym: {vote.grup}")
         vote.partyId = id
     else:
-        file_log(f"Matched party: {matching_parties}")
+        log(f"Matched party: {matching_parties}")
         vote.partyId = matching_parties[0]["Id"]
     return True
     
@@ -119,16 +119,16 @@ def getVoteListForALawById(lawId : int, existing_law_id : str) -> list[Vote]:
     parties = getParties()
     politicians= getPoliticans()
     for vote in votes:
-        file_log(f"Processing vote for politician: {vote.name}, group: {vote.grup}")
+        log(f"Processing vote for politician: {vote.name}, group: {vote.grup}")
         if not findPartyForVote(parties, vote):
-            file_log(f"Skipping vote for politician: {vote.name} due to missing party.", alsoPrint=True)
+            log(f"Skipping vote for politician: {vote.name} due to missing party.")
             continue
         if not addPoliticianMatching(politicians, vote):
-            file_log(f"Skipping vote for politician: {vote.name} due to missing politician.", alsoPrint=True)
+            log(f"Skipping vote for politician: {vote.name} due to missing politician.")
             continue
         setVotePosition(vote)
     result = [vote for vote in votes if vote.politicianId is not None and vote.partyId is not None]
-    file_log(f"Total valid votes after matching: {len(result)}", alsoPrint=True)
+    log(f"Total valid votes after matching: {len(result)}")
     return result
 
 
@@ -146,26 +146,26 @@ def importLaws(startingIndex : int, endingIndex : int) -> list:
         try:
             file = f"law_{lawId}_response.txt"
             if checkifLawIsNotEMpty(lawId, file) == False:
-                file_log(f"Law ID {lawId} has no votes. Skipping import.", alsoPrint=True)
+                log(f"Law ID {lawId} has no votes. Skipping import.")
                 try:
                     os.remove(os.path.join(createtempDir(), file))
                 except Exception:
-                    file_log(f"Failed to remove temp file for law ID {lawId}: {file}")
+                    log(f"Failed to remove temp file for law ID {lawId}: {file}")
                 continue
             existing_law_id = None
             if any(law for law in existinglaws if law["VoteId"] == lawId):
-                file_log(f"Law ID {lawId} already exists in the database. Skipping import.")
+                log(f"Law ID {lawId} already exists in the database. Skipping import.")
                 existing_law_id = next(law for law in existinglaws if law["VoteId"] == lawId)["Id"]
             else:
                 existing_law_id = extractNewVotingRound(lawId).Id
 
             votes = getVoteListForALawById(lawId, existing_law_id)
-            file_log(f"Imported {len(votes)} votes for law ID {lawId}", alsoPrint=True)
+            log(f"Imported {len(votes)} votes for law ID {lawId}")
             if insert_votes(votes) == 0:
-                file_log(f"No votes were inserted for law ID {lawId}", alsoPrint=True)
+                log(f"No votes were inserted for law ID {lawId}")
             
         except Exception as e:
-            file_log(f"Error processing law ID {lawId}: {e}")
+            log(f"Error processing law ID {lawId}: {e}")
 
 def goFromLastforward(numberOfForwardSearaches: int):
     lastNumber = get_max_vote_id()
