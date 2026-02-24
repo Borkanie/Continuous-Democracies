@@ -1,9 +1,8 @@
 from datetime import datetime
 
-def file_log(*args, sep=' ', end='\n', alsoPrint=False):
+def log(*args, sep=' ', end='\n'):
     """
     Log messages to console only (stdout) with a timestamp.
-    No file logging to prevent large log files on disk.
     Docker console logs are temporary and size-limited.
     """
     try:

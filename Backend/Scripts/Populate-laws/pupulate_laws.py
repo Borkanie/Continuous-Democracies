@@ -10,7 +10,7 @@ from PIL import Image
 import pytesseract
 import json
 from typing import Optional
-from log_writer import file_log
+from log_writer import log
 from PyPDF2 import PdfReader
 from typing import Optional
 from dataBase_interaction import delete_law, getUnpopulatedLaws, update_law, update_law_description, promulgareKey, adoptedKey, motivatieKey, ougKey, VoteIdKey, DescriptionKey, TitleKey, IdKey
@@ -29,13 +29,13 @@ def extract_text_from_selectable_pdf(pdf_path: str) -> str:
     try:
         reader = PdfReader(pdf_path)
         text = []
-        file_log(f"Opened PDF {pdf_path} with {len(reader.pages)} pages.")
+        log(f"Opened PDF {pdf_path} with {len(reader.pages)} pages.")
         for page in reader.pages:
-            file_log(f"Extracting text from page {reader.pages.index(page) + 1}")
+            log(f"Extracting text from page {reader.pages.index(page) + 1}")
             page_text = page.extract_text()
             if page_text:
                 text.append(page_text)
-        file_log(f"Extracted text from PDF {pdf_path}, total length: {sum(len(t) for t in text)} characters.")
+        log(f"Extracted text from PDF {pdf_path}, total length: {sum(len(t) for t in text)} characters.")
         return "\n".join(text)
     except Exception as e:
         print(f"Error reading PDF {pdf_path}: {e}")
@@ -59,7 +59,7 @@ def ask_chatgpt_json(prompt: str, api_key: Optional[str] = None, model: str = "g
         api_key = os.getenv("OPENAI_API_KEY")
 
     if not api_key:
-        file_log("OpenAI API key not set. Set OPENAI_API_KEY in environment or pass api_key parameter.")
+        log("OpenAI API key not set. Set OPENAI_API_KEY in environment or pass api_key parameter.")
         return None
 
     url = "https://api.openai.com/v1/chat/completions"
@@ -115,7 +115,7 @@ def extract_text_from_pdf(pdf_path: str, poppler_path: str, tesseract_cmd: str =
     temp_dir = os.path.join(os.path.dirname(pdf_path), "temp_" + uuid.uuid4().hex)
     os.makedirs(temp_dir, exist_ok=True)
     # log internal info to file
-    file_log("Temporary directory created at:", temp_dir)
+    log("Temporary directory created at:", temp_dir)
 
     try:
         pdfinfo_exe = os.path.join(poppler_path, "pdfinfo.exe")
@@ -161,7 +161,7 @@ def extract_text_from_pdf(pdf_path: str, poppler_path: str, tesseract_cmd: str =
         text_output = []
         for img_path in images:
             text_output.append(pytesseract.image_to_string(Image.open(img_path), lang="ron"))
-        file_log(f"OCR completed on {pdf_path}! extracted {len(text_output)} pages.")
+        log(f"OCR completed on {pdf_path}! extracted {len(text_output)} pages.")
         return "\n".join(text_output).strip()
     except Exception as e:
         # error prints should remain on console
@@ -174,7 +174,7 @@ def extract_text_from_pdf(pdf_path: str, poppler_path: str, tesseract_cmd: str =
       
 
 def getTextTroughOCRFromUrl(lawUrl):
-    file_log("Fetching motivatie URL:", lawUrl)
+    log("Fetching motivatie URL:", lawUrl)
     output_file = "E:\\populate-laws\\temp\\motivatie.pdf" 
     output_file = unicodedata.normalize("NFKD", output_file).replace("\\", "/")
     downloadFileFormUrl(lawUrl, output_file)
@@ -183,7 +183,7 @@ def getTextTroughOCRFromUrl(lawUrl):
     try:
         os.remove(output_file)
     except Exception:
-        file_log("Could not remove downloaded motivatie file:", output_file)
+        log("Could not remove downloaded motivatie file:", output_file)
     return text
 
 def fetch_and_search(url, regex_map):
@@ -205,7 +205,7 @@ def fetch_and_search(url, regex_map):
             found = re.findall(pattern, response)
             matches[key] = found[0] if found else None
             # log search attempts internally
-            file_log(f"fetch_and_search: key={key} matched_count={len(found)}")
+            log(f"fetch_and_search: key={key} matched_count={len(found)}")
             
         return matches
 
@@ -224,7 +224,7 @@ def getTextFromLawByForm(getlawForm):
         try:
             os.remove(output_file)
         except Exception:
-            file_log("Could not remove downloaded promulgare file:", output_file)
+            log("Could not remove downloaded promulgare file:", output_file)
         return text
     
     if getlawForm[adoptedKey]:
@@ -247,7 +247,7 @@ def getTextFromLawByForm(getlawForm):
 def getNewNameAndDescriptionForLaw(first_law, onlyDesc: bool = False) -> Optional[dict]:
     vote_id = first_law[VoteIdKey]  # Get the VoteId of the first law
     voteURL = f"https://www.cdep.ro/pls/steno/evot2015.nominal?idv={vote_id}&idl=1"
-    file_log("Fetching URL:", voteURL)
+    log("Fetching URL:", voteURL)
     prezentaKey = "prezenta"
     getlawForm = {
             #/pls/proiecte/upl_pck2015.proiect?\?idp=(\d+)
@@ -257,7 +257,7 @@ def getNewNameAndDescriptionForLaw(first_law, onlyDesc: bool = False) -> Optiona
     results = fetch_and_search(voteURL, getlawForm)
     if results[prezentaKey] and results[VoteIdKey] is None:
         print("Special case: presence check only, no law associated.")
-        file_log("Special case: presence check only, no law associated for URL:", voteURL)
+        log("Special case: presence check only, no law associated for URL:", voteURL)
         return {
             'titlu': "Verificare prezenta",
             'descriere': "Verificare prezenta in parlament pentru aceasta sesiune."
@@ -265,15 +265,15 @@ def getNewNameAndDescriptionForLaw(first_law, onlyDesc: bool = False) -> Optiona
     secondParams = {
             VoteIdKey: results[VoteIdKey] if results[VoteIdKey] else None
         }
-    file_log("Got param law url:", secondParams)
+    log("Got param law url:", secondParams)
     
 
     if not secondParams[VoteIdKey]:
-        file_log("No VoteId found in the voting round page for URL:", voteURL)
+        log("No VoteId found in the voting round page for URL:", voteURL)
         return None
 
     lawUrl=f"https://www.cdep.ro/pls/proiecte/upl_pck2015.proiect?idp={str(secondParams[VoteIdKey])}"
-    file_log("Fetching law URL:", lawUrl)
+    log("Fetching law URL:", lawUrl)
 
 
     getlawForm = {
@@ -294,22 +294,22 @@ def getNewNameAndDescriptionForLaw(first_law, onlyDesc: bool = False) -> Optiona
 
     results = fetch_and_search(lawUrl, getlawForm)
 
-    file_log("Got law douments:", results)
+    log("Got law douments:", results)
 
 
     text = getTextFromLawByForm(results)
 
     if text:
-        file_log("Extracted text length:", len(text))
+        log("Extracted text length:", len(text))
         if onlyDesc:
             prompt = f"Extrage o scurta descriere pentru legea urmatoare si returneaza-o in format JSON cu cheia descriere:\n\n{text[:5000]}"  # limit to first 4000 chars
         else:
             prompt = f"Extrage un titlu si o scurta descriere pentru legea urmatoare si returneaza-le in format JSON cu cheile titlu is descriere:\n\n{text[:5000]}"  # limit to first 4000 chars
         json_response = ask_chatgpt_json(prompt)
-        file_log("ChatGPT JSON response:", json_response)
+        log("ChatGPT JSON response:", json_response)
         return json_response
     else:
-        file_log("No text extracted from the law document. For law URL:", lawUrl)
+        log("No text extracted from the law document. For law URL:", lawUrl)
 
     return None
 
@@ -321,28 +321,28 @@ def tryPopulateAllLawsFromDBWithDefautlName():
         try:
             onlyDesc = "Comprehensive legislation to reduce carbon emissions by" in str(law[DescriptionKey])
             if onlyDesc:
-                file_log("Processing only description update for law with title:" + law[TitleKey], alsoPrint=True)
+                log("Processing only description update for law with title:" + law[TitleKey])
             if "Vot electronic" in str(law[TitleKey]) or "Comprehensive legislation to reduce carbon emissions by" in str(law[DescriptionKey]):
-                file_log("Processing law with title:" + law[TitleKey], alsoPrint=True)
+                log("Processing law with title:" + law[TitleKey])
                 desc = getNewNameAndDescriptionForLaw(law, onlyDesc=onlyDesc)
                 if desc:
                     if onlyDesc:
-                        file_log(f"Updating only description for law ID {law[IdKey]}.", alsoPrint=True)
+                        log(f"Updating only description for law ID {law[IdKey]}.")
                         update_law_description(law[IdKey], desc['descriere'])
                     else:
-                        file_log(f"Updating TITLE and description for law ID {law[IdKey]}.", alsoPrint=True)
+                        log(f"Updating TITLE and description for law ID {law[IdKey]}.")
                         update_law(law[IdKey], desc)
-                    file_log(f"Updated law ID {law.get(IdKey)} successfully.", alsoPrint=True)
+                    log(f"Updated law ID {law.get(IdKey)} successfully.")
                 else:
-                    file_log(f"No description produced for law ID {law.get(IdKey)}; deleting record.", alsoPrint=True)
+                    log(f"No description produced for law ID {law.get(IdKey)}; deleting record.")
                     try:
                         delete_law(law.get(IdKey))
                     except Exception as e:
-                        file_log(f"Failed to delete law ID {law.get(IdKey)}: {e}", alsoPrint=True)
+                        log(f"Failed to delete law ID {law.get(IdKey)}: {e}")
             else:
-                file_log("Skipping law with title:" + law[TitleKey], alsoPrint=True)
+                log("Skipping law with title:" + law[TitleKey])
         except Exception as e:
-            file_log(f"Error processing law ID {law[IdKey]}: {e}", alsoPrint=True)        
+            log(f"Error processing law ID {law[IdKey]}: {e}")        
 
 if __name__ == "__main__":
     # Run the processing loop once every hour. Main-level prints/errors remain
@@ -354,10 +354,10 @@ if __name__ == "__main__":
             tryPopulateAllLawsFromDBWithDefautlName()
 
             # finished one pass
-            file_log(f"Cycle complete — sleeping {INTERVAL_SECONDS} seconds until next run.", alsoPrint=True)
+            log(f"Cycle complete — sleeping {INTERVAL_SECONDS} seconds until next run.")
             time.sleep(INTERVAL_SECONDS)
     except KeyboardInterrupt:
-        file_log("Interrupted by user; exiting.", alsoPrint=True)
+        log("Interrupted by user; exiting.")
 
 
         
