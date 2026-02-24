@@ -134,6 +134,9 @@ def extract_datetime_from_dom(dom_str):
     text = text.replace(",", "").strip()
 
     # Now input looks like: "13 iunie 2023 12:16"
+    # Collapse any repeated whitespace that may have been introduced by
+    # removing tokens like 'ora' or commas so strptime isn't strict about spaces
+    text = re.sub(r"\s+", " ", text).strip()
     dt = datetime.strptime(text, "%d %B %Y %H:%M")
 
     # Romanian timezone (summer = UTC+3, winter = UTC+2)
