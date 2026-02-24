@@ -5,8 +5,8 @@ on:
     branches: [ "main" ]
     paths:
       - Backend/**
-    workflow_dispatch:
-      inputs:
+  workflow_dispatch:
+    inputs:
       logLevel:
         description: 'Log level'
         required: true
@@ -24,9 +24,6 @@ on:
         description: 'Environment to run tests against'
         type: environment
         required: true
-    
-
-
 
 jobs:
   build-and-deploy:
