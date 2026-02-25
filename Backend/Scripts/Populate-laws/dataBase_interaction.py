@@ -1,6 +1,6 @@
 import uuid
 import psycopg2
-from log_writer import file_log
+from log_writer import log
 from psycopg2 import sql
 import os
 from vote import Vote
@@ -73,7 +73,7 @@ def getPoliticans() -> list[dict]:
         for row in cursor.fetchall():
             politician = {"Id": row[0], "PartyId": row[1], "Name": row[2]}
             politicians.append(politician)
-        file_log(f"Retrieved {len(politicians)} politicians from the database.")
+        log(f"Retrieved {len(politicians)} politicians from the database.")
         return politicians
     except psycopg2.Error as e:
         # error prints should remain on console
@@ -100,7 +100,7 @@ def getParties() -> list[dict]:
         for row in cursor.fetchall():
             party = {"Id": row[0], "Acronym": row[1], "Name": row[2]}
             parties.append(party)
-        file_log(f"Retrieved {len(parties)} parties from the database.")
+        log(f"Retrieved {len(parties)} parties from the database.")
         return parties
     except psycopg2.Error as e:
         # error prints should remain on console
@@ -127,7 +127,7 @@ def get_max_vote_id() -> int | str | None:
             cursor.execute(query)
             res = cursor.fetchone()[0]
             if res is not None:
-                file_log(f"Max numeric VoteId found: {res}")
+                log(f"Max numeric VoteId found: {res}")
                 return int(res)
         except Exception:
             # Fallback to lexical max if casting fails
@@ -137,7 +137,7 @@ def get_max_vote_id() -> int | str | None:
             cursor.execute(query)
             row = cursor.fetchone()
             if row:
-                file_log(f"Max VoteId (fallback) found: {row[0]}")
+                log(f"Max VoteId (fallback) found: {row[0]}")
                 return row[0]
         return None
 
@@ -165,7 +165,7 @@ def getUnpopulatedLaws() -> list[dict]:
         for row in cursor.fetchall():
             law = {IdKey: row[0], VoteIdKey: row[1], TitleKey: row[2], DescriptionKey: row[3]}
             laws.append(law)
-        file_log(f"Retrieved {len(laws)} laws from the database.")
+        log(f"Retrieved {len(laws)} laws from the database.")
         return laws
     except psycopg2.Error as e:
         # error prints should remain on console
@@ -191,7 +191,7 @@ def getLaws() -> list[dict]:
         for row in cursor.fetchall():
             law = {IdKey: row[0], VoteIdKey: row[1], TitleKey: row[2], DescriptionKey: row[3]}
             laws.append(law)
-        file_log(f"Retrieved {len(laws)} laws from the database.")
+        log(f"Retrieved {len(laws)} laws from the database.")
         return laws
     except psycopg2.Error as e:
         # error prints should remain on console
@@ -228,11 +228,11 @@ def insertNewParty(acronym: str, partyName = "Unknown Party") -> str:
             partyName
         ))
         connection.commit()
-        file_log(f"Inserted new party with ID {new_party_id} and acronym {acronym}.")
+        log(f"Inserted new party with ID {new_party_id} and acronym {acronym}.")
 
     except psycopg2.Error as e:
         # error prints should remain on console
-        file_log(f"Database error while inserting Party: {e}", alsoPrint=True)
+        log(f"Database error while inserting Party: {e}")
         if connection:
             connection.rollback()
         new_party_id = None
@@ -253,7 +253,7 @@ def insertVotingRound(voting_round: VotingRounds):
         connection = _get_connection()
         cursor = connection.cursor()
         print(f"Inserting new voting round: {voting_round.__dict__}")
-        file_log(f"Inserting new voting round: {voting_round.__dict__}")
+        log(f"Inserting new voting round: {voting_round.__dict__}")
         # Prepare SQL insert statement safely using psycopg2.sql
         insert_query = sql.SQL("""
             INSERT INTO public."VotingRounds" ("Id", "VoteId", "Title", "VoteDate","Description","Name")
@@ -269,7 +269,7 @@ def insertVotingRound(voting_round: VotingRounds):
             voting_round.Title
         ))
         connection.commit()
-        file_log(f"Inserted voting round ID {voting_round.Id} successfully.")
+        log(f"Inserted voting round ID {voting_round.Id} successfully.")
 
     except psycopg2.Error as e:
         # error prints should remain on console
@@ -306,7 +306,7 @@ def insertPolitician(name: str, partyId: str, imageUrl = "", gender = 2, active 
     try:
         connection = _get_connection()
         cursor = connection.cursor()
-        file_log(f"Inserting new politician: Name={name}, PartyId={partyId}", alsoPrint=True)
+        log(f"Inserting new politician: Name={name}, PartyId={partyId}")
         # Prepare SQL insert statement safely using psycopg2.sql
         insert_query = sql.SQL("""
             INSERT INTO public."Politicians"
@@ -324,11 +324,11 @@ def insertPolitician(name: str, partyId: str, imageUrl = "", gender = 2, active 
             name
         ))
         connection.commit()
-        file_log(f"Inserted politician {name} with ID {id} successfully.", alsoPrint=True)
+        log(f"Inserted politician {name} with ID {id} successfully.")
 
     except psycopg2.Error as e:
         # error prints should remain on console
-        file_log(f"Database error while inserting Politician: {e}", alsoPrint=True)
+        log(f"Database error while inserting Politician: {e}")
         if connection:
             connection.rollback()
         id = None
@@ -349,7 +349,7 @@ def set_politician_active_by_name(name_like: str) -> int:
     try:
         connection = _get_connection()
         cursor = connection.cursor()
-        file_log(f"Setting Active=true for politicians matching: {name_like}")
+        log(f"Setting Active=true for politicians matching: {name_like}")
         update_query = sql.SQL('''
             UPDATE public."Politicians"
             SET "Active" = TRUE
@@ -361,10 +361,10 @@ def set_politician_active_by_name(name_like: str) -> int:
         # commit to persist changes
         connection.commit()
         count = len(rows)
-        file_log(f"Updated Active for {count} politician(s) matching '{name_like}'")
+        log(f"Updated Active for {count} politician(s) matching '{name_like}'")
         return count
     except psycopg2.Error as e:
-        file_log(f"Database error while updating politician Active flag: {e}", alsoPrint=True)
+        log(f"Database error while updating politician Active flag: {e}")
         if connection:
             connection.rollback()
         return 0
@@ -388,7 +388,7 @@ def replace_active_politicians_by_names(names: list[str]) -> dict:
     try:
         connection = _get_connection()
         cursor = connection.cursor()
-        file_log("Starting replace_active_politicians_by_names transaction", alsoPrint=True)
+        log("Starting replace_active_politicians_by_names transaction")
 
         # Start transaction (psycopg2 starts one by default)
         cursor.execute('UPDATE public."Politicians" SET "Active" = FALSE;')
@@ -401,14 +401,14 @@ def replace_active_politicians_by_names(names: list[str]) -> dict:
             rows = cursor.fetchall()
             activated = len(rows)
             activated_total += activated
-            file_log(f"Activated {activated} rows for pattern: {pattern}")
+            log(f"Activated {activated} rows for pattern: {pattern}")
 
         connection.commit()
-        file_log(f"replace_active_politicians_by_names committed: deactivated={deactivated}, activated={activated_total}")
+        log(f"replace_active_politicians_by_names committed: deactivated={deactivated}, activated={activated_total}")
         return {'deactivated': deactivated, 'activated': activated_total}
 
     except psycopg2.Error as e:
-        file_log(f"Database error in replace_active_politicians_by_names: {e}", alsoPrint=True)
+        log(f"Database error in replace_active_politicians_by_names: {e}")
         try:
             connection.rollback()
         except Exception:
@@ -430,7 +430,7 @@ def update_law_description(law_id: int, description: str):
     try:
         connection = _get_connection()
         cursor = connection.cursor()
-        file_log(f"Updating law ID {law_id} with data: {description}")
+        log(f"Updating law ID {law_id} with data: {description}")
         # Prepare SQL update statement safely using psycopg2.sql
         update_query = sql.SQL("""
             UPDATE public."VotingRounds"
@@ -441,7 +441,7 @@ def update_law_description(law_id: int, description: str):
 
         cursor.execute(update_query, (description, law_id))
         connection.commit()
-        file_log(f"Updated law ID {law_id} successfully.")
+        log(f"Updated law ID {law_id} successfully.")
 
     except psycopg2.Error as e:
         # error prints should remain on console
@@ -465,7 +465,7 @@ def update_law(law_id: int, law_json: dict):
     try:
         connection = _get_connection()
         cursor = connection.cursor()
-        file_log(f"Updating law ID {law_id} with data: {law_json}")
+        log(f"Updating law ID {law_id} with data: {law_json}")
         # Prepare SQL update statement safely using psycopg2.sql
         update_query = sql.SQL("""
             UPDATE public."VotingRounds"
@@ -479,7 +479,7 @@ def update_law(law_id: int, law_json: dict):
 
         cursor.execute(update_query, (title, description, law_id))
         connection.commit()
-        file_log(f"Updated law ID {law_id} successfully.")
+        log(f"Updated law ID {law_id} successfully.")
 
     except psycopg2.Error as e:
         # error prints should remain on console
@@ -502,14 +502,14 @@ def delete_law(law_id: int):
     try:
         connection = _get_connection()
         cursor = connection.cursor()
-        file_log(f"Deleting law ID {law_id} from database")
+        log(f"Deleting law ID {law_id} from database")
         delete_query = sql.SQL('''
             DELETE FROM public."VotingRounds"
             WHERE "Id" = %s;
         ''')
         cursor.execute(delete_query, (law_id,))
         connection.commit()
-        file_log(f"Deleted law ID {law_id} successfully.")
+        log(f"Deleted law ID {law_id} successfully.")
     except psycopg2.Error as e:
         print(f"Database error while deleting law ID {law_id}: {e}")
         if connection:
@@ -530,7 +530,7 @@ def insert_votes(votes: list[Vote]) -> int:
 
     Returns the number of rows successfully inserted (may be fewer than len(votes) if duplicates).
     """
-    file_log(f"insert_votes: attempting to insert {len(votes)} votes into database.", alsoPrint=True)
+    log(f"insert_votes: attempting to insert {len(votes)} votes into database.")
     if not votes:
         return 0
 
@@ -543,7 +543,7 @@ def insert_votes(votes: list[Vote]) -> int:
         insert_sql = sql.SQL(
             'INSERT INTO public."Votes" ("Id", "RoundId", "PoliticianId", "Position", "Name") VALUES %s ON CONFLICT ("Id") DO NOTHING'
         )
-        file_log("Prepared insert SQL for votes.")
+        log("Prepared insert SQL for votes.")
         # Build list of tuples for execute_values
         values = []
         for v in votes:
@@ -556,27 +556,27 @@ def insert_votes(votes: list[Vote]) -> int:
             execute_values = None
         
         if execute_values:
-            file_log("Using psycopg2.extras.execute_values for bulk insert.", alsoPrint=True)
+            log("Using psycopg2.extras.execute_values for bulk insert.")
             execute_values(cursor, insert_sql.as_string(connection), values, template=None, page_size=100)
             # Get number of rows affected
             inserted += cursor.rowcount
-            file_log(f"Inserted {inserted} votes.", alsoPrint=True)
+            log(f"Inserted {inserted} votes.")
         else:
-            file_log("psycopg2.extras.execute_values not available, falling back to single inserts.", alsoPrint=True)
+            log("psycopg2.extras.execute_values not available, falling back to single inserts.")
             # Fallback: insert rows one by one
             for row in values:
                 try:
                     cursor.execute('INSERT INTO public."Votes" ("Id", "RoundId", "PoliticianId", "Position", "Name") VALUES (%s, %s, %s, %s, %s) ON CONFLICT ("Id") DO NOTHING', row)
                     # Get number of rows affected
                     inserted += cursor.rowcount
-                    file_log(f"Inserted vote {row[0]} successfully.", alsoPrint=True)
+                    log(f"Inserted vote {row[0]} successfully.")
                 except Exception as e:
-                    file_log(f"Failed to insert vote {row[0]}: {e}")
+                    log(f"Failed to insert vote {row[0]}: {e}")
         connection.commit()
-        file_log("Committed vote inserts to database.")
+        log("Committed vote inserts to database.")
 
     except psycopg2.Error as e:
-        file_log(f"Database error while inserting votes: {e}", alsoPrint=True)
+        log(f"Database error while inserting votes: {e}")
         if connection:
             connection.rollback()
         return 0
