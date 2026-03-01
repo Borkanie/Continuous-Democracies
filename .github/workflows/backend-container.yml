@@ -28,6 +28,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: self-hosted
+    environment: self-hosted
 
     steps:
     # 1. Checkout repo

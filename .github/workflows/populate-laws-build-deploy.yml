@@ -21,6 +21,7 @@ jobs:
   build-and-push:
     name: Build and push Docker image (cloud)
     runs-on: ubuntu-latest
+    environment: self-hosted
 
     steps:
       - name: Checkout repository
@@ -55,6 +56,7 @@ jobs:
     name: Pull latest image and (re)start container on self-hosted runner
     needs: build-and-push
     runs-on: self-hosted
+    environment: self-hosted
 
     steps:
       - name: Checkout repository
