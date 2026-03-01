@@ -62,7 +62,7 @@ def main():
 				except Exception as e:
 					log(f"Failed to activate politicians: {e}")
 
-			time.sleep(3600)
+			time.sleep(3600*12)
 	except KeyboardInterrupt:
 		log("Orchestrator stopped by user.")
 	finally:

@@ -149,6 +149,34 @@ def get_max_vote_id() -> int | str | None:
         if 'cursor' in locals() and cursor:
             cursor.close()
             
+def get_last_vote_id() -> str | None:
+    """
+    Return the last (most-recent) VoteId from public."VotingRounds" using lexical ordering.
+
+    This is a simple helper that performs:
+      SELECT "VoteId" FROM public."VotingRounds" ORDER BY "VoteId" DESC LIMIT 1;
+
+    Returns the VoteId as a string, or None if no rows exist or on error.
+    """
+    try:
+        connection = _get_connection()
+        cursor = connection.cursor()
+        query = sql.SQL('SELECT {voteid} FROM public."VotingRounds" ORDER BY {voteid} DESC LIMIT 1;').format(
+            voteid=sql.Identifier(VoteIdKey)
+        )
+        cursor.execute(query)
+        row = cursor.fetchone()
+        if row:
+            log(f"get_last_vote_id found: {row[0]}")
+            return row[0]
+        return None
+    except psycopg2.Error as e:
+        log(f"Database error while fetching last VoteId: {e}")
+        return None
+    finally:
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+            
 def getUnpopulatedLaws() -> list[dict]:
     try:
         connection = _get_connection()
