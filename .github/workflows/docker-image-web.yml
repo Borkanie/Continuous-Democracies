@@ -29,6 +29,7 @@ jobs:
   build-and-run:
     # This is designed to run on your self-hosted runner with Docker available
     runs-on: self-hosted
+    environment: self-hosted
 
     steps:
       - name: Checkout repository
