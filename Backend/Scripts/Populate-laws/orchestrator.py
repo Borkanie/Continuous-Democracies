@@ -19,12 +19,13 @@ def run_cycle():
 	year = datetime.datetime.now().year
 	log(f"Orchestrator cycle start: {datetime.datetime.now().isoformat()}")
 
+	# this only happens once every four years so it's redundant for now.
 	# 1) Import politicians only for the current year (IDs 1..333)
-	try:
-		log(f"Importing politicians for year {year}")
-		importPoliticians(1, 333, year)
-	except Exception as e:
-		log(f"Failed to import politicians: {e}")
+	#try:
+	#	log(f"Importing politicians for year {year}")
+	#	importPoliticians(1, 333, year)
+	#except Exception as e:
+	#	log(f"Failed to import politicians: {e}")
 
 	# 2) Import new laws from last forward, attempt up to 100
 	try:
