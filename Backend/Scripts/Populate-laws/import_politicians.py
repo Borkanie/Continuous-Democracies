@@ -155,13 +155,13 @@ def importPoliticians(startId: int, endId: int,year: int):
         startId (int): The starting ID of the politicians to import.
         endId (int): The ending ID of the politicians to import.
     """
-    for politicianId in range(startId, endId + 1):
-        try:
+    try:
+        for politicianId in range(startId, endId + 1):
             print(f"Importing politician with ID: {politicianId}")
             importPoitician(politicianId, year)
-        except Exception as e:
+    except Exception as e:
             log(f"Error importing politician with ID {politicianId} for year{year}: {e}")
-        
+            
 
 if __name__ == "__main__":
     createtempDir()
