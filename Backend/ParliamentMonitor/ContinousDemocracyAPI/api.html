@@ -1,0 +1,523 @@
+\n
+<!DOCTYPE html>\n<html lang="ro">\n
+
+<head> \n <title>VOT ELECTRONIC</title>\n\t
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">\n <!-- meta charset="ISO-8859-2" / -->\n
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1" />\n
+    <link type="text/css" rel="stylesheet" href="/site2015/css/style1.css" media="all">\n
+    <link type="text/css" rel="stylesheet" href="/site2015/css/flexslider.css" media="all">\n
+    <link rel="stylesheet" href="/site2015/css/general.css" type="text/css" />\n
+    <link rel="stylesheet" href="/site2015/css/general_roz.css" type="text/css" />\n
+    <link rel="stylesheet" href="/site2015/css/home.css" type="text/css" />\n
+    <script src="/site2015/js/jquery-1.11.0.min.js"></script>\n
+    <script src="/site2015/js/jquery-ui-1.10.4.min.js"></script>\n
+    <script src="/site2015/js/jquery.cookie.js"></script>\n
+    <script src="/site2015/js/jquery.flexslider.js"></script>\n
+    <script src="/site2015/js/scripts.js"></script>\n\n
+</head>\n
+
+<body>\n
+    <script>\n    function emailCurrentPage() { \n        window.location.href = "mailto:?subject=" + document.title + "&body=" + escape(window.location.href); \n } \n</script>
+    \n\n <div class="master-wrapper">\n <!-- Header start -->\n <div id="header">\n <div id="pocaUP"
+                style="padding: 1px;">\n <!--<div style="border: 1px solid #fff; margin: 1%; padding: 2%;">-->\n <div>\n
+                    <div>\n <a href="https://servicii-electronice.cdep.ro"
+                            target="Servicii online oferite de Camera Deputatilor"> \n <span
+                                style="padding-left:0%;font-family: Segoe UI; font-weight: 700; color: white!important;">\n
+                                <span style="font-size: 24px;">#eCdep</span> \n <br><br>\n
+                                <!-- <span style="font-size: 12px; color: white!important; letter-spacing: 0.1vw;">Servicii online oferite de Camera Deputatilor</span> -->\n
+                            </span>\n </a>\n </div>\n </div>\n </div>\n \n <!-- Header left start -->\n <div
+                class="header-wrapper">
+                <div class="header-left">\n\n\t <div class="main-logo">\n\t <div class="logo-image">\n\t <a
+                                href="/pls/dic/site2015.home?idl=1" title="Camera Deputatilor">\n\t <img
+                                    src="/site2015/img/main_logo.png" alt="Sigla Camerei Deputatilor" />\n\t <h1>Camera
+                                    Deputatilor</h1>\n\t </a>\n\t </div>\n\t <div class="main-social">\n\t <ul>\n\t <li
+                                    id="fb-btn"><a
+                                        href="https://www.facebook.com/pages/Parlamentul-Romaniei-Camera-Deputatilor-Pagina-Oficiala/165253540340098"
+                                        title="Facebook" target="extern"></a></li>\n\t <li id="tw-btn"><a
+                                        href="https://twitter.com/cdep_ro" title="Twitter" target="extern"></a></li>\n\t
+                                <!-- <li id="gp-btn"><a href="https://plus.google.com/100451232127794471860/posts" title="Google Plus" target="extern"></a></li> -->\n\t
+                                <li id="yt-btn"><a href="https://www.youtube.com/user/camdeputatilor" title="YouTube"
+                                        target="extern"></a></li>\n\t <li id="insta-btn"><a
+                                        href="https://instagram.com/cameradeputatilor/" title="Instagram"
+                                        target="extern"></a></li>\n\t </ul>\n\t <div class="fb-like-wrapper">\n\t <div
+                                    class="fb-like" data-href="https://developers.facebook.com/docs/plugins/"
+                                    data-layout="button_count" data-action="like" data-show-faces="true"
+                                    data-share="false"></div>\n\t </div>\n\t </div>
+                    </div>\n<div class="calendar">\n <div class="js-date"></div>\n</div>\n\n
+                    <script>\nvar strDays = ""; \n$(document).ready(function () { \n    if ($(".js-date").length > 0) { \n       $(".js-date").datepicker({ \n           onSelect: function () { \n                var data = $.datepicker.formatDate("yymmdd", $(".js-date").datepicker("getDate")); \n                window.location.href = "/pls/steno/evot2015.data?dat=" + data; \n }, \n           beforeShowDay: function (date) { \n                var dd = date.getDate().toString(); \n              \n                if (dd.length == 1) dd = "0" + dd; \n                var mm = (date.getMonth() + 1).toString(); \n               \n                if (mm.length == 1) mm = "0" + mm; \n                var yy = date.getFullYear().toString(); \n              \n                if (strDays.indexOf("," + yy + mm + dd) == -1) \n                    return [false, ""]; \n                else \n                    return [true, ""]; \n }, \n           onChangeMonthYear: function (year, month, inst) { \n              strDays = ""; \n              DoAjax("/pls/steno/evot2015.zile_vot", month, year); \n }, \n           monthNames: ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"], \n           monthNamesShort: ["Ian", "Feb", "Mar", "Apr", "Mai", "Iun", "Iul", "Aug", "Sep", "Oct", "Noi", "Dec"], \n           dayNames: ["Duminica", "Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sâmbata"], \n           dayNamesShort: ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "Sâm"], \n           dayNamesMin: ["Du", "Lu", "Ma", "Mi", "Jo", "Vi", "Sâ"], \n           firstDay: 1, \n           showOtherMonths: true, \n           showMonthAfterYear: false, \n           changeYear: true, \n           dateFormat: "yymmdd", \n           defaultDate: "20260225", \n           yearRange: "2006:2026"\n       }); \n          var dd = $(".js-date").datepicker("option", "defaultDate"); \n          DoAjax("/pls/steno/evot2015.zile_vot", dd.substr(4, 2), dd.substr(0, 4)); \n       \n   }\n}); \nfunction DoAjax(url, lu, an) { \n  strDays = ""; \n  ajaxIni = 1; \n\t$.ajax({ \n\t\ttype: "GET", \n\t\turl: url, \n\t\tdata: "lu=" + lu + "&an=" + an + "", \n\t\tsuccess: function (data) { \n\t\t  strDays = data; \n\t\t  $(".js-date").datepicker("refresh"); \n\t\t }\n\t }); \n } \n</script>
+                    \n\n
+                </div>\n
+            </div>\n <!-- Header left end -->\n <!-- Header top start -->\n <div class="header-top clearfix">\n <div
+                    class="header-inner">\n <div class="header-align clearfix"> \n <div class="language">\n
+                            <span>Limba:</span>\n <ul>
+                                <li class="current-language"><a href="#" title="RO">RO</a></li>
+                                <li><a href="/pls/steno/evot2015.data?idl=2" title="EN">EN</a></li>
+                                <li><a href="/pls/steno/evot2015.data?idl=3" title="FR">FR</a></li>\n
+                            </ul>\n </div> \n </div>\n </div>\n </div>\n <!-- Header top end --> \n
+            <!-- Header center start -->\n <div class="header-center clearfix">\n <div class="header-inner">\n <div
+                        class="header-align search-dd">\n <!-- Tablet & mobile menu toggle start -->\n <div
+                            class="mobile-menu">\n <button class="menu-toggle"><i
+                                    class="fa fa-bars"></i>Meniu</button>\n </div>\n
+                        <!-- Tablet & mobile menu toggle end -->\n<!-- Main menu start -->\n<div class="main-menu">\n
+                            <ul>\n <li class="has-dropdown">\n <div class="inner-wrap clearfix">\n<a href="#"
+                                            title="Structuri parlamentare">Structuri parlamentare</a>\n\n <div
+                                            class="dropdown">\n <ul>\n<li><a href="/pls/parlam/structura2015.ch?idl=1"
+                                                        title="Preşedintele Camerei Deputaţilor">Preşedintele Camerei
+                                                        Deputaţilor</a></li>\n<li><a
+                                                        href="/pls/parlam/structura2015.bp?idl=1&poz=1"
+                                                        title="Biroul permanent">Biroul permanent</a></li>\n<li><a
+                                                        href="/pls/parlam/structura2015.cl?idl=1"
+                                                        title="Comitetul liderilor grupurilor parlam.">Comitetul
+                                                        liderilor grupurilor parlam.</a></li>\n<li><a
+                                                        href="/pls/parlam/structura2015.gp?idl=1"
+                                                        title="Grupurile parlamentare">Grupurile parlamentare</a></li>\n
+                                                <li><a href="/pls/parlam/structura2015.co?leg=2024"
+                                                        title="Comisiile parlamentare">Comisiile parlamentare</a></li>\n
+                                                <li class="has-sec-dropdown">\n<a href="#"
+                                                        title="Deputaţii">Deputaţii</a>\n<div class="second-dropdown"
+                                                        style="width: 260px;">
+                                                        <ul>\n<li><a href="/pls/parlam/structura2015.de?idl=1"
+                                                                    title="În ordine alfabetică">În ordine
+                                                                    alfabetică</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.ce?idl=1"
+                                                                    title="După circumscripţia electorală">După
+                                                                    circumscripţia electorală</a></li>\n</ul>
+                                                    </div>\n</li>\n<li class="has-sec-dropdown">\n<a href="#"
+                                                        title="Structurile parlamentare comune">Structurile parlamentare
+                                                        comune</a>\n<div class="second-dropdown" style="width: 260px;">
+                                                        <ul>\n<li><a href="/pls/parlam/structura2015.co?cam=0&tpc=0"
+                                                                    title="Comisiile parlamentare">Comisiile
+                                                                    parlamentare</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.pr"
+                                                                    title="Grupurile de prietenie">Grupurile de
+                                                                    prietenie</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.dp"
+                                                                    title="Delegaţiile parlamentare">Delegaţiile
+                                                                    parlamentare</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.co?cam=0&tpc=4"
+                                                                    title="Alte grupuri">Alte grupuri</a></li>\n</ul>
+                                                    </div>\n</li>\n<li class="has-sec-dropdown">\n<a href="#"
+                                                        title="Organizarea din alte legislaturi">Organizarea din alte
+                                                        legislaturi</a>\n<div class="second-dropdown">
+                                                        <ul>\n<li><a href="/pls/parlam/structura2015.home?leg=2020&idl=1"
+                                                                    title="2020 - 2024">2020 - 2024</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.home?leg=2016&idl=1"
+                                                                    title="2016 - 2020">2016 - 2020</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.home?leg=2012&idl=1"
+                                                                    title="2012 - 2016">2012 - 2016</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.home?leg=2008&idl=1"
+                                                                    title="2008 - 2012">2008 - 2012</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.home?leg=2004&idl=1"
+                                                                    title="2004 - 2008">2004 - 2008</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.home?leg=2000&idl=1"
+                                                                    title="2000 - 2004">2000 - 2004</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.home?leg=1996&idl=1"
+                                                                    title="1996 - 2000">1996 - 2000</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.home?leg=1992&idl=1"
+                                                                    title="1992 - 1996">1992 - 1996</a></li>\n<li><a
+                                                                    href="/pls/parlam/structura2015.home?leg=1990&idl=1"
+                                                                    title="1990 - 1992">1990 - 1992</a></li>\n</ul>
+                                                    </div>\n</li>\n \n </ul>\n </div>\n </div>\n </li>\n<li
+                                    class="menu-sep"><span></span></li>\n<li class="has-dropdown">\n <div
+                                        class="inner-wrap clearfix">\n<a href="#"
+                                            title="Activitate parlamentară">Activitate parlamentară</a>\n\n <div
+                                            class="dropdown">\n <ul>\n<li><a href="/pls/proiecte/upl_pck2015.home"
+                                                        title="Urmărirea procesului legislativ">Urmărirea procesului
+                                                        legislativ</a></li>\n<li class="has-sec-dropdown">\n<a href="#"
+                                                        title="Controlul parlamentar">Controlul parlamentar</a>\n<div
+                                                        class="second-dropdown" style="width: 300px;">
+                                                        <ul>\n<li><a href="/pls/parlam/interpelari2015.home"
+                                                                    title="Întrebari şi interpelări">Întrebari şi
+                                                                    interpelări</a></li>\n<li><a
+                                                                    href="/pls/parlam/motiuni2015.home"
+                                                                    title="Moţiuni simple şi de cenzură">Moţiuni simple
+                                                                    şi de cenzură</a></li>\n<li><a
+                                                                    href="/eu/examinare_pck2015.lista_examinare"
+                                                                    title="Examinarea documentelor UE">Examinarea
+                                                                    documentelor UE</a>\n
+                                                            <li><a href="/pls/dic/site2015.page?id=329"
+                                                                    title="Autorităţi/instituţii publice ">Autorităţi/instituţii
+                                                                    publice </a></li>\n
+                                                        </ul>
+                                                    </div>\n</li>\n<li class="has-sec-dropdown">\n<a href="#"
+                                                        title="Activitate în plen">Activitate în plen</a>\n<div
+                                                        class="second-dropdown" style="width: 200px;">
+                                                        <ul>\n<li><a href="/pls/caseta/eCaseta2015.OrdineZi"
+                                                                    title="Ordinea de zi">Ordinea de zi</a></li>\n<li><a
+                                                                    href="/pls/steno/steno2015.home"
+                                                                    title="Stenogramele sedinţelor">Stenogramele
+                                                                    sedinţelor</a></li>\n<li><a
+                                                                    href="/pls/steno/steno2015.video?sursa=1"
+                                                                    title="Înregistrări audio-video">Înregistrări
+                                                                    audio-video</a></li>\n<li><a
+                                                                    href="/pls/steno/evot2015.data"
+                                                                    title="Votul electronic">Votul electronic</a></li>\n
+                                                        </ul>
+                                                    </div>\n</li>\n<li class="has-sec-dropdown">\n<a href="#"
+                                                        title="Activitate în comisii">Activitate în comisii</a>\n<div
+                                                        class="second-dropdown" style="width: 200px;">
+                                                        <ul>\n<li><a href="/co/sedinte2015.comisii"
+                                                                    title="Şedinţele comisiilor">Şedinţele
+                                                                    comisiilor</a></li>\n<li><a
+                                                                    href="/pls/proiecte/upl_com2015.home"
+                                                                    title="Documente ale comisiilor">Documente ale
+                                                                    comisiilor</a></li>\n<li><a
+                                                                    href="/co/sedinte2015.comisii?care=1"
+                                                                    title="Înregistrări audio-video">Înregistrări
+                                                                    audio-video</a></li>\n</ul>
+                                                    </div>\n</li>\n<li><a
+                                                        href="/pls/parlam/sanctiuni_parlam.lista_sanctionati?leg=2024&cam=2"
+                                                        title="Sancţiuni aplicate deputaţilor">Sancţiuni aplicate
+                                                        deputaţilor</a></li>\n \n </ul>\n </div>\n </div>\n </li>\n<li
+                                    class="menu-sep"><span></span></li>\n\n <li class="has-dropdown">\n <div
+                                        class="inner-wrap clearfix">\n<a href="#" title="Informaţii publice">Informaţii
+                                            publice</a>\n<div class="dropdown">
+                                            <ul>
+                                                <li class="has-sec-dropdown">\n<a href="#"
+                                                        title="Serviciile Camerei Deputaţilor">Serviciile Camerei
+                                                        Deputaţilor</a>\n<div class="second-dropdown"
+                                                        style="width: 200px;">
+                                                        <ul>\n<li><a href="/pls/dic/site2015.page?den=serviciiA1"
+                                                                    title="Atribuţii">Atribuţii</a></li>\n<li><a
+                                                                    href="/pls/dic/servicii2015.conducere?idl=1"
+                                                                    title="Conducere">Conducere</a></li>\n</ul>
+                                                    </div>
+                                                </li>\n<li><a href="/relatii_publice/site2015.home?idl=1"
+                                                        title="Relaţii publice">Relaţii publice</a></li>\n<li><a
+                                                        href="/internship"
+                                                        title="Internship la Camera Deputaţilor">Internship la Camera
+                                                        Deputaţilor</a></li>\n<li><a
+                                                        href="/relatii_publice/site2015.dpetitii?idl=1"
+                                                        title="Petiţii şi audienţe">Petiţii şi audienţe</a></li>\n<li><a
+                                                        href="/informatii_publice/achizitii2015.home"
+                                                        title="Achiziţii publice">Achiziţii publice</a></li>\n<li><a
+                                                        href="/pls/dic/declaratii2015.home?idl=1"
+                                                        title="Declaraţii de avere şi interese">Declaraţii de avere şi
+                                                        interese</a></li>\n<li><a
+                                                        href="/pls/parlam/informatii_economice2015.home"
+                                                        title="Informaţii economice">Informaţii economice</a></li>\n<li>
+                                                    <a href="/pls/dic/site2015.page?id=1161"
+                                                        title="Proiecte finanţate din fonduri europene">Proiecte
+                                                        finanţate din fonduri europene</a></li>\n<li><a
+                                                        href="/pls/dic/site2015.page?id=1128"
+                                                        title="Integritate instituţională">Integritate
+                                                        instituţională</a></li>\n<li><a
+                                                        href="/pls/dic/site2015.page?id=1026"
+                                                        title="Funcţionarea RA Monitorul Oficial">Funcţionarea RA
+                                                        Monitorul Oficial</a></li>\n<li><a
+                                                        href="/pls/dic/site2015.page?den=decl-salarii"
+                                                        title="Transparenţa veniturilor salariale">Transparenţa
+                                                        veniturilor salariale</a></li>\n<li><a
+                                                        href="/pls/dic/site2015.page?den=decl-bunuri"
+                                                        title="Bunuri primite cu titlu gratuit">Bunuri primite cu titlu
+                                                        gratuit</a></li>\n<li><a href="/pls/dic/site2015.page?den=rgpd1"
+                                                        title="Prelucrarea datelor cu caracter personal">Prelucrarea
+                                                        datelor cu caracter personal</a></li>\n<li><a
+                                                        href="/pls/personal/resurse_umane2015.concursuri?par=1"
+                                                        title="Oportunităţi de angajare">Oportunităţi de angajare</a>
+                                                </li>\n<li><a href="/pls/dic/site2015.page?id=477"
+                                                        title="Sigla Camerei Deputaţilor">Sigla Camerei
+                                                        Deputaţilor</a>\n \n
+                                            </ul>\n
+                                        </div>\n </div>\n </li>\n\n <li class="menu-sep"><span></span></li>\n\n <li
+                                    class="has-dropdown" id="pocaMenuItem">\n <div class="inner-wrap clearfix">\n\t\t
+                                        <div style="margin-bottom:10%;">\n \n \t<a
+                                                href="https://servicii-electronice.cdep.ro"
+                                                target="Servicii online oferite de Camera Deputatilor"> \n <span
+                                                    style="padding-left:50%;font-family: Segoe UI; font-weight: 700; color: white!important;">\n
+                                                    \n <span style="font-size: 24px;">#eCdep</span> \n
+                                                    <!--    <span style="font-size: 12px; color: white!important; letter-spacing: 0.1vw;">Servicii online oferite de Camera Deputaţilor</span> -->\n
+                                                    \t\n \t</a>\n\n \n </div>\n </div>\n </li> \n \t\n\n </ul>\n</div>
+                        \n<!-- Main menu end -->\n\n <!-- Header search -->\n
+                        <!--<button class="search-btn"></button>-->\n <!-- Tablet & mobile expandable search start -->\n
+                        <div class="mobile-search">\n <div class="sb-search" id="sb-search">\n <form>\n <input
+                                        class="sb-search-input" placeholder="Cauta.." type="text" value="" name="cauta"
+                                        id="search">\n <input class="sb-search-submit" type="submit" value="">\n <span
+                                        class="sb-icon-search"><i class="fa fa-search"></i></span>\n </form>\n </div>\n
+                        </div>\n <!-- Tablet & mobile expandable search end -->\n <!-- Desktop search start -->\n <div
+                            class="header-search">\n <form method="POST">\n <input type="text" name="cauta"
+                                    placeholder="Cauta.." />\n </form>\n </div>\n <!-- Desktop search end -->\n \n
+                    </div>\n </div>\n </div>\n <!-- Header center end -->\n \n <!-- Header bottom start -->\n <div
+                class="header-bottom clearfix">\n <div class="header-inner">\n <div class="header-align">\n <div
+                            class="sub-menu">\n <ul>\n<li><a href="/pls/dic/site.home?idl=1">Pagina veche</a></li>\n<li
+                                    class="s-menu-sep"><span></span></li>\n<li><a href="/pls/dic/site2015.page?id=794"
+                                        title="Mentiune juridica">Mentiune juridica</a></li>\n<li class="s-menu-sep">
+                                    <span></span></li>\n<li><a href="/pls/dic/site2015.page?den=istorie1"
+                                        title="Istoric">Istoric</a></li>\n<li class="s-menu-sep"><span></span></li>\n
+                                <li><a href="/pls/dic/htp_contact1?idl=1" title="Contact">Contact</a></li>\n \n </ul>\n
+                        </div>\n </div>\n </div>\n </div>\n <!-- Header bottom end -->\n \n<!-- Main content start -->\n
+            <div id="content">\n <!-- Main content wrapper start -->\n <div class="content-wrapper clearfix">
+                    \n<!-- Left content start -->
+                    <div class="content-left" style="padding-top: 110px;">\n\n<!-- Box start -->\n<div
+                            class="resurse-parlamentare-box" style="margin-top: 120px;">\n <div class="resurse-list"
+                                style="padding: 9px 9%; text-align: center;">\n <img src="/img/slides/03.jpg"
+                                    width="180">\n </div>\n</div>\n<!-- Box end -->\n\n</div>
+                    <!-- Left content end -->\n<!-- Right content start -->
+                    <div class="content-right">\n<div class="stiri-box">\n<div class="cale clearfix">
+                                <table width="100%" border=0>
+                                    <tr valign="top">\n<td class="cale-left" nowrap>Sunteti aici: </td>\n<td
+                                            class="cale-right" width="100%"><a href="/pls/dic/site2015.home?idl=1">Prima
+                                                pagina</a> &gt; Voturile electronice din 25.02.2026</td>\n</tr>
+                                </table>
+                            </div>\n<div class="box-title clearfix">
+                                <h3>VOT ELECTRONIC</h3>
+                            </div>\n<div class="program-lucru-detalii clearfix">\n<div class="boxTitle">\n<h1
+                                        style="line-height: 120%;">Miercuri, 25 februarie 2026</h1>\n<div
+                                        class="clearfix"></div>\n</div>\n<style>
+                                    td {
+                                        padding: 5px;
+                                    }
+                                </style>\n<div id="olddiv">\n<div
+                                        style="text-align: right; font-size:85%; font-style:italic;"><i><a
+                                                href="/pls/steno/evot2015.xml?par1=1&par2=20260225" target="XML">lista
+                                                de vot în format xml</a></i></div>\n<div id="olddiv">\n<div
+                                            class="grup-parlamentar-list grupuri-parlamentare-list"
+                                            style="overflow: hidden; width: 108%; margin-left: -27px;">
+                                            <table border=1 class="flex-table2021">\n<thead>\n<tr>\n<th
+                                                            style="padding:5px;" class="Ora" rowspan=2 width="5%">
+                                                            <b>#</b></th>\n<th style="padding:5px;" class="Ora"
+                                                            rowspan=2 width="5%"><b>Ora</b></th>\n<th
+                                                            style="padding:5px;" class="id-vot" rowspan=2 width="5%">
+                                                            <b>Id<br>vot</b></th>\n<th style="padding:5px;"
+                                                            class="descriere" rowspan=2><b>Descriere</b></th>\n<th
+                                                            style="padding:5px;" class="prezenti" rowspan=2>
+                                                            <b>Prezenti</b></th>\n<th style="padding:5px;"
+                                                            class="nr-voturi" colspan=4><b>Nr. voturi</b></th>\n</tr>\n
+                                                    <tr>\n<th style="padding:5px;" width="8%"><b>Pentru</b></th>\n<th
+                                                            style="padding:5px;" width="8%"><b>Împotriva</b></th>\n<th
+                                                            style="padding:5px;" width="8%"><b>Abtineri</b></th>\n<th
+                                                            style="padding:5px;" width="8%"><b>Nu
+                                                                au<br>votat<sup>*</sup></b></th>\n</tr>\n</thead>
+                                                <tbody>\n<tr bgcolor=#ffffff>\n<td data-label="#"><u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36069&idl=1">1</a></u>
+                                                        </td>\n<td data-label="Ora">\n<a
+                                                                href="/pls/steno/evot2015.nominal?idv=36069&idl=1"><u>10:58</u></a>\n
+                                                        </td>\n<td data-label="Id vot">\n<u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36069&idl=1">36069</a></u>\n
+                                                        </td>\n<td data-label="Descriere">\nPrelungire program de
+                                                            lucru\n</td>\n<td data-label="Prezenta">197</td>\n<td
+                                                            data-label="Pentru"><b>192</td>\n<td data-label="Împotriva">
+                                                            1</td>\n<td data-label="Abtineri">4</td>\n<td
+                                                            data-label="Nu au votat*">-</td>\n</tr>\n<tr
+                                                        bgcolor=#ffffff>\n<td data-label="#"><u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36071&idl=1">2</a></u>
+                                                        </td>\n<td data-label="Ora">\n<a
+                                                                href="/pls/steno/evot2015.nominal?idv=36071&idl=1"><u>11:30</u></a>\n
+                                                        </td>\n<td data-label="Id vot">\n<u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36071&idl=1">36071</a></u>\n
+                                                        </td>\n<td data-label="Descriere">\nVerificare prezenta\n</td>\n
+                                                        <td data-label="Prezenta">229</td>\n<td data-label="Pentru">
+                                                            <b>120</td>\n<td data-label="Împotriva">2</td>\n<td
+                                                            data-label="Abtineri">2</td>\n<td data-label="Nu au votat*">
+                                                            105</td>\n</tr>\n<tr>
+                                                        <td data-label="Titlu PL" bgcolor=#E0E0E0 colspan=9
+                                                            style="text-align: left"><a
+                                                                href="/pls/proiecte/upl_pck2015.proiect?idp=22366"
+                                                                target="PROIECTE">PL 330/2025</a>&nbsp;pentru
+                                                            completarea Legii nr.678/2001 privind prevenirea şi
+                                                            combaterea traficului de persoane, precum şi a art.30 din
+                                                            Ordonanţa Guvernului nr.58/1998 privind organizarea şi
+                                                            desfăşurarea activităţii de turism în România</td>
+                                                    </tr>\n<tr bgcolor=#ffffff>\n<td data-label="#"><u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36072&idl=1">3</a></u>
+                                                        </td>\n<td data-label="Ora">\n<a
+                                                                href="/pls/steno/evot2015.nominal?idv=36072&idl=1"><u>11:31</u></a>\n
+                                                        </td>\n<td data-label="Id vot">\n<u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36072&idl=1">36072</a></u>\n
+                                                        </td>\n<td data-label="Descriere">\nVot final\n- PL-x 330/2025 -
+                                                            Vot final adoptare\nadoptare\n</td>\n<td
+                                                            data-label="Prezenta">266</td>\n<td data-label="Pentru">
+                                                            <b>251</td>\n<td data-label="Împotriva">6</td>\n<td
+                                                            data-label="Abtineri">9</td>\n<td data-label="Nu au votat*">
+                                                            -</td>\n</tr>\n<tr>
+                                                        <td data-label="Titlu PL" bgcolor=#E0E0E0 colspan=9
+                                                            style="text-align: left"><a
+                                                                href="/pls/proiecte/upl_pck2015.proiect?idp=22920"
+                                                                target="PROIECTE">PL 16/2026</a>&nbsp;pentru modificarea
+                                                            şi completarea Legii nr.217/2003 pentru prevenirea şi
+                                                            combaterea violenţei domestice şi a Legii nr.26/2024 privind
+                                                            ordinul de protecţie</td>
+                                                    </tr>\n<tr bgcolor=#ffffff>\n<td data-label="#"><u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36073&idl=1">4</a></u>
+                                                        </td>\n<td data-label="Ora">\n<a
+                                                                href="/pls/steno/evot2015.nominal?idv=36073&idl=1"><u>11:36</u></a>\n
+                                                        </td>\n<td data-label="Id vot">\n<u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36073&idl=1">36073</a></u>\n
+                                                        </td>\n<td data-label="Descriere">\nVot final\n- PL-x 16/2026 -
+                                                            Vot final adoptare\nadoptare\n</td>\n<td
+                                                            data-label="Prezenta">286</td>\n<td data-label="Pentru">
+                                                            <b>273</td>\n<td data-label="Împotriva">2</td>\n<td
+                                                            data-label="Abtineri">11</td>\n<td
+                                                            data-label="Nu au votat*">-</td>\n</tr>\n<tr>
+                                                        <td data-label="Titlu PL" bgcolor=#E0E0E0 colspan=9
+                                                            style="text-align: left"><a
+                                                                href="/pls/proiecte/upl_pck2015.proiect?idp=22788"
+                                                                target="PROIECTE">PL 505/2025</a>&nbsp;pentru
+                                                            modificarea şi completarea Legii nr.236/2022 privind
+                                                            supravegherea prudenţială a societăţilor de servicii de
+                                                            investiţii financiare, precum şi pentru modificarea şi
+                                                            completarea unor acte normative</td>
+                                                    </tr>\n<tr bgcolor=#ffffff>\n<td data-label="#"><u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36074&idl=1">5</a></u>
+                                                        </td>\n<td data-label="Ora">\n<a
+                                                                href="/pls/steno/evot2015.nominal?idv=36074&idl=1"><u>11:43</u></a>\n
+                                                        </td>\n<td data-label="Id vot">\n<u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36074&idl=1">36074</a></u>\n
+                                                        </td>\n<td data-label="Descriere">\nVot final\n- PL-x 505/2025 -
+                                                            Vot final adoptare\nadoptare\n</td>\n<td
+                                                            data-label="Prezenta">292</td>\n<td data-label="Pentru">
+                                                            <b>276</td>\n<td data-label="Împotriva">0</td>\n<td
+                                                            data-label="Abtineri">15</td>\n<td
+                                                            data-label="Nu au votat*">1</td>\n</tr>\n<tr>
+                                                        <td data-label="Titlu PL" bgcolor=#E0E0E0 colspan=9
+                                                            style="text-align: left"><a
+                                                                href="/pls/proiecte/upl_pck2015.proiect?idp=22402"
+                                                                target="PROIECTE">PL 323/2025</a>&nbsp;pentru
+                                                            completarea Legii nr.45/2009 privind organizarea şi
+                                                            funcţionarea Academiei de Ştiinţe Agricole şi Silvice
+                                                            &#8222;Gheorghe Ionescu-Şişeşti&#8221; şi a sistemului de
+                                                            cercetare-dezvoltare din domeniile agriculturii,
+                                                            silviculturii şi industriei alimentare</td>
+                                                    </tr>\n<tr bgcolor=#ffffff>\n<td data-label="#"><u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36075&idl=1">6</a></u>
+                                                        </td>\n<td data-label="Ora">\n<a
+                                                                href="/pls/steno/evot2015.nominal?idv=36075&idl=1"><u>11:44</u></a>\n
+                                                        </td>\n<td data-label="Id vot">\n<u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36075&idl=1">36075</a></u>\n
+                                                        </td>\n<td data-label="Descriere">\nVot final\n- PL-x 323/2025 -
+                                                            Vot final adoptare\nadoptare\n</td>\n<td
+                                                            data-label="Prezenta">293</td>\n<td data-label="Pentru">
+                                                            <b>264</td>\n<td data-label="Împotriva">0</td>\n<td
+                                                            data-label="Abtineri">29</td>\n<td
+                                                            data-label="Nu au votat*">-</td>\n</tr>\n<tr>
+                                                        <td data-label="Titlu PL" bgcolor=#E0E0E0 colspan=9
+                                                            style="text-align: left"><a
+                                                                href="/pls/proiecte/upl_pck2015.proiect?idp=22771"
+                                                                target="PROIECTE">PL 489/2025</a>&nbsp;pentru aderarea
+                                                            României la Acordul de Consorţiu ELIXIR de stabilire a
+                                                            infrastructurii europene de ştiinţe ale vieţii pentru
+                                                            informaţii biologice (ELIXIR), aprobat la Copenhaga, la
+                                                            22-23 aprilie 2013, intrat în vigoare la 12 ianuarie 2014
+                                                        </td>
+                                                    </tr>\n<tr bgcolor=#ffffff>\n<td data-label="#"><u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36076&idl=1">7</a></u>
+                                                        </td>\n<td data-label="Ora">\n<a
+                                                                href="/pls/steno/evot2015.nominal?idv=36076&idl=1"><u>11:45</u></a>\n
+                                                        </td>\n<td data-label="Id vot">\n<u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36076&idl=1">36076</a></u>\n
+                                                        </td>\n<td data-label="Descriere">\nVot final\n- PL-x 489/2025 -
+                                                            Vot final adoptare\nadoptare\n</td>\n<td
+                                                            data-label="Prezenta">293</td>\n<td data-label="Pentru">
+                                                            <b>221</td>\n<td data-label="Împotriva">0</td>\n<td
+                                                            data-label="Abtineri">72</td>\n<td
+                                                            data-label="Nu au votat*">-</td>\n</tr>\n<tr>
+                                                        <td data-label="Titlu PL" bgcolor=#E0E0E0 colspan=9
+                                                            style="text-align: left"><a
+                                                                href="/pls/proiecte/upl_pck2015.proiect?idp=22923"
+                                                                target="PROIECTE">PL 1/2026</a>&nbsp;pentru aprobarea
+                                                            Ordonanţei de urgenţă a Guvernului nr.93/2025 privind unele
+                                                            măsuri temporare în domeniul justiţiei, precum şi pentru
+                                                            modificarea unor acte normative</td>
+                                                    </tr>\n<tr bgcolor=#ffffff>\n<td data-label="#"><u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36077&idl=1">8</a></u>
+                                                        </td>\n<td data-label="Ora">\n<a
+                                                                href="/pls/steno/evot2015.nominal?idv=36077&idl=1"><u>11:46</u></a>\n
+                                                        </td>\n<td data-label="Id vot">\n<u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36077&idl=1">36077</a></u>\n
+                                                        </td>\n<td data-label="Descriere">\nVot final\n- PL-x 1/2026 -
+                                                            Vot final adoptare\nadoptare\n</td>\n<td
+                                                            data-label="Prezenta">291</td>\n<td data-label="Pentru">
+                                                            <b>218</td>\n<td data-label="Împotriva">0</td>\n<td
+                                                            data-label="Abtineri">22</td>\n<td
+                                                            data-label="Nu au votat*">51</td>\n</tr>\n<tr>
+                                                        <td data-label="Titlu PL" bgcolor=#E0E0E0 colspan=9
+                                                            style="text-align: left"><a
+                                                                href="/pls/proiecte/upl_pck2015.proiect?idp=22934"
+                                                                target="PROIECTE">PL 28/2026</a>&nbsp;privind aprobarea
+                                                            Ordonanţei de urgenţă a Guvernului nr.1/2026 pentru
+                                                            modificarea şi completarea unor acte normative din domeniul
+                                                            educaţiei</td>
+                                                    </tr>\n<tr bgcolor=#ffffff>\n<td data-label="#"><u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36078&idl=1">9</a></u>
+                                                        </td>\n<td data-label="Ora">\n<a
+                                                                href="/pls/steno/evot2015.nominal?idv=36078&idl=1"><u>11:48</u></a>\n
+                                                        </td>\n<td data-label="Id vot">\n<u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36078&idl=1">36078</a></u>\n
+                                                        </td>\n<td data-label="Descriere">\nVot final\n- PL-x 28/2026 -
+                                                            Vot final adoptare\nadoptare\n</td>\n<td
+                                                            data-label="Prezenta">287</td>\n<td data-label="Pentru">
+                                                            <b>223</td>\n<td data-label="Împotriva">2</td>\n<td
+                                                            data-label="Abtineri">11</td>\n<td
+                                                            data-label="Nu au votat*">51</td>\n</tr>\n<tr>
+                                                        <td data-label="Titlu PL" bgcolor=#E0E0E0 colspan=9
+                                                            style="text-align: left"><a
+                                                                href="/pls/proiecte/upl_pck2015.proiect?idp=21572"
+                                                                target="PROIECTE">PL 109/2024</a>&nbsp;pentru
+                                                            modificarea şi completarea Legii nr.118/2019 privind
+                                                            Registrul naţional automatizat cu privire la persoanele care
+                                                            au comis infracţiuni sexuale, de exploatare a unor persoane
+                                                            sau asupra minorilor, precum şi pentru completarea Legii
+                                                            nr.76/2008 privind organizarea şi funcţionarea Sistemului
+                                                            Naţional de Date Genetice Judiciare</td>
+                                                    </tr>\n<tr bgcolor=#ffffff>\n<td data-label="#"><u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36079&idl=1">10</a></u>
+                                                        </td>\n<td data-label="Ora">\n<a
+                                                                href="/pls/steno/evot2015.nominal?idv=36079&idl=1"><u>11:51</u></a>\n
+                                                        </td>\n<td data-label="Id vot">\n<u><a
+                                                                    href="/pls/steno/evot2015.nominal?idv=36079&idl=1">36079</a></u>\n
+                                                        </td>\n<td data-label="Descriere">\nVot final\n- PL-x 109/2024 -
+                                                            Vot final adoptare\nadoptare\n</td>\n<td
+                                                            data-label="Prezenta">294</td>\n<td data-label="Pentru">
+                                                            <b>290</td>\n<td data-label="Împotriva">0</td>\n<td
+                                                            data-label="Abtineri">3</td>\n<td data-label="Nu au votat*">
+                                                            1</td>\n</tr>\n</tbody>
+                                            </table>
+                                        </div>\n<p><sup>*</sup> - <i>prezenti care nu si-au exercitat votul</i>\n</div>
+                                    \n</div>\n</div>\n</div>\n</div><!-- Right content end -->\n\n
+                </div>\n <!-- Main content wrapper end -->\n</div>\n<!-- Main content end -->\n\n<!-- Footer start -->\n
+            <div id="footer">\n\n <!-- Footer top start -->\n <div class="footer-top">\n <div class="footer-inner">\n \n
+                        <!-- Footer logo start -->\n <div class="footer-logo">\n <a href="/"
+                                title="Camera Deputaţilor">\n <img src="/site2015/img/cdep_footer_logo.png"
+                                    alt="Camera Deputaţilor" />\n <h3>Camera Deputaţilor</h3>\n </a>\n </div>\n
+                        <!-- Footer logo end -->\n \n <!-- Footer content start -->\n <div
+                            class="footer-content clearfix">\n \n <div class="footer-adresa">\n <h4>Adresa poştală</h4>
+                                \n <p>Palatul Parlamentului, str.Izvor nr.2-4, sect.5, Bucuresti</p>\n <div
+                                    class="footer-tel">\n
+                                    <!--\n            <span>(021)316.03.00</span>\n            <span>(021)414.11.11</span>\n          -->\n
+                                </div>\n
+                                <!--\n          <a class="footer-mail" href="mailto:webmaster@cdep.ro">webmaster@cdep.ro</a>\n          -->\n
+                            </div>\n <div class="footer-linkuri">\n <h4>Legături utile</h4>\n <ul>\n <li><a
+                                            href="https://www.presidency.ro/" title="Preşedintele României"
+                                            target="extern">Preşedintele României</a></li>\n <li><a
+                                            href="https://www.senat.ro" title="Senatul României" target="extern">Senatul
+                                            României</a></li>\n <li><a href="https://www.guv.ro"
+                                            title="Guvernul României" target="extern">Guvernul României</a></li>\n <li>
+                                        <a href="https://www.ccr.ro" title="Curtea Constituţională"
+                                            target="extern">Curtea Constituţională</a></li>\n <li><a
+                                            href="http://www.clr.ro" title="Consiliul Legislativ"
+                                            target="extern">Consiliul Legislativ</a></li>\n <li><a
+                                            href="https://www.monitoruloficial.ro/" title="Monitorul Oficial"
+                                            target="extern">Monitorul Oficial</a></li>\n </ul>\n </div>\n<div
+                                style="float: right; margin-top: 30px; font-size: 10px; color: #999999; font-family: Verdana, Arial, Helvetica, sans-serif;">
+                                \n<a href="https://www.cdep.ro/pls/dic/site2015.home"><img
+                                        src="/site2015/img/decrypted.png" alt="HTTPS access" /></a>\n</div>\n \n </div>
+                        \n <!-- Footer content end -->\n\n </div>\n \n </div>\n <!-- Footer top end -->\n \n
+                <!-- Footer bottom start -->\n <div class="footer-bottom" style="padding-bottom: 100px;">\n <div
+                        class="footer-inner clearfix">\n <!-- Footer menu start -->\n <div class="footer-menu">\n <ul>\n
+                                <li class="first"><a href="/pls/dic/site2015.map?idl=1" title="Hartă site">Hartă
+                                        site</a></li>\n <li><a href="/pls/parlam/structura2015.home?idl=1"
+                                        title="Structuri parlamentare">Structuri parlamentare</a></li>\n <li><a
+                                        href="/pls/dic/site2015.page?den=legislativ1"
+                                        title="Activitate parlamentară">Activitate parlamentară</a></li>\n <li><a
+                                        href="/relatii_publice/site2015.home" title="Informaţii publice">Informaţii
+                                        publice</a></li>\n <li><a href="/pls/dic/arhiva_anunturi?idl=1"
+                                        title="Arhivă">Arhivă</a></li>\n \n </ul>\n </div>\n <!-- Footer menu end -->\n
+                        <div class="copyright">\n <p>Copyright &copy; Camera Deputaţilor</p>\n </div>\n </div>\n </div>
+                \n <!-- Footer bottom end -->\n \n</div>\n<!-- Footer end -->\n\n </div>\n\n
+        <link rel="stylesheet" type="text/css" href="/js/cookies/cookieconsent.min.css" />\n
+        <script src="/js/cookies/cookieconsent.min.js"></script>\n
+        <script>\nwindow.addEventListener("load", function () { \nwindow.cookieconsent.initialise({ \n  "palette": { \n    "popup": { \n      "background": "#551043", \n      "text": "#ffdddd"\n }, \n    "button": { \n      "background": "#370a2b"\n }\n }, \n  "theme": "classic", \n  "type": "opt-out1", \n  onInitialise: function (status) { \n  var type = this.options.type; \n  var didConsent = this.hasConsented(); \n  if (type == \'opt-in\' && didConsent) {\n    // enable cookies\n    alert(\'1\');\n  }\n  if (type == \'opt-out\' && !didConsent) {\n    // disable cookies\n    var anchors = document.getElementsByTagName("a");\n    for (var i = 0; i < anchors.length; i++) {\n        anchors[i].onclick = function() {return false;};\n    }\n    document.cookie = \'cookieconsent_status\' + \'=; expires=Thu, 01 Jan 1970 00:00:01 GMT;\';\n    alert(\'2\');\n  }\n},\n \nonStatusChange: function(status, chosenBefore) {\n  var type = this.options.type;\n  var didConsent = this.hasConsented();\n  if (type == \'opt-in\' && didConsent) {\n    // enable cookies\n    alert(\'3\');\n  }\n  if (type == \'opt-out\' && !didConsent) {\n    // disable cookies\n    var anchors = document.getElementsByTagName("a");\n    for (var i = 0; i < anchors.length; i++) {\n        anchors[i].onclick = function() {return false;};\n    }\n    document.cookie = \'cookieconsent_status\' + \'=; expires=Thu, 01 Jan 1970 00:00:01 GMT;\';\n    alert(\'4\');\n  }\n},\n \nonRevokeChoice: function() {\n  var type = this.options.type;\n  if (type == \'opt-in\') {\n    // disable cookies\n    alert(\'5\');\n  }\n  if (type == \'opt-out\') {\n    // enable cookies\n    alert(\'6\');\n  }\n},\n  "position": "bottom",\n  "content": {\n    "message": "Acest site foloseste cookie-uri funcţionale pentru a asista utilizatorul în completarea unor formulare. Navigând în continuare vă exprimaţi acordul asupra folosirii acestora.",\n    "dismiss": "Sunt de acord",\n    "link": "Mai multe detalii privind prelucrarea datelor cu caracter personal pe site-ul Camerei Deputaţilor",\n    "href": "/pls/dic/site2015.page?den=rgpd-site1"\n  }\n})});\n\n</script>
+        \n\n\n
+</body>\n
+
+</html>\n

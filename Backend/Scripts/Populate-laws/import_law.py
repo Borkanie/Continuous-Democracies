@@ -167,11 +167,45 @@ def importLaws(startingIndex : int, endingIndex : int) -> list:
         except Exception as e:
             log(f"Error processing law ID {lawId}: {e}")
 
+# Try to detect the remote max VoteId and import missing ranges first
+def fetch_remote_max_voteid() -> int | None:
+    try:
+        url = "https://www.cdep.ro/pls/steno/evot2015.data"
+        text = get(url=url, file="evot2015.data")
+        import re
+        # Extract only the numeric value passed to the `idv` parameter in query strings
+        # Matches patterns like '?idv=36079&idl=1' or '&idv=36079'
+        matches = re.findall(r'[?&]idv=(\d+)', text)
+        if not matches:
+            log("No idv=... entries found on remote .data page")
+            return None
+        nums = [int(n) for n in matches]
+        maxn = max(nums)
+        log(f"Remote max VoteId found: {maxn}")
+        return maxn
+    except Exception as e:
+        log(f"Failed to fetch remote max VoteId: {e}")
+        return None    
+
 def goFromLastforward(numberOfForwardSearaches: int):
-    lastNumber = get_max_vote_id()
-    startingIndex = lastNumber + 1
-    endingIndex = startingIndex + numberOfForwardSearaches - 1
-    importLaws(startingIndex, endingIndex)
+
+
+    db_last = get_max_vote_id()
+    if db_last is None:
+        db_last = 35333
+
+    remote_last = fetch_remote_max_voteid()
+    if remote_last is not None and isinstance(remote_last, int) and remote_last > db_last:
+        startingIndex = db_last + 1
+        endingIndex = remote_last
+        log(f"Remote site has newer VoteId(s). Importing range {startingIndex}..{endingIndex}")
+        importLaws(startingIndex, endingIndex)
+    else:
+        # Fallback: import a fixed forward window
+        startingIndex = db_last + 1
+        endingIndex = startingIndex + numberOfForwardSearaches - 1
+        log(f"No newer remote votes detected; importing forward {numberOfForwardSearaches} items: {startingIndex}..{endingIndex}")
+        importLaws(startingIndex, endingIndex)
 
 if __name__ == "__main__":
     createtempDir()
