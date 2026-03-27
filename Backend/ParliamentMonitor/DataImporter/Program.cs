@@ -37,7 +37,7 @@ static void UpdateImagesBasedOnImagefolder()
     using (ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole()))
     {
         Console.WriteLine("Starting services");
-        var dbContext = new AppDBContext();
+        var dbContext = new AppDBContext(AppDBContext.getConnStringFromEnvVariables());
         Console.WriteLine("Loaded DB Context");
 
         var polLogger = factory.CreateLogger<IPoliticianService<Politician>>();
@@ -95,7 +95,7 @@ static async Task ImportDataFromVoteFolder()
             using (ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole()))
             {
                 Console.WriteLine("Starting services");
-                var dbContext = new AppDBContext();
+                var dbContext = new AppDBContext(AppDBContext.getConnStringFromEnvVariables());
                 Console.WriteLine("Loaded DB Context");
 
                 var polLogger = factory.CreateLogger<IPoliticianService<Politician>>();

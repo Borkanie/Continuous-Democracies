@@ -77,6 +77,11 @@ jobs:
           --name $CONTAINER_NAME \
           -p $HOST_PORT1:$CONTAINER_PORT1 \
           -p $HOST_PORT2:$CONTAINER_PORT2 \
+          -e DBSERVERADDRESS="${{ secrets.DBSERVERADDRESS }}" \
+          -e DBNAME="${{ secrets.DBNAME }}" \
+          -e DBUSER="${{ secrets.DBUSER }}" \
+          -e DBPASSWORD="${{ secrets.DBPASSWORD }}" \
+          -e LOG_LEVEL="${{ secrets.LOG_LEVEL }}" \
           --restart unless-stopped \
           $IMAGE_NAME
 
