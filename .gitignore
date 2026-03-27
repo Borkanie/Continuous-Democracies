@@ -45,6 +45,9 @@ CodeCoverage/
 .vs/
 ParliamentMonitor/.vs
 
+# Development configuration files (may contain sensitive data)
+**/appsettings.Development.json
+
 # MSBuild Binary and Structured Log
 *.binlog
 

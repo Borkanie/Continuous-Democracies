@@ -16,18 +16,26 @@ namespace ParliamentMonitor.DataBaseConnector
     {
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
 
-        public AppDBContext() : base(new DbContextOptionsBuilder<AppDBContext>()
-                .UseNpgsql("Server=192.168.1.108;Port=5432;Database=parlimentdb;Username=bobo;Password=password123;")
-                .Options)
+        public AppDBContext(string connectionString) : base(new DbContextOptionsBuilder<AppDBContext>().UseNpgsql(connectionString).Options) {}
+
+        public static string getConnStringFromEnvVariables()
         {
-         
+            var dbServer = Environment.GetEnvironmentVariable("DBSERVERADDRESS");
+            var dbName = Environment.GetEnvironmentVariable("DBNAME");
+            var dbUser = Environment.GetEnvironmentVariable("DBUSER");
+            var dbPassword = Environment.GetEnvironmentVariable("DBPASSWORD");
 
-        }
-
-        public AppDBContext(string connectionString) : base(new DbContextOptionsBuilder<AppDBContext>().UseNpgsql(connectionString).Options)
-        {
-
-
+            string connectionString;
+            if (!string.IsNullOrEmpty(dbServer) && !string.IsNullOrEmpty(dbName) && !string.IsNullOrEmpty(dbUser))
+            {
+                connectionString = $"Server={dbServer};Port=5432;Database={dbName};Username={dbUser};Password={dbPassword};";
+                Console.WriteLine("Using connection string from environment variables");
+            }
+            else
+            {
+                throw new Exception("Database environment variables are not set. Please set DBSERVERADDRESS, DBNAME, DBUSER, and DBPASSWORD.");
+            }
+            return connectionString;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

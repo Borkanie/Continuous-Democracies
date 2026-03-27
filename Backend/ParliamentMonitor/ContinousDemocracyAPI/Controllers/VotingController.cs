@@ -77,7 +77,7 @@ namespace ContinousDemocracyAPI.Controllers
             if (round == null)
             {
                 logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (VoteNumber={VoteNumber})", ts, ip, voteNumber);
-                return Ok("Voting votes not found.");
+                return Ok("No votes not found with that ID.");
             }
 
             logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK (Round found for VoteNumber={VoteNumber})", ts, ip, voteNumber);
@@ -107,7 +107,7 @@ namespace ContinousDemocracyAPI.Controllers
             if (votes == null)
             {
                 logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (Round {Number})", ts, ip, number);
-                return Ok("Voting votes not found.");
+                return Ok("No votes found for round ID.");
             }
 
             if (partyId != null)
@@ -151,7 +151,7 @@ namespace ContinousDemocracyAPI.Controllers
             if (votes == null)
             {
                 logger.LogWarning("Response at {Timestamp} to {IP} -> 404 Not Found (RoundId={RoundId})", ts, ip, roundId);
-                return Ok("Voting votes not found.");
+                return Ok("No votes found for round ID.");
             }
 
             logger.LogInformation("Response at {Timestamp} to {IP} -> 200 OK ({Count} votes for RoundId={RoundId})", ts, ip, votes.Count, roundId);

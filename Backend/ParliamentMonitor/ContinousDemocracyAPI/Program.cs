@@ -8,10 +8,23 @@ using ContinousDemocracyAPI.MiddleWare;
 var builder = WebApplication.CreateBuilder(args);
 Console.WriteLine("Starting ContinousDemocracyAPI...");
 
+// Configure log level from environment variable if present
 builder.Logging.ClearProviders(); // optional: remove default ones
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
-builder.Logging.SetMinimumLevel(LogLevel.Information);
+
+var logLevel = Environment.GetEnvironmentVariable("LOG_LEVEL");
+if (!string.IsNullOrEmpty(logLevel))
+{
+    var level = Enum.Parse<LogLevel>(logLevel, ignoreCase: true);
+    builder.Logging.SetMinimumLevel(level);
+    Console.WriteLine($"Log level set from environment: {level}");
+}
+else
+{
+    builder.Logging.SetMinimumLevel(LogLevel.Information);
+    Console.WriteLine("Log level set from default: Information");
+}
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -29,7 +42,7 @@ builder.Services.AddSwaggerGen(c =>
 );
 
 // Add services to the container.
-builder.Services.AddSingleton(new AppDBContext(builder.Configuration.GetConnectionString("RDS")!));
+builder.Services.AddSingleton(new AppDBContext(AppDBContext.getConnStringFromEnvVariables()));
 builder.Services.AddScoped<IPartyService<Party>, PartyService>();
 builder.Services.AddScoped<IPoliticianService<Politician>, PoliticianService>();
 builder.Services.AddScoped<IVotingService<Vote>, VotingService>();
