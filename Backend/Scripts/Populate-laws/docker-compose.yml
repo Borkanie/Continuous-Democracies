@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  protonvpn:
+    image: borkanie/protonvpn:latest
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.rp_filter=2
+    volumes:
+      - ${WG_CONFIGS_PATH:-./wg-configs}:/etc/wireguard/configs:ro
+    environment:
+      VPN_RECONNECT: "12:00"
+      VPN_KILL_SWITCH: "1"
+    restart: unless-stopped
+
+  populate-laws:
+    image: borkanie/populate-laws:latest
+    network_mode: "service:protonvpn"
+    depends_on:
+      - protonvpn
+    environment:
+      DBName: ${DBName}
+      DBUser: ${DBUser}
+      DBPassword: ${DBPassword}
+      DBServerAddress: ${DBServerAddress}
+      DBPort: ${DBPort:-5432}
+    restart: unless-stopped

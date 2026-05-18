@@ -47,6 +47,7 @@ ParliamentMonitor/.vs
 
 # Development configuration files (may contain sensitive data)
 **/appsettings.Development.json
+**/.env
 
 # MSBuild Binary and Structured Log
 *.binlog
