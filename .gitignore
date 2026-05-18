@@ -6,7 +6,7 @@
 ## has more thorough IDE-specific entries.
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/Dotnet.gitignore
-
+*wg-configs*
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -47,6 +47,7 @@ ParliamentMonitor/.vs
 
 # Development configuration files (may contain sensitive data)
 **/appsettings.Development.json
+**/.env
 
 # MSBuild Binary and Structured Log
 *.binlog
