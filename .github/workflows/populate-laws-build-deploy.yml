@@ -83,15 +83,16 @@ jobs:
           DBServerAddress: ${{ secrets.DBServerAddress }}
           IMAGE_NAME: borkanie/populate-laws:latest
           WG_CONFIG: ${{ secrets.WG_CONFIG }}
+          WG_CONFIGS_PATH: Backend/Scripts/Populate-laws/wg-configs
         run: |
           set -e
           echo "Pulling latest image $IMAGE_NAME..."
           docker pull $IMAGE_NAME
 
           echo "Setting up WireGuard config..."
-          mkdir -p Backend/Scripts/Populate-laws/wg-configs
-          echo "$WG_CONFIG" > Backend/Scripts/Populate-laws/wg-configs/proton.conf
-          chmod 600 Backend/Scripts/Populate-laws/wg-configs/proton.conf
+          mkdir -p "$WG_CONFIGS_PATH"
+          echo "$WG_CONFIG" > "$WG_CONFIGS_PATH/proton.conf"
+          chmod 600 "$WG_CONFIGS_PATH/proton.conf"
 
           echo "Starting services via docker compose..."
           docker compose -f Backend/Scripts/Populate-laws/docker-compose.yml up -d --remove-orphans
