@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   protonvpn:
     image: borkanie/protonvpn:latest
@@ -8,7 +6,7 @@ services:
     sysctls:
       - net.ipv4.conf.all.rp_filter=2
     volumes:
-      - ${WG_CONFIGS_PATH:-./wg-configs}:/etc/wireguard/configs:ro
+      - ${WG_CONFIGS_PATH:-.}/wg-configs:/etc/wireguard/configs:ro
     environment:
       VPN_RECONNECT: "12:00"
       VPN_KILL_SWITCH: "1"

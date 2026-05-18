@@ -83,7 +83,7 @@ jobs:
           DBServerAddress: ${{ secrets.DBServerAddress }}
           IMAGE_NAME: borkanie/populate-laws:latest
           WG_CONFIG: ${{ secrets.WG_CONFIG }}
-          WG_CONFIGS_PATH: Backend/Scripts/Populate-laws/wg-configs
+          WG_CONFIGS_PATH: ./Backend/Scripts/Populate-laws/wg-configs
         run: |
           set -e
           echo "Pulling latest image $IMAGE_NAME..."
