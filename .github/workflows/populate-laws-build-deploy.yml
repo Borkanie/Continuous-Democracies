@@ -83,26 +83,34 @@ jobs:
           DBServerAddress: ${{ secrets.DBServerAddress }}
           IMAGE_NAME: borkanie/populate-laws:latest
           WG_CONFIG: ${{ secrets.WG_CONFIG }}
-          WG_CONFIGS_PATH: ./Backend/Scripts/Populate-laws/wg-configs
         run: |
           set -e
           echo "Pulling latest image $IMAGE_NAME..."
           docker pull $IMAGE_NAME
 
           echo "Setting up WireGuard config..."
-          mkdir -p "$WG_CONFIGS_PATH"
+          mkdir -p Backend/Scripts/Populate-laws/wg-configs
 
           if [ -z "$WG_CONFIG" ]; then
             echo "ERROR: WG_CONFIG secret is empty!"
             exit 1
           fi
 
-          echo "$WG_CONFIG" > "$WG_CONFIGS_PATH/proton.conf"
-          chmod 600 "$WG_CONFIGS_PATH/proton.conf"
+          echo "$WG_CONFIG" > Backend/Scripts/Populate-laws/wg-configs/proton.conf
+          chmod 600 Backend/Scripts/Populate-laws/wg-configs/proton.conf
 
           echo "Verifying file was created:"
-          ls -lah "$WG_CONFIGS_PATH/"
-          wc -l "$WG_CONFIGS_PATH/proton.conf"
+          ls -lah Backend/Scripts/Populate-laws/wg-configs/
+          wc -l Backend/Scripts/Populate-laws/wg-configs/proton.conf
+
+          echo "Creating .env file for docker-compose..."
+          cat > Backend/Scripts/Populate-laws/.env <<EOF
+          DBName=$DBName
+          DBUser=$DBUser
+          DBPassword=$DBPassword
+          DBServerAddress=$DBServerAddress
+          WG_CONFIGS_PATH=./wg-configs
+          EOF
 
           echo "Starting services via docker compose..."
           docker compose -f Backend/Scripts/Populate-laws/docker-compose.yml up -d --remove-orphans
