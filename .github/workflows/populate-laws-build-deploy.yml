@@ -77,10 +77,10 @@ jobs:
 
       - name: Pull image and restart containers
         env:
-          DBName: ${{ secrets.DBName }}
-          DBUser: ${{ secrets.DBUser }}
-          DBPassword: ${{ secrets.DBPassword }}
-          DBServerAddress: ${{ secrets.DBServerAddress }}
+          DBName: ${{ secrets.DBNAME }}
+          DBUser: ${{ secrets.DBUSER }}
+          DBPassword: ${{ secrets.DBPASSWORD }}
+          DBServerAddress: ${{ secrets.DBSERVERADDRESS }}
           IMAGE_NAME: borkanie/populate-laws:latest
         run: |
           set -e
