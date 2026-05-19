@@ -21,7 +21,7 @@ db_params = {
     'dbname': os.getenv('DBName'),
     'user': os.getenv('DBUser'),
     'password': os.getenv('DBPassword'),
-    'host': '192.168.1.108',  # Change to your database host
+    'host':  os.getenv('DBServerAddress'),  # Change to your database host
     'port': '5432'        # Default PostgreSQL port
 }
 
