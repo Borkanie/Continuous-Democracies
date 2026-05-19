@@ -90,7 +90,7 @@ jobs:
 
           echo "Cleaning up previous deployment..."
           docker compose -f Backend/Scripts/Populate-laws/docker-compose.yml down -v 2>/dev/null || true
-          sudo rm -rf Backend/Scripts/Populate-laws/wg-configs 2>/dev/null || true
+          rm -rf Backend/Scripts/Populate-laws/wg-configs 2>/dev/null || true
 
           echo "Setting up WireGuard config..."
           mkdir -p Backend/Scripts/Populate-laws/wg-configs
