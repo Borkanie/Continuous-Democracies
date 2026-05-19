@@ -19,7 +19,6 @@ RUN apt-get update && \
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
 # ── Environment variable defaults ─────────────────────────────────────────────
 
 # Directory where WireGuard .conf files are mounted (one per server).
