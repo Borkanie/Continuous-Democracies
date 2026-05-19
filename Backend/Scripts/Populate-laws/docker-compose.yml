@@ -1,6 +1,7 @@
 services:
   protonvpn:
     image: borkanie/protonvpn:latest
+    network_mode: "host"
     cap_add:
       - NET_ADMIN
     sysctls:
@@ -14,13 +15,13 @@ services:
 
   populate-laws:
     image: borkanie/populate-laws:latest
-    network_mode: "service:protonvpn"
+    network_mode: "host"
     depends_on:
       - protonvpn
     environment:
       DBName: ${DBName}
       DBUser: ${DBUser}
       DBPassword: ${DBPassword}
-      DBServerAddress: ${DBServerAddress}
+      DBServerAddress: 127.0.0.1
       DBPort: ${DBPort:-5432}
     restart: unless-stopped
