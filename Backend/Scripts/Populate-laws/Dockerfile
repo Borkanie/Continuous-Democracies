@@ -17,7 +17,6 @@ ENV DBPort=${DBPort}
 # Install system dependencies for Poppler and Tesseract + fonts
 RUN apt-get update \
      && apt-get install -y --no-install-recommends \
-         curl \
          poppler-utils \
          tesseract-ocr \
          tesseract-ocr-ron \

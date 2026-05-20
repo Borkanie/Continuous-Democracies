@@ -1,7 +1,7 @@
 from time import timezone
 from log_writer import log
 import os
-import subprocess
+import requests
 from charset_normalizer import from_path
 from bs4 import BeautifulSoup
 from shutil import rmtree
@@ -161,33 +161,22 @@ def extract_datetime_from_dom(dom_str):
 def downloadFileFormUrl(url, output_file):
     """
     Download a file from a given URL and save it to the specified output file.
-    Uses curl command to perform the download. Errors are captured and logged,
-    and a RuntimeError is raised if the curl command fails.
+    Streams the response so large PDFs don't load entirely into memory.
     Args:
         url (str): The URL of the file to download.
         output_file (str): The file path where the downloaded file will be saved.
     Raises:
-        RuntimeError: If the curl command fails (non-zero exit code).
+        requests.RequestException: If the request fails or the response status is not 2xx.
     Returns:
         None
     """
-    cmd = f'curl -s "{url}" -o "{output_file}"'
-    # internal download messages go to file
-    log("Running curl for:", url, "->", output_file)
-    #os.system(cmd)
-    result = subprocess.run(
-        cmd,
-        shell=True,
-        stdout=subprocess.DEVNULL,   # hide normal output
-        stderr=subprocess.PIPE,      # capture errors
-        text=True
-    )
-
-    if result.stderr:
-        print(result.stderr)
-
-    if result.returncode != 0:
-        raise RuntimeError(f"curl command failed with exit code {result.returncode} for URL: {url}")
+    log("Downloading:", url, "->", output_file)
+    with requests.get(url, stream=True, timeout=60) as r:
+        r.raise_for_status()
+        with open(output_file, "wb") as f:
+            for chunk in r.iter_content(chunk_size=64 * 1024):
+                if chunk:
+                    f.write(chunk)
 
 def get(url, file= "temp_response.txt", keep = False) -> str:
         """
