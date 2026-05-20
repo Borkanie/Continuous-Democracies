@@ -1,27 +1,16 @@
 services:
-  protonvpn:
-    image: borkanie/protonvpn:latest
-    network_mode: "host"
-    cap_add:
-      - NET_ADMIN
-    sysctls:
-      - net.ipv4.conf.all.rp_filter=2
-    volumes:
-      -  ../../../../../../wg-configs/:/etc/wireguard/configs:ro
-    environment:
-      VPN_RECONNECT: "12:00"
-      VPN_KILL_SWITCH: "1"
-    restart: unless-stopped
-
   populate-laws:
     image: borkanie/populate-laws:latest
-    network_mode: "host"
-    depends_on:
-      - protonvpn
+    volumes:
+      - ../../../../../../wg-configs/:/etc/wireguard/configs:ro
     environment:
       DBName: ${DBName}
       DBUser: ${DBUser}
       DBPassword: ${DBPassword}
-      DBServerAddress: 127.0.0.1
+      DBServerAddress: ${DBServerAddress:-host.docker.internal}
       DBPort: ${DBPort:-5432}
+      WG_CONFIGS_DIR: /etc/wireguard/configs
+      PROXY_BIND: 127.0.0.1:25344
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: unless-stopped

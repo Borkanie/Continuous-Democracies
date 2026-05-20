@@ -158,10 +158,22 @@ def extract_datetime_from_dom(dom_str):
     # Your required output format:
     return dt_utc.strftime("%Y-%m-%d %H:%M:%S.%f+00")
 
+# SOCKS5 endpoint of the local wireproxy (set by entrypoint.sh).
+# When unset, cdep.ro is reached directly — useful when running outside the container.
+CDEP_PROXY_URL = os.getenv("CDEP_PROXY_URL")
+
+
+def _proxies_for(url: str):
+    if CDEP_PROXY_URL and "cdep.ro" in url:
+        return {"http": CDEP_PROXY_URL, "https": CDEP_PROXY_URL}
+    return None
+
+
 def downloadFileFormUrl(url, output_file):
     """
     Download a file from a given URL and save it to the specified output file.
     Streams the response so large PDFs don't load entirely into memory.
+    cdep.ro URLs are routed through the local SOCKS5 proxy when CDEP_PROXY_URL is set.
     Args:
         url (str): The URL of the file to download.
         output_file (str): The file path where the downloaded file will be saved.
@@ -171,7 +183,7 @@ def downloadFileFormUrl(url, output_file):
         None
     """
     log("Downloading:", url, "->", output_file)
-    with requests.get(url, stream=True, timeout=60) as r:
+    with requests.get(url, stream=True, timeout=60, proxies=_proxies_for(url)) as r:
         r.raise_for_status()
         with open(output_file, "wb") as f:
             for chunk in r.iter_content(chunk_size=64 * 1024):
