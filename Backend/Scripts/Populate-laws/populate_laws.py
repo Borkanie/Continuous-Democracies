@@ -2,9 +2,9 @@ import re
 import requests
 import os
 import time
-import unicodedata
 import shutil
 import subprocess
+import tempfile
 import uuid
 from PIL import Image
 import pytesseract
@@ -99,33 +99,24 @@ def ask_chatgpt_json(prompt: str, api_key: Optional[str] = None, model: str = "g
 
 
 
-def extract_text_from_pdf(pdf_path: str, poppler_path: str, tesseract_cmd: str = None, dpi: int = 300) -> str:
+def extract_text_from_pdf(pdf_path: str, dpi: int = 300) -> str:
     """
     Extract Romanian text from a PDF using Poppler (pdfinfo + pdftoppm) and Tesseract OCR.
-    
+    Expects pdfinfo, pdftoppm and tesseract to be available on $PATH.
+
     Args:
         pdf_path: Path to the PDF file.
-        poppler_path: Path to the Poppler 'bin' folder containing pdfinfo.exe and pdftoppm.exe.
-        tesseract_cmd: Optional full path to tesseract executable.
         dpi: Resolution for converting PDF pages to images.
-    
+
     Returns:
         Extracted text as a string.
     """
-    temp_dir = os.path.join(os.path.dirname(pdf_path), "temp_" + uuid.uuid4().hex)
-    os.makedirs(temp_dir, exist_ok=True)
-    # log internal info to file
+    temp_dir = tempfile.mkdtemp(prefix="ocr_")
     log("Temporary directory created at:", temp_dir)
 
     try:
-        pdfinfo_exe = os.path.join(poppler_path, "pdfinfo.exe")
-        pdftoppm_exe = os.path.join(poppler_path, "pdftoppm.exe")
-
-        if not os.path.exists(pdfinfo_exe) or not os.path.exists(pdftoppm_exe):
-            raise FileNotFoundError("Poppler executables not found in the provided path.")
-
         # Step 1: Get page count
-        result = subprocess.run([pdfinfo_exe, pdf_path], capture_output=True, text=True, check=True)
+        result = subprocess.run(["pdfinfo", pdf_path], capture_output=True, text=True, check=True)
         page_count = 0
         for line in result.stdout.splitlines():
             if line.lower().startswith("pages:"):
@@ -136,15 +127,11 @@ def extract_text_from_pdf(pdf_path: str, poppler_path: str, tesseract_cmd: str =
 
         # Step 2: Convert PDF to images
         output_prefix = os.path.join(temp_dir, f"page_{uuid.uuid4().hex}")
-        subprocess.run([
-            pdftoppm_exe,
-            "-r", str(dpi),
-            "-png",
-            pdf_path,
-            output_prefix
-        ], check=True, capture_output=True)
+        subprocess.run(
+            ["pdftoppm", "-r", str(dpi), "-png", pdf_path, output_prefix],
+            check=True, capture_output=True,
+        )
 
-        # Collect generated images
         prefix_basename = os.path.basename(output_prefix)
         images = sorted([
             os.path.join(temp_dir, f)
@@ -155,9 +142,6 @@ def extract_text_from_pdf(pdf_path: str, poppler_path: str, tesseract_cmd: str =
             raise RuntimeError("No images were generated from PDF.")
 
         # Step 3: OCR each image
-        if tesseract_cmd:
-            pytesseract.pytesseract.tesseract_cmd = tesseract_cmd
-
         text_output = []
         for img_path in images:
             text_output.append(pytesseract.image_to_string(Image.open(img_path), lang="ron"))
@@ -168,23 +152,23 @@ def extract_text_from_pdf(pdf_path: str, poppler_path: str, tesseract_cmd: str =
         print(f"Error during PDF text extraction: {e} for file {pdf_path}")
         return None
     finally:
-        # Cleanup temp files
         if os.path.exists(temp_dir):
             shutil.rmtree(temp_dir)
-      
+
 
 def getTextTroughOCRFromUrl(lawUrl):
     log("Fetching motivatie URL:", lawUrl)
-    output_file = "E:\\populate-laws\\temp\\motivatie.pdf" 
-    output_file = unicodedata.normalize("NFKD", output_file).replace("\\", "/")
-    downloadFileFormUrl(lawUrl, output_file)
-    time.sleep(1)  # allow OS to release file handle
-    text = extract_text_from_pdf(output_file, "E:/poppler-25.11.0/Library/bin", "D:/tesseract-docker/tesseract.exe", dpi=300)
+    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+        output_file = tmp.name
     try:
-        os.remove(output_file)
-    except Exception:
-        log("Could not remove downloaded motivatie file:", output_file)
-    return text
+        downloadFileFormUrl(lawUrl, output_file)
+        time.sleep(1)  # allow OS to release file handle
+        return extract_text_from_pdf(output_file, dpi=300)
+    finally:
+        try:
+            os.remove(output_file)
+        except Exception:
+            log("Could not remove downloaded motivatie file:", output_file)
 
 def fetch_and_search(url, regex_map):
     """
@@ -218,14 +202,16 @@ def getTextFromLawByForm(getlawForm):
     baseUrl = "https://www.cdep.ro"
     if getlawForm[promulgareKey]:
         lawUrl = baseUrl + "/pls/proiecte/" + getlawForm[promulgareKey]
-        output_file = "E:\\populate-laws\\temp\\promulgare.pdf"
-        downloadFileFormUrl(lawUrl, output_file)
-        text =  extract_text_from_selectable_pdf(output_file)
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+            output_file = tmp.name
         try:
-            os.remove(output_file)
-        except Exception:
-            log("Could not remove downloaded promulgare file:", output_file)
-        return text
+            downloadFileFormUrl(lawUrl, output_file)
+            return extract_text_from_selectable_pdf(output_file)
+        finally:
+            try:
+                os.remove(output_file)
+            except Exception:
+                log("Could not remove downloaded promulgare file:", output_file)
     
     if getlawForm[adoptedKey]:
         lawUrl = baseUrl + getlawForm[adoptedKey]
