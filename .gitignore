@@ -65,3 +65,8 @@ Backend/ParliamentMonitor/.vs/ParliamentMonitor/v17/.suo
 /Backend/ParliamentMonitor/DataImporter/DataImporter.cs
 /Resources/DeputyPortaits/*
 Backend/ParliamentMonitor/.vs/*
+
+# Python
+.venv/
+__pycache__/
+*.pyc
