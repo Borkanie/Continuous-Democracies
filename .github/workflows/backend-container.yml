@@ -2,9 +2,9 @@ name: CI/CD deploy Backend Docker Image
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     paths:
-      - Backend/**
+      - new-backend/api/**
   workflow_dispatch:
     inputs:
       logLevel:
@@ -13,17 +13,9 @@ on:
         default: 'warning'
         type: choice
         options:
-        - info
-        - warning
-        - debug
-      tags:
-        description: 'Rebuild Backend container'
-        required: false
-        type: boolean
-      environment:
-        description: 'Environment to run tests against'
-        type: environment
-        required: true
+          - info
+          - warning
+          - debug
 
 jobs:
   build-and-deploy:
@@ -31,60 +23,44 @@ jobs:
     environment: self-hosted
 
     steps:
-    # 1. Checkout repo
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    # 2. Log in to Docker Hub
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # 3. Build and push Docker image
-    - name: Build and push Docker image
-      run: |
-        cd Backend/ParliamentMonitor/
-        ls -a 
-        IMAGE=borkanie/continousdemocracyapi:latest
-        docker build \
-          -t $IMAGE \
-          .
-        docker push $IMAGE
-        
-    # 4. Deploy to Docker
-    - name: Deploy to 
-      run: |
-        IMAGE_NAME="borkanie/continousdemocracyapi"
-        CONTAINER_NAME="continuous-democracies"
-        HOST_PORT1=8080
-        HOST_PORT2=8081
-        CONTAINER_PORT1=8080
-        CONTAINER_PORT2=8081
+      - name: Build and push Docker image
+        run: |
+          IMAGE=borkanie/continousdemocracyapi:latest
+          docker build -t $IMAGE ./new-backend/api
+          docker push $IMAGE
 
-        echo "Pulling latest image $IMAGE_NAME..."
-        docker pull $IMAGE_NAME
+      - name: Deploy container
+        run: |
+          IMAGE_NAME="borkanie/continousdemocracyapi:latest"
+          CONTAINER_NAME="continuous-democracies"
 
-        if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
-          echo "Stopping and removing existing container $CONTAINER_NAME..."
-          docker stop $CONTAINER_NAME
-          docker rm $CONTAINER_NAME
-        fi
+          echo "Pulling latest image..."
+          docker pull $IMAGE_NAME
 
-        echo "Starting new container $CONTAINER_NAME..."
-        docker run -d \
-          --name $CONTAINER_NAME \
-          -p $HOST_PORT1:$CONTAINER_PORT1 \
-          -p $HOST_PORT2:$CONTAINER_PORT2 \
-          -e DBSERVERADDRESS="${{ secrets.DBSERVERADDRESS }}" \
-          -e DBNAME="${{ secrets.DBNAME }}" \
-          -e DBUSER="${{ secrets.DBUSER }}" \
-          -e DBPASSWORD="${{ secrets.DBPASSWORD }}" \
-          -e LOG_LEVEL="${{ secrets.LOG_LEVEL }}" \
-          --restart unless-stopped \
-          $IMAGE_NAME
+          if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
+            echo "Stopping and removing existing container..."
+            docker stop $CONTAINER_NAME
+            docker rm $CONTAINER_NAME
+          fi
 
-        echo "Backend Deployment complete!"
+          echo "Starting new container..."
+          docker run -d \
+            --name $CONTAINER_NAME \
+            -p 8080:8080 \
+            -e MONGODB_URI="${{ secrets.MONGODB_URI }}" \
+            -e DB_NAME="${{ secrets.MONGODB_DB_NAME }}" \
+            -e PORT="8080" \
+            -e LOG_LEVEL="${{ inputs.logLevel || 'warning' }}" \
+            --restart unless-stopped \
+            $IMAGE_NAME
 
-
+          echo "Backend deployment complete!"

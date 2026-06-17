@@ -1,0 +1,44 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - new-backend/api/**
+      - tests/**
+  pull_request:
+    branches: ["main"]
+    paths:
+      - new-backend/api/**
+      - tests/**
+
+jobs:
+  integration-tests:
+    name: Run integration tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+          cache-dependency-path: |
+            new-backend/api/go.sum
+            tests/go.sum
+
+      - name: Tidy API module
+        working-directory: new-backend/api
+        run: go mod tidy
+
+      - name: Tidy tests module
+        working-directory: tests
+        run: go mod tidy
+
+      - name: Run integration tests
+        working-directory: tests
+        run: go test ./integration/... -v -timeout 120s
+        # testcontainers-go pulls and starts MongoDB automatically via Docker
+        # Docker is pre-installed on ubuntu-latest runners

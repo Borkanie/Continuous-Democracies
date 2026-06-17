@@ -1,10 +1,10 @@
-name: Build & Publish populate-laws Image
+name: Build & Publish parliament-scraper Image
 
 on:
   push:
     branches: ["main"]
     paths:
-      - Backend/Scripts/Populate-laws/**
+      - new-backend/scraper/**
   workflow_dispatch:
     inputs:
       logLevel:
@@ -13,13 +13,13 @@ on:
         default: 'warning'
         type: choice
         options:
-        - info
-        - warning
-        - debug
+          - info
+          - warning
+          - debug
 
 jobs:
   build-and-push:
-    name: Build and push Docker image (cloud)
+    name: Build and push Docker image
     runs-on: ubuntu-latest
     environment: self-hosted
 
@@ -39,34 +39,17 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push image
+      - name: Build and push scraper image
         uses: docker/build-push-action@v4
         with:
-          context: Backend/Scripts/Populate-laws
+          context: new-backend/scraper
           push: true
           tags: |
             borkanie/populate-laws:latest
             borkanie/populate-laws:${{ github.sha }}
 
-      - name: Image pushed
-        run: echo "Image borkanie/populate-laws pushed (latest + ${{ github.sha }})"
-
-      - name: Build and push ProtonVPN image
-        uses: docker/build-push-action@v6
-        with:
-          context: Backend/Docker/ProtonVPN
-          push: true
-          platforms: linux/amd64,linux/arm64
-          tags: |
-            borkanie/protonvpn:latest
-            borkanie/protonvpn:${{ github.sha }}
-
-      - name: ProtonVPN image pushed
-        run: echo "Image borkanie/protonvpn pushed (latest + ${{ github.sha }})"
-
-
   deploy-local:
-    name: Pull latest image and (re)start container on self-hosted runner
+    name: Pull and restart scraper on self-hosted runner
     needs: build-and-push
     runs-on: self-hosted
     environment: self-hosted
@@ -75,19 +58,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Pull image and restart containers
+      - name: Pull image and restart container
         env:
-          DBName: ${{ secrets.DBNAME }}
-          DBUser: ${{ secrets.DBUSER }}
-          DBPassword: ${{ secrets.DBPASSWORD }}
           IMAGE_NAME: borkanie/populate-laws:latest
         run: |
           set -e
-          echo "Pulling latest image $IMAGE_NAME..."
           docker pull $IMAGE_NAME
 
-          echo "Starting services via docker compose..."
-          docker compose -f Backend/Scripts/Populate-laws/docker-compose.yml up -d --remove-orphans
+          docker stop parliament-scraper 2>/dev/null || true
+          docker rm   parliament-scraper 2>/dev/null || true
 
-          echo "Services status:"
-          docker compose -f Backend/Scripts/Populate-laws/docker-compose.yml ps
+          docker run -d \
+            --name parliament-scraper \
+            -e MONGODB_URI="${{ secrets.MONGODB_URI }}" \
+            -e DB_NAME="${{ secrets.MONGODB_DB_NAME }}" \
+            -e OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
+            -e CDEP_PROXY_URL="${{ secrets.CDEP_PROXY_URL }}" \
+            -e LOG_LEVEL="${{ inputs.logLevel || 'warning' }}" \
+            --restart unless-stopped \
+            $IMAGE_NAME
+
+          docker ps --filter name=parliament-scraper
+          echo "Scraper deployment complete!"
