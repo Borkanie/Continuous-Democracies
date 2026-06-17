@@ -1,0 +1,65 @@
+[
+  {
+    "_id": "22222222-2222-2222-2222-222222222001",
+    "name": "Ion Popescu",
+    "gender": 0,
+    "imageUrl": null,
+    "partyId": "11111111-1111-1111-1111-111111111001",
+    "active": true,
+    "workLocation": 0
+  },
+  {
+    "_id": "22222222-2222-2222-2222-222222222002",
+    "name": "Maria Ionescu",
+    "gender": 1,
+    "imageUrl": null,
+    "partyId": "11111111-1111-1111-1111-111111111001",
+    "active": true,
+    "workLocation": 0
+  },
+  {
+    "_id": "22222222-2222-2222-2222-222222222003",
+    "name": "Gheorghe Dumitrescu",
+    "gender": 0,
+    "imageUrl": null,
+    "partyId": "11111111-1111-1111-1111-111111111002",
+    "active": true,
+    "workLocation": 0
+  },
+  {
+    "_id": "22222222-2222-2222-2222-222222222004",
+    "name": "Ana Constantin",
+    "gender": 1,
+    "imageUrl": null,
+    "partyId": "11111111-1111-1111-1111-111111111002",
+    "active": true,
+    "workLocation": 1
+  },
+  {
+    "_id": "22222222-2222-2222-2222-222222222005",
+    "name": "Mihai Stancu",
+    "gender": 0,
+    "imageUrl": null,
+    "partyId": "11111111-1111-1111-1111-111111111003",
+    "active": true,
+    "workLocation": 0
+  },
+  {
+    "_id": "22222222-2222-2222-2222-222222222006",
+    "name": "Elena Vasile",
+    "gender": 1,
+    "imageUrl": null,
+    "partyId": "11111111-1111-1111-1111-111111111004",
+    "active": true,
+    "workLocation": 0
+  },
+  {
+    "_id": "22222222-2222-2222-2222-222222222007",
+    "name": "Andrei Popa",
+    "gender": 0,
+    "imageUrl": null,
+    "partyId": "11111111-1111-1111-1111-111111111001",
+    "active": false,
+    "workLocation": 0
+  }
+]
