@@ -136,21 +136,7 @@ const partyColorToCss = (color?: PartyColor): string => {
   if (!color) {
     return '#888888';
   }
-
-  const r = color.r ?? 0;
-  const g = color.g ?? 0;
-  const b = color.b ?? 0;
-  const a = color.a ?? 1;
-
-  const toHex = (value: number) => {
-    const hex = Math.round(value).toString(16).padStart(2, '0');
-    return hex;
-  };
-
-  const rgbHex = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-  const alphaHex = a < 1 ? toHex(a * 255) : '';
-
-  return `${rgbHex}${alphaHex}`;
+  return color;
 };
 
 export const buildPartyPieData = (

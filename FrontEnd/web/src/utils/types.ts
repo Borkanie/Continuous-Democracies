@@ -1,14 +1,5 @@
-export type PartyColor = {
-  r: number;
-  g: number;
-  b: number;
-  a: number;
-  isKnownColor: boolean;
-  isEmpty: boolean;
-  isNamedColor: boolean;
-  isSystemColor: boolean;
-  name: string;
-};
+// Color is now a hex string (e.g. "#D40000") from the Go API.
+export type PartyColor = string;
 
 type Party = {
   acronym: string;
