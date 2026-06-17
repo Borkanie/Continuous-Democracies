@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: parliament-scraper
+spec:
+  # Run every 12 hours
+  schedule: "0 */12 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: scraper
+              image: borkanie/populate-laws:latest
+              env:
+                - name: MONGODB_URI
+                  value: "mongodb://mongodb:27017"
+                - name: DB_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: parliament-config
+                      key: db-name
+                - name: RUN_ONCE
+                  value: "true"
+                - name: LOG_LEVEL
+                  value: "info"
+                - name: OPENAI_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: parliament-secrets
+                      key: openai-api-key
+                - name: CDEP_PROXY_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: parliament-secrets
+                      key: cdep-proxy-url
+                      optional: true
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+                limits:
+                  cpu: 1000m
+                  memory: 1Gi
