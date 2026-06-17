@@ -1,3 +1,10 @@
 {
-    "python-envs.pythonProjects": []
+    "python-envs.pythonProjects": [],
+    "go.goroot": "/Users/bogdanioan.boboc/homebrew/opt/go/libexec",
+    "go.alternateTools": {
+        "go": "/Users/bogdanioan.boboc/homebrew/bin/go"
+    },
+    "terminal.integrated.env.osx": {
+        "PATH": "/Users/bogdanioan.boboc/homebrew/bin:${env:PATH}"
+    }
 }
