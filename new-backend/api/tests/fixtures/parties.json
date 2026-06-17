@@ -1,0 +1,42 @@
+[
+  {
+    "_id": "11111111-1111-1111-1111-111111111001",
+    "name": "Partidul Social Democrat",
+    "acronym": "PSD",
+    "logoUrl": null,
+    "color": "#D40000",
+    "active": true
+  },
+  {
+    "_id": "11111111-1111-1111-1111-111111111002",
+    "name": "Partidul Național Liberal",
+    "acronym": "PNL",
+    "logoUrl": null,
+    "color": "#FFDD00",
+    "active": true
+  },
+  {
+    "_id": "11111111-1111-1111-1111-111111111003",
+    "name": "Alianța pentru Unirea Românilor",
+    "acronym": "AUR",
+    "logoUrl": null,
+    "color": "#FFA500",
+    "active": true
+  },
+  {
+    "_id": "11111111-1111-1111-1111-111111111004",
+    "name": "Uniunea Salvați România",
+    "acronym": "USR",
+    "logoUrl": null,
+    "color": "#0066CC",
+    "active": true
+  },
+  {
+    "_id": "11111111-1111-1111-1111-111111111005",
+    "name": "Partidul Democrat Liberal",
+    "acronym": "PDL",
+    "logoUrl": null,
+    "color": "#FF6600",
+    "active": false
+  }
+]

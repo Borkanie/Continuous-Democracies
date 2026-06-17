@@ -1,0 +1,42 @@
+[
+  {
+    "_id": "33333333-3333-3333-3333-333333333001",
+    "voteId": 1001,
+    "title": "Legea privind bugetul de stat pe 2024",
+    "name": "Legea privind bugetul de stat pe 2024",
+    "description": "Lege de aprobare a bugetului de stat pentru exercitiul bugetar 2024",
+    "voteDate": "2024-02-15T10:30:00Z"
+  },
+  {
+    "_id": "33333333-3333-3333-3333-333333333002",
+    "voteId": 1002,
+    "title": "Legea privind pensiile speciale",
+    "name": "Legea privind pensiile speciale",
+    "description": "Lege de modificare a sistemului de pensii speciale",
+    "voteDate": "2024-03-20T14:00:00Z"
+  },
+  {
+    "_id": "33333333-3333-3333-3333-333333333003",
+    "voteId": 1003,
+    "title": "Legea educatiei nationale",
+    "name": "Legea educatiei nationale",
+    "description": "Modificari la legea educatiei nationale privind curriculumul",
+    "voteDate": "2024-04-10T11:00:00Z"
+  },
+  {
+    "_id": "33333333-3333-3333-3333-333333333004",
+    "voteId": 1004,
+    "title": "Legea privind securitatea cibernetica",
+    "name": "Legea privind securitatea cibernetica",
+    "description": "Cadru legislativ pentru securitatea infrastructurii critice",
+    "voteDate": "2024-05-05T09:00:00Z"
+  },
+  {
+    "_id": "33333333-3333-3333-3333-333333333005",
+    "voteId": 1005,
+    "title": "Vot electronic:1005",
+    "name": "Vot electronic:1005",
+    "description": "",
+    "voteDate": "2024-06-01T10:00:00Z"
+  }
+]
