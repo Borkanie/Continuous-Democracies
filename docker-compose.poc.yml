@@ -1,0 +1,29 @@
+services:
+  mongodb-poc:
+    image: mongo:7
+    ports:
+      - "27018:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  scraper-poc:
+    build:
+      context: ./new-backend/scraper
+      dockerfile: Dockerfile
+    depends_on:
+      mongodb-poc:
+        condition: service_healthy
+    environment:
+      MONGODB_URI: mongodb://mongodb-poc:27017
+      DB_NAME: parliamentdb
+      IMPORT_LAW_ID: ${IMPORT_LAW_ID:-40000}
+      LOG_LEVEL: info
+      WG_CONFIGS_DIR: /etc/wireguard/configs
+    volumes:
+      # Mount your WireGuard config directory so the scraper can reach cdep.ro.
+      # Override with: WG_CONFIGS_DIR=/your/path ./poc.sh <law_id>
+      - ${WG_CONFIGS_DIR:-/etc/wireguard/configs}:/etc/wireguard/configs:ro

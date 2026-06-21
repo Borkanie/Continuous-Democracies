@@ -9,6 +9,7 @@ import (
 
 	"github.com/borkanie/parliament-scraper/internal/config"
 	"github.com/borkanie/parliament-scraper/internal/db"
+	"github.com/borkanie/parliament-scraper/internal/importer"
 	"github.com/borkanie/parliament-scraper/internal/orchestrator"
 )
 
@@ -24,6 +25,17 @@ func main() {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
+
+	// Single-law import mode: IMPORT_LAW_ID=<id> imports exactly one law then exits.
+	if cfg.ImportLawId > 0 {
+		votesImporter := importer.NewVotesImporter(database, cfg.ProxyURL)
+		if err := votesImporter.ImportSingleLaw(ctx, cfg.ImportLawId); err != nil {
+			slog.Error("single law import failed", "lawId", cfg.ImportLawId, "err", err)
+			os.Exit(1)
+		}
+		slog.Info("single law import complete", "lawId", cfg.ImportLawId)
+		return
+	}
 
 	orc := orchestrator.New(database, cfg.OpenAIKey, cfg.ProxyURL)
 

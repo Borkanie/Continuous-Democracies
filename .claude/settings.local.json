@@ -6,7 +6,9 @@
       "WebFetch(domain:protonvpn.com)",
       "WebSearch",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:gist.github.com)"
+      "WebFetch(domain:gist.github.com)",
+      "WebFetch(domain:proxy.golang.org)",
+      "Bash(IMPORT_LAW_ID=37113 docker compose -f docker-compose.poc.yml up --build --abort-on-container-exit --exit-code-from scraper-poc)"
     ]
   }
 }

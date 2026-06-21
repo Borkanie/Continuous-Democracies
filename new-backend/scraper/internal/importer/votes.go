@@ -54,6 +54,11 @@ func NewVotesImporter(database *db.DB, proxyURL string) *VotesImporter {
 	}
 }
 
+// ImportSingleLaw fetches and stores exactly one law by its cdep.ro vote ID.
+func (importer *VotesImporter) ImportSingleLaw(ctx context.Context, lawId int) error {
+	return importer.importLaw(ctx, lawId)
+}
+
 // GoFromLastForward imports up to maxForward new voting rounds starting from the DB max.
 func (importer *VotesImporter) GoFromLastForward(ctx context.Context, maxForward int) error {
 	dbMax, err := importer.db.GetMaxVoteId(ctx)

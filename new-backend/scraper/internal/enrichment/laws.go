@@ -233,7 +233,7 @@ Text lege:
 %s`, truncated)
 
 	resp, err := enricher.openai.Chat.Completions.New(ctx, openai.ChatCompletionNewParams{
-		Model: openai.ChatModelGPT4oMini,
+		Model: openai.F(openai.ChatModelGPT4oMini),
 		Messages: openai.F([]openai.ChatCompletionMessageParamUnion{
 			openai.UserMessage(prompt),
 		}),
