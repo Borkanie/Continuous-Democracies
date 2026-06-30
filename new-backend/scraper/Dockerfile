@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tesseract-ocr-ron \
     poppler-utils \
     ca-certificates \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=wireproxy-bin /tmp/wireproxy /usr/local/bin/wireproxy

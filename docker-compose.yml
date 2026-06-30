@@ -57,7 +57,12 @@ services:
       MONGODB_URI: mongodb://mongodb:27017
       DB_NAME: parliamentdb
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      # CDEP_PROXY_URL is set automatically by entrypoint.sh when WireGuard configs are mounted.
+      # Only set manually here if you want to override with an external proxy.
       CDEP_PROXY_URL: ${CDEP_PROXY_URL:-}
+    volumes:
+      # Mount ProtonVPN WireGuard .conf files (gitignored). Entrypoint picks one randomly.
+      - ./new-backend/scraper/wg-configs:/etc/wireguard/configs:ro
     restart: unless-stopped
 
 volumes:
