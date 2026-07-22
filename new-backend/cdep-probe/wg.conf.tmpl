@@ -1,0 +1,17 @@
+[Interface]
+# Bouncing = 2
+# NetShield = 0
+# Moderate NAT = off
+# NAT-PMP (Port Forwarding) = off
+# VPN Accelerator = on
+PrivateKey = ${WG_PRIVATE_KEY}
+Address = 10.2.0.2/32, 2a07:b944::2:2/128
+DNS = 10.2.0.1, 2a07:b944::2:1
+
+[Peer]
+# RO#11
+PublicKey = 5Zfe5nMk+zqZKkvorCiUwTqVidCwTG2UREvUTyswDmo=
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = 138.199.53.225:443
+
+PersistentKeepalive = 25
