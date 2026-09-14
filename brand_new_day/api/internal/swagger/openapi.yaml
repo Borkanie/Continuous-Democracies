@@ -1,0 +1,576 @@
+openapi: 3.0.3
+info:
+  title: brand_new_day API
+  version: "1.0.0"
+  description: >
+    Read-only API exposing Romanian Chamber of Deputies (cdep) voting data:
+    parties, politicians, law buckets (bills), normatives, and voting rounds.
+servers:
+  - url: http://localhost:8090
+    description: local
+
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Health check
+      tags: [health]
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /parties:
+    get:
+      operationId: listParties
+      summary: List all parties
+      tags: [parties]
+      responses:
+        "200":
+          description: List of parties
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Party"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /parties/{partyId}:
+    get:
+      operationId: getPartyById
+      summary: Get a party by id
+      tags: [parties]
+      parameters:
+        - name: partyId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The party
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Party"
+        "404":
+          description: Party not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /politicians:
+    get:
+      operationId: listPoliticians
+      summary: List all politicians
+      tags: [politicians]
+      responses:
+        "200":
+          description: List of politicians
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Politician"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /politicians/{politicianId}:
+    get:
+      operationId: getPoliticianById
+      summary: Get a politician by id
+      tags: [politicians]
+      parameters:
+        - name: politicianId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The politician
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Politician"
+        "404":
+          description: Politician not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /politicians/{politicianId}/votes:
+    get:
+      operationId: getVotesByPolitician
+      summary: Get all votes cast by a politician, enriched with round and law
+      description: >
+        Aggregation over voting_rounds.votes for the given politician, each
+        entry enriched with the resolved voting round, normative, and law
+        bucket.
+      tags: [politicians]
+      parameters:
+        - name: politicianId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of enriched vote entries for the politician
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PoliticianVoteEntry"
+        "404":
+          description: Politician not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /votingRounds:
+    get:
+      operationId: listVotingRounds
+      summary: List all voting rounds
+      tags: [votingRounds]
+      responses:
+        "200":
+          description: List of voting rounds
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VotingRound"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /votingRounds/{roundId}:
+    get:
+      operationId: getVotingRoundById
+      summary: Get a voting round by id
+      description: >
+        Round detail includes the resolved normative and its parent law
+        bucket inline.
+      tags: [votingRounds]
+      parameters:
+        - name: roundId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The voting round detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VotingRoundDetail"
+        "404":
+          description: Voting round not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /votingRounds/{roundId}/votes:
+    get:
+      operationId: getVotesByVotingRound
+      summary: Get the votes cast in a voting round, hydrated with politician and party
+      tags: [votingRounds]
+      parameters:
+        - name: roundId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of hydrated votes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HydratedVote"
+        "404":
+          description: Voting round not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /lawBuckets:
+    get:
+      operationId: listLawBuckets
+      summary: List all law buckets
+      tags: [lawBuckets]
+      responses:
+        "200":
+          description: List of law buckets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LawBucket"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /lawBuckets/{lawBucketId}:
+    get:
+      operationId: getLawBucketById
+      summary: Get a law bucket by id
+      description: Embeds the law bucket's current normatives.
+      tags: [lawBuckets]
+      parameters:
+        - name: lawBucketId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The law bucket
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LawBucket"
+        "404":
+          description: Law bucket not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /lawBuckets/{lawBucketId}/votingRounds:
+    get:
+      operationId: getVotingRoundsByLawBucket
+      summary: Get all voting rounds associated with a law bucket
+      tags: [lawBuckets]
+      parameters:
+        - name: lawBucketId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of voting rounds for the law bucket
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VotingRound"
+        "404":
+          description: Law bucket not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    VoteValue:
+      type: string
+      enum: [Yes, No, Abstain, Absent]
+
+    NormativeType:
+      type: string
+      enum: [article, amendment, referencedAct, wholeBillFinal]
+
+    MajorityType:
+      type: string
+      enum: [simple, absolute, qualified]
+
+    HealthResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+
+    Party:
+      type: object
+      required: [id, name, acronym, logoUrl, color, active]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        acronym:
+          type: string
+        logoUrl:
+          type: string
+        color:
+          type: string
+        active:
+          type: boolean
+
+    Politician:
+      type: object
+      required: [id, name, gender, imageUrl, partyId, active, workLocation]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        gender:
+          type: integer
+        imageUrl:
+          type: string
+        partyId:
+          type: string
+        active:
+          type: boolean
+        workLocation:
+          type: integer
+
+    Normative:
+      type: object
+      required: [id, version, lawBucketId, type, label, text, effectiveDate]
+      properties:
+        id:
+          type: string
+        version:
+          type: integer
+        lawBucketId:
+          type: integer
+        type:
+          $ref: "#/components/schemas/NormativeType"
+        label:
+          type: string
+        text:
+          type: string
+        effectiveDate:
+          type: string
+          format: date-time
+
+    LawBucket:
+      type: object
+      required:
+        [
+          id,
+          version,
+          plNumber,
+          title,
+          description,
+          initiationDate,
+          status,
+          normatives,
+        ]
+      properties:
+        id:
+          type: integer
+        version:
+          type: integer
+        plNumber:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        initiationDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+        normatives:
+          type: array
+          items:
+            $ref: "#/components/schemas/Normative"
+
+    Vote:
+      type: object
+      required: [politicianId, partyId, value]
+      properties:
+        politicianId:
+          type: string
+        partyId:
+          type: string
+        value:
+          $ref: "#/components/schemas/VoteValue"
+
+    VotingRound:
+      type: object
+      required:
+        [
+          id,
+          title,
+          description,
+          voteDate,
+          normativeId,
+          normativeVersion,
+          majorityType,
+          votes,
+        ]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        voteDate:
+          type: string
+          format: date-time
+        normativeId:
+          type: string
+        normativeVersion:
+          type: integer
+        majorityType:
+          $ref: "#/components/schemas/MajorityType"
+        votes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Vote"
+
+    VotingRoundDetail:
+      type: object
+      required:
+        [
+          id,
+          title,
+          description,
+          voteDate,
+          normativeId,
+          normativeVersion,
+          majorityType,
+          votes,
+          normative,
+          lawBucket,
+        ]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        voteDate:
+          type: string
+          format: date-time
+        normativeId:
+          type: string
+        normativeVersion:
+          type: integer
+        majorityType:
+          $ref: "#/components/schemas/MajorityType"
+        votes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Vote"
+        normative:
+          $ref: "#/components/schemas/Normative"
+        lawBucket:
+          $ref: "#/components/schemas/LawBucket"
+
+    HydratedVote:
+      type: object
+      required: [politicianId, partyId, value, politician, party]
+      properties:
+        politicianId:
+          type: string
+        partyId:
+          type: string
+        value:
+          $ref: "#/components/schemas/VoteValue"
+        politician:
+          $ref: "#/components/schemas/Politician"
+        party:
+          $ref: "#/components/schemas/Party"
+
+    PoliticianVoteEntry:
+      type: object
+      required: [value, votingRound, normative, lawBucket]
+      properties:
+        value:
+          $ref: "#/components/schemas/VoteValue"
+        votingRound:
+          $ref: "#/components/schemas/VotingRound"
+        normative:
+          $ref: "#/components/schemas/Normative"
+        lawBucket:
+          $ref: "#/components/schemas/LawBucket"

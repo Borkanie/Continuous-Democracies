@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "party-001",
+    "name": "Social Democratic Party",
+    "acronym": "PSD",
+    "logoUrl": "https://example.com/psd.png",
+    "color": "#D40000",
+    "active": true
+  },
+  {
+    "_id": "party-002",
+    "name": "National Liberal Party",
+    "acronym": "PNL",
+    "logoUrl": "https://example.com/pnl.png",
+    "color": "#FFDD00",
+    "active": true
+  },
+  {
+    "_id": "party-003",
+    "name": "Romanian Radical Right Party",
+    "acronym": "AUR",
+    "logoUrl": "https://example.com/aur.png",
+    "color": "#FFA500",
+    "active": true
+  }
+]

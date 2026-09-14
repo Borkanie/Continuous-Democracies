@@ -1,0 +1,42 @@
+[
+  {
+    "id": "party-psd",
+    "name": "Partidul Social Democrat",
+    "acronym": "PSD",
+    "logoUrl": "https://example.com/logos/psd.png",
+    "color": "#DA251D",
+    "active": true
+  },
+  {
+    "id": "party-pnl",
+    "name": "Partidul Național Liberal",
+    "acronym": "PNL",
+    "logoUrl": "https://example.com/logos/pnl.png",
+    "color": "#004990",
+    "active": true
+  },
+  {
+    "id": "party-usr",
+    "name": "Uniunea Salvați România",
+    "acronym": "USR",
+    "logoUrl": "https://example.com/logos/usr.png",
+    "color": "#00A19A",
+    "active": true
+  },
+  {
+    "id": "party-aur",
+    "name": "Alianța pentru Unirea Românilor",
+    "acronym": "AUR",
+    "logoUrl": "https://example.com/logos/aur.png",
+    "color": "#F2C230",
+    "active": true
+  },
+  {
+    "id": "party-udmr",
+    "name": "Uniunea Democrată Maghiară din România",
+    "acronym": "UDMR",
+    "logoUrl": "https://example.com/logos/udmr.png",
+    "color": "#2E7D32",
+    "active": true
+  }
+]

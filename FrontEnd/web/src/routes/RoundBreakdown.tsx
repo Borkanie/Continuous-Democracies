@@ -7,18 +7,18 @@ import {
 import { PieChart, type PieChartData } from '../components/chart/PieChart';
 import styles from './styles/RoundBreakdown.module.css';
 import { useQuery } from '@tanstack/react-query';
-import { getRound } from '../utils/api/rounds';
+import { getVotingRoundById } from '../utils/api/rounds';
 import { Legend } from '../components/legend/Legend';
 import classNames from 'classnames';
 import {
   useResultsByRoundId,
   type GroupedVotes,
 } from '../utils/hooks/useResultsByRoundId';
-import type { Position } from '../utils/types';
-import { VOTERS_TOTAL_NUMBER } from '../utils/constants';
+import type { VoteValue } from '../utils/types';
 import { Spinner } from '../components/spinner/Spinner';
 import { Header } from '../components/section/header';
-import { positionColor, positionLabel } from '../utils/helper';
+import { positionColor, positionLabel, getVoteStatus } from '../utils/helper';
+import { useTheme, type Theme } from '../utils/context/ThemeContext';
 import { UiText } from '../components/ui/text/UiText';
 
 const { Div, separator, content, bold, chartContainer, chartTitle, info } =
@@ -34,12 +34,13 @@ export const RoundBreakdown = () => {
   const { data: roundData, isFetching } = useQuery({
     queryKey: ['roundById', roundId],
     enabled: !!roundId,
-    queryFn: ({ queryKey }) => getRound(queryKey[1] || ''),
+    queryFn: ({ queryKey }) => getVotingRoundById(queryKey[1] || ''),
   });
 
   const { data: groupedRoundResults } = useResultsByRoundId(roundId);
+  const { theme } = useTheme();
 
-  const roundBreakdownData = buildRoundBreakdownData(groupedRoundResults);
+  const roundBreakdownData = buildRoundBreakdownData(groupedRoundResults, theme);
 
   return (
     <div className={Div}>
@@ -55,6 +56,12 @@ export const RoundBreakdown = () => {
                 title={roundData?.title || ''}
                 extraDetails={{ voteDate: roundData?.voteDate }}
                 description={roundData?.description}
+                status={
+                  groupedRoundResults && roundData
+                    ? getVoteStatus(groupedRoundResults, roundData.majorityType)
+                    : undefined
+                }
+                majorityType={roundData?.majorityType}
               />
 
               <div className={separator}></div>
@@ -82,6 +89,7 @@ export const RoundBreakdown = () => {
                     <Legend
                       text={'Legenda voturilor'}
                       slices={roundBreakdownData.slices}
+                      onSliceClick={(id) => navigate({ to: `section/${id}` })}
                     />
                   </div>
                 </div>
@@ -96,39 +104,29 @@ export const RoundBreakdown = () => {
 
 const buildRoundBreakdownData = (
   groupedRoundResults: GroupedVotes | undefined,
+  theme: Theme,
 ): PieChartData => {
   if (!groupedRoundResults) {
     return { slices: [] };
   }
 
-  const total = VOTERS_TOTAL_NUMBER;
-  const nonAbsentPositions: Position[] = [0, 1, 2];
+  const voteValues: VoteValue[] = ['Yes', 'No', 'Abstain', 'Absent'];
+  const total = voteValues.reduce(
+    (sum, value) => sum + (groupedRoundResults[value]?.length ?? 0),
+    0,
+  );
 
-  // Build slices for Da, Nu, Abtinere
-  const slices = nonAbsentPositions.map((pos) => {
-    const count = groupedRoundResults[pos]?.length ?? 0;
+  const slices = voteValues.map((value) => {
+    const count = groupedRoundResults[value]?.length ?? 0;
     const percentage =
       total > 0 ? Number(((count / total) * 100).toFixed(2)) : 0;
 
     return {
-      id: pos,
-      label: positionLabel(pos),
+      id: value,
+      label: positionLabel(value),
       value: { count, percentage },
-      color: positionColor(pos),
+      color: positionColor(value, theme),
     };
-  });
-
-  // Compute "Absent" as the remainder
-  const usedVotes = slices.reduce((sum, slice) => sum + slice.value.count, 0);
-  const absentCount = Math.max(0, total - usedVotes);
-  const absentPercentage =
-    total > 0 ? Number(((absentCount / total) * 100).toFixed(2)) : 0;
-
-  slices.push({
-    id: 3,
-    label: positionLabel(3),
-    value: { count: absentCount, percentage: absentPercentage },
-    color: positionColor(3),
   });
 
   return { slices };

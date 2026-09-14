@@ -1,0 +1,29 @@
+[
+  {
+    "_id": "politician-001",
+    "name": "John Smith",
+    "gender": 1,
+    "imageUrl": "https://example.com/john.jpg",
+    "partyId": "party-001",
+    "active": true,
+    "workLocation": 1
+  },
+  {
+    "_id": "politician-002",
+    "name": "Jane Doe",
+    "gender": 0,
+    "imageUrl": "https://example.com/jane.jpg",
+    "partyId": "party-002",
+    "active": true,
+    "workLocation": 1
+  },
+  {
+    "_id": "politician-003",
+    "name": "Bob Wilson",
+    "gender": 1,
+    "imageUrl": "https://example.com/bob.jpg",
+    "partyId": "party-003",
+    "active": true,
+    "workLocation": 2
+  }
+]

@@ -14,6 +14,12 @@ export type Slice = {
   value: { count: number; percentage: number };
   color: string;
   acronym?: string;
+  /*
+   * Radial pixel offset for this slice: positive pops it out from center
+   * (stands out), negative pulls it toward center (looks recessed/smaller).
+   * Defaults to 0 (resting position) when omitted.
+   */
+  offset?: number;
 };
 
 export type PieChartData = {
@@ -40,6 +46,7 @@ export const PieChart = (props: Props) => {
         label: data.label || '',
         data: data.slices.map((child) => child.value.count),
         backgroundColor: colors,
+        offset: data.slices.map((child) => child.offset ?? 0),
         borderWidth: 1,
         borderColor: '#fff',
         hoverBorderWidth: 1,

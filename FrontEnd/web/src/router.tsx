@@ -6,7 +6,7 @@ import {
 } from '@tanstack/react-router';
 import { App } from './routes/App';
 import { RoundSection } from './routes/RoundSection';
-import { getAllRounds } from './utils/api/rounds';
+import { listVotingRounds } from './utils/api/rounds';
 import { RoundBreakdown } from './routes/RoundBreakdown';
 import { PartySection } from './routes/PartySection';
 
@@ -24,11 +24,11 @@ const rootIndexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   beforeLoad: async () => {
-    const rounds = await getAllRounds();
+    const rounds = await listVotingRounds();
     if (rounds && rounds.length > 0) {
       throw redirect({
         to: '/round/$roundId',
-        params: { roundId: rounds[0].voteId.toString() },
+        params: { roundId: rounds[0].id.toString() },
       });
     }
   },

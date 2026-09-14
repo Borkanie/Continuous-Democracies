@@ -1,10 +1,11 @@
-import type { Position } from './types';
+import type { VoteValue } from './types';
 
-export const VOTERS_TOTAL_NUMBER = 464;
-
-export const SECTION_LABELS: Record<Position, string> = {
-  0: 'Da',
-  1: 'Nu',
-  2: 'Abtinere',
-  3: 'Absent',
+export const SECTION_LABELS: Record<VoteValue, string> = {
+  Yes: 'Da',
+  No: 'Nu',
+  Abstain: 'Abtinere',
+  Absent: 'Absent',
 };
+
+/* Matches the steady-state parliament size assumed throughout the backend/seed data. */
+export const TOTAL_CHAMBER_MEMBERS = 330;

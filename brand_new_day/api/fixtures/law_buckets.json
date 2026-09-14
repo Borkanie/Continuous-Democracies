@@ -1,0 +1,506 @@
+[
+  {
+    "id": 18201,
+    "version": 1,
+    "plNumber": "PL-102/2023",
+    "title": "Legea pentru modificarea și completarea Codului Muncii",
+    "description": "Introduce reglementări privind munca la distanță și dreptul la deconectare.",
+    "initiationDate": "2023-02-14",
+    "status": "adopted",
+    "normatives": [
+      {
+        "id": "norm-18201-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "article",
+            "label": "Art. 5^1 - Munca la distanță (formă inițială)",
+            "text": "Angajatorul poate stabili unilateral programul de muncă la distanță, cu notificare cu 5 zile lucrătoare înainte.",
+            "effectiveDate": "2023-03-01",
+            "votingRound": {
+              "id": 500001,
+              "title": "Vot asupra art. 5^1 (formă inițială)",
+              "description": "Vot în plen asupra formei inițiale a articolului privind munca la distanță.",
+              "voteDate": "2023-02-20",
+              "majorityType": "absolute"
+            }
+          },
+          {
+            "version": 2,
+            "type": "article",
+            "label": "Art. 5^1 - Munca la distanță (formă revizuită)",
+            "text": "Programul de muncă la distanță se stabilește prin acordul scris al părților, cu notificare cu 10 zile lucrătoare înainte.",
+            "effectiveDate": "2023-05-15",
+            "votingRound": {
+              "id": 500002,
+              "title": "Vot asupra art. 5^1 (formă revizuită)",
+              "description": "Vot în plen asupra formei revizuite a articolului, după amendamentele adoptate în comisie.",
+              "voteDate": "2023-05-02",
+              "majorityType": "absolute"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18215,
+    "version": 1,
+    "plNumber": "PL-118/2023",
+    "title": "Legea privind protecția avertizorilor de integritate",
+    "description": "Reglementează procedura de raportare a neregulilor și protecția persoanelor care le semnalează.",
+    "initiationDate": "2023-03-01",
+    "status": "adopted",
+    "normatives": [
+      {
+        "id": "norm-18215-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "article",
+            "label": "Art. 12 - Procedura de raportare",
+            "text": "Raportarea se face către canalul intern de raportare sau, subsidiar, către Agenția Națională de Integritate.",
+            "effectiveDate": "2023-04-01",
+            "votingRound": {
+              "id": 500003,
+              "title": "Vot asupra art. 12",
+              "description": "Vot în plen asupra articolului privind procedura de raportare.",
+              "voteDate": "2023-03-20",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18215-2",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Adoptare formă finală a legii",
+            "text": "Se adoptă în ansamblu Legea privind protecția avertizorilor de integritate, cu amendamentele acceptate.",
+            "effectiveDate": "2023-04-20",
+            "votingRound": {
+              "id": 500004,
+              "title": "Vot final asupra legii",
+              "description": "Vot final în plen asupra întregii legi.",
+              "voteDate": "2023-04-10",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18233,
+    "version": 1,
+    "plNumber": "PL-140/2023",
+    "title": "Legea bugetului de stat pe anul 2024",
+    "description": "Stabilește veniturile și cheltuielile bugetului de stat pentru anul 2024.",
+    "initiationDate": "2023-11-05",
+    "status": "promulgated",
+    "normatives": [
+      {
+        "id": "norm-18233-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "article",
+            "label": "Art. 3 - Deficitul bugetar",
+            "text": "Deficitul bugetar se stabilește la nivelul de 2,9% din produsul intern brut.",
+            "effectiveDate": "2024-01-01",
+            "votingRound": {
+              "id": 500005,
+              "title": "Vot asupra art. 3",
+              "description": "Vot în plen asupra articolului privind deficitul bugetar.",
+              "voteDate": "2023-12-01",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18233-2",
+        "versions": [
+          {
+            "version": 1,
+            "type": "amendment",
+            "label": "Amendament - alocare fonduri pentru sănătate",
+            "text": "Se alocă suplimentar 500 milioane lei pentru dotarea spitalelor publice.",
+            "effectiveDate": "2024-01-01",
+            "votingRound": {
+              "id": 500006,
+              "title": "Vot asupra amendamentului privind sănătatea",
+              "description": "Vot în plen asupra amendamentului de alocare a fondurilor pentru sănătate.",
+              "voteDate": "2023-12-05",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18233-3",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Adoptare lege buget",
+            "text": "Se adoptă în ansamblu Legea bugetului de stat pe anul 2024.",
+            "effectiveDate": "2024-01-01",
+            "votingRound": {
+              "id": 500007,
+              "title": "Vot final asupra legii bugetului",
+              "description": "Vot final în plen asupra întregii legi a bugetului de stat.",
+              "voteDate": "2023-12-15",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18250,
+    "version": 1,
+    "plNumber": "PL-155/2023",
+    "title": "Legea privind achizițiile publice electronice",
+    "description": "Introduce obligativitatea desfășurării integrale a procedurilor de achiziție publică prin mijloace electronice.",
+    "initiationDate": "2023-04-12",
+    "status": "rejected",
+    "normatives": [
+      {
+        "id": "norm-18250-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Vot final asupra proiectului",
+            "text": "Se propune adoptarea în ansamblu a legii privind achizițiile publice electronice.",
+            "effectiveDate": "2023-06-01",
+            "votingRound": {
+              "id": 500008,
+              "title": "Vot final asupra proiectului de lege",
+              "description": "Vot final în plen; proiectul a fost respins.",
+              "voteDate": "2023-06-01",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18266,
+    "version": 1,
+    "plNumber": "PL-168/2023",
+    "title": "Legea pentru modificarea Codului Fiscal",
+    "description": "Modifică cotele de TVA aplicabile anumitor categorii de produse și servicii.",
+    "initiationDate": "2023-05-03",
+    "status": "adopted",
+    "normatives": [
+      {
+        "id": "norm-18266-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "amendment",
+            "label": "Amendament - cota TVA redusă pentru alimente",
+            "text": "Se stabilește o cotă TVA redusă de 5% pentru alimentele de bază.",
+            "effectiveDate": "2023-07-01",
+            "votingRound": {
+              "id": 500009,
+              "title": "Vot asupra amendamentului privind TVA la alimente",
+              "description": "Vot în plen asupra amendamentului privind cota TVA redusă.",
+              "voteDate": "2023-06-10",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18266-2",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Adoptare formă finală",
+            "text": "Se adoptă în ansamblu Legea pentru modificarea Codului Fiscal.",
+            "effectiveDate": "2023-07-01",
+            "votingRound": {
+              "id": 500010,
+              "title": "Vot final asupra legii",
+              "description": "Vot final în plen asupra întregii legi.",
+              "voteDate": "2023-06-20",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18281,
+    "version": 1,
+    "plNumber": "PL-172/2023",
+    "title": "Legea educației naționale (revizuire)",
+    "description": "Revizuiește finanțarea per elev și transpune un act european privind recunoașterea diplomelor.",
+    "initiationDate": "2023-05-20",
+    "status": "underDebate",
+    "normatives": [
+      {
+        "id": "norm-18281-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "article",
+            "label": "Art. 7 - Finanțarea per elev",
+            "text": "Finanțarea per elev se calculează anual prin hotărâre de Guvern, pe baza costului standard.",
+            "effectiveDate": "2023-09-01",
+            "votingRound": {
+              "id": 500011,
+              "title": "Vot asupra art. 7",
+              "description": "Vot în plen asupra articolului privind finanțarea per elev.",
+              "voteDate": "2023-07-01",
+              "majorityType": "absolute"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18281-2",
+        "versions": [
+          {
+            "version": 1,
+            "type": "referencedAct",
+            "label": "Raportare Directiva UE 2005/36/CE privind recunoașterea calificărilor",
+            "text": "Se raportează asupra transpunerii Directivei 2005/36/CE privind recunoașterea calificărilor profesionale.",
+            "effectiveDate": "2023-09-01",
+            "votingRound": {
+              "id": 500012,
+              "title": "Vot asupra raportului privind actul european",
+              "description": "Vot în plen asupra raportului de transpunere a directivei europene.",
+              "voteDate": "2023-07-05",
+              "majorityType": "absolute"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18281-3",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Vot final",
+            "text": "Se propune adoptarea în ansamblu a legii educației naționale revizuite.",
+            "effectiveDate": "2023-09-01",
+            "votingRound": {
+              "id": 500013,
+              "title": "Vot final asupra legii educației",
+              "description": "Vot final în plen asupra întregii legi.",
+              "voteDate": "2023-09-01",
+              "majorityType": "absolute"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18299,
+    "version": 1,
+    "plNumber": "PL-180/2023",
+    "title": "Legea privind combaterea evaziunii fiscale",
+    "description": "Definește și sancționează faptele de evaziune fiscală și introduce noi obligații de raportare.",
+    "initiationDate": "2023-06-02",
+    "status": "adopted",
+    "normatives": [
+      {
+        "id": "norm-18299-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "article",
+            "label": "Art. 2 - Definirea faptelor de evaziune",
+            "text": "Constituie evaziune fiscală ascunderea bunului sau sursei impozabile ori taxabile.",
+            "effectiveDate": "2023-10-01",
+            "votingRound": {
+              "id": 500014,
+              "title": "Vot asupra art. 2",
+              "description": "Vot în plen asupra articolului privind definirea evaziunii fiscale.",
+              "voteDate": "2023-08-10",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18310,
+    "version": 1,
+    "plNumber": "PL-190/2023",
+    "title": "Legea privind sănătatea animalelor",
+    "description": "Transpune reglementări europene privind sănătatea animalelor și controlul bolilor transmisibile.",
+    "initiationDate": "2023-06-15",
+    "status": "adopted",
+    "normatives": [
+      {
+        "id": "norm-18310-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "referencedAct",
+            "label": "Transpunere Regulament UE 2016/429",
+            "text": "Se transpune Regulamentul UE 2016/429 privind bolile transmisibile ale animalelor.",
+            "effectiveDate": "2023-11-01",
+            "votingRound": {
+              "id": 500015,
+              "title": "Vot asupra transpunerii regulamentului european",
+              "description": "Vot în plen asupra raportului de transpunere a regulamentului european.",
+              "voteDate": "2023-09-05",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18310-2",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Adoptare formă finală",
+            "text": "Se adoptă în ansamblu Legea privind sănătatea animalelor.",
+            "effectiveDate": "2023-11-01",
+            "votingRound": {
+              "id": 500016,
+              "title": "Vot final asupra legii",
+              "description": "Vot final în plen asupra întregii legi.",
+              "voteDate": "2023-09-15",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18325,
+    "version": 1,
+    "plNumber": "PL-205/2023",
+    "title": "Legea pentru modificarea Codului Penal",
+    "description": "Modifică regimul circumstanțelor atenuante și agravante pentru anumite infracțiuni.",
+    "initiationDate": "2023-07-01",
+    "status": "adopted",
+    "normatives": [
+      {
+        "id": "norm-18325-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "article",
+            "label": "Art. 44 - Circumstanțe atenuante",
+            "text": "Instanța poate reține circumstanțe atenuante în cazul reparării integrale a prejudiciului.",
+            "effectiveDate": "2023-12-01",
+            "votingRound": {
+              "id": 500017,
+              "title": "Vot asupra art. 44",
+              "description": "Vot în plen asupra articolului privind circumstanțele atenuante.",
+              "voteDate": "2023-09-20",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18325-2",
+        "versions": [
+          {
+            "version": 1,
+            "type": "amendment",
+            "label": "Amendament - agravante pentru recidivă",
+            "text": "Se introduce o circumstanță agravantă pentru infracțiunile comise în stare de recidivă.",
+            "effectiveDate": "2023-12-01",
+            "votingRound": {
+              "id": 500018,
+              "title": "Vot asupra amendamentului privind recidiva",
+              "description": "Vot în plen asupra amendamentului privind circumstanța agravantă de recidivă.",
+              "voteDate": "2023-09-22",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18325-3",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Vot final",
+            "text": "Se adoptă în ansamblu Legea pentru modificarea Codului Penal.",
+            "effectiveDate": "2023-12-01",
+            "votingRound": {
+              "id": 500019,
+              "title": "Vot final asupra legii",
+              "description": "Vot final în plen asupra întregii legi.",
+              "voteDate": "2023-10-01",
+              "majorityType": "qualified"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18340,
+    "version": 1,
+    "plNumber": "PL-220/2023",
+    "title": "Legea privind economia socială",
+    "description": "Stabilește criteriile de eligibilitate pentru întreprinderile de economie socială și de inserție.",
+    "initiationDate": "2023-08-01",
+    "status": "draft",
+    "normatives": [
+      {
+        "id": "norm-18340-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "amendment",
+            "label": "Amendament - criterii de eligibilitate",
+            "text": "Se extinde eligibilitatea la cooperativele agricole cu profil social.",
+            "effectiveDate": "2023-12-01",
+            "votingRound": {
+              "id": 500020,
+              "title": "Vot asupra amendamentului privind eligibilitatea",
+              "description": "Vot în plen asupra amendamentului privind criteriile de eligibilitate.",
+              "voteDate": "2023-10-10",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18340-2",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Vot final",
+            "text": "Se propune adoptarea în ansamblu a legii privind economia socială.",
+            "effectiveDate": "2023-12-01",
+            "votingRound": {
+              "id": 500021,
+              "title": "Vot final asupra legii",
+              "description": "Vot final în plen asupra întregii legi.",
+              "voteDate": "2023-10-20",
+              "majorityType": "simple"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

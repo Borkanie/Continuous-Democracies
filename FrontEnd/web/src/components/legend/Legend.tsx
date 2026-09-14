@@ -1,4 +1,3 @@
-import { useNavigate, useParams } from '@tanstack/react-router';
 import type { Slice } from '../chart/PieChart';
 import { LegendCard } from '../legend-card/LegendCard';
 import styles from './Legend.module.css';
@@ -10,21 +9,11 @@ const { Div, bold, cardsContainer, mh400 } = styles;
 type Props = {
   slices: Slice[];
   text: string;
+  onSliceClick?: (id: string | number) => void;
 };
 
 export const Legend = (props: Props) => {
-  const { slices, text } = props;
-
-  const navigate = useNavigate();
-  const { roundId, sectionId } = useParams({ strict: false });
-
-  const getPath = (id: string) => {
-    if (roundId && sectionId) {
-      return `party/${id}`;
-    } else if (roundId) {
-      return `section/${id}`;
-    }
-  };
+  const { slices, text, onSliceClick } = props;
 
   return (
     <div className={Div}>
@@ -38,9 +27,9 @@ export const Legend = (props: Props) => {
                 color={slice.color}
                 count={slice.value.count}
                 percentage={slice.value.percentage}
-                onClick={() =>
-                  slice.value.percentage > 0
-                    ? navigate({ to: getPath(slice.id.toString()) || '' })
+                onClick={
+                  slice.value.percentage > 0 && onSliceClick
+                    ? () => onSliceClick(slice.id)
                     : undefined
                 }
               />

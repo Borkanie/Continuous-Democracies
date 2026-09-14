@@ -1,0 +1,20 @@
+[
+  {
+    "_id": 100,
+    "version": 1,
+    "plNumber": "PL-001",
+    "title": "Law on Budget",
+    "description": "Budget law for fiscal year 2024",
+    "initiationDate": "2023-01-15T00:00:00Z",
+    "status": "enacted"
+  },
+  {
+    "_id": 101,
+    "version": 1,
+    "plNumber": "PL-002",
+    "title": "Law on Education",
+    "description": "Amendment to education law",
+    "initiationDate": "2023-03-20T00:00:00Z",
+    "status": "in_progress"
+  }
+]

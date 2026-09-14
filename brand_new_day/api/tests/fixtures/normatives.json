@@ -1,0 +1,46 @@
+[
+  {
+    "_id": {
+      "id": "norm-001",
+      "version": 1
+    },
+    "lawBucketId": 100,
+    "type": "article",
+    "label": "Article 1",
+    "text": "The state ensures the implementation of the budget.",
+    "effectiveDate": "2023-01-15T00:00:00Z"
+  },
+  {
+    "_id": {
+      "id": "norm-001",
+      "version": 2
+    },
+    "lawBucketId": 100,
+    "type": "article",
+    "label": "Article 1",
+    "text": "The state ensures the implementation of the budget with oversight.",
+    "effectiveDate": "2023-02-01T00:00:00Z"
+  },
+  {
+    "_id": {
+      "id": "norm-002",
+      "version": 1
+    },
+    "lawBucketId": 100,
+    "type": "amendment",
+    "label": "Amendment 1",
+    "text": "Amendment to article 2.",
+    "effectiveDate": "2023-01-15T00:00:00Z"
+  },
+  {
+    "_id": {
+      "id": "norm-003",
+      "version": 1
+    },
+    "lawBucketId": 101,
+    "type": "article",
+    "label": "Article 2",
+    "text": "Education shall be mandatory up to age 18.",
+    "effectiveDate": "2023-03-20T00:00:00Z"
+  }
+]

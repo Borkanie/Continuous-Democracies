@@ -1,4 +1,4 @@
-import type { Round } from '../../utils/types';
+import type { VotingRound } from '../../utils/types';
 import { DateComponent } from '../date/DateComponent';
 import { UiText } from '../ui/text/UiText';
 import styles from './RoundCard.module.css';
@@ -7,7 +7,7 @@ import classNames from 'classnames';
 const { Div, title, footer, header, selected } = styles;
 
 type Props = {
-  round: Round;
+  round: VotingRound;
   isSelected?: boolean;
   onSelect?: () => void;
 };

@@ -1,34 +1,35 @@
-import type { Round, VoteResult } from '../types';
+import type { VotingRound, HydratedVote } from '../types';
+import { API_BASE_URL } from './config';
 
-export const getAllRounds = async (searchTerm?: string): Promise<Round[]> => {
-  const params = new URLSearchParams();
-
-  if (searchTerm) {
-    params.set('keywords', encodeURIComponent(searchTerm));
+export const listVotingRounds = async (): Promise<VotingRound[]> => {
+  const response = await fetch(`${API_BASE_URL}/votingRounds`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch voting rounds: ${response.status}`);
   }
 
-  const url = `/api/Voting/getAllRounds${
-    params.toString() ? `?${params.toString()}` : ''
-  }`;
-  const response = await fetch(url);
+  return response.json();
+};
+
+export const getVotingRoundById = async (
+  roundId: string,
+): Promise<VotingRound> => {
+  const response = await fetch(`${API_BASE_URL}/votingRounds/${roundId}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch voting round ${roundId}: ${response.status}`);
+  }
 
   return response.json();
 };
 
-export const getRound = async (roundId: string): Promise<Round> => {
+export const getVotesByVotingRound = async (
+  roundId: string,
+): Promise<HydratedVote[]> => {
   const response = await fetch(
-    `/api/Voting/getRoundById?voteNumber=${roundId}`
+    `${API_BASE_URL}/votingRounds/${roundId}/votes`,
   );
-
-  return response.json();
-};
-
-export const getResultsByRoundId = async (
-  roundId: string
-): Promise<VoteResult[]> => {
-  const response = await fetch(
-    `/api/Voting/GetResultForVote?number=${roundId}`
-  );
+  if (!response.ok) {
+    throw new Error(`Failed to fetch votes for round ${roundId}: ${response.status}`);
+  }
 
   return response.json();
 };

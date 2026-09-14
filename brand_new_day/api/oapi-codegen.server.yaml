@@ -1,0 +1,4 @@
+package: generated
+generate:
+  chi-server: true
+output: internal/generated/server.go

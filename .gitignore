@@ -70,3 +70,4 @@ Backend/ParliamentMonitor/.vs/*
 .venv/
 __pycache__/
 *.pyc
+*.claude

@@ -2,7 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { RoundCard } from '../round-card/RoundCard';
 import { Search } from '../search/Search';
 import styles from './RoundsList.module.css';
-import { getAllRounds } from '../../utils/api/rounds';
+import { listVotingRounds } from '../../utils/api/rounds';
+import type { VotingRound } from '../../utils/types';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import classNames from 'classnames';
 import { Spinner } from '../spinner/Spinner';
@@ -17,15 +18,33 @@ import { ScrollableArea } from '../ui/scrollable-area/ScrollableArea';
 
 const { Div, header, inDrawer: inDrawerClass, topSide, headerRight } = styles;
 
+const filterRoundsByKeyword = (
+  rounds: VotingRound[] | undefined,
+  keyword: string,
+): VotingRound[] | undefined => {
+  if (!rounds || !keyword) {
+    return rounds;
+  }
+
+  const lowerKeyword = keyword.toLowerCase();
+  return rounds.filter(
+    (round) =>
+      round.title.toLowerCase().includes(lowerKeyword) ||
+      round.description.toLowerCase().includes(lowerKeyword),
+  );
+};
+
 export const RoundsList = ({ inDrawer = false }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const { debouncedValue, isTyping } = useDebounce(searchTerm);
   const { isDrawerOpen, setIsDrawerOpen } = useDrawer();
 
-  const { data, isFetching } = useQuery({
-    queryKey: ['rounds', debouncedValue],
-    queryFn: () => getAllRounds(debouncedValue),
+  const { data: allRounds, isFetching } = useQuery({
+    queryKey: ['rounds'],
+    queryFn: () => listVotingRounds(),
   });
+
+  const data = filterRoundsByKeyword(allRounds, debouncedValue);
 
   const navigate = useNavigate();
   const params = useParams({ strict: false });
@@ -57,16 +76,16 @@ export const RoundsList = ({ inDrawer = false }) => {
         ) : (
           <>
             {data && data.length > 0 ? (
-              data?.map((round, index) => (
+              data?.map((round) => (
                 <RoundCard
-                  key={round.voteId + '-' + index}
+                  key={round.id}
                   round={round}
-                  isSelected={roundId === round.voteId.toString()}
+                  isSelected={roundId === round.id.toString()}
                   onSelect={() => {
                     if (isDrawerOpen) {
                       setIsDrawerOpen(false);
                     }
-                    navigate({ to: `round/${round.voteId}` });
+                    navigate({ to: `round/${round.id}` });
                   }}
                 />
               ))

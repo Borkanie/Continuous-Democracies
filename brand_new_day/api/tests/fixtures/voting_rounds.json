@@ -1,0 +1,92 @@
+[
+  {
+    "_id": 1,
+    "title": "Final vote on budget",
+    "description": "First reading of the budget law",
+    "voteDate": "2023-02-01T10:00:00Z",
+    "normativeId": "norm-001",
+    "normativeVersion": 1,
+    "votes": [
+      {
+        "politicianId": "politician-001",
+        "partyId": "party-001",
+        "value": "Yes"
+      },
+      {
+        "politicianId": "politician-002",
+        "partyId": "party-002",
+        "value": "No"
+      },
+      {
+        "politicianId": "politician-003",
+        "partyId": "party-003",
+        "value": "Abstain"
+      }
+    ]
+  },
+  {
+    "_id": 2,
+    "title": "Amendment vote",
+    "description": "Vote on amendment 1",
+    "voteDate": "2023-02-05T14:00:00Z",
+    "normativeId": "norm-002",
+    "normativeVersion": 1,
+    "votes": [
+      {
+        "politicianId": "politician-001",
+        "partyId": "party-001",
+        "value": "Yes"
+      },
+      {
+        "politicianId": "politician-002",
+        "partyId": "party-002",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "_id": 3,
+    "title": "Updated budget vote",
+    "description": "Second reading of the budget law with updates",
+    "voteDate": "2023-02-10T11:00:00Z",
+    "normativeId": "norm-001",
+    "normativeVersion": 2,
+    "votes": [
+      {
+        "politicianId": "politician-001",
+        "partyId": "party-001",
+        "value": "Yes"
+      },
+      {
+        "politicianId": "politician-002",
+        "partyId": "party-002",
+        "value": "Yes"
+      },
+      {
+        "politicianId": "politician-003",
+        "partyId": "party-003",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "_id": 4,
+    "title": "Education law vote",
+    "description": "Vote on education law amendment",
+    "voteDate": "2023-03-25T09:00:00Z",
+    "normativeId": "norm-003",
+    "normativeVersion": 1,
+    "votes": [
+      {
+        "politicianId": "politician-001",
+        "partyId": "party-001",
+        "value": "Absent"
+      },
+      {
+        "politicianId": "politician-002",
+        "partyId": "party-002",
+        "value": "Yes"
+      }
+    ]
+  }
+]

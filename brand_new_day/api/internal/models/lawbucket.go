@@ -1,0 +1,19 @@
+package models
+
+import "time"
+
+// LawBucket is the real-world law/bill. Its _id is the natural external key
+// (cdep's idp), so no redundant synthetic UUID is stored. Normatives is never
+// persisted on this document — it is populated at read time via $lookup,
+// embedding the current (highest-version) normative for each distinct
+// normative id belonging to this bucket.
+type LawBucket struct {
+	ID             int         `bson:"_id" json:"id"`
+	Version        int         `bson:"version" json:"version"`
+	PLNumber       string      `bson:"plNumber" json:"plNumber"`
+	Title          string      `bson:"title" json:"title"`
+	Description    string      `bson:"description" json:"description"`
+	InitiationDate time.Time   `bson:"initiationDate" json:"initiationDate"`
+	Status         string      `bson:"status" json:"status"`
+	Normatives     []Normative `bson:"normatives,omitempty" json:"normatives"`
+}

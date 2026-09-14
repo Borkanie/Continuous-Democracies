@@ -1,11 +1,11 @@
-import type { VoteResult } from '../../utils/types';
+import type { HydratedVote } from '../../utils/types';
 import styles from './PoliticiansList.module.css';
 import { ScrollableArea } from '../ui/scrollable-area/ScrollableArea';
 import classNames from 'classnames';
 
 const { list, card, imageContainer, mh60 } = styles;
 
-type Props = { vote: VoteResult[]; className?: string };
+type Props = { vote: HydratedVote[]; className?: string };
 
 export const PoliticiansList = (props: Props) => {
   const { vote, className } = props;

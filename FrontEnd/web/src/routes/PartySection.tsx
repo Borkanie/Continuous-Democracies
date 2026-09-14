@@ -2,16 +2,13 @@ import { useParams } from '@tanstack/react-router';
 import { Header } from '../components/section/header';
 import sharedStyles from './styles/RoundBreakdown.module.css';
 import { useQuery } from '@tanstack/react-query';
-import { getRound } from '../utils/api/rounds';
+import { getVotingRoundById } from '../utils/api/rounds';
 import classNames from 'classnames';
 import { UiText } from '../components/ui/text/UiText';
-import {
-  buildPartyPieData,
-  groupVotesByPartyForPosition,
-} from './RoundSection';
+import { groupVotesByPartyForPosition } from './RoundSection';
 import { useResultsByRoundId } from '../utils/hooks/useResultsByRoundId';
-import type { PieChartData } from '../components/chart/PieChart';
 import { PoliticiansList } from '../components/politicians-list/PoliticiansList';
+import { getVoteStatus } from '../utils/helper';
 
 const { Div, separator, content, bold, chartTitle } = sharedStyles;
 
@@ -21,18 +18,14 @@ export const PartySection = () => {
   const { data: roundData } = useQuery({
     queryKey: ['roundById', roundId],
     enabled: !!roundId,
-    queryFn: ({ queryKey }) => getRound(queryKey[1] || ''),
+    queryFn: ({ queryKey }) => getVotingRoundById(queryKey[1] || ''),
   });
 
   const { data: groupedRoundResults } = useResultsByRoundId(roundId);
-  const partyPieData = buildPartyPieData(groupedRoundResults, sectionId);
-  const getPartyById = (partyPieData: PieChartData, partyId: string) => {
-    return partyPieData.slices.find((party) => party.id === partyId);
-  };
-  const party = getPartyById(partyPieData, partyId || '');
   const votes = groupVotesByPartyForPosition(groupedRoundResults, sectionId)[
     partyId || ''
   ];
+  const party = votes?.[0]?.party;
 
   const title = `${roundData?.title} `;
 
@@ -42,6 +35,12 @@ export const PartySection = () => {
         title={title}
         description={roundData?.description}
         extraDetails={{ voteDate: roundData?.voteDate }}
+        status={
+          groupedRoundResults && roundData
+            ? getVoteStatus(groupedRoundResults, roundData.majorityType)
+            : undefined
+        }
+        majorityType={roundData?.majorityType}
       />
       <div className={separator}></div>
 
@@ -49,7 +48,7 @@ export const PartySection = () => {
       <div className={content}>
         <UiText
           className={classNames(bold, chartTitle)}
-          text={`Votanti per partid - ${party?.label} (${party?.acronym || ''})`}
+          text={`Votanti per partid - ${party?.name} (${party?.acronym || ''})`}
         />
         <PoliticiansList vote={votes || []} />
       </div>

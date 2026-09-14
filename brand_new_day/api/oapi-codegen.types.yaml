@@ -1,0 +1,11 @@
+package: generated
+generate:
+  models: true
+output: internal/generated/types.go
+compatibility:
+  # Without this, oapi-codegen emits the members of the top-level
+  # VoteValue/NormativeType enum schemas as bare package-level identifiers
+  # (Yes, No, Absent, Article, Amendment, ...), which pollutes the `generated`
+  # namespace and collides the moment two enums share a member name.
+  # Prefixing yields VoteValueYes / NormativeTypeArticle instead.
+  always-prefix-enum-values: true

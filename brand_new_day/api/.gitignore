@@ -1,0 +1,10 @@
+# MongoDB bind-mounted data directory (see docker-compose.yml)
+data/mongo/*
+!data/mongo/.gitkeep
+
+# mongodump archives produced by `make snapshot`
+snapshot.gz
+
+# compiled binaries
+/server
+/seed

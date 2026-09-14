@@ -1,7 +1,6 @@
-// Color is now a hex string (e.g. "#D40000") from the Go API.
 export type PartyColor = string;
 
-type Party = {
+export type Party = {
   acronym: string;
   logoUrl: string | null;
   color: PartyColor;
@@ -13,28 +12,29 @@ type Party = {
 export type Politician = {
   gender: number;
   imageUrl: string | null;
-  party: Party;
+  partyId: string;
   active: boolean;
   workLocation: number;
   id: string;
   name: string;
 };
 
-export type Round = {
-  id: string;
+export type MajorityType = 'simple' | 'absolute' | 'qualified';
+
+export type VotingRound = {
+  id: number;
   title: string;
   description: string;
   voteDate: Date;
-  voteId: number;
-  name: string;
+  majorityType: MajorityType;
 };
 
-export type Position = 0 | 1 | 2 | 3;
+export type VoteValue = 'Yes' | 'No' | 'Abstain' | 'Absent';
 
-export type VoteResult = {
+export type HydratedVote = {
+  politicianId: string;
+  partyId: string;
+  value: VoteValue;
   politician: Politician;
-  position: Position;
-  round: Round;
-  id: string;
-  name: string;
+  party: Party;
 };

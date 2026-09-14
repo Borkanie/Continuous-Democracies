@@ -1,0 +1,38 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongo:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # Built from ./Dockerfile (multi-stage; produces both the server and the
+  # seeder binaries). The image's own HEALTHCHECK curls /health, so
+  # `docker compose ps` reports readiness accurately.
+  #
+  # NOTE: on a TLS-intercepting network `docker compose build api` currently
+  # fails inside `go mod download` (unknown certificate authority) — see the
+  # long comment at the top of ./Dockerfile for the two candidate fixes.
+  # `docker compose up -d mongo` plus a host-side `make seed && make run`
+  # is the verified startup path in the meantime.
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017
+      DB_NAME: brandnewdaydb
+      PORT: "8090"
+      LOG_LEVEL: info
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
