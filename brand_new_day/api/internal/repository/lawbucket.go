@@ -21,7 +21,7 @@ type LawBucketRepository interface {
 // LawBucketRepositoryMongo is the MongoDB-backed LawBucketRepository
 // implementation.
 type LawBucketRepositoryMongo struct {
-	lawBucketsCollection *mongo.Collection
+	lawBucketsCollection db.MongoCollection
 }
 
 var _ LawBucketRepository = (*LawBucketRepositoryMongo)(nil)
@@ -30,7 +30,7 @@ var _ LawBucketRepository = (*LawBucketRepositoryMongo)(nil)
 // given database's law_buckets collection.
 func NewLawBucketRepository(database *mongo.Database) *LawBucketRepositoryMongo {
 	return &LawBucketRepositoryMongo{
-		lawBucketsCollection: database.Collection(db.CollectionLawBuckets),
+		lawBucketsCollection: db.GetLoggingCollection(database, db.CollectionLawBuckets),
 	}
 }
 

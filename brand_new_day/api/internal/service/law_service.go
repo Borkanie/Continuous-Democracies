@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log/slog"
 
 	"github.com/borkanie/brand-new-day-api/internal/generated"
 	"github.com/borkanie/brand-new-day-api/internal/repository"
@@ -31,6 +32,7 @@ func NewLawService(
 
 // ListLawBuckets returns every law bucket, with its current normatives embedded.
 func (service *LawService) ListLawBuckets(requestContext context.Context) ([]generated.LawBucket, error) {
+	slog.DebugContext(requestContext, "service call started")
 	lawBucketModels, err := service.lawBucketRepository.ListLawBuckets(requestContext)
 	if err != nil {
 		return nil, err
@@ -46,6 +48,7 @@ func (service *LawService) ListLawBuckets(requestContext context.Context) ([]gen
 // GetLawBucketByID returns a single law bucket by id, with its current normatives embedded,
 // or repository.ErrNotFound if absent.
 func (service *LawService) GetLawBucketByID(requestContext context.Context, lawBucketID int) (*generated.LawBucket, error) {
+	slog.DebugContext(requestContext, "service call started", "lawBucketID", lawBucketID)
 	lawBucketModel, err := service.lawBucketRepository.GetLawBucketByID(requestContext, lawBucketID)
 	if err != nil {
 		return nil, err
@@ -60,6 +63,7 @@ func (service *LawService) GetLawBucketByID(requestContext context.Context, lawB
 // (-> HTTP 404) rather than an empty 200. Each round's Votes field is emptied to keep the list
 // response small, same rationale as VotingService.ListVotingRounds.
 func (service *LawService) GetVotingRoundsByLawBucket(requestContext context.Context, lawBucketID int) ([]generated.VotingRound, error) {
+	slog.DebugContext(requestContext, "service call started", "lawBucketID", lawBucketID)
 	if _, err := service.lawBucketRepository.GetLawBucketByID(requestContext, lawBucketID); err != nil {
 		return nil, err
 	}

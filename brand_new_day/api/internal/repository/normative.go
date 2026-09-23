@@ -22,7 +22,7 @@ type NormativeRepository interface {
 // NormativeRepositoryMongo is the MongoDB-backed NormativeRepository
 // implementation.
 type NormativeRepositoryMongo struct {
-	normativesCollection *mongo.Collection
+	normativesCollection db.MongoCollection
 }
 
 var _ NormativeRepository = (*NormativeRepositoryMongo)(nil)
@@ -31,7 +31,7 @@ var _ NormativeRepository = (*NormativeRepositoryMongo)(nil)
 // database's normatives collection.
 func NewNormativeRepository(database *mongo.Database) *NormativeRepositoryMongo {
 	return &NormativeRepositoryMongo{
-		normativesCollection: database.Collection(db.CollectionNormatives),
+		normativesCollection: db.GetLoggingCollection(database, db.CollectionNormatives),
 	}
 }
 

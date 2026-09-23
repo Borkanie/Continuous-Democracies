@@ -26,8 +26,8 @@ type VotingRoundRepository interface {
 // VotingRoundRepositoryMongo is the MongoDB-backed VotingRoundRepository
 // implementation.
 type VotingRoundRepositoryMongo struct {
-	votingRoundsCollection *mongo.Collection
-	normativesCollection   *mongo.Collection
+	votingRoundsCollection db.MongoCollection
+	normativesCollection   db.MongoCollection
 }
 
 var _ VotingRoundRepository = (*VotingRoundRepositoryMongo)(nil)
@@ -37,8 +37,8 @@ var _ VotingRoundRepository = (*VotingRoundRepositoryMongo)(nil)
 // ListVotingRoundsByLawBucketID's two-step join, the normatives collection).
 func NewVotingRoundRepository(database *mongo.Database) *VotingRoundRepositoryMongo {
 	return &VotingRoundRepositoryMongo{
-		votingRoundsCollection: database.Collection(db.CollectionVotingRounds),
-		normativesCollection:   database.Collection(db.CollectionNormatives),
+		votingRoundsCollection: db.GetLoggingCollection(database, db.CollectionVotingRounds),
+		normativesCollection:   db.GetLoggingCollection(database, db.CollectionNormatives),
 	}
 }
 

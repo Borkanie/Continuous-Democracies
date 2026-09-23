@@ -22,7 +22,7 @@ type PoliticianRepository interface {
 // PoliticianRepositoryMongo is the MongoDB-backed PoliticianRepository
 // implementation.
 type PoliticianRepositoryMongo struct {
-	politiciansCollection *mongo.Collection
+	politiciansCollection db.MongoCollection
 }
 
 var _ PoliticianRepository = (*PoliticianRepositoryMongo)(nil)
@@ -31,7 +31,7 @@ var _ PoliticianRepository = (*PoliticianRepositoryMongo)(nil)
 // given database's politicians collection.
 func NewPoliticianRepository(database *mongo.Database) *PoliticianRepositoryMongo {
 	return &PoliticianRepositoryMongo{
-		politiciansCollection: database.Collection(db.CollectionPoliticians),
+		politiciansCollection: db.GetLoggingCollection(database, db.CollectionPoliticians),
 	}
 }
 

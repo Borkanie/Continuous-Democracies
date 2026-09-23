@@ -38,6 +38,7 @@ func NewVotingService(
 // ListVotingRounds returns every voting round. Each round's Votes field is emptied to keep the
 // list response small; fetch GET /votingRounds/{roundId}/votes for the hydrated votes of a round.
 func (service *VotingService) ListVotingRounds(requestContext context.Context) ([]generated.VotingRound, error) {
+	slog.DebugContext(requestContext, "service call started")
 	votingRoundModels, err := service.votingRoundRepository.ListVotingRounds(requestContext)
 	if err != nil {
 		return nil, err
@@ -50,6 +51,7 @@ func (service *VotingService) ListVotingRounds(requestContext context.Context) (
 // and its parent law bucket inline. If the normative or law bucket cannot be resolved, that DTO
 // field is left zero-valued and a warning is logged rather than failing the whole request.
 func (service *VotingService) GetVotingRoundByID(requestContext context.Context, votingRoundID int) (*generated.VotingRoundDetail, error) {
+	slog.DebugContext(requestContext, "service call started", "votingRoundID", votingRoundID)
 	votingRoundModel, err := service.votingRoundRepository.GetVotingRoundByID(requestContext, votingRoundID)
 	if err != nil {
 		return nil, err
@@ -96,6 +98,7 @@ func (service *VotingService) GetVotingRoundByID(requestContext context.Context,
 // with the politician and party it references, preserving the embedded array's order. Politician
 // and party lookups are batched (one call each) rather than done per-vote.
 func (service *VotingService) GetVotesByVotingRound(requestContext context.Context, votingRoundID int) ([]generated.HydratedVote, error) {
+	slog.DebugContext(requestContext, "service call started", "votingRoundID", votingRoundID)
 	votingRoundModel, err := service.votingRoundRepository.GetVotingRoundByID(requestContext, votingRoundID)
 	if err != nil {
 		return nil, err

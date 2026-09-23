@@ -22,6 +22,8 @@ import (
 	"github.com/borkanie/brand-new-day-api/internal/controller"
 	"github.com/borkanie/brand-new-day-api/internal/db"
 	"github.com/borkanie/brand-new-day-api/internal/generated"
+	"github.com/borkanie/brand-new-day-api/internal/httplog"
+	"github.com/borkanie/brand-new-day-api/internal/logging"
 	"github.com/borkanie/brand-new-day-api/internal/repository"
 	"github.com/borkanie/brand-new-day-api/internal/service"
 	"github.com/borkanie/brand-new-day-api/internal/swagger"
@@ -43,9 +45,10 @@ func main() {
 func run() error {
 	configuration := config.Load()
 
-	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+	jsonHandler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 		Level: configuration.SlogLevel(),
-	})))
+	})
+	slog.SetDefault(slog.New(logging.NewTraceHandler(jsonHandler)))
 
 	mongoClient, database, err := db.ConnectClient(configuration.MongoURI, configuration.DatabaseName)
 	if err != nil {
@@ -88,7 +91,14 @@ func run() error {
 	apiController := controller.NewController(politicianService, votingService, lawService)
 
 	router := chi.NewRouter()
-	router.Use(middleware.RequestID)
+	router.Use(httplog.TraceIDMiddleware)
+	router.Use(func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(responseWriter http.ResponseWriter, request *http.Request) {
+			responseWriter.Header().Set("X-Trace-Id", middleware.GetReqID(request.Context()))
+			next.ServeHTTP(responseWriter, request)
+		})
+	})
+	router.Use(httplog.Middleware)
 	router.Use(middleware.RealIP)
 	router.Use(middleware.Recoverer)
 	router.Use(cors.Handler(cors.Options{

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log/slog"
 
 	"github.com/borkanie/brand-new-day-api/internal/generated"
 	"github.com/borkanie/brand-new-day-api/internal/repository"
@@ -30,6 +31,7 @@ func NewPoliticianService(
 
 // ListParties returns every party.
 func (service *PoliticianService) ListParties(requestContext context.Context) ([]generated.Party, error) {
+	slog.DebugContext(requestContext, "service call started")
 	partyModels, err := service.partyRepository.ListParties(requestContext)
 	if err != nil {
 		return nil, err
@@ -44,6 +46,7 @@ func (service *PoliticianService) ListParties(requestContext context.Context) ([
 
 // GetPartyByID returns a single party by id, or repository.ErrNotFound if absent.
 func (service *PoliticianService) GetPartyByID(requestContext context.Context, partyID string) (*generated.Party, error) {
+	slog.DebugContext(requestContext, "service call started", "partyID", partyID)
 	partyModel, err := service.partyRepository.GetPartyByID(requestContext, partyID)
 	if err != nil {
 		return nil, err
@@ -55,6 +58,7 @@ func (service *PoliticianService) GetPartyByID(requestContext context.Context, p
 
 // ListPoliticians returns every politician.
 func (service *PoliticianService) ListPoliticians(requestContext context.Context) ([]generated.Politician, error) {
+	slog.DebugContext(requestContext, "service call started")
 	politicianModels, err := service.politicianRepository.ListPoliticians(requestContext)
 	if err != nil {
 		return nil, err
@@ -69,6 +73,7 @@ func (service *PoliticianService) ListPoliticians(requestContext context.Context
 
 // GetPoliticianByID returns a single politician by id, or repository.ErrNotFound if absent.
 func (service *PoliticianService) GetPoliticianByID(requestContext context.Context, politicianID string) (*generated.Politician, error) {
+	slog.DebugContext(requestContext, "service call started", "politicianID", politicianID)
 	politicianModel, err := service.politicianRepository.GetPoliticianByID(requestContext, politicianID)
 	if err != nil {
 		return nil, err
@@ -82,6 +87,7 @@ func (service *PoliticianService) GetPoliticianByID(requestContext context.Conte
 // resolved voting round, normative, and law bucket. It first confirms the politician exists so
 // an unknown id yields repository.ErrNotFound (-> HTTP 404) rather than an empty 200.
 func (service *PoliticianService) GetVotesByPolitician(requestContext context.Context, politicianID string) ([]generated.PoliticianVoteEntry, error) {
+	slog.DebugContext(requestContext, "service call started", "politicianID", politicianID)
 	if _, err := service.politicianRepository.GetPoliticianByID(requestContext, politicianID); err != nil {
 		return nil, err
 	}

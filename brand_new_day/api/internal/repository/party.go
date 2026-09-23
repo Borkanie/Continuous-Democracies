@@ -21,7 +21,7 @@ type PartyRepository interface {
 
 // PartyRepositoryMongo is the MongoDB-backed PartyRepository implementation.
 type PartyRepositoryMongo struct {
-	partiesCollection *mongo.Collection
+	partiesCollection db.MongoCollection
 }
 
 var _ PartyRepository = (*PartyRepositoryMongo)(nil)
@@ -30,7 +30,7 @@ var _ PartyRepository = (*PartyRepositoryMongo)(nil)
 // database's parties collection.
 func NewPartyRepository(database *mongo.Database) *PartyRepositoryMongo {
 	return &PartyRepositoryMongo{
-		partiesCollection: database.Collection(db.CollectionParties),
+		partiesCollection: db.GetLoggingCollection(database, db.CollectionParties),
 	}
 }
 
