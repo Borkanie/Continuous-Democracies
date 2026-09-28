@@ -22,7 +22,8 @@
               "title": "Vot asupra art. 5^1 (formă inițială)",
               "description": "Vot în plen asupra formei inițiale a articolului privind munca la distanță.",
               "voteDate": "2023-02-20",
-              "majorityType": "absolute"
+              "majorityType": "absolute",
+              "chamber": "parliament"
             }
           },
           {
@@ -36,7 +37,8 @@
               "title": "Vot asupra art. 5^1 (formă revizuită)",
               "description": "Vot în plen asupra formei revizuite a articolului, după amendamentele adoptate în comisie.",
               "voteDate": "2023-05-02",
-              "majorityType": "absolute"
+              "majorityType": "absolute",
+              "chamber": "parliament"
             }
           }
         ]
@@ -47,6 +49,7 @@
     "id": 18215,
     "version": 1,
     "plNumber": "PL-118/2023",
+    "senateRegistrationNumber": "L-45/2023",
     "title": "Legea privind protecția avertizorilor de integritate",
     "description": "Reglementează procedura de raportare a neregulilor și protecția persoanelor care le semnalează.",
     "initiationDate": "2023-03-01",
@@ -66,7 +69,8 @@
               "title": "Vot asupra art. 12",
               "description": "Vot în plen asupra articolului privind procedura de raportare.",
               "voteDate": "2023-03-20",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -85,7 +89,28 @@
               "title": "Vot final asupra legii",
               "description": "Vot final în plen asupra întregii legi.",
               "voteDate": "2023-04-10",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18215-3",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Adoptare formă finală a legii (Senat)",
+            "text": "Senatul adoptă în ansamblu Legea privind protecția avertizorilor de integritate, ca for decizional.",
+            "effectiveDate": "2023-05-10",
+            "votingRound": {
+              "id": 500022,
+              "title": "Vot final Senat asupra legii",
+              "description": "Vot final în Senat, ca for decizional, asupra întregii legi.",
+              "voteDate": "2023-05-01",
+              "majorityType": "simple",
+              "chamber": "senate"
             }
           }
         ]
@@ -115,7 +140,8 @@
               "title": "Vot asupra art. 3",
               "description": "Vot în plen asupra articolului privind deficitul bugetar.",
               "voteDate": "2023-12-01",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -134,7 +160,8 @@
               "title": "Vot asupra amendamentului privind sănătatea",
               "description": "Vot în plen asupra amendamentului de alocare a fondurilor pentru sănătate.",
               "voteDate": "2023-12-05",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -153,7 +180,8 @@
               "title": "Vot final asupra legii bugetului",
               "description": "Vot final în plen asupra întregii legi a bugetului de stat.",
               "voteDate": "2023-12-15",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -183,7 +211,8 @@
               "title": "Vot final asupra proiectului de lege",
               "description": "Vot final în plen; proiectul a fost respins.",
               "voteDate": "2023-06-01",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -213,7 +242,8 @@
               "title": "Vot asupra amendamentului privind TVA la alimente",
               "description": "Vot în plen asupra amendamentului privind cota TVA redusă.",
               "voteDate": "2023-06-10",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -232,7 +262,8 @@
               "title": "Vot final asupra legii",
               "description": "Vot final în plen asupra întregii legi.",
               "voteDate": "2023-06-20",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -262,7 +293,8 @@
               "title": "Vot asupra art. 7",
               "description": "Vot în plen asupra articolului privind finanțarea per elev.",
               "voteDate": "2023-07-01",
-              "majorityType": "absolute"
+              "majorityType": "absolute",
+              "chamber": "parliament"
             }
           }
         ]
@@ -281,7 +313,8 @@
               "title": "Vot asupra raportului privind actul european",
               "description": "Vot în plen asupra raportului de transpunere a directivei europene.",
               "voteDate": "2023-07-05",
-              "majorityType": "absolute"
+              "majorityType": "absolute",
+              "chamber": "parliament"
             }
           }
         ]
@@ -300,7 +333,8 @@
               "title": "Vot final asupra legii educației",
               "description": "Vot final în plen asupra întregii legi.",
               "voteDate": "2023-09-01",
-              "majorityType": "absolute"
+              "majorityType": "absolute",
+              "chamber": "parliament"
             }
           }
         ]
@@ -330,7 +364,8 @@
               "title": "Vot asupra art. 2",
               "description": "Vot în plen asupra articolului privind definirea evaziunii fiscale.",
               "voteDate": "2023-08-10",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -360,7 +395,8 @@
               "title": "Vot asupra transpunerii regulamentului european",
               "description": "Vot în plen asupra raportului de transpunere a regulamentului european.",
               "voteDate": "2023-09-05",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -379,7 +415,8 @@
               "title": "Vot final asupra legii",
               "description": "Vot final în plen asupra întregii legi.",
               "voteDate": "2023-09-15",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -409,7 +446,8 @@
               "title": "Vot asupra art. 44",
               "description": "Vot în plen asupra articolului privind circumstanțele atenuante.",
               "voteDate": "2023-09-20",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -428,7 +466,8 @@
               "title": "Vot asupra amendamentului privind recidiva",
               "description": "Vot în plen asupra amendamentului privind circumstanța agravantă de recidivă.",
               "voteDate": "2023-09-22",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -447,7 +486,8 @@
               "title": "Vot final asupra legii",
               "description": "Vot final în plen asupra întregii legi.",
               "voteDate": "2023-10-01",
-              "majorityType": "qualified"
+              "majorityType": "qualified",
+              "chamber": "parliament"
             }
           }
         ]
@@ -477,7 +517,8 @@
               "title": "Vot asupra amendamentului privind eligibilitatea",
               "description": "Vot în plen asupra amendamentului privind criteriile de eligibilitate.",
               "voteDate": "2023-10-10",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]
@@ -496,7 +537,8 @@
               "title": "Vot final asupra legii",
               "description": "Vot final în plen asupra întregii legi.",
               "voteDate": "2023-10-20",
-              "majorityType": "simple"
+              "majorityType": "simple",
+              "chamber": "parliament"
             }
           }
         ]

@@ -3,6 +3,7 @@
     "_id": 100,
     "version": 1,
     "plNumber": "PL-001",
+    "senateRegistrationNumber": "L-001",
     "title": "Law on Budget",
     "description": "Budget law for fiscal year 2024",
     "initiationDate": "2023-01-15T00:00:00Z",

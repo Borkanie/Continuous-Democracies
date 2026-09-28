@@ -358,6 +358,10 @@ components:
       type: string
       enum: [simple, absolute, qualified]
 
+    Chamber:
+      type: string
+      enum: [parliament, senate]
+
     HealthResponse:
       type: object
       required: [status]
@@ -448,6 +452,13 @@ components:
           type: integer
         plNumber:
           type: string
+        senateRegistrationNumber:
+          type: string
+          description: >
+            The Senate's own registration number for this same bill (e.g.
+            "L235/2026"), pairing with plNumber (the Chamber of Deputies'
+            number, e.g. "PLX592/2025"). Absent until the bill has reached
+            the Senate / the pairing is known.
         title:
           type: string
         description:
@@ -484,6 +495,7 @@ components:
           normativeId,
           normativeVersion,
           majorityType,
+          chamber,
           votes,
         ]
       properties:
@@ -502,6 +514,8 @@ components:
           type: integer
         majorityType:
           $ref: "#/components/schemas/MajorityType"
+        chamber:
+          $ref: "#/components/schemas/Chamber"
         votes:
           type: array
           items:
@@ -518,6 +532,7 @@ components:
           normativeId,
           normativeVersion,
           majorityType,
+          chamber,
           votes,
           normative,
           lawBucket,
@@ -538,6 +553,8 @@ components:
           type: integer
         majorityType:
           $ref: "#/components/schemas/MajorityType"
+        chamber:
+          $ref: "#/components/schemas/Chamber"
         votes:
           type: array
           items:

@@ -3,8 +3,10 @@ import styles from './Header.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UiText } from '../text/UiText';
 import { ThemeToggle } from '../theme-toggle/ThemeToggle';
+import { ChamberToggle } from '../chamber-toggle/ChamberToggle';
 
-const { header, content, iconContainer, icon, details, flex } = styles;
+const { header, content, iconContainer, icon, details, flex, toggleGroup } =
+  styles;
 
 export const Header = () => {
   const heading = 'Voturi parlamentare';
@@ -24,7 +26,10 @@ export const Header = () => {
             </div>
           </div>
         </div>
-        <ThemeToggle />
+        <div className={`${flex} ${toggleGroup}`}>
+          <ChamberToggle />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

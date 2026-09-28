@@ -1,4 +1,4 @@
-import type { VoteValue, MajorityType, HydratedVote } from './types';
+import type { VoteValue, MajorityType, HydratedVote, Chamber } from './types';
 import type { Theme } from './context/ThemeContext';
 import { TOTAL_CHAMBER_MEMBERS } from './constants';
 
@@ -78,15 +78,17 @@ export const haze = (hexColor: string, theme: Theme, amount = 0.65): string => {
 export const getVoteStatus = (
   grouped: Record<VoteValue, HydratedVote[]>,
   majorityType: MajorityType,
+  chamber: Chamber,
 ): 'PASSED' | 'FAILED' => {
   const yesCount = grouped.Yes?.length ?? 0;
   const noCount = grouped.No?.length ?? 0;
+  const totalMembers = TOTAL_CHAMBER_MEMBERS[chamber];
 
   switch (majorityType) {
     case 'absolute':
-      return yesCount > TOTAL_CHAMBER_MEMBERS / 2 ? 'PASSED' : 'FAILED';
+      return yesCount > totalMembers / 2 ? 'PASSED' : 'FAILED';
     case 'qualified':
-      return yesCount >= Math.ceil((TOTAL_CHAMBER_MEMBERS * 2) / 3)
+      return yesCount >= Math.ceil((totalMembers * 2) / 3)
         ? 'PASSED'
         : 'FAILED';
     case 'simple':

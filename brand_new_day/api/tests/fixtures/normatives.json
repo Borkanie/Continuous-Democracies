@@ -42,5 +42,16 @@
     "label": "Article 2",
     "text": "Education shall be mandatory up to age 18.",
     "effectiveDate": "2023-03-20T00:00:00Z"
+  },
+  {
+    "_id": {
+      "id": "norm-senate-001",
+      "version": 1
+    },
+    "lawBucketId": 100,
+    "type": "wholeBillFinal",
+    "label": "Senate final adoption",
+    "text": "The Senate adopts the budget law in full, as decisional chamber.",
+    "effectiveDate": "2023-02-15T00:00:00Z"
   }
 ]

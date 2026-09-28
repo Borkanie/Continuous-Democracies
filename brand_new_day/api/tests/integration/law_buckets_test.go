@@ -130,9 +130,9 @@ func TestGetVotingRoundsByLawBucket_ReturnsAllRounds(testingInstance *testing.T)
 		testingInstance.Fatalf("decode response: %v", err)
 	}
 
-	// Law bucket 100 has 3 voting rounds (1, 2, 3)
-	if len(roundsList) != 3 {
-		testingInstance.Errorf("expected 3 voting rounds for law bucket 100, got %d", len(roundsList))
+	// Law bucket 100 has 4 voting rounds (1, 2, 3 in the Chamber of Deputies, 5 in the Senate)
+	if len(roundsList) != 4 {
+		testingInstance.Errorf("expected 4 voting rounds for law bucket 100, got %d", len(roundsList))
 	}
 
 	// Check that votes arrays are empty in list response

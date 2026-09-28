@@ -57,6 +57,7 @@ type votingRoundFixture struct {
 	Description  string `json:"description"`
 	VoteDate     string `json:"voteDate"`
 	MajorityType string `json:"majorityType"`
+	Chamber      string `json:"chamber"`
 }
 
 type normativeVersionFixture struct {
@@ -74,14 +75,15 @@ type normativeFixture struct {
 }
 
 type lawBucketFixture struct {
-	ID             int                `json:"id"`
-	Version        int                `json:"version"`
-	PLNumber       string             `json:"plNumber"`
-	Title          string             `json:"title"`
-	Description    string             `json:"description"`
-	InitiationDate string             `json:"initiationDate"`
-	Status         string             `json:"status"`
-	Normatives     []normativeFixture `json:"normatives"`
+	ID                       int                `json:"id"`
+	Version                  int                `json:"version"`
+	PLNumber                 string             `json:"plNumber"`
+	SenateRegistrationNumber string             `json:"senateRegistrationNumber"`
+	Title                    string             `json:"title"`
+	Description              string             `json:"description"`
+	InitiationDate           string             `json:"initiationDate"`
+	Status                   string             `json:"status"`
+	Normatives               []normativeFixture `json:"normatives"`
 }
 
 // --- Romanian name pools for deterministic politician generation --------
@@ -324,13 +326,14 @@ func seedLawData(
 		}
 
 		lawBucketDocuments = append(lawBucketDocuments, models.LawBucket{
-			ID:             lawBucket.ID,
-			Version:        lawBucket.Version,
-			PLNumber:       lawBucket.PLNumber,
-			Title:          lawBucket.Title,
-			Description:    lawBucket.Description,
-			InitiationDate: initiationDate,
-			Status:         lawBucket.Status,
+			ID:                       lawBucket.ID,
+			Version:                  lawBucket.Version,
+			PLNumber:                 lawBucket.PLNumber,
+			SenateRegistrationNumber: lawBucket.SenateRegistrationNumber,
+			Title:                    lawBucket.Title,
+			Description:              lawBucket.Description,
+			InitiationDate:           initiationDate,
+			Status:                   lawBucket.Status,
 		})
 
 		for _, normative := range lawBucket.Normatives {
@@ -377,6 +380,7 @@ func seedLawData(
 					NormativeID:      normative.ID,
 					NormativeVersion: normativeVersion.Version,
 					MajorityType:     normativeVersion.VotingRound.MajorityType,
+					Chamber:          normativeVersion.VotingRound.Chamber,
 					Votes:            votes,
 				})
 				votingRoundCount++

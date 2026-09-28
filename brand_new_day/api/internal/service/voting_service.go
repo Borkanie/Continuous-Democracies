@@ -65,6 +65,7 @@ func (service *VotingService) GetVotingRoundByID(requestContext context.Context,
 		NormativeId:      votingRoundModel.NormativeID,
 		NormativeVersion: votingRoundModel.NormativeVersion,
 		MajorityType:     generated.MajorityType(votingRoundModel.MajorityType),
+		Chamber:          generated.Chamber(votingRoundModel.Chamber),
 		Votes:            mapVotesModelToDTO(votingRoundModel.Votes),
 	}
 

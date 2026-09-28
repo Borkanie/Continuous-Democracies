@@ -93,6 +93,7 @@ func EnsureIndexes(requestContext context.Context, database *mongo.Database) err
 				// by this politician".
 				{Keys: bson.D{{Key: "votes.politicianId", Value: 1}}},
 				{Keys: bson.D{{Key: "normativeId", Value: 1}, {Key: "normativeVersion", Value: 1}}},
+				{Keys: bson.D{{Key: "chamber", Value: 1}}},
 				{
 					Keys: bson.D{
 						{Key: "title", Value: "text"},

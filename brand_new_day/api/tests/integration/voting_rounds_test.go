@@ -22,8 +22,8 @@ func TestListVotingRounds_ReturnsAllRounds(testingInstance *testing.T) {
 		testingInstance.Fatalf("decode response: %v", err)
 	}
 
-	if len(roundsList) != 4 {
-		testingInstance.Errorf("expected 4 voting rounds, got %d", len(roundsList))
+	if len(roundsList) != 5 {
+		testingInstance.Errorf("expected 5 voting rounds, got %d", len(roundsList))
 	}
 
 	// Check that votes arrays are empty in list response
@@ -58,6 +58,10 @@ func TestGetVotingRoundByID_ReturnsDetailWithVotes(testingInstance *testing.T) {
 
 	if roundData["title"] != "Final vote on budget" {
 		testingInstance.Errorf("expected title 'Final vote on budget', got %v", roundData["title"])
+	}
+
+	if roundData["chamber"] != "parliament" {
+		testingInstance.Errorf("expected chamber 'parliament', got %v", roundData["chamber"])
 	}
 
 	// Verify that the detail response includes the full votes array
@@ -258,6 +262,45 @@ func TestGetVotingRoundByID_NotFound(testingInstance *testing.T) {
 
 	if _, hasError := errorResponse["error"]; !hasError {
 		testingInstance.Error("expected error field in response")
+	}
+}
+
+func TestGetVotingRoundByID_SenateRoundHasSenateChamberAndResolvesLawBucketPairing(testingInstance *testing.T) {
+	// Round 5 is the Senate's own final-adoption vote on the same law bucket
+	// (100) that round 1/3 (Chamber of Deputies) voted on. Verifies the
+	// chamber field round-trips and that the law bucket resolved for a
+	// Senate round carries the registration-number pairing back to the
+	// Chamber of Deputies.
+	getRoundResponse, err := http.Get(testServer.URL + "/votingRounds/5")
+	if err != nil {
+		testingInstance.Fatalf("request failed: %v", err)
+	}
+	defer getRoundResponse.Body.Close()
+
+	if getRoundResponse.StatusCode != http.StatusOK {
+		testingInstance.Fatalf("expected 200, got %d", getRoundResponse.StatusCode)
+	}
+
+	var roundData map[string]interface{}
+	if err := json.NewDecoder(getRoundResponse.Body).Decode(&roundData); err != nil {
+		testingInstance.Fatalf("decode response: %v", err)
+	}
+
+	if roundData["chamber"] != "senate" {
+		testingInstance.Errorf("expected chamber 'senate', got %v", roundData["chamber"])
+	}
+
+	lawBucketInterface := roundData["lawBucket"]
+	if lawBucketInterface == nil {
+		testingInstance.Fatal("expected lawBucket field in round detail")
+	}
+	lawBucketData := lawBucketInterface.(map[string]interface{})
+
+	if lawBucketData["plNumber"] != "PL-001" {
+		testingInstance.Errorf("expected lawBucket plNumber 'PL-001', got %v", lawBucketData["plNumber"])
+	}
+	if lawBucketData["senateRegistrationNumber"] != "L-001" {
+		testingInstance.Errorf("expected lawBucket senateRegistrationNumber 'L-001', got %v", lawBucketData["senateRegistrationNumber"])
 	}
 }
 

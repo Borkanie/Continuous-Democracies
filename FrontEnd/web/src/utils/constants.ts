@@ -1,4 +1,4 @@
-import type { VoteValue } from './types';
+import type { Chamber, VoteValue } from './types';
 
 export const SECTION_LABELS: Record<VoteValue, string> = {
   Yes: 'Da',
@@ -7,5 +7,8 @@ export const SECTION_LABELS: Record<VoteValue, string> = {
   Absent: 'Absent',
 };
 
-/* Matches the steady-state parliament size assumed throughout the backend/seed data. */
-export const TOTAL_CHAMBER_MEMBERS = 330;
+/* Steady-state seat counts per chamber, used for absolute/qualified majority math. */
+export const TOTAL_CHAMBER_MEMBERS: Record<Chamber, number> = {
+  parliament: 330,
+  senate: 136,
+};

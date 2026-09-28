@@ -98,3 +98,30 @@ func TestAllNormativeTypes(testRunner *testing.T) {
 		require.Equal(testRunner, firstCallResult, secondCallResult)
 	})
 }
+
+func TestChamberConstants(testRunner *testing.T) {
+	testRunner.Run("ChamberParliament has exact value 'parliament'", func(testRunner *testing.T) {
+		require.Equal(testRunner, "parliament", models.ChamberParliament)
+	})
+
+	testRunner.Run("ChamberSenate has exact value 'senate'", func(testRunner *testing.T) {
+		require.Equal(testRunner, "senate", models.ChamberSenate)
+	})
+}
+
+func TestAllChambers(testRunner *testing.T) {
+	testRunner.Run("returns both chambers in stable order", func(testRunner *testing.T) {
+		allChambersResult := models.AllChambers()
+
+		require.Len(testRunner, allChambersResult, 2)
+		require.Equal(testRunner, "parliament", allChambersResult[0])
+		require.Equal(testRunner, "senate", allChambersResult[1])
+	})
+
+	testRunner.Run("returns same order on repeated calls", func(testRunner *testing.T) {
+		firstCallResult := models.AllChambers()
+		secondCallResult := models.AllChambers()
+
+		require.Equal(testRunner, firstCallResult, secondCallResult)
+	})
+}

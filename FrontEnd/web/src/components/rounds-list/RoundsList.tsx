@@ -3,7 +3,7 @@ import { RoundCard } from '../round-card/RoundCard';
 import { Search } from '../search/Search';
 import styles from './RoundsList.module.css';
 import { listVotingRounds } from '../../utils/api/rounds';
-import type { VotingRound } from '../../utils/types';
+import type { Chamber, VotingRound } from '../../utils/types';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import classNames from 'classnames';
 import { Spinner } from '../spinner/Spinner';
@@ -12,6 +12,7 @@ import { useDebounce } from '../../utils/hooks/useDebounce';
 import { EmptyState } from '../empty-state/EmptyState';
 import { UiText } from '../ui/text/UiText';
 import { useDrawer } from '../../utils/context/DrawerContext';
+import { useChamber } from '../../utils/context/ChamberContext';
 import { UiButton } from '../ui/button/UiButton';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ScrollableArea } from '../ui/scrollable-area/ScrollableArea';
@@ -34,17 +35,29 @@ const filterRoundsByKeyword = (
   );
 };
 
+// The backend has no chamber filter (deliberately -- it's a read-only,
+// no-CRUD, no-filters API), so it always returns every round across both
+// chambers; the chamber switch is applied client-side.
+const filterRoundsByChamber = (
+  rounds: VotingRound[] | undefined,
+  chamber: Chamber,
+): VotingRound[] | undefined => rounds?.filter((round) => round.chamber === chamber);
+
 export const RoundsList = ({ inDrawer = false }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const { debouncedValue, isTyping } = useDebounce(searchTerm);
   const { isDrawerOpen, setIsDrawerOpen } = useDrawer();
+  const { chamber } = useChamber();
 
   const { data: allRounds, isFetching } = useQuery({
     queryKey: ['rounds'],
     queryFn: () => listVotingRounds(),
   });
 
-  const data = filterRoundsByKeyword(allRounds, debouncedValue);
+  const data = filterRoundsByKeyword(
+    filterRoundsByChamber(allRounds, chamber),
+    debouncedValue,
+  );
 
   const navigate = useNavigate();
   const params = useParams({ strict: false });
@@ -85,7 +98,7 @@ export const RoundsList = ({ inDrawer = false }) => {
                     if (isDrawerOpen) {
                       setIsDrawerOpen(false);
                     }
-                    navigate({ to: `round/${round.id}` });
+                    navigate({ to: `/round/${round.id}` });
                   }}
                 />
               ))

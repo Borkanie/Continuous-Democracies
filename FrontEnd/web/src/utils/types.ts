@@ -21,12 +21,15 @@ export type Politician = {
 
 export type MajorityType = 'simple' | 'absolute' | 'qualified';
 
+export type Chamber = 'parliament' | 'senate';
+
 export type VotingRound = {
   id: number;
   title: string;
   description: string;
   voteDate: Date;
   majorityType: MajorityType;
+  chamber: Chamber;
 };
 
 export type VoteValue = 'Yes' | 'No' | 'Abstain' | 'Absent';

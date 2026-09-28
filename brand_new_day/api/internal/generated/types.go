@@ -7,6 +7,24 @@ import (
 	"time"
 )
 
+// Defines values for Chamber.
+const (
+	ChamberParliament Chamber = "parliament"
+	ChamberSenate     Chamber = "senate"
+)
+
+// Valid indicates whether the value is a known member of the Chamber enum.
+func (e Chamber) Valid() bool {
+	switch e {
+	case ChamberParliament:
+		return true
+	case ChamberSenate:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for MajorityType.
 const (
 	MajorityTypeAbsolute  MajorityType = "absolute"
@@ -76,6 +94,9 @@ func (e VoteValue) Valid() bool {
 	}
 }
 
+// Chamber defines model for Chamber.
+type Chamber string
+
 // ErrorResponse defines model for ErrorResponse.
 type ErrorResponse struct {
 	Error string `json:"error"`
@@ -102,9 +123,12 @@ type LawBucket struct {
 	InitiationDate time.Time   `json:"initiationDate"`
 	Normatives     []Normative `json:"normatives"`
 	PlNumber       string      `json:"plNumber"`
-	Status         string      `json:"status"`
-	Title          string      `json:"title"`
-	Version        int         `json:"version"`
+
+	// SenateRegistrationNumber The Senate's own registration number for this same bill (e.g. "L235/2026"), pairing with plNumber (the Chamber of Deputies' number, e.g. "PLX592/2025"). Absent until the bill has reached the Senate / the pairing is known.
+	SenateRegistrationNumber *string `json:"senateRegistrationNumber,omitempty"`
+	Status                   string  `json:"status"`
+	Title                    string  `json:"title"`
+	Version                  int     `json:"version"`
 }
 
 // MajorityType defines model for MajorityType.
@@ -165,6 +189,7 @@ type VoteValue string
 
 // VotingRound defines model for VotingRound.
 type VotingRound struct {
+	Chamber          Chamber      `json:"chamber"`
 	Description      string       `json:"description"`
 	Id               int          `json:"id"`
 	MajorityType     MajorityType `json:"majorityType"`
@@ -177,6 +202,7 @@ type VotingRound struct {
 
 // VotingRoundDetail defines model for VotingRoundDetail.
 type VotingRoundDetail struct {
+	Chamber          Chamber      `json:"chamber"`
 	Description      string       `json:"description"`
 	Id               int          `json:"id"`
 	LawBucket        LawBucket    `json:"lawBucket"`

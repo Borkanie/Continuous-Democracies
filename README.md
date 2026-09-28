@@ -1,6 +1,30 @@
 # Continuous-Democracies
 This project will allow us to see what the fuck the parlament is doing on our money at all times.
 
+## Run it locally
+
+Backend (`brand_new_day/`, canonical — see [`brand_new_day/README.md`](./brand_new_day/README.md) for details):
+
+```bash
+cd brand_new_day/api
+docker compose up -d mongo   # starts MongoDB only
+make seed                    # loads the mock dataset
+make run                     # starts the API on :8090
+```
+
+Frontend (`FrontEnd/web/`):
+
+```bash
+cd FrontEnd/web
+npm install
+npm run dev                  # starts Vite dev server on :5173
+```
+
+- API Swagger UI: http://localhost:8090/swagger/
+- Frontend: http://localhost:5173
+
+> `Backend/` and `new-backend/` below are legacy (.NET / earlier Go rewrite) and not the active backend.
+
 ## Architecture
 
 ### Deployment Pipeline

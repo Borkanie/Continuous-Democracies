@@ -58,15 +58,25 @@ func mapNormativesModelToDTO(normativeModels []models.Normative) []generated.Nor
 // mapping the already-embedded current normatives through as well.
 func mapLawBucketModelToDTO(lawBucketModel models.LawBucket) generated.LawBucket {
 	return generated.LawBucket{
-		Id:             lawBucketModel.ID,
-		Version:        lawBucketModel.Version,
-		PlNumber:       lawBucketModel.PLNumber,
-		Title:          lawBucketModel.Title,
-		Description:    lawBucketModel.Description,
-		InitiationDate: lawBucketModel.InitiationDate,
-		Status:         lawBucketModel.Status,
-		Normatives:     mapNormativesModelToDTO(lawBucketModel.Normatives),
+		Id:                       lawBucketModel.ID,
+		Version:                  lawBucketModel.Version,
+		PlNumber:                 lawBucketModel.PLNumber,
+		Title:                    lawBucketModel.Title,
+		Description:              lawBucketModel.Description,
+		InitiationDate:           lawBucketModel.InitiationDate,
+		Status:                   lawBucketModel.Status,
+		Normatives:               mapNormativesModelToDTO(lawBucketModel.Normatives),
+		SenateRegistrationNumber: stringPointerOrNil(lawBucketModel.SenateRegistrationNumber),
 	}
+}
+
+// stringPointerOrNil returns nil for an empty string, or a pointer to value otherwise. Used for
+// optional DTO fields (generated as *string by oapi-codegen) backed by an omitempty model field.
+func stringPointerOrNil(value string) *string {
+	if value == "" {
+		return nil
+	}
+	return &value
 }
 
 // mapVoteModelToDTO converts a models.Vote into the generated.Vote DTO.
@@ -99,6 +109,7 @@ func mapVotingRoundModelToDTO(votingRoundModel models.VotingRound) generated.Vot
 		NormativeId:      votingRoundModel.NormativeID,
 		NormativeVersion: votingRoundModel.NormativeVersion,
 		MajorityType:     generated.MajorityType(votingRoundModel.MajorityType),
+		Chamber:          generated.Chamber(votingRoundModel.Chamber),
 		Votes:            mapVotesModelToDTO(votingRoundModel.Votes),
 	}
 }

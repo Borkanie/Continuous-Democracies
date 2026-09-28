@@ -21,7 +21,28 @@
 
 .statusGroup {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 10px;
   flex-shrink: 0;
+}
+
+.statusItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: var(--theme-border-secondary);
+  background-color: var(--background-color-secondary);
+}
+
+.statusItemValue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statusLabel {
+  opacity: 0.6;
 }

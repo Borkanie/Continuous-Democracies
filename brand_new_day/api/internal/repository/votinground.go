@@ -177,6 +177,7 @@ func (votingRoundRepository *VotingRoundRepositoryMongo) ListVoteRecordsByPoliti
 				{Key: "voteDate", Value: "$voteDate"},
 				{Key: "normativeId", Value: "$normativeId"},
 				{Key: "normativeVersion", Value: "$normativeVersion"},
+				{Key: "chamber", Value: "$chamber"},
 				{Key: "votes", Value: bson.D{{Key: "$literal", Value: bson.A{}}}},
 			}},
 			{Key: "normative", Value: "$normative"},

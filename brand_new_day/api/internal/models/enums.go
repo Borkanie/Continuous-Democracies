@@ -49,3 +49,16 @@ const (
 func AllMajorityTypes() []string {
 	return []string{MajorityTypeSimple, MajorityTypeAbsolute, MajorityTypeQualified}
 }
+
+// Chamber enum: which house of Parliament a VotingRound was cast in. Exact
+// casing matters: it is serialized as-is into JSON responses and matches the
+// openapi.yaml enum.
+const (
+	ChamberParliament = "parliament"
+	ChamberSenate     = "senate"
+)
+
+// AllChambers returns every valid VotingRound.Chamber in a stable order.
+func AllChambers() []string {
+	return []string{ChamberParliament, ChamberSenate}
+}

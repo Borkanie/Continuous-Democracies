@@ -6,6 +6,7 @@
     "voteDate": "2023-02-01T10:00:00Z",
     "normativeId": "norm-001",
     "normativeVersion": 1,
+    "chamber": "parliament",
     "votes": [
       {
         "politicianId": "politician-001",
@@ -31,6 +32,7 @@
     "voteDate": "2023-02-05T14:00:00Z",
     "normativeId": "norm-002",
     "normativeVersion": 1,
+    "chamber": "parliament",
     "votes": [
       {
         "politicianId": "politician-001",
@@ -51,6 +53,7 @@
     "voteDate": "2023-02-10T11:00:00Z",
     "normativeId": "norm-001",
     "normativeVersion": 2,
+    "chamber": "parliament",
     "votes": [
       {
         "politicianId": "politician-001",
@@ -76,6 +79,7 @@
     "voteDate": "2023-03-25T09:00:00Z",
     "normativeId": "norm-003",
     "normativeVersion": 1,
+    "chamber": "parliament",
     "votes": [
       {
         "politicianId": "politician-001",
@@ -86,6 +90,32 @@
         "politicianId": "politician-002",
         "partyId": "party-002",
         "value": "Yes"
+      }
+    ]
+  },
+  {
+    "_id": 5,
+    "title": "Senate final vote on budget",
+    "description": "Senate final adoption of the budget law, as decisional chamber",
+    "voteDate": "2023-02-20T10:00:00Z",
+    "normativeId": "norm-senate-001",
+    "normativeVersion": 1,
+    "chamber": "senate",
+    "votes": [
+      {
+        "politicianId": "politician-001",
+        "partyId": "party-001",
+        "value": "Yes"
+      },
+      {
+        "politicianId": "politician-002",
+        "partyId": "party-002",
+        "value": "Yes"
+      },
+      {
+        "politicianId": "politician-003",
+        "partyId": "party-003",
+        "value": "No"
       }
     ]
   }

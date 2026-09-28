@@ -104,13 +104,13 @@ func TestGetVotesByPolitician_ReturnsVotes(testingInstance *testing.T) {
 		testingInstance.Fatalf("decode response: %v", err)
 	}
 
-	// politician-001 voted in rounds 1, 2, 3, and 4
-	if len(voteEntries) != 4 {
-		testingInstance.Errorf("expected 4 vote entries, got %d", len(voteEntries))
+	// politician-001 voted in rounds 1, 2, 3, 4, and 5
+	if len(voteEntries) != 5 {
+		testingInstance.Errorf("expected 5 vote entries, got %d", len(voteEntries))
 	}
 
 	// Verify that votes are sorted by voteDate descending
-	// Round 3 (2023-02-10), Round 2 (2023-02-05), Round 1 (2023-02-01)
+	// Round 4 (2023-03-25), Round 5 (2023-02-20), Round 3 (2023-02-10), Round 2 (2023-02-05), Round 1 (2023-02-01)
 	if len(voteEntries) >= 2 {
 		firstVoteDate := voteEntries[0]["votingRound"].(map[string]interface{})["voteDate"]
 		secondVoteDate := voteEntries[1]["votingRound"].(map[string]interface{})["voteDate"]

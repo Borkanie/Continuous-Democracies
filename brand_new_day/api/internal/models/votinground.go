@@ -26,6 +26,7 @@ type VotingRound struct {
 	NormativeID      string    `bson:"normativeId" json:"normativeId"`
 	NormativeVersion int       `bson:"normativeVersion" json:"normativeVersion"`
 	MajorityType     string    `bson:"majorityType" json:"majorityType"`
+	Chamber          string    `bson:"chamber" json:"chamber"`
 	Votes            []Vote    `bson:"votes" json:"votes"`
 }
 

@@ -37,7 +37,7 @@ export const PartySection = () => {
         extraDetails={{ voteDate: roundData?.voteDate }}
         status={
           groupedRoundResults && roundData
-            ? getVoteStatus(groupedRoundResults, roundData.majorityType)
+            ? getVoteStatus(groupedRoundResults, roundData.majorityType, roundData.chamber)
             : undefined
         }
         majorityType={roundData?.majorityType}

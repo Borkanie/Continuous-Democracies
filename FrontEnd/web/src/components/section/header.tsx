@@ -16,7 +16,8 @@ import { useTheme } from '../../utils/context/ThemeContext';
 import { positionColor, majorityTypeLabel } from '../../utils/helper';
 import type { MajorityType } from '../../utils/types';
 
-const { header, extraDetails, titleRow, statusGroup } = styles;
+const { header, extraDetails, titleRow, statusGroup, statusItem, statusItemValue, statusLabel } =
+  styles;
 
 type Props = {
   title: string;
@@ -55,15 +56,31 @@ export const Header = (props: Props) => {
         {status && (
           <div className={statusGroup}>
             {majorityType && (
-              <UiText text={majorityTypeLabel(majorityType)} size={'small'} />
+              <div className={statusItem}>
+                <UiText
+                  className={statusLabel}
+                  text={'Modalitate de votare'}
+                  size={'small'}
+                />
+                <UiText text={majorityTypeLabel(majorityType)} size={'small'} />
+              </div>
             )}
-            <FontAwesomeIcon
-              icon={status === 'PASSED' ? faCircleCheck : faCircleXmark}
-              title={status}
-              style={{
-                color: positionColor(status === 'PASSED' ? 'Yes' : 'No', theme),
-              }}
-            />
+            <div className={statusItem}>
+              <UiText className={statusLabel} text={'A trecut'} size={'small'} />
+              <div className={statusItemValue}>
+                <UiText
+                  text={status === 'PASSED' ? 'Da' : 'Nu'}
+                  size={'small'}
+                />
+                <FontAwesomeIcon
+                  icon={status === 'PASSED' ? faCircleCheck : faCircleXmark}
+                  title={status}
+                  style={{
+                    color: positionColor(status === 'PASSED' ? 'Yes' : 'No', theme),
+                  }}
+                />
+              </div>
+            </div>
           </div>
         )}
       </div>

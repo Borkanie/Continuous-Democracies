@@ -16,4 +16,11 @@ type LawBucket struct {
 	InitiationDate time.Time   `bson:"initiationDate" json:"initiationDate"`
 	Status         string      `bson:"status" json:"status"`
 	Normatives     []Normative `bson:"normatives,omitempty" json:"normatives"`
+
+	// SenateRegistrationNumber is the Senate's own registration number for
+	// this same bill (e.g. "L235/2026"), pairing with PLNumber (the Chamber
+	// of Deputies' registration number, e.g. "PLX592/2025") the same way
+	// both chambers' own sites cross-reference each other. Empty until the
+	// bill has actually reached the Senate / the pairing is known.
+	SenateRegistrationNumber string `bson:"senateRegistrationNumber,omitempty" json:"senateRegistrationNumber,omitempty"`
 }
