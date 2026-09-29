@@ -30,16 +30,21 @@ export const ChamberToggle = () => {
       }}
     >
       <motion.span
-        layout
+        animate={{ x: isSenate ? 'calc(100% + 5px)' : 0 }}
         transition={{ duration: 0.35, ease: 'easeInOut' }}
         style={{
           position: 'absolute',
           top: 3,
           bottom: 3,
-          left: isSenate ? '50%' : 3,
-          width: 'calc(50% - 3px)',
+          left: 3,
+          width: 'calc(50% - 5.5px)',
           borderRadius: 999,
-          backgroundColor: 'var(--background-color-secondary)',
+          background:
+            'color-mix(in srgb, var(--theme-color-primary) 22%, var(--background-color-primary) 78%)',
+          border: 'var(--theme-border-secondary)',
+          boxShadow: 'var(--theme-box-shadow-primary)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
         }}
       />
       <ToggleButtonGroup
@@ -47,11 +52,20 @@ export const ChamberToggle = () => {
         exclusive
         onChange={handleChange}
         aria-label={'Comuta intre Camera Deputatilor si Senat'}
+        sx={{ gap: '5px' }}
       >
-        <ToggleButton value={'parliament' as Chamber}>
+        <ToggleButton
+          value={'parliament' as Chamber}
+          sx={{ flex: 1, paddingInline: '19px' }}
+        >
           Camera Deputatilor
         </ToggleButton>
-        <ToggleButton value={'senate' as Chamber}>Senat</ToggleButton>
+        <ToggleButton
+          value={'senate' as Chamber}
+          sx={{ flex: 1, paddingInline: '19px' }}
+        >
+          Senat
+        </ToggleButton>
       </ToggleButtonGroup>
     </div>
   );

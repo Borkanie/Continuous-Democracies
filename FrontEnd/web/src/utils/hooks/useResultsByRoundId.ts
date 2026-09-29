@@ -21,7 +21,7 @@ export const useResultsByRoundId = (roundId: string | undefined) => {
   });
 };
 
-const groupVotesByValue = (votes: HydratedVote[]): GroupedVotes => {
+export const groupVotesByValue = (votes: HydratedVote[]): GroupedVotes => {
   const grouped: GroupedVotes = { Yes: [], No: [], Abstain: [], Absent: [] };
   votes.forEach((vote) => grouped[vote.value].push(vote));
   return grouped;

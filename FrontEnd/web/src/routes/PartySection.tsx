@@ -8,9 +8,18 @@ import { UiText } from '../components/ui/text/UiText';
 import { groupVotesByPartyForPosition } from './RoundSection';
 import { useResultsByRoundId } from '../utils/hooks/useResultsByRoundId';
 import { PoliticiansList } from '../components/politicians-list/PoliticiansList';
+import { PartyIcon } from '../components/ui/party-icon/PartyIcon';
 import { getVoteStatus } from '../utils/helper';
 
-const { Div, separator, content, bold, chartTitle } = sharedStyles;
+const {
+  Div,
+  separator,
+  content,
+  bold,
+  chartTitle,
+  watermarkWrapper,
+  watermark,
+} = sharedStyles;
 
 export const PartySection = () => {
   const { roundId, sectionId, partyId } = useParams({ strict: false });
@@ -50,7 +59,12 @@ export const PartySection = () => {
           className={classNames(bold, chartTitle)}
           text={`Votanti per partid - ${party?.name} (${party?.acronym || ''})`}
         />
-        <PoliticiansList vote={votes || []} />
+        <div className={watermarkWrapper}>
+          <div className={watermark}>
+            <PartyIcon party={party} size={220} />
+          </div>
+          <PoliticiansList vote={votes || []} showPartyIcon={false} />
+        </div>
       </div>
     </div>
   );

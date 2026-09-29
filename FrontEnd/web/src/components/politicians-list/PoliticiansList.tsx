@@ -1,27 +1,28 @@
 import type { HydratedVote } from '../../utils/types';
 import styles from './PoliticiansList.module.css';
 import { ScrollableArea } from '../ui/scrollable-area/ScrollableArea';
+import { VoteListItem } from '../vote-list-item/VoteListItem';
 import classNames from 'classnames';
 
-const { list, card, imageContainer, mh60 } = styles;
+const { list, mh60 } = styles;
 
-type Props = { vote: HydratedVote[]; className?: string };
+type Props = {
+  vote: HydratedVote[];
+  className?: string;
+  showPartyIcon?: boolean;
+};
 
 export const PoliticiansList = (props: Props) => {
-  const { vote, className } = props;
+  const { vote, className, showPartyIcon } = props;
   return (
     <ScrollableArea className={classNames(className, mh60)}>
       <ul className={list}>
-        {vote?.map(({ politician }) => (
-          <li key={politician.id} className={card}>
-            <div className={imageContainer}>
-              <img
-                src={politician.imageUrl || undefined}
-                alt={politician.name}
-              />
-            </div>
-            <div>{politician.name}</div>
-          </li>
+        {vote?.map((v) => (
+          <VoteListItem
+            key={v.politicianId}
+            vote={v}
+            showPartyIcon={showPartyIcon}
+          />
         ))}
       </ul>
     </ScrollableArea>
