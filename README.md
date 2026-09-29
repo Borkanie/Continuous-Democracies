@@ -3,27 +3,33 @@ This project will allow us to see what the fuck the parlament is doing on our mo
 
 ## Run it locally
 
-Backend (`brand_new_day/`, canonical — see [`brand_new_day/README.md`](./brand_new_day/README.md) for details):
+Everything (Mongo + API + frontend) runs via Docker Compose from `Backend/` (canonical — see [`Backend/README.md`](./Backend/README.md) for details). The API and frontend images are packaged from binaries built on the host rather than inside the container, because this network's TLS-intercepting proxy blocks `go mod download`/`pnpm install` from succeeding inside a build stage:
 
 ```bash
-cd brand_new_day/api
-docker compose up -d mongo   # starts MongoDB only
-make seed                    # loads the mock dataset
-make run                     # starts the API on :8090
+cd Backend/api && make docker-build   # host-builds the api binary (see api/Dockerfile)
 ```
-
-Frontend (`FrontEnd/web/`):
-
 ```bash
-cd FrontEnd/web
-npm install
-npm run dev                  # starts Vite dev server on :5173
+cd FrontEnd/web && VITE_API_BASE_URL=http://localhost:8090 pnpm build   # host-builds the frontend (see FrontEnd/web/Dockerfile)
+```
+```bash
+cd Backend
+docker compose up --build                    # mongo + api (:8090) + frontend (:8099)
+docker compose --profile seed run --rm seed  # optional: loads the mock dataset
 ```
 
 - API Swagger UI: http://localhost:8090/swagger/
-- Frontend: http://localhost:5173
+- Frontend: http://localhost:8099
 
-> `Backend/` and `new-backend/` below are legacy (.NET / earlier Go rewrite) and not the active backend.
+Skip the `seed` step to start with an empty database. Mongo data persists in a named volume across restarts — to wipe it and start fully empty again:
+
+```bash
+docker compose down -v   # stops everything, removes the mongo_data volume
+docker compose up -d     # fresh, empty Mongo - no seed step runs automatically
+```
+
+> Vite bakes `VITE_API_BASE_URL` into the frontend bundle at build time - always pass it explicitly as above; don't rely on `FrontEnd/web/.env.local` (it's checked in empty).
+
+> `new-backend/` below is legacy (an earlier Go rewrite) and not the active backend.
 
 ## Architecture
 

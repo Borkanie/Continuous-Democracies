@@ -1,0 +1,61 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # Uses the `backend-api` image tag built by `make -C api docker-build`
+  # (a plain `build:` here would re-run `docker build` from ./api without
+  # the pre-built server/seed binaries in place - see api/Dockerfile's
+  # top comment for why the build itself doesn't happen inside a container).
+  api:
+    image: backend-api
+    ports:
+      - "8090:8090"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017
+      DB_NAME: brandnewdaydb
+      PORT: "8090"
+      LOG_LEVEL: info
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Loads the mock dataset into `mongo`. Not part of the default `up` -
+  # run explicitly: `docker compose --profile seed run --rm seed`.
+  seed:
+    image: backend-api
+    entrypoint: ["/usr/local/bin/seed"]
+    environment:
+      MONGODB_URI: mongodb://mongo:27017
+      DB_NAME: brandnewdaydb
+    depends_on:
+      mongo:
+        condition: service_healthy
+    profiles: ["seed"]
+
+  # dist/ must exist before this builds - in ../FrontEnd/web first run:
+  #   pnpm install
+  #   VITE_API_BASE_URL=http://localhost:8090 pnpm build
+  # Vite bakes VITE_API_BASE_URL into the bundle at build time - don't rely
+  # on .env.local for this (it's checked in empty; only useful if you've
+  # personally exported the var in your own shell profile for `pnpm dev`).
+  frontend:
+    build:
+      context: ../FrontEnd/web
+    ports:
+      - "8099:80"
+    depends_on:
+      - api
+
+volumes:
+  mongo_data:
