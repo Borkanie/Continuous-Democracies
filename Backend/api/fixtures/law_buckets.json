@@ -544,5 +544,155 @@
         ]
       }
     ]
+  },
+  {
+    "id": 18350,
+    "version": 1,
+    "plNumber": "PL-153/2025",
+    "senateRegistrationNumber": "L-136/2025",
+    "title": "Legea privind declararea anului 2026 ca \"Anul Nadia Comăneci\"",
+    "description": "Declară anul 2026 drept «Anul Nadia Comăneci», în semn de recunoaștere a performanțelor sportive ale gimnastei, la 50 de ani de la prima notă de 10 din istoria gimnasticii. Depusă la 26 martie 2025 și trimisă Senatului ca primă Cameră sesizată; inițiatori din mai multe partide, printre care Ruxandra Cibu Deaconu (co-inițiatoare, alături de alți parlamentari — nu autoarea unică). Parcurs real: Senat (adoptat, 14 mai 2025) → Camera Deputaților, for decizional (adoptat, 11 iunie 2025) → Legea nr. 130/2025, promulgată prin Decretul nr. 775/2025 și publicată în Monitorul Oficial nr. 651 din 10 iulie 2025. Ce s-a schimbat efectiv: anul 2026 este desemnat oficial cu acest nume; legea nu modifică niciun alt act normativ și nu creează obligații bugetare proprii dincolo de recunoașterea simbolică.",
+    "initiationDate": "2025-03-26",
+    "status": "promulgated",
+    "normatives": [
+      {
+        "id": "norm-18350-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Adoptare în Senat (primă Cameră sesizată)",
+            "text": "Senatul, ca primă Cameră sesizată, se pronunță printr-un singur vot asupra raportului comun de admitere (Comisia pentru administrație publică și Comisia pentru tineret și sport) și a propunerii legislative. Această etapă nu produce încă efectul legal - ea doar înaintează propunerea Camerei Deputaților, care este for decizional pentru acest tip de lege.",
+            "effectiveDate": "2025-05-14",
+            "votingRound": {
+              "id": 500023,
+              "title": "Vot final în Senat - Anul Nadia Comăneci",
+              "description": "Rezultat real (stenograma ședinței de plen, 14 mai 2025): 119 voturi pentru, 0 împotrivă, 1 abținere. Propunerea este adoptată de Senat și înaintată Camerei Deputaților, care va decide forma finală.",
+              "voteDate": "2025-05-14",
+              "majorityType": "simple",
+              "chamber": "senate",
+              "tally": { "yes": 119, "no": 0, "abstain": 1 }
+            }
+          }
+        ]
+      },
+      {
+        "id": "norm-18350-2",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Adoptare finală - Camera Deputaților (for decizional)",
+            "text": "Camera Deputaților, for decizional, adoptă legea în forma finală: anul 2026 este declarat oficial \"Anul Nadia Comăneci\". Această etapă este cea care produce efectiv schimbarea legală - Senatul fiind doar prima Cameră sesizată, votul său nu avea, singur, efect normativ.",
+            "effectiveDate": "2025-07-10",
+            "votingRound": {
+              "id": 500024,
+              "title": "Vot final în Camera Deputaților - Anul Nadia Comăneci",
+              "description": "Rezultat real (fișa cdep.ro a proiectului PL-x 153/2025, 11 iunie 2025): 307 voturi pentru, 0 împotrivă, 0 abțineri, 1 parlamentar absent. Fiind for decizional, acest vot finalizează procesul legislativ; legea este trimisă la promulgare și devine Legea nr. 130/2025, publicată în Monitorul Oficial nr. 651 din 10 iulie 2025.",
+              "voteDate": "2025-06-11",
+              "majorityType": "simple",
+              "chamber": "parliament",
+              "tally": { "yes": 307, "no": 0, "abstain": 0 }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18360,
+    "version": 1,
+    "plNumber": "PL-195/2025",
+    "senateRegistrationNumber": "L-158/2025",
+    "title": "Legea pentru modificarea art. 143 din Legea învățământului preuniversitar nr. 198/2023",
+    "description": "Modifică art. 143 din Legea învățământului preuniversitar nr. 198/2023 astfel încât unitățile de învățământ special din sistemul privat și confesional să poată fi finanțate de la bugetul de stat, în aceleași condiții ca cele din sistemul public. Proiect cu 43 de inițiatori, printre care Ruxandra Cibu Deaconu (co-inițiatoare). Ce s-ar schimba dacă va fi promulgată: elevii cu nevoi educaționale speciale înscriși în școli speciale private sau confesionale ar primi, pentru prima dată, finanțare publică egală cu cea a unităților de stat. Adoptată de Senat (10 iunie 2025, 111 voturi pentru, 0 împotrivă, 12 abțineri); la Camera Deputaților, for decizional, este încă în procedură — trimisă pentru raport la Comisia pentru învățământ, cu avize de la comisiile de buget, muncă, sănătate, juridică și drepturile omului. Nu este încă lege, așa că finanțarea nu s-a schimbat încă.",
+    "initiationDate": "2025-04-10",
+    "status": "underDebate",
+    "normatives": [
+      {
+        "id": "norm-18360-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "article",
+            "label": "Art. 143 - Finanțarea învățământului special privat și confesional",
+            "text": "Unitățile de învățământ special din sistemul privat și confesional sunt finanțate de la bugetul de stat, în aceleași condiții ca cele din sistemul public de învățământ special.",
+            "effectiveDate": "2025-09-01",
+            "votingRound": {
+              "id": 500025,
+              "title": "Vot în Senat - finanțarea învățământului special privat și confesional",
+              "description": "Senatul adoptă proiectul cu 111 voturi pentru, 0 împotrivă și 12 abțineri; proiectul este trimis la Camera Deputaților, for decizional, înregistrat ca PL-x 195/2025.",
+              "voteDate": "2025-06-10",
+              "majorityType": "absolute",
+              "chamber": "senate"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18370,
+    "version": 1,
+    "plNumber": "PL-226/2025",
+    "senateRegistrationNumber": "L-155/2025",
+    "title": "Legea pentru modificarea și completarea OUG nr. 41/2022 privind sistemul RO e-Transport",
+    "description": "Modifică OUG nr. 41/2022 privind sistemul național RO e-Transport, prin care transportatorii raportează electronic datele despre transportul rutier al bunurilor cu risc fiscal ridicat. 12 senatori inițiatori, printre care Ruxandra Cibu Deaconu (co-inițiatoare). Ce s-ar schimba dacă ar fi adoptată: regulile de raportare din sistemul RO e-Transport ar fi modificate conform propunerii. Senatul a respins proiectul (24 iunie 2025); fiindcă domeniul fiscal rutier are Camera Deputaților ca for decizional, proiectul a fost trimis la Cameră pentru dezbatere — soarta finală rămâne deschisă, iar până la un vot final al Camerei, sistemul RO e-Transport funcționează neschimbat.",
+    "initiationDate": "2025-05-12",
+    "status": "underDebate",
+    "normatives": [
+      {
+        "id": "norm-18370-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Vot final în Senat",
+            "text": "Se propune modificarea OUG nr. 41/2022 privind sistemul RO e-Transport.",
+            "effectiveDate": "2025-06-24",
+            "votingRound": {
+              "id": 500026,
+              "title": "Vot final în Senat - RO e-Transport",
+              "description": "Senatul respinge proiectul de modificare a OUG nr. 41/2022; proiectul este trimis la Camera Deputaților, for decizional, pentru dezbatere și vot final.",
+              "voteDate": "2025-06-24",
+              "majorityType": "simple",
+              "chamber": "senate"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18380,
+    "version": 1,
+    "plNumber": "PL-198/2025",
+    "senateRegistrationNumber": "L-132/2025",
+    "title": "Legea pentru modificarea Codului Fiscal privind firmele aflate în insolvență",
+    "description": "Modifică Codul fiscal cu privire la regimul firmelor aflate în insolvență. Inițiativă a unui grup de parlamentari USR, printre care Ruxandra Cibu Deaconu (co-inițiatoare). Ce s-ar schimba dacă ar fi adoptată: regimul fiscal aplicabil firmelor în insolvență s-ar modifica conform propunerii. Senatul a respins proiectul (10 iunie 2025); a fost trimis la Camera Deputaților (for decizional), unde este în continuare la Comisia pentru buget, finanțe și bănci, cu avize de la alte comisii. În februarie 2026, Guvernul a transmis un punct de vedere negativ. Proiectul nu a fost adoptat, deci regimul fiscal al firmelor în insolvență nu s-a schimbat.",
+    "initiationDate": "2025-04-25",
+    "status": "underDebate",
+    "normatives": [
+      {
+        "id": "norm-18380-1",
+        "versions": [
+          {
+            "version": 1,
+            "type": "wholeBillFinal",
+            "label": "Vot final în Senat",
+            "text": "Se propune modificarea Codului fiscal pentru regimul firmelor aflate în insolvență.",
+            "effectiveDate": "2025-06-10",
+            "votingRound": {
+              "id": 500027,
+              "title": "Vot final în Senat - Cod fiscal (insolvență)",
+              "description": "Senatul respinge proiectul de modificare a Codului fiscal pentru firmele în insolvență; proiectul este trimis la Camera Deputaților, for decizional, pentru dezbatere. Guvernul a transmis, în februarie 2026, un punct de vedere negativ.",
+              "voteDate": "2025-06-10",
+              "majorityType": "simple",
+              "chamber": "senate"
+            }
+          }
+        ]
+      }
+    ]
   }
 ]

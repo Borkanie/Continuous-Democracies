@@ -1,0 +1,1208 @@
+[
+  {
+    "id": "sen-001",
+    "name": "ABRUDEAN Mircea",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-001.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 13
+  },
+  {
+    "id": "sen-002",
+    "name": "ALDEA Valentina-Mariana",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-002.jpg",
+    "partyId": "party-neafiliati",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-003",
+    "name": "ALEXANDRU Victoria-Violeta",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-003.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-004",
+    "name": "ANGHEL Razvan-Paul",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-004.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 2
+  },
+  {
+    "id": "sen-005",
+    "name": "ANISIE Monica-Cristina",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-005.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-006",
+    "name": "ANTAL István-Loránt",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-006.jpg",
+    "partyId": "party-udmr",
+    "active": true,
+    "workLocation": 21
+  },
+  {
+    "id": "sen-007",
+    "name": "BARCARI Dorina",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-007.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 8
+  },
+  {
+    "id": "sen-008",
+    "name": "BEM Cristian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-008.jpg",
+    "partyId": "party-pace",
+    "active": true,
+    "workLocation": 39
+  },
+  {
+    "id": "sen-009",
+    "name": "BICĂ Andra",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-009.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 40
+  },
+  {
+    "id": "sen-010",
+    "name": "BLAGA Vasile",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-010.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 37
+  },
+  {
+    "id": "sen-011",
+    "name": "BOCHILEANU George-Cătălin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-011.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 43
+  },
+  {
+    "id": "sen-012",
+    "name": "BODEA Marius",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-012.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 24
+  },
+  {
+    "id": "sen-013",
+    "name": "BOLOJAN Ilie",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-013.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 5
+  },
+  {
+    "id": "sen-014",
+    "name": "BORȚUN Ștefan",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-014.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 38
+  },
+  {
+    "id": "sen-015",
+    "name": "BOTA Gheorghe-Ioan",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-015.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 5
+  },
+  {
+    "id": "sen-016",
+    "name": "BUZATU Oana-Constantina",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-016.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 27
+  },
+  {
+    "id": "sen-017",
+    "name": "CARP Ionel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-017.jpg",
+    "partyId": "party-pace",
+    "active": true,
+    "workLocation": 38
+  },
+  {
+    "id": "sen-018",
+    "name": "CATANA Claudiu-Daniel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-018.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 36
+  },
+  {
+    "id": "sen-019",
+    "name": "CAZANCIUC Robert-Marius",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-019.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-020",
+    "name": "CAȘCAVAL Dan",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-020.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 24
+  },
+  {
+    "id": "sen-021",
+    "name": "CERNIC Sebastian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-021.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 4
+  },
+  {
+    "id": "sen-022",
+    "name": "CERVA Nadia-Cosmina",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-022.jpg",
+    "partyId": "party-pace",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-023",
+    "name": "CHELARU Mircia",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-023.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 3
+  },
+  {
+    "id": "sen-024",
+    "name": "CHERTIF Costache",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-024.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 26
+  },
+  {
+    "id": "sen-025",
+    "name": "CIBU DEACONU Ruxandra",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-025.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 34
+  },
+  {
+    "id": "sen-026",
+    "name": "CIUPERCEANU Ionuț-Ciprian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-026.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 36
+  },
+  {
+    "id": "sen-027",
+    "name": "CONSTANTINESCU Rodica",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-027.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 18
+  },
+  {
+    "id": "sen-028",
+    "name": "CORLĂŢEAN Titus",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-028.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 16
+  },
+  {
+    "id": "sen-029",
+    "name": "COTEȚ Mihai",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-029.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 3
+  },
+  {
+    "id": "sen-030",
+    "name": "COȘA Silviu-Iulian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-030.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 14
+  },
+  {
+    "id": "sen-031",
+    "name": "CSEKE Attila-Zoltan",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-031.jpg",
+    "partyId": "party-udmr",
+    "active": true,
+    "workLocation": 5
+  },
+  {
+    "id": "sen-032",
+    "name": "CSÁSZÁR Károly Zsolt",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-032.jpg",
+    "partyId": "party-udmr",
+    "active": true,
+    "workLocation": 28
+  },
+  {
+    "id": "sen-033",
+    "name": "CUȘNIR Rodica",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-033.jpg",
+    "partyId": "party-pace",
+    "active": true,
+    "workLocation": 35
+  },
+  {
+    "id": "sen-034",
+    "name": "CÎMPEANU Sorin-Mihai",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-034.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-035",
+    "name": "DARĂU Ambrozie-Irineu",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-035.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 8
+  },
+  {
+    "id": "sen-036",
+    "name": "DOBRA Elena-Adelina",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-036.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 16
+  },
+  {
+    "id": "sen-037",
+    "name": "DOGARIU Eugen",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-037.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 37
+  },
+  {
+    "id": "sen-038",
+    "name": "DUMITRESCU Cristina-Gabriella",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-038.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 24
+  },
+  {
+    "id": "sen-039",
+    "name": "DUNCA Marius-Alexandru",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-039.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 8
+  },
+  {
+    "id": "sen-040",
+    "name": "DÎRLĂU Andrei-Emil",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-040.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 1
+  },
+  {
+    "id": "sen-041",
+    "name": "FEDEROVICI Doina-Elena",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-041.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 7
+  },
+  {
+    "id": "sen-042",
+    "name": "FEJÉR László-Ődőn",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-042.jpg",
+    "partyId": "party-udmr",
+    "active": true,
+    "workLocation": 15
+  },
+  {
+    "id": "sen-043",
+    "name": "FENECHIU Cătălin-Daniel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-043.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 4
+  },
+  {
+    "id": "sen-044",
+    "name": "FLOROIU Ionel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-044.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 4
+  },
+  {
+    "id": "sen-045",
+    "name": "FLUTUR Gheorghe",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-045.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 35
+  },
+  {
+    "id": "sen-046",
+    "name": "FODOCA Liviu-Iulian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-046.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 33
+  },
+  {
+    "id": "sen-047",
+    "name": "GEAMĂNU Ștefan",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-047.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 43
+  },
+  {
+    "id": "sen-048",
+    "name": "GHEORGHE Daniel-Paul-Romeo",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-048.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 29
+  },
+  {
+    "id": "sen-049",
+    "name": "GHINEA Cristian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-049.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-050",
+    "name": "GHIȚĂ Robert-Daniel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-050.jpg",
+    "partyId": "party-neafiliati",
+    "active": true,
+    "workLocation": 30
+  },
+  {
+    "id": "sen-051",
+    "name": "GRAUR Cătălin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-051.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 41
+  },
+  {
+    "id": "sen-052",
+    "name": "HORGA Maria-Gabriela",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-052.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 19
+  },
+  {
+    "id": "sen-053",
+    "name": "HUMELNICU Marius",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-053.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 18
+  },
+  {
+    "id": "sen-054",
+    "name": "IACOB Constantin-Ciprian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-054.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 16
+  },
+  {
+    "id": "sen-055",
+    "name": "JITARU Ovidiu",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-055.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 7
+  },
+  {
+    "id": "sen-056",
+    "name": "KONDOR Ágota",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-056.jpg",
+    "partyId": "party-udmr",
+    "active": true,
+    "workLocation": 15
+  },
+  {
+    "id": "sen-057",
+    "name": "KOVÁCS Maté",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-057.jpg",
+    "partyId": "party-udmr",
+    "active": true,
+    "workLocation": 32
+  },
+  {
+    "id": "sen-058",
+    "name": "LAVRIC Sorin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-058.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 29
+  },
+  {
+    "id": "sen-059",
+    "name": "MANEA Dumitru",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-059.jpg",
+    "partyId": "party-neafiliati",
+    "active": true,
+    "workLocation": 24
+  },
+  {
+    "id": "sen-060",
+    "name": "MARIAN Călin-Petru",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-060.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 22
+  },
+  {
+    "id": "sen-061",
+    "name": "MAZILU Liviu-Lucian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-061.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 27
+  },
+  {
+    "id": "sen-062",
+    "name": "MIHAI Daniela",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-062.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 12
+  },
+  {
+    "id": "sen-063",
+    "name": "MIRCESCU Ion-Narcis",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-063.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 3
+  },
+  {
+    "id": "sen-064",
+    "name": "MOHAN Aurel-George",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-064.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 5
+  },
+  {
+    "id": "sen-065",
+    "name": "MOISE Sorin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-065.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 9
+  },
+  {
+    "id": "sen-066",
+    "name": "MÎNDRU Cătălin-Emil",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-066.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 39
+  },
+  {
+    "id": "sen-067",
+    "name": "MĂLĂIESCU Luca",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-067.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 11
+  },
+  {
+    "id": "sen-068",
+    "name": "MĂRGINEAN Lucian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-068.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 28
+  },
+  {
+    "id": "sen-069",
+    "name": "NEAGU Nicolae",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-069.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 34
+  },
+  {
+    "id": "sen-070",
+    "name": "NEGOI Eugen-Remus",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-070.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 14
+  },
+  {
+    "id": "sen-071",
+    "name": "NEGRU Corneliu",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-071.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 41
+  },
+  {
+    "id": "sen-072",
+    "name": "NICULA Mircea-Cristian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-072.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 6
+  },
+  {
+    "id": "sen-073",
+    "name": "NICULESCU-ŢÂGÂRLAŞ Cristian-Augustin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-073.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 26
+  },
+  {
+    "id": "sen-074",
+    "name": "NOVAK Levente",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-074.jpg",
+    "partyId": "party-udmr",
+    "active": true,
+    "workLocation": 28
+  },
+  {
+    "id": "sen-075",
+    "name": "ONEA Olga",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-075.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 18
+  },
+  {
+    "id": "sen-076",
+    "name": "OPREA Ştefan-Radu",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-076.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 31
+  },
+  {
+    "id": "sen-077",
+    "name": "OPRINOIU Aurel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-077.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 31
+  },
+  {
+    "id": "sen-078",
+    "name": "ORBAN Carmen",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-078.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 10
+  },
+  {
+    "id": "sen-079",
+    "name": "PARASCA Teofil",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-079.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 2
+  },
+  {
+    "id": "sen-080",
+    "name": "PAULIUC Nicoleta",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-080.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 25
+  },
+  {
+    "id": "sen-081",
+    "name": "PEIA Ninel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-081.jpg",
+    "partyId": "party-pace",
+    "active": true,
+    "workLocation": 31
+  },
+  {
+    "id": "sen-082",
+    "name": "PEIU Grigore-Adrian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-082.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 23
+  },
+  {
+    "id": "sen-083",
+    "name": "PEIU Petrișor-Gabriel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-083.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-084",
+    "name": "PETRE George-Cezar",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-084.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 30
+  },
+  {
+    "id": "sen-085",
+    "name": "PETREA Dorin-Silviu",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-085.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 9
+  },
+  {
+    "id": "sen-086",
+    "name": "PINTEA Paul-Ciprian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-086.jpg",
+    "partyId": "party-neafiliati",
+    "active": true,
+    "workLocation": 33
+  },
+  {
+    "id": "sen-087",
+    "name": "PLĂEȘU Laurențiu",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-087.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 31
+  },
+  {
+    "id": "sen-088",
+    "name": "POTECĂ Vasilică",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-088.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 22
+  },
+  {
+    "id": "sen-089",
+    "name": "PREDOIU Marian-Cătălin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-089.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 31
+  },
+  {
+    "id": "sen-090",
+    "name": "PRESURĂ Alexandra",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-090.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 17
+  },
+  {
+    "id": "sen-091",
+    "name": "PUIU Ovidiu",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-091.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 3
+  },
+  {
+    "id": "sen-092",
+    "name": "PĂDURARU Răducu-Adrian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-092.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 29
+  },
+  {
+    "id": "sen-093",
+    "name": "PĂLĂRIE Ștefan",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-093.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-094",
+    "name": "PĂSCULESCU Veta",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-094.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 17
+  },
+  {
+    "id": "sen-095",
+    "name": "PĂUCEAN-FERNANDES Luminița",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-095.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 34
+  },
+  {
+    "id": "sen-096",
+    "name": "PĂUN Ana-Cynthia-Ioana",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-096.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 25
+  },
+  {
+    "id": "sen-097",
+    "name": "RESMERIŢĂ Cornel-Cristian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-097.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 22
+  },
+  {
+    "id": "sen-098",
+    "name": "ROBE Liviu Sorin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-098.jpg",
+    "partyId": "party-neafiliati",
+    "active": true,
+    "workLocation": 6
+  },
+  {
+    "id": "sen-099",
+    "name": "ROMAN Marius-Valentin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-099.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 10
+  },
+  {
+    "id": "sen-100",
+    "name": "RUJAN Ion-Cristinel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-100.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 20
+  },
+  {
+    "id": "sen-101",
+    "name": "RUS Vasile-Ciprian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-101.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 13
+  },
+  {
+    "id": "sen-102",
+    "name": "RUSU Ioan-Cristian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-102.jpg",
+    "partyId": "party-pace",
+    "active": true,
+    "workLocation": 12
+  },
+  {
+    "id": "sen-103",
+    "name": "RUSU Petrică Lucian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-103.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 24
+  },
+  {
+    "id": "sen-104",
+    "name": "RĂCUCI Claudiu-Vasile",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-104.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 1
+  },
+  {
+    "id": "sen-105",
+    "name": "SANDU Mircea-Ionuț",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-105.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 20
+  },
+  {
+    "id": "sen-106",
+    "name": "SAVA Clement",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-106.jpg",
+    "partyId": "party-pace",
+    "active": true,
+    "workLocation": 14
+  },
+  {
+    "id": "sen-107",
+    "name": "SILEGEANU Cătălin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-107.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 7
+  },
+  {
+    "id": "sen-108",
+    "name": "SPAU Dumitru",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-108.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 40
+  },
+  {
+    "id": "sen-109",
+    "name": "SPĂTARU Elena-Simona",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-109.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-110",
+    "name": "STAN Ioan",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-110.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 35
+  },
+  {
+    "id": "sen-111",
+    "name": "STELEA Niculina",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-111.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-112",
+    "name": "STOICA Ciprian-Titi",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-112.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 37
+  },
+  {
+    "id": "sen-113",
+    "name": "STOICIU Victoria",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-113.jpg",
+    "partyId": "party-neafiliati",
+    "active": true,
+    "workLocation": 39
+  },
+  {
+    "id": "sen-114",
+    "name": "STREINU CERCEL Adrian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-114.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-115",
+    "name": "STROE Felix",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-115.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 14
+  },
+  {
+    "id": "sen-116",
+    "name": "STĂNESCU Paul",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-116.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 30
+  },
+  {
+    "id": "sen-117",
+    "name": "TASNADI Istvan-Szilard",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-117.jpg",
+    "partyId": "party-udmr",
+    "active": true,
+    "workLocation": 13
+  },
+  {
+    "id": "sen-118",
+    "name": "TUROS Lóránd",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-118.jpg",
+    "partyId": "party-udmr",
+    "active": true,
+    "workLocation": 32
+  },
+  {
+    "id": "sen-119",
+    "name": "TÁNCZOS Barna",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-119.jpg",
+    "partyId": "party-udmr",
+    "active": true,
+    "workLocation": 21
+  },
+  {
+    "id": "sen-120",
+    "name": "TĂNĂSESCU Alina-Elena",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-120.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 17
+  },
+  {
+    "id": "sen-121",
+    "name": "VARGA Glad-Aurel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-121.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 2
+  },
+  {
+    "id": "sen-122",
+    "name": "VASILE Marian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-122.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 17
+  },
+  {
+    "id": "sen-123",
+    "name": "VELA Gheorghe",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-123.jpg",
+    "partyId": "party-neafiliati",
+    "active": true,
+    "workLocation": 11
+  },
+  {
+    "id": "sen-124",
+    "name": "VEŞTEA Mihail",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-124.jpg",
+    "partyId": "party-pnl",
+    "active": true,
+    "workLocation": 8
+  },
+  {
+    "id": "sen-125",
+    "name": "VLAHU Nicolae",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-125.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 14
+  },
+  {
+    "id": "sen-126",
+    "name": "VLAŞIN Sorin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-126.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 26
+  },
+  {
+    "id": "sen-127",
+    "name": "VLĂESCU Virgiliu-George",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-127.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 35
+  },
+  {
+    "id": "sen-128",
+    "name": "VÂNTU Cristian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-128.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 28
+  },
+  {
+    "id": "sen-129",
+    "name": "ZAMFIR Daniel-Cătălin",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-129.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 42
+  },
+  {
+    "id": "sen-130",
+    "name": "ŢEPELUŞ Laurenţiu-Cristinel",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-130.jpg",
+    "partyId": "party-psd",
+    "active": true,
+    "workLocation": 10
+  },
+  {
+    "id": "sen-131",
+    "name": "ȘIPOȘ Eugen-Cristian",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-131.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 13
+  },
+  {
+    "id": "sen-132",
+    "name": "ȘIPOȘ Sorin-Gheorghe",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-132.jpg",
+    "partyId": "party-usr",
+    "active": true,
+    "workLocation": 37
+  },
+  {
+    "id": "sen-133",
+    "name": "ȘTEFĂNACHE Gheorghe",
+    "gender": 0,
+    "imageUrl": "https://example.com/politicians/sen-133.jpg",
+    "partyId": "party-neafiliati",
+    "active": true,
+    "workLocation": 18
+  },
+  {
+    "id": "sen-134",
+    "name": "ȘTEFĂNESCU Daniela",
+    "gender": 1,
+    "imageUrl": "https://example.com/politicians/sen-134.jpg",
+    "partyId": "party-aur",
+    "active": true,
+    "workLocation": 4
+  }
+]

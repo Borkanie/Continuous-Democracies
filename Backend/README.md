@@ -7,7 +7,7 @@ From-scratch Go + MongoDB backend for Continuous-Democracies, isolated from `Bac
 ```bash
 cd brand_new_day/api
 docker compose up -d mongo   # starts MongoDB only (see note below on the api container)
-make seed                    # loads the mock dataset: 5 parties, 330 politicians, 10 laws, random votes
+make seed                    # loads 10 parties, the real current Senate (senat.ro) + Chamber of Deputies (cdep.ro) rosters, 14 laws
 make run                     # starts the API on :8090
 ```
 

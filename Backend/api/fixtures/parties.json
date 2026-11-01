@@ -38,5 +38,45 @@
     "logoUrl": "https://example.com/logos/udmr.png",
     "color": "#2E7D32",
     "active": true
+  },
+  {
+    "id": "party-upr",
+    "name": "Uniți pentru România",
+    "acronym": "UPR",
+    "logoUrl": "https://example.com/logos/upr.png",
+    "color": "#5E35B1",
+    "active": true
+  },
+  {
+    "id": "party-sos",
+    "name": "S.O.S. România",
+    "acronym": "SOS",
+    "logoUrl": "https://example.com/logos/sos.png",
+    "color": "#E65100",
+    "active": true
+  },
+  {
+    "id": "party-pace",
+    "name": "PACE – Întâi România",
+    "acronym": "PACE",
+    "logoUrl": "https://example.com/logos/pace.png",
+    "color": "#0277BD",
+    "active": true
+  },
+  {
+    "id": "party-minoritati",
+    "name": "Grupul parlamentar al minorităților naționale",
+    "acronym": "MIN",
+    "logoUrl": "https://example.com/logos/minoritati.png",
+    "color": "#8D6E63",
+    "active": true
+  },
+  {
+    "id": "party-neafiliati",
+    "name": "Parlamentari neafiliați",
+    "acronym": "NA",
+    "logoUrl": "https://example.com/logos/neafiliati.png",
+    "color": "#757575",
+    "active": true
   }
 ]

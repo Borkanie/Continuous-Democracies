@@ -13,7 +13,25 @@
       "Bash(python3 -m json.tool)",
       "Bash(git diff *)",
       "Bash(lsof -ti:8090)",
-      "Bash(xargs -r kill)"
+      "Bash(xargs -r kill)",
+      "Bash(docker rm *)",
+      "Bash(PATH=/Users/bogdanioan.boboc/homebrew/bin:__TRACKED_VAR__ go vet ./...)",
+      "Bash(PATH=/Users/bogdanioan.boboc/homebrew/bin:__TRACKED_VAR__ go test ./tests/unit/...)",
+      "Bash(npx tsc *)",
+      "Bash(docker info *)",
+      "Bash(xargs -I{} echo {})",
+      "Bash(xargs -I{} sh -c 'echo ==={}===; cat {}')",
+      "Bash(lsof -nP -iTCP:5173 -sTCP:LISTEN)",
+      "Bash(lsof -nP -iTCP:8090 -sTCP:LISTEN)",
+      "Bash(npm run *)",
+      "Bash(tee /private/tmp/claude-503/-Users-bogdanioan-boboc-Documents-home-Continuous-Democracies/f390094d-4be9-4d93-86ef-d5efb23da617/scratchpad/vite-dev.log)",
+      "Bash(xargs -I{} sh -c 'echo {}; ls -la {} 2>&1 | head -3')",
+      "Bash(lsof -nP -iTCP:5174 -sTCP:LISTEN)",
+      "Bash(git -C /Users/bogdanioan.boboc/Documents/home/Continuous-Democracies status --porcelain -- Backend/api/docker-compose.yml)",
+      "Bash(docker compose *)",
+      "Bash(docker volume *)",
+      "Bash(pip3 install *)",
+      "Bash(python3 -m site --user-site)"
     ]
   }
 }
