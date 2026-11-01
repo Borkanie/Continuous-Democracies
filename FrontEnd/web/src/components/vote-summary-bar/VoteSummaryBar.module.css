@@ -1,0 +1,60 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+
+  @media only screen and (max-width: 767px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.barArea {
+  flex: 1;
+  min-width: 0;
+}
+
+.counts {
+  display: flex;
+  height: 20px;
+  font-weight: bold;
+  font-size: var(--theme-font-size-m);
+}
+
+.count {
+  text-align: center;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.bar {
+  position: relative;
+  display: flex;
+  height: 28px;
+  border-radius: 4px;
+  background-color: var(--background-color-tertiary);
+  border: var(--theme-border-primary);
+}
+
+.segment {
+  height: 100%;
+}
+
+.marker {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  background-color: var(--theme-font-color-primary);
+}
+
+.markerLabel {
+  position: absolute;
+  top: 100%;
+  left: 4px;
+  margin-top: 4px;
+  white-space: nowrap;
+  font-size: var(--theme-font-size-s);
+  color: var(--theme-font-color-secondary);
+}

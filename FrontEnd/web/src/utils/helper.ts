@@ -9,17 +9,17 @@ import { TOTAL_CHAMBER_MEMBERS } from './constants';
  * looks harsh on a white background.
  */
 const POSITION_COLORS_DARK: Record<VoteValue, string> = {
-  Yes: '#2e7d32',
-  No: '#d32f2f',
-  Abstain: '#757575',
-  Absent: '#000000',
+  Yes: '#43a047',
+  No: '#e53935',
+  Abstain: '#9e9e9e',
+  Absent: '#4b5563',
 };
 
 const POSITION_COLORS_LIGHT: Record<VoteValue, string> = {
   Yes: '#66bb6a',
   No: '#ef5350',
   Abstain: '#bdbdbd',
-  Absent: '#616161',
+  Absent: '#424242',
 };
 
 export const positionColor = (value: VoteValue, theme: Theme): string => {
@@ -70,31 +70,41 @@ export const haze = (hexColor: string, theme: Theme, amount = 0.65): string => {
 };
 
 /*
- * Determines whether a round passed, based on which of the three Romanian
- * Parliament majority mechanisms applies: simple (Yes>No), absolute (Yes
- * over half the chamber), or qualified (Yes at least 2/3 of the chamber,
- * used for constitutional revision or presidential impeachment).
+ * Minimum number of Yes votes needed for a round to pass, based on which of
+ * the three Romanian Parliament majority mechanisms applies: simple (more Yes
+ * than No), absolute (Yes over half the chamber), or qualified (Yes at least
+ * 2/3 of the chamber, used for constitutional revision or presidential
+ * impeachment).
  */
+export const getPassThreshold = (
+  grouped: Record<VoteValue, HydratedVote[]>,
+  majorityType: MajorityType,
+  chamber: Chamber,
+): number => {
+  const noCount = grouped.No?.length ?? 0;
+  const totalMembers = TOTAL_CHAMBER_MEMBERS[chamber];
+
+  switch (majorityType) {
+    case 'absolute':
+      return Math.floor(totalMembers / 2) + 1;
+    case 'qualified':
+      return Math.ceil((totalMembers * 2) / 3);
+    case 'simple':
+    default:
+      return noCount + 1;
+  }
+};
+
+/* Determines whether a round passed, by comparing Yes votes to the pass threshold. */
 export const getVoteStatus = (
   grouped: Record<VoteValue, HydratedVote[]>,
   majorityType: MajorityType,
   chamber: Chamber,
 ): 'PASSED' | 'FAILED' => {
   const yesCount = grouped.Yes?.length ?? 0;
-  const noCount = grouped.No?.length ?? 0;
-  const totalMembers = TOTAL_CHAMBER_MEMBERS[chamber];
-
-  switch (majorityType) {
-    case 'absolute':
-      return yesCount > totalMembers / 2 ? 'PASSED' : 'FAILED';
-    case 'qualified':
-      return yesCount >= Math.ceil((totalMembers * 2) / 3)
-        ? 'PASSED'
-        : 'FAILED';
-    case 'simple':
-    default:
-      return yesCount > noCount ? 'PASSED' : 'FAILED';
-  }
+  return yesCount >= getPassThreshold(grouped, majorityType, chamber)
+    ? 'PASSED'
+    : 'FAILED';
 };
 
 export const positionLabel = (value: VoteValue): string => {

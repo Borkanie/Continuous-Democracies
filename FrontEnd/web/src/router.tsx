@@ -5,7 +5,6 @@ import {
   redirect,
 } from '@tanstack/react-router';
 import { App } from './routes/App';
-import { RoundSection } from './routes/RoundSection';
 import { listVotingRounds } from './utils/api/rounds';
 import { RoundBreakdown } from './routes/RoundBreakdown';
 import { PartySection } from './routes/PartySection';
@@ -51,17 +50,8 @@ const roundBreakdownRoute = createRoute({
   },
 });
 
-const sectionRoute = createRoute({
+const partyRoute = createRoute({
   getParentRoute: () => roundBreakdownRoute,
-  path: '/section/$sectionId',
-  component: RoundSection,
-  staticData: {
-    breadcrumb: 'Impartirea pe partide',
-  },
-});
-
-const politicianListRoute = createRoute({
-  getParentRoute: () => sectionRoute,
   path: '/party/$partyId',
   component: PartySection,
   staticData: {
@@ -72,8 +62,7 @@ const politicianListRoute = createRoute({
 const routeTree = rootRoute.addChildren([
   rootIndexRoute,
   roundBreakdownRoute,
-  sectionRoute,
-  politicianListRoute,
+  partyRoute,
 ]);
 
 export const router = createRouter({ routeTree });

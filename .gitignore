@@ -24,7 +24,7 @@ bld/
 [Ll]ogs/
 *_pycache__*
 *output.txt
-
+zed*
 # .NET Core
 project.lock.json
 project.fragment.lock.json

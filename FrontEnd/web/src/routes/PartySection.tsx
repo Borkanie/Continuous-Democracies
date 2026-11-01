@@ -5,11 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 import { getVotingRoundById } from '../utils/api/rounds';
 import classNames from 'classnames';
 import { UiText } from '../components/ui/text/UiText';
-import { groupVotesByPartyForPosition } from './RoundSection';
+import { useMemo } from 'react';
 import { useResultsByRoundId } from '../utils/hooks/useResultsByRoundId';
 import { PoliticiansList } from '../components/politicians-list/PoliticiansList';
 import { PartyIcon } from '../components/ui/party-icon/PartyIcon';
 import { getVoteStatus } from '../utils/helper';
+import type { VoteValue } from '../utils/types';
 
 const {
   Div,
@@ -21,8 +22,10 @@ const {
   watermark,
 } = sharedStyles;
 
+const VOTE_VALUES: VoteValue[] = ['Yes', 'No', 'Abstain', 'Absent'];
+
 export const PartySection = () => {
-  const { roundId, sectionId, partyId } = useParams({ strict: false });
+  const { roundId, partyId } = useParams({ strict: false });
 
   const { data: roundData } = useQuery({
     queryKey: ['roundById', roundId],
@@ -31,10 +34,15 @@ export const PartySection = () => {
   });
 
   const { data: groupedRoundResults } = useResultsByRoundId(roundId);
-  const votes = groupVotesByPartyForPosition(groupedRoundResults, sectionId)[
-    partyId || ''
-  ];
-  const party = votes?.[0]?.party;
+  // Every member of the party, regardless of how they voted (Yes -> Absent).
+  const votes = useMemo(
+    () =>
+      VOTE_VALUES.flatMap((value) => groupedRoundResults?.[value] ?? []).filter(
+        (v) => v.party?.id === partyId,
+      ),
+    [groupedRoundResults, partyId],
+  );
+  const party = votes[0]?.party;
 
   const title = `${roundData?.title} `;
 
@@ -53,7 +61,7 @@ export const PartySection = () => {
       />
       <div className={separator}></div>
 
-      {/* Party distribution pie + legend for selected section */}
+      {/* All members of the selected party with their votes */}
       <div className={content}>
         <UiText
           className={classNames(bold, chartTitle)}
@@ -63,7 +71,7 @@ export const PartySection = () => {
           <div className={watermark}>
             <PartyIcon party={party} size={220} />
           </div>
-          <PoliticiansList vote={votes || []} showPartyIcon={false} />
+          <PoliticiansList vote={votes} showPartyIcon={false} />
         </div>
       </div>
     </div>

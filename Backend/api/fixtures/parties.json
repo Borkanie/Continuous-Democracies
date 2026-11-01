@@ -3,7 +3,7 @@
     "id": "party-psd",
     "name": "Partidul Social Democrat",
     "acronym": "PSD",
-    "logoUrl": "https://example.com/logos/psd.png",
+    "logoUrl": "/logos/psd.webp",
     "color": "#DA251D",
     "active": true
   },
@@ -11,7 +11,7 @@
     "id": "party-pnl",
     "name": "Partidul Național Liberal",
     "acronym": "PNL",
-    "logoUrl": "https://example.com/logos/pnl.png",
+    "logoUrl": "/logos/pnl.png",
     "color": "#004990",
     "active": true
   },
@@ -19,7 +19,7 @@
     "id": "party-usr",
     "name": "Uniunea Salvați România",
     "acronym": "USR",
-    "logoUrl": "https://example.com/logos/usr.png",
+    "logoUrl": "/logos/usr.webp",
     "color": "#00A19A",
     "active": true
   },
@@ -27,7 +27,7 @@
     "id": "party-aur",
     "name": "Alianța pentru Unirea Românilor",
     "acronym": "AUR",
-    "logoUrl": "https://example.com/logos/aur.png",
+    "logoUrl": "/logos/aur.jpeg",
     "color": "#F2C230",
     "active": true
   },
@@ -35,7 +35,7 @@
     "id": "party-udmr",
     "name": "Uniunea Democrată Maghiară din România",
     "acronym": "UDMR",
-    "logoUrl": "https://example.com/logos/udmr.png",
+    "logoUrl": "/logos/udmr.jpeg",
     "color": "#2E7D32",
     "active": true
   },
@@ -43,7 +43,7 @@
     "id": "party-upr",
     "name": "Uniți pentru România",
     "acronym": "UPR",
-    "logoUrl": "https://example.com/logos/upr.png",
+    "logoUrl": "/logos/upr.jpeg",
     "color": "#5E35B1",
     "active": true
   },
@@ -51,7 +51,7 @@
     "id": "party-sos",
     "name": "S.O.S. România",
     "acronym": "SOS",
-    "logoUrl": "https://example.com/logos/sos.png",
+    "logoUrl": "/logos/sos.svg",
     "color": "#E65100",
     "active": true
   },
@@ -59,7 +59,7 @@
     "id": "party-pace",
     "name": "PACE – Întâi România",
     "acronym": "PACE",
-    "logoUrl": "https://example.com/logos/pace.png",
+    "logoUrl": "",
     "color": "#0277BD",
     "active": true
   },
@@ -67,7 +67,7 @@
     "id": "party-minoritati",
     "name": "Grupul parlamentar al minorităților naționale",
     "acronym": "MIN",
-    "logoUrl": "https://example.com/logos/minoritati.png",
+    "logoUrl": "/logos/minoritati.webp",
     "color": "#8D6E63",
     "active": true
   },
@@ -75,7 +75,7 @@
     "id": "party-neafiliati",
     "name": "Parlamentari neafiliați",
     "acronym": "NA",
-    "logoUrl": "https://example.com/logos/neafiliati.png",
+    "logoUrl": "/logos/neafiliati.jpg",
     "color": "#757575",
     "active": true
   }

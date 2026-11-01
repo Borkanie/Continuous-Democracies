@@ -1,0 +1,62 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--background-color-tertiary);
+  }
+}
+
+.yesCell {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.centerCell {
+  display: flex;
+  justify-content: center;
+}
+
+.restCell {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.barSegment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.countLabel {
+  font-size: var(--theme-font-size-s);
+  font-weight: bold;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.bar {
+  width: 100%;
+  height: 14px;
+}
